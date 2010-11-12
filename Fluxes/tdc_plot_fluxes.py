@@ -1,5 +1,5 @@
 import Common
-from Common  import tdc_Manip, tdc_Single_Figure
+from Common  import tdc_Manip
 
 from tdc_flux_data       import tdc_Flux_Data
 from tdc_fluxes_plotter  import tdc_Fluxes_Plotter

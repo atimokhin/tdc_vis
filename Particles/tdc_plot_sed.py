@@ -3,7 +3,6 @@ import numpy as np
 import Common
 from Common  import tdc_Mesh, tdc_Setup_Props
 from Common  import tdc_Manip
-from Common  import tdc_Single_Figure
 
 from tdc_xp_data       import tdc_XP_Data
 from tdc_sed_data      import tdc_SED_Data

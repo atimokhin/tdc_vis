@@ -17,7 +17,6 @@ from tdc_setup_props     import tdc_Setup_Props
 from tdc_data_sequence   import tdc_Data_Sequence, tdc_Data_Sequence_Initializer
 from tdc_data_plotter    import tdc_Data_Plotter, tdc_Data_vs_X_Plotter
 
-from tdc_single_figure   import tdc_Single_Figure
 from tdc_manip           import tdc_Manip, tdc_Manip_Plot_vs_X 
 
 from tdc_exception       import tdc_Exception
