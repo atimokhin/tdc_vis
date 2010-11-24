@@ -12,7 +12,7 @@ class MovieEngine:
         # Movie file maker
         self.MFM = movie_file_maker
         
-        # here we store axes bacjground during animation
+        # here we store axes background during animation
         self.background=None
         # counter
         self.i_frame=1
