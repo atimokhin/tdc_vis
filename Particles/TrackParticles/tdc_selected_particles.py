@@ -1,5 +1,3 @@
-import scipy.io
-
 from Common.tdc_filenames  import tdc_Filenames
 
 class tdc_Selected_Particles:
@@ -43,6 +41,7 @@ class tdc_Selected_Particles:
         and sets up all members
         the file to be read  is 'sp_{sp_id}.mat' in the calc_id RESULTS directory
         """
+        import scipy.io
         filename = 'sp_' + sp_id + '.mat'
         full_filename = tdc_Filenames().get_full_filename(calc_id,filename)
         mat_struct   = scipy.io.loadmat(full_filename,struct_as_record=True)
