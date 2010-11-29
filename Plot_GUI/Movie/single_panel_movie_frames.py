@@ -1,6 +1,5 @@
-from movie_frames import MovieFrames
-
 from Common   import *
+from Movie    import *
 
 # LaTeX rendering would be very slow!
 import matplotlib

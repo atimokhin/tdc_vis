@@ -44,7 +44,7 @@ def tdc_plot_field_movie(calc_ids, field_name, ylim,
     # movie frames
     MF = Single_Panel_Movie_Frames(fp, ylim=ylim, **kwargs)
     # movie file maker
-    MFM = Movie_File_Maker(field_name + '_' + calc_ids[0])
+    MFM = Movie_File_Maker__GUI(field_name + '_' + calc_ids[0])
     # movie maker
     MM = Movie_Maker(MF, MFM)
     # play movie

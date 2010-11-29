@@ -1,6 +1,7 @@
 #from movie_frames import MovieFrames
 
 from Common   import *
+from Movie    import *
 
 # LaTeX rendering would be very slow!
 import matplotlib
@@ -9,7 +10,7 @@ matplotlib.rcParams['text.usetex'] = False
 import matplotlib.pyplot as plt
 
 
-class Single_Panel_Movie_Frames:
+class Single_Panel_Movie_Frames(MovieFrames):
     """
     plot function(s) and time label
 
@@ -39,7 +40,9 @@ class Single_Panel_Movie_Frames:
         # field plotter --------------
         self.seq_plotter = seq_plotter
         # initialize field plotter
-        #self.seq_plotter.read(1)
+        self.seq_plotter.read(1)
+        # initialize base class ======
+        MovieFrames.__init__(self, self.seq_plotter)
 
         # axes limits ----------------------------
         # xlim -- if not set use the whole x range 

@@ -38,7 +38,7 @@ def tdc_plot_tp_movie(tp,
     # movie frames
     MF = Single_Panel_Movie_Frames(pp, ylim=ylim, **kwargs)
     # movie file maker
-    MFM = Movie_File_Maker('TP' + '_' + tp.calc_id)
+    MFM = Movie_File_Maker__GUI('TP' + '_' + tp.calc_id)
     # movie maker
     MM = Movie_Maker(MF, MFM)
     # play movie
