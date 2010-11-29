@@ -1,7 +1,7 @@
 import gtk, gobject
 
-import GUI.movie_gui
-import Movie.movie_engine
+import Plot_GUI.GUI.movie_gui
+import Plot_GUI.Movie.movie_engine
 
 
 class Movie_Maker:
@@ -11,8 +11,8 @@ class Movie_Maker:
         self.F   = movie_frames
         self.MFM = movie_file_maker
 
-        self.GUI = GUI.movie_gui.MovieGUI(self.F.canvas,self.MFM)
-        self.ME  = Movie.movie_engine.MovieEngine(self.F, self.GUI, self.MFM)
+        self.GUI = Plot_GUI.GUI.movie_gui.MovieGUI(self.F.canvas,self.MFM)
+        self.ME  = Plot_GUI.Movie.movie_engine.MovieEngine(self.F, self.GUI, self.MFM)
 
         self.GUI.cp.set_frame_number_limits(self.F.i_frame_min, self.F.i_frame_max)
         self.ME.set_frame_number_limits(    self.F.i_frame_min, self.F.i_frame_max)

@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy             as np
 
-from Common import *
-from Fluxes import *
+from Common   import *
+from Plot_CMD import *
 
 from single_figure_style import fig_style
 

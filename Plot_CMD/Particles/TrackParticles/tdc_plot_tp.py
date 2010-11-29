@@ -1,7 +1,6 @@
-import Common
 from Common  import tdc_Manip_Plot_vs_X
 
-from tdc_tp_plotter  import tdc_TP_Plotter
+from Particles.TrackParticles.tdc_tp_plotter  import tdc_TP_Plotter
 
 
 def tdc_plot_tp(tp, i_ts,

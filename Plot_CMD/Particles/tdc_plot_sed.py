@@ -1,12 +1,11 @@
 import numpy as np
 
-import Common
 from Common  import tdc_Mesh, tdc_Setup_Props
 from Common  import tdc_Manip
 
-from tdc_xp_data       import tdc_XP_Data
-from tdc_sed_data      import tdc_SED_Data
-from tdc_seds_plotter  import tdc_SEDs_Plotter
+from Particles.tdc_xp_data       import tdc_XP_Data
+from Particles.tdc_sed_data      import tdc_SED_Data
+from Particles.tdc_seds_plotter  import tdc_SEDs_Plotter
 
 
 def tdc_plot_sed(calc_id, i_ts,

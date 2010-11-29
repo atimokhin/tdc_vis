@@ -1,7 +1,7 @@
 import matplotlib as mpl
 import numpy      as np
 
-class Moving_Grid_Plotter:
+class tdc_Moving_Grid_Plotter:
     """
     This class is responsible for plotting moving
     grids in movies or other specialized plots

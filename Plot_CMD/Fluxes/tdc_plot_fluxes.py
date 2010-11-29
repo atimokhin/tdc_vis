@@ -1,8 +1,7 @@
-import Common
 from Common  import tdc_Manip
 
-from tdc_flux_data       import tdc_Flux_Data
-from tdc_fluxes_plotter  import tdc_Fluxes_Plotter
+from Fluxes.tdc_flux_data       import tdc_Flux_Data
+from Fluxes.tdc_fluxes_plotter  import tdc_Fluxes_Plotter
 
 
 def tdc_plot_fluxes( calc_ids, flux_name,

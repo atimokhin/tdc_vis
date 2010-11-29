@@ -1,22 +1,26 @@
 #!/usr/bin/python
 
+import pickle
+
 import matplotlib
 matplotlib.use('GTKAgg')
 
-import pickle
-
-from Common    import *
-from Fields    import *
-from Particles import *
+from Common   import *
+from Plot_GUI import *
 
 
-## tdc_set_results_dir('../RESULTS/')
-tdc_set_results_dir('../RESULTS/FreeAgent/')
+tdc_set_results_dir('../RESULTS/')
+## tdc_set_results_dir('../RESULTS/FreeAgent/')
+
+
 
 ## ID='test_osc_2e'
+## ID='SCLF_jm1.0_P0.1_L0.5_nGJ2e4_nx1e3_dt1e-4__RhoLin2_A1_X0.5_noLPT_t1'
 
-ID='SCLF_jp1.0_P0.2_L0.5_nGJ1e4_nx1e3_dt1e-4__RhoLin2_A-1_X0.5_noLPT'
-ID='SCLF_jp1.0_P0.2_L0.5_nGJ1e4_nx1e3_dt1e-4__RhoLin2_A1_X0.5'
+ID='SCLF_jp1.0_P0.05_L0.5_nGJ2e4_nx1e3_dt1e-4__RhoLin2_Ap0.5_X0.5_Xb0.7_inj5'
+
+## ID='SCLF_jp1.0_P0.2_L0.5_nGJ1e4_nx1e3_dt1e-4__RhoLin2_A-1_X0.5_noLPT'
+## ID='SCLF_jp1.0_P0.2_L0.5_nGJ1e4_nx1e3_dt1e-4__RhoLin2_A1_X0.5'
 
 
 ## ID='SCLF_2_jm0.5_L100_nGJ2e4_nx1e3_dt2.5e-2__tst'
@@ -60,11 +64,11 @@ def do_movie():
     moving_grid_dict = dict(n_lines=30, speed=1)
     moving_grid_dict = None
 
-    ## tdc_plot_field_movie(ID,'Rho',ylim=[-5,5],moving_grid_dict=moving_grid_dict)
+    ## tdc_plot_field_movie(ID,'Rho',ylim=[-1.5,1.5],moving_grid_dict=moving_grid_dict)
 
     ## tdc_plot_field_movie(ID,'Phi',ylim=[-.5,.1],moving_grid_dict=moving_grid_dict)
 
-    tdc_plot_field_movie(ID,'E_acc',ylim=[-1,1],moving_grid_dict=moving_grid_dict)
+    tdc_plot_field_movie(ID,'E_acc',ylim=[-1,1],moving_grid_dict=moving_grid_dict, tt=[1.2])
 
     ## tdc_plot_ep_density_movie(ID, ylim=[0,60],
     ##                           e_density_negative=False,
@@ -72,25 +76,25 @@ def do_movie():
 
 
 
-    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-    ## # XP Movie
-    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-    ## tp = None
-    ## tt = None    
-    ## ## tp = tdc_TP_Data()
-    ## ## tp.setup_from_file(ID,'p500_ts525')
+    # ~~~~~~~~~~~~~~~~~~~~~~~~
+    # XP Movie
+    # ~~~~~~~~~~~~~~~~~~~~~~~~
+    tp = None
+    tt = None    
+    ## tp = tdc_TP_Data()
+    ## tp.setup_from_file(ID,'p500_ts525')
 
-    ## ## tp.delete(range(0,47,2))
+    ## tp.delete(range(0,47,2))
 
-    ## sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
-    ## particle_names = ['Electrons','Positrons','Pairs']
-    ## ## particle_names = ['Electrons','Positrons']
+    sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
+    particle_names = ['Electrons','Positrons','Pairs']
+    ## particle_names = ['Electrons','Positrons']
         
-    ## tdc_plot_xp_movie(ID, particle_names, sample_dict,
-    ##                   tp=tp, trail_dict=dict(length=18,marker='numbers'),
-    ##                   tt=tt,
-    ##                   ylim=[-1.6e7,1.6e7],
-    ##                   moving_grid_dict=moving_grid_dict)
+    tdc_plot_xp_movie(ID, particle_names, sample_dict,
+                      tp=tp, trail_dict=dict(length=18,marker='numbers'),
+                      tt=tt,
+                      ylim=[-1.6e7,1.6e7],
+                      moving_grid_dict=moving_grid_dict)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~
     # particles trajectories

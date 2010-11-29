@@ -3,6 +3,7 @@ import numpy             as np
 
 from Common        import *
 from Particles     import *
+from Plot_CMD      import *
 
 from single_figure_style import fig_style
 

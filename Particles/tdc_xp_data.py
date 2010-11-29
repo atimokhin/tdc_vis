@@ -62,7 +62,7 @@ class tdc_XP_Data:
         self.timetable.set_flyby_time()
         # define members ----------------
         self.i_ts=None
-        self.__space=None
+        self.__dspace=None
         self.__mem_dspace=None
         self.x=np.empty(0)
         self.p=np.empty(0)
@@ -97,10 +97,6 @@ class tdc_XP_Data:
         self.i_ts = i_ts
         self.timetable.read_time(i_ts)
         if self.any_particle_at_timeshot(self.i_ts):
-            # get statistical weight if requested
-            if self.get_weight_flag:
-                w_dset_name='/Weight/'+ str(self.i_ts)
-                self.w = self.read_dataset(w_dset_name)
             # setup positions and momenta ===========
             if self.name != 'Pairs':
                 x_dset_name    = '/X/'      + str(self.i_ts)
@@ -128,6 +124,11 @@ class tdc_XP_Data:
                 dx_ph = self.x_cr - self.x_em       
                 t = self.timetable.get_absolute_time()
                 self.x += np.sign(dx_ph)*( t - (self.t_cr - np.abs(dx_ph)) )
+            # ========================================
+            # get statistical weight if requested
+            if self.get_weight_flag:
+                w_dset_name='/Weight/'+ str(self.i_ts)
+                self.w = self.read_dataset(w_dset_name)
         else:
             self.x=np.empty(0)
             self.p=np.empty(0)

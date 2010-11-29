@@ -1,14 +1,9 @@
-from Common    import *
-import Common
 from Common    import tdc_Data_Sequence, tdc_Data_Sequence_Initializer
 
-from tdc_xp_data           import tdc_XP_Data
-from tdc_xps_tp_plotter    import tdc_XPs_TP_Plotter
+from Particles.tdc_xp_data           import tdc_XP_Data
+from Particles.tdc_xps_tp_plotter    import tdc_XPs_TP_Plotter
 
-from Movie.single_panel_movie_frames import Single_Panel_Movie_Frames
-from Movie.movie_maker               import Movie_Maker
-from Movie.movie_file_maker          import Movie_File_Maker
-from Movie.moving_grid_plotter       import Moving_Grid_Plotter
+from Plot_GUI.Movie import *
 
 
 def tdc_plot_xp_movie(calc_ids,
@@ -30,7 +25,7 @@ def tdc_plot_xp_movie(calc_ids,
        Y axis limits   
     Options:
     --------
-    t
+    tt
        time interval <[t1,<t2>]>
     xlim
        <None> X axis limits
@@ -60,7 +55,7 @@ def tdc_plot_xp_movie(calc_ids,
     pp  = tdc_XPs_TP_Plotter(xps=xps, tp=tps,trail_dict=trail_dict)
     # plot moving grid if asked
     if moving_grid_dict:
-        pp  = Moving_Grid_Plotter(pp,moving_grid_dict)
+        pp  = tdc_Moving_Grid_Plotter(pp,moving_grid_dict)
     # movie frames
     MF = Single_Panel_Movie_Frames(pp, ylim=ylim, **kwargs)
     # movie file maker

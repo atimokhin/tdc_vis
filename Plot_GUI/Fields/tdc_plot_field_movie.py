@@ -3,10 +3,8 @@ from Common.tdc_filenames  import *
 from Common   import tdc_Data_Sequence, tdc_Data_Sequence_Initializer
 from Fields   import tdc_Field_Data, tdc_Fields_Plotter
 
-from Movie.single_panel_movie_frames import Single_Panel_Movie_Frames
-from Movie.movie_maker               import Movie_Maker
-from Movie.movie_file_maker          import Movie_File_Maker
-from Movie.moving_grid_plotter       import Moving_Grid_Plotter
+from Plot_GUI.Movie import *
+
 
 def tdc_plot_field_movie(calc_ids, field_name, ylim,
                          moving_grid_dict=None,
@@ -20,7 +18,7 @@ def tdc_plot_field_movie(calc_ids, field_name, ylim,
        Y axis limits   
     Options:
     --------
-    t
+    tt
        time interval <[t1,<t2>]>
     xlim
        <None> X axis limits
@@ -42,7 +40,7 @@ def tdc_plot_field_movie(calc_ids, field_name, ylim,
     fp  = tdc_Fields_Plotter(fs)
     # plot moving grid if asked
     if moving_grid_dict:
-        fp  = Moving_Grid_Plotter(fp,moving_grid_dict)
+        fp  = tdc_Moving_Grid_Plotter(fp,moving_grid_dict)
     # movie frames
     MF = Single_Panel_Movie_Frames(fp, ylim=ylim, **kwargs)
     # movie file maker

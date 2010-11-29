@@ -3,10 +3,7 @@ from Common.tdc_filenames  import *
 from Common   import tdc_Data_Sequence_Initializer
 from Fields   import tdc_Field_Data, tdc_EP_Density_Plotter
 
-from Movie.single_panel_movie_frames import Single_Panel_Movie_Frames
-from Movie.movie_maker               import Movie_Maker
-from Movie.movie_file_maker          import Movie_File_Maker
-from Movie.moving_grid_plotter       import Moving_Grid_Plotter
+from Plot_GUI.Movie import *
 
 
 def tdc_plot_ep_density_movie(calc_ids, ylim,
@@ -41,7 +38,7 @@ def tdc_plot_ep_density_movie(calc_ids, ylim,
     f_plotter  = tdc_EP_Density_Plotter(fe,fp,e_density_negative)
     # plot moving grid if asked
     if moving_grid_dict:
-        f_plotter  = Moving_Grid_Plotter(f_plotter,moving_grid_dict)
+        f_plotter  = tdc_Moving_Grid_Plotter(f_plotter,moving_grid_dict)
     # movie frames
     MF = Single_Panel_Movie_Frames(f_plotter, ylim=ylim, **kwargs)
     # movie file maker

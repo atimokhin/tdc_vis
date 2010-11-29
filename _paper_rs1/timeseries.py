@@ -3,7 +3,6 @@ import numpy             as np
 
 from Common   import *
 
-import Fields
 from  Fields  import tdc_Field_Data
 from  Fields  import tdc_Fields_Plotter
 
