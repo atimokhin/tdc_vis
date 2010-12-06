@@ -1,15 +1,17 @@
 from Common.tdc_filenames  import *
 
-from Common   import tdc_Data_Sequence_Initializer
+from Common   import tdc_Data_Sequence_Initializer, tdc_Moving_Grid_Plotter
 from Fields   import tdc_Field_Data, tdc_EP_Density_Plotter
 
 from Plot_GUI.Movie import *
 
 
-def tdc_plot_ep_density_movie(calc_ids, ylim,
-                              e_density_negative=True,
-                              moving_grid_dict=None,
-                              **kwargs):
+def tdc_plot_ep_density_movie__gui(calc_ids,
+                                   ylim,
+                                   fps=None,
+                                   e_density_negative=True,
+                                   moving_grid_dict=None,
+                                   **kwargs):
     """
     calc_ids
        calculation id names
@@ -42,7 +44,7 @@ def tdc_plot_ep_density_movie(calc_ids, ylim,
     # movie frames
     MF = Single_Panel_Movie_Frames(f_plotter, ylim=ylim, **kwargs)
     # movie file maker
-    MFM = Movie_File_Maker__GUI('EP' + '_' + calc_ids[0])
+    MFM = Movie_File_Maker__GUI('EP' + '_' + calc_ids[0], fps)
     # movie maker
     MM = Movie_Maker(MF, MFM)
     # play movie

@@ -24,21 +24,25 @@ class Movie_File_Maker__GUI(Movie_File_Maker):
        function which updated # of recorded frames shown in GUI
     """
 
+    # default value for fps in GUI interface
+    __default_fps = 15
 
-    def __init__(self, movie_id):
+    def __init__(self, movie_id, fps=None):
         """
         movie_id  -- subdirectorty whewre movie files will be stored
         """
-        Movie_File_Maker.__init__(self,movie_id)
+        # set fps to default value if it is not given in function call
+        if not fps:
+            fps = self.__default_fps
+        # setup base class
+        Movie_File_Maker.__init__(self,movie_id,fps)
+        # initialize internal list with frames in png format
+        self.frames_png = []
+        # main window - needed for Movie_File_Maker parameter window
         self.main_Window=None
 
-
-    def set_main_window(self,window):
-        self.main_Window=window
-        
-    def set_update_number_of_recorded_frames_function(self,fun):
-        self.update_number_of_recorded_frames_function=fun
-
+    def get_number_of_saved_snapshots(self):
+        return len(self.frames_png)
 
     def store_snapshot(self, widget):
         """
@@ -59,17 +63,52 @@ class Movie_File_Maker__GUI(Movie_File_Maker):
         # update #of recorded frames in GUI
         self.update_number_of_recorded_frames_function(len(self.frames_png))
 
+    def save_png_snapshots_to_disk(self):
+        """
+        saves all PNGs on to the disk as separate files
+        if frame buffer is not empty
+        """
+        if len(self.frames_png):
+            # open index file
+            index_file = open(self.index_filename, 'w')
+            print 'total # of stored frames', len(self.frames_png)
+            # save individual frames
+            for idx,frame in enumerate(self.frames_png):
+                # name of the file where current frame will be saved
+                filename = self.movie_dir_name + \
+                           self._frame_filename + '_' + str(idx) + '.png'
+                # create frame file, save frame there, then close the file 
+                frame_file = open(filename,"w")
+                frame_file.write(frame)
+                frame_file.close
+                # append name of the frame file to the list
+                index_file.write(filename+'\n')
+            # close index file
+            index_file.close()
+            # clear frame buffer
+            self.clear_frame_buffer()
+            return True
+        else:
+            return False
+
+    def clear_frame_buffer(self):
+        "clear self.frames_png list"
+        self.frames_png = []
+        # update #of recorded frames in GUI
+        self.update_number_of_recorded_frames_function(len(self.frames_png))
+
+    def set_main_window(self,window):
+        self.main_Window=window
+        
+    def set_update_number_of_recorded_frames_function(self,fun):
+        self.update_number_of_recorded_frames_function=fun
 
     def make_movie_file(self):
         """
-        Pops up parameter window and passes control to it
+        Main function: Pops up parameter window and passes control to it
         """
         mfm_params_window = Movie_File_Maker_Params(self)
         
-
-
-        
-
 
 
 class Movie_File_Maker_Params:
@@ -133,7 +172,7 @@ class Movie_File_Maker_Params:
         fps_box.pack_start(fps_label,  False, False, 10)
         fps_label.show()
         # spin button
-        adj = gtk.Adjustment(self.MFM._default_fps, 1, 50, 1, 1, 0)
+        adj = gtk.Adjustment(self.MFM.fps, 1, 50, 1, 1, 0)
         self.fps_spinner = gtk.SpinButton(adj, 0.0, 0)
         self.fps_spinner_adj=self.fps_spinner.get_adjustment()
         self.fps_spinner_adj.connect("value-changed",

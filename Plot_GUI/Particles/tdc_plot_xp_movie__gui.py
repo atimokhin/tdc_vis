@@ -1,4 +1,4 @@
-from Common    import tdc_Data_Sequence, tdc_Data_Sequence_Initializer
+from Common    import tdc_Data_Sequence, tdc_Data_Sequence_Initializer, tdc_Moving_Grid_Plotter
 
 from Particles.tdc_xp_data           import tdc_XP_Data
 from Particles.tdc_xps_tp_plotter    import tdc_XPs_TP_Plotter
@@ -6,13 +6,14 @@ from Particles.tdc_xps_tp_plotter    import tdc_XPs_TP_Plotter
 from Plot_GUI.Movie import *
 
 
-def tdc_plot_xp_movie(calc_ids,
-                      particle_names,
-                      sample_dict,
-                      ylim,
-                      tp=None,trail_dict=None,
-                      moving_grid_dict=None,
-                      **kwargs):
+def tdc_plot_xp_movie__gui(calc_ids,
+                           particle_names,
+                           sample_dict,
+                           ylim,
+                           fps=None,
+                           tp=None,trail_dict=None,
+                           moving_grid_dict=None,
+                           **kwargs):
     """
     calc_ids
        calculation id names
@@ -59,7 +60,7 @@ def tdc_plot_xp_movie(calc_ids,
     # movie frames
     MF = Single_Panel_Movie_Frames(pp, ylim=ylim, **kwargs)
     # movie file maker
-    MFM = Movie_File_Maker__GUI('XP' + '_' + calc_ids[0])
+    MFM = Movie_File_Maker__GUI('XP' + '_' + calc_ids[0], fps)
     # movie maker
     MM = Movie_Maker(MF, MFM)
     # play movie

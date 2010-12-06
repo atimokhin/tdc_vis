@@ -64,9 +64,9 @@ class Single_Panel_Movie_Frames(MovieFrames):
     def plot(self,**kwargs):
         "Makes initial plot"
         # main plot
-        self.seq_plotter.plot(self.ax,**kwargs)
         self.ax.set_xlim(self.xlim)
         self.ax.set_ylim(self.ylim)
+        self.seq_plotter.plot(self.ax,**kwargs)
         # time label
         self.ax.text(0.02, 0.925,
                      't=%.3f' % self.seq_plotter.get_time(),

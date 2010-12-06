@@ -1,23 +1,30 @@
 #!/usr/bin/python
 
-import pickle
+from Common import *
 
-import matplotlib
-matplotlib.use('GTKAgg')
+# ============================================================
+# Interface
+# ============================================================
+## from Plot_GUI import *
+from Plot_CMD import *
 
-from Common   import *
-from Plot_GUI import *
-
-
+# ============================================================
+# Directory
+# ============================================================
 tdc_set_results_dir('../RESULTS/')
 ## tdc_set_results_dir('../RESULTS/FreeAgent/')
 
 
 
-## ID='test_osc_2e'
-## ID='SCLF_jm1.0_P0.1_L0.5_nGJ2e4_nx1e3_dt1e-4__RhoLin2_A1_X0.5_noLPT_t1'
+# ============================================================
+# IDs 
+# ============================================================
 
-ID='SCLF_jp1.0_P0.05_L0.5_nGJ2e4_nx1e3_dt1e-4__RhoLin2_Ap0.5_X0.5_Xb0.7_inj5'
+## ID='test_osc_2e'
+ID='SCLF_jm1.0_P0.1_L0.5_nGJ2e4_nx1e3_dt1e-4__RhoLin2_A1_X0.5_noLPT_t1'
+
+## ID='SCLF_jm1_P0.05_L0.5_nGJ5e4_nx2.5e3_dt4e-5__RhoLin2_Am0.3_X0.7_Xb0.5'
+
 
 ## ID='SCLF_jp1.0_P0.2_L0.5_nGJ1e4_nx1e3_dt1e-4__RhoLin2_A-1_X0.5_noLPT'
 ## ID='SCLF_jp1.0_P0.2_L0.5_nGJ1e4_nx1e3_dt1e-4__RhoLin2_A1_X0.5'
@@ -56,24 +63,36 @@ ID='SCLF_jp1.0_P0.05_L0.5_nGJ2e4_nx1e3_dt1e-4__RhoLin2_Ap0.5_X0.5_Xb0.7_inj5'
 ##ID='RS_1_R6_jp1.0_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU__wave_break__no_pairs__start_594'
 ## ID='RS_1_R6_jp1.0_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU__wave_break__no_pairs__start_598'
 ## ID='RS_1_R6_jp1.0_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU__wave_decay__no_pairs__start_601'
+# ============================================================
 
 
 
 def do_movie():
 
     moving_grid_dict = dict(n_lines=30, speed=1)
-    moving_grid_dict = None
+    ## moving_grid_dict = None
 
-    ## tdc_plot_field_movie(ID,'Rho',ylim=[-1.5,1.5],moving_grid_dict=moving_grid_dict)
+    # ~~~~~~~~~~~~~~~~~~~~~~~~
+    # Rho
+    # ~~~~~~~~~~~~~~~~~~~~~~~~
+    tdc_plot_field_movie(ID,'Rho',ylim=[-1.5,1.5],moving_grid_dict=moving_grid_dict,tt=[1,2])
 
+    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+    ## # Phi
+    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
     ## tdc_plot_field_movie(ID,'Phi',ylim=[-.5,.1],moving_grid_dict=moving_grid_dict)
 
-    tdc_plot_field_movie(ID,'E_acc',ylim=[-1,1],moving_grid_dict=moving_grid_dict, tt=[1.2])
+    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+    ## # E_acc
+    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+    ## tdc_plot_field_movie(ID,'E_acc',ylim=[-1,1],moving_grid_dict=moving_grid_dict, tt=[1.2])
 
+    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+    ## # Particle Number Density
+    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
     ## tdc_plot_ep_density_movie(ID, ylim=[0,60],
     ##                           e_density_negative=False,
     ##                           moving_grid_dict=moving_grid_dict)
-
 
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -93,12 +112,14 @@ def do_movie():
     tdc_plot_xp_movie(ID, particle_names, sample_dict,
                       tp=tp, trail_dict=dict(length=18,marker='numbers'),
                       tt=tt,
-                      ylim=[-1.6e7,1.6e7],
+                      ylim=[-1.6e4,1.6e4],
                       moving_grid_dict=moving_grid_dict)
+    # ~~~~~~~~~~~~~~~~~~~~~~~~
 
-    # ~~~~~~~~~~~~~~~~~~~~~~~~
-    # particles trajectories
-    # ~~~~~~~~~~~~~~~~~~~~~~~~
+
+    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+    ## # particles trajectories
+    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
     ## tp.setup_from_file(ID,'p1e7_ts90_ignition')
     ## tp.select([0,3,12,19,25])
 
@@ -120,6 +141,8 @@ def do_movie():
     ##                   trail_dict=dict(length=50,marker='numbers'),
     ##                   tt=tt,
     ##                   moving_grid_dict=moving_grid_dict )
+    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 if __name__ == "__main__":
     do_movie()

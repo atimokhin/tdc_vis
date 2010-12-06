@@ -20,23 +20,18 @@ class Movie_File_Maker:
     keep_frame_files_flag
        whether to keep png frame files after creating movie
        default - False
-    main_Window
-       main window - necessary for showing pop-up windows
-    update_number_of_recorded_frames_function
-       function which updated # of recorded frames shown in GUI
     """
 
     __index_filename         = 'index.txt'
     _frame_filename          = 'frame'
     _default_movie_filename  = 'animation'
-    _default_fps             = 24
 
-    def __init__(self, movie_id):
+    def __init__(self, movie_id, fps):
         """
         movie_id  -- subdirectorty whewre movie files will be stored
         """
         # FPS
-        self.set_fps(self._default_fps)
+        self.fps = fps
         # movie_id
         self.movie_id = movie_id
         # directory where image and movie fiels will be saved
@@ -50,8 +45,6 @@ class Movie_File_Maker:
         self.set_movie_filenames(self._default_movie_filename)
         # keep_frame_files_flag
         self.set_keep_frame_files_flag(False)
-        # initialize internal list with frames in png format
-        self.frames_png = []
 
 
     def set_movie_filenames(self,filename):
@@ -63,38 +56,6 @@ class Movie_File_Maker:
 
     def set_keep_frame_files_flag(self,val):
         self.keep_frame_files_flag = val
-
-    def get_number_of_saved_snapshots(self):
-        return len(self.frames_png)
-
-
-    def save_png_snapshots_to_disk(self):
-        """
-        saves all PNGs on to the disk as separate files
-        if frame buffer is not empty
-        """
-        if len(self.frames_png):
-            # open index file
-            index_file = open(self.index_filename, 'w')
-            print 'total # of stored frames', len(self.frames_png)
-            # save individual frames
-            for idx,frame in enumerate(self.frames_png):
-                # name of the file where current frame will be saved
-                filename = self.movie_dir_name + \
-                           self._frame_filename + '_' + str(idx) + '.png'
-                # create frame file, save frame there, then close the file 
-                frame_file = open(filename,"w")
-                frame_file.write(frame)
-                frame_file.close
-                # append name of the frame file to the list
-                index_file.write(filename+'\n')
-            # close index file
-            index_file.close()
-            # clear frame buffer
-            self.clear_frame_buffer()
-            return True
-        else:
-            return False
 
 
     def combine_frames_into_movie(self):
@@ -130,13 +91,6 @@ class Movie_File_Maker:
         return not status
     
 
-
-    def clear_frame_buffer(self):
-        "clear self.frames_png list"
-        self.frames_png = []
-        # update #of recorded frames in GUI
-        self.update_number_of_recorded_frames_function(len(self.frames_png))
-
     def delete_frame_files(self):
         """
         Delete frame files if self.keep_frame_files_flag is not set
@@ -154,19 +108,3 @@ class Movie_File_Maker:
             return status0 and (not status1) and (not status2)
         else:
             return False
-
-        
-    def store_snapshot(self, snapshot):
-        """
-        takes snapshot of and stores in it in the internal list 
-        must be implemented in children classes
-        """
-        pass
-
-
-    def make_movie_file(self):
-        """
-        main function
-        must be implemented in children classes
-        """
-        mfm_params_window = Movie_File_Maker_Params(self)
