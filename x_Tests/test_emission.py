@@ -4,7 +4,7 @@ import numpy as np
 
 from Common import tdc_Filenames as tdc_Filenames
 
-def  test_cr(calc_id,n_bins):
+def  test_emission(calc_id,n_bins):
 
     F0=5.236e0
     # read Kcr table
@@ -43,7 +43,7 @@ def  test_cr(calc_id,n_bins):
 
     # --------------------------------------------
     # discrete photon emission -------------------
-    filename = tdc_Filenames().get_full_filename(calc_id, 'photons_cr_discrete.h5')
+    filename = tdc_Filenames().get_full_filename(calc_id, 'cache_photons.h5')
     f2 = h5py.File(filename,'r')
     EpsilonC = np.array(f2['EpsilonC'])
     Tau      = np.array(f2['Tau'])
@@ -68,5 +68,5 @@ def  test_cr(calc_id,n_bins):
 
     print 'w_total_discrete = ', np.sum(p/Tau)
 
-
+    plt.show()
 

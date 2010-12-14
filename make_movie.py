@@ -5,8 +5,8 @@ from Common import *
 # ============================================================
 # Interface
 # ============================================================
-## from Plot_GUI import *
-from Plot_CMD import *
+from Plot_GUI import *
+## from Plot_CMD import *
 
 # ============================================================
 # Directory
@@ -20,8 +20,8 @@ tdc_set_results_dir('../RESULTS/')
 # IDs 
 # ============================================================
 
-## ID='test_osc_2e'
-ID='SCLF_jm1.0_P0.1_L0.5_nGJ2e4_nx1e3_dt1e-4__RhoLin2_A1_X0.5_noLPT_t1'
+ID= 'single_particle_acceleration'
+## ID='SCLF_jm1.0_P0.1_L0.5_nGJ2e4_nx1e3_dt1e-4__RhoLin2_A1_X0.5_noLPT_t1'
 
 ## ID='SCLF_jm1_P0.05_L0.5_nGJ5e4_nx2.5e3_dt4e-5__RhoLin2_Am0.3_X0.7_Xb0.5'
 
@@ -69,13 +69,13 @@ ID='SCLF_jm1.0_P0.1_L0.5_nGJ2e4_nx1e3_dt1e-4__RhoLin2_A1_X0.5_noLPT_t1'
 
 def do_movie():
 
-    moving_grid_dict = dict(n_lines=30, speed=1)
-    ## moving_grid_dict = None
+    ## moving_grid_dict = dict(n_lines=30, speed=1)
+    moving_grid_dict = None
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~
     # Rho
     # ~~~~~~~~~~~~~~~~~~~~~~~~
-    tdc_plot_field_movie(ID,'Rho',ylim=[-1.5,1.5],moving_grid_dict=moving_grid_dict,tt=[1,2])
+    ## tdc_plot_field_movie(ID,'Rho',ylim=[-1.5,1.5],moving_grid_dict=moving_grid_dict,tt=[1,2])
 
     ## # ~~~~~~~~~~~~~~~~~~~~~~~~
     ## # Phi
@@ -85,7 +85,7 @@ def do_movie():
     ## # ~~~~~~~~~~~~~~~~~~~~~~~~
     ## # E_acc
     ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-    ## tdc_plot_field_movie(ID,'E_acc',ylim=[-1,1],moving_grid_dict=moving_grid_dict, tt=[1.2])
+    tdc_plot_field_movie(ID,'E_acc',ylim=[-1,1],moving_grid_dict=moving_grid_dict)
 
     ## # ~~~~~~~~~~~~~~~~~~~~~~~~
     ## # Particle Number Density
@@ -107,12 +107,12 @@ def do_movie():
 
     sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
     particle_names = ['Electrons','Positrons','Pairs']
-    ## particle_names = ['Electrons','Positrons']
+    particle_names = ['Electrons']
         
     tdc_plot_xp_movie(ID, particle_names, sample_dict,
                       tp=tp, trail_dict=dict(length=18,marker='numbers'),
                       tt=tt,
-                      ylim=[-1.6e4,1.6e4],
+                      ylim=[-1.6e7,1.6e7],
                       moving_grid_dict=moving_grid_dict)
     # ~~~~~~~~~~~~~~~~~~~~~~~~
 
