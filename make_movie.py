@@ -5,8 +5,8 @@ from Common import *
 # ============================================================
 # Interface
 # ============================================================
-from Plot_GUI import *
-## from Plot_CMD import *
+## from Plot_GUI import *
+from Plot_CMD import *
 
 # ============================================================
 # Directory
@@ -20,7 +20,11 @@ tdc_set_results_dir('../RESULTS/')
 # IDs 
 # ============================================================
 
-IDs=['SCLF_jm1.0_P0.05_L0.5_nGJ2e4_nx1e3_dt1e-4__RhoLin2_A0.3_X0.7_Xb0.5_inj5']
+IDs=['SCLF_jp0.3_Pcf8e8_L1_nGJ1.6e5_nx8e3_dt3.125e-5__RhoLin2_0_m0.15_0.65__R6C_Xb0.5__inj8',
+'SCLF_jp0.3_Pcf8e8_L1_nGJ1.6e5_nx8e3_dt3.125e-5__RhoLin2_1.0_m0.15_0.65__R6C_Xb0.5__inj8',
+'SCLF_jp0.3_Pcf8e8_L1_nGJ1.6e5_nx8e3_dt3.125e-5__RhoLin2_1.0_p0.15_0.65__R6C_Xb0.5__inj8',
+'SCLF_jp0.3_Pcf8e8_L1_nGJ8e4_nx4e3_dt6.25e-5__RhoLin2_1.0_m0.15_0.65__R6C_Xb0.5__inj8',
+'SCLF_jp0.3_Pcf8e8_L1_nGJ8e4_nx4e3_dt6.25e-5__RhoLin2_1.0_p0.15_0.65__R6C_Xb0.5__inj8']
 
 # ============================================================
 
