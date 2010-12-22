@@ -9,12 +9,14 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
     line       -- Line artists with plotted field
     """
 
-    __plotstyle = { 'Electrons' : ['.b'] ,
-                    'Positrons' : ['.r'] ,
+    __plotstyle = { 'Electrons' : ['.b'],
+                    'Positrons' : ['.r'],
+                    'Protons'   : ['om'],  
                     'Pairs'     : ['.k']   }
 
     __plotlabel = { 'Electrons' : r'$p_{-}$' ,
                     'Positrons' : r'$p_{+}$' ,
+                    'Protons'   : r'$p_{\mbox{p}}$',
                     'Pairs'     : r'$p_\gamma$'   }
 
 
