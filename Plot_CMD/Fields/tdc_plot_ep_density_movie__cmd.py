@@ -8,6 +8,7 @@ from Plot_CMD.Movie import *
 
 def tdc_plot_ep_density_movie__cmd(calc_ids,
                                    ylim,
+                                   xlim=None,
                                    fps=None,
                                    e_density_negative=True,
                                    moving_grid_dict=None,
@@ -45,4 +46,4 @@ def tdc_plot_ep_density_movie__cmd(calc_ids,
     movie_id = 'EP' + '_' + calc_ids[0]
     # -----------------------------------------
     # make movie
-    plot_movie__cmd( plotter, movie_id, ylim, fps, **kwargs)
+    plot_movie__cmd( plotter, movie_id, fps, ylim, xlim, **kwargs)

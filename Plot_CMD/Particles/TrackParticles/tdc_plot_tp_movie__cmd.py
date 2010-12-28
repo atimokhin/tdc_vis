@@ -8,6 +8,7 @@ from Plot_CMD.Movie import *
 
 def tdc_plot_tp_movie__cmd(tp,
                            ylim,
+                           xlim=None,
                            fps=None,
                            trail_dict=None,
                            moving_grid_dict=None,
@@ -40,4 +41,4 @@ def tdc_plot_tp_movie__cmd(tp,
     movie_id = 'TP' + '_' + tp.calc_id
     # -----------------------------------------
     # make movie
-    plot_movie__cmd( plotter, movie_id, ylim, fps, **kwargs)
+    plot_movie__cmd( plotter, movie_id, fps, ylim, xlim, **kwargs)

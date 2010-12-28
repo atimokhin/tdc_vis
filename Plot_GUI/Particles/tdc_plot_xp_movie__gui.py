@@ -10,6 +10,7 @@ def tdc_plot_xp_movie__gui(calc_ids,
                            particle_names,
                            sample_dict,
                            ylim,
+                           xlim=None,
                            fps=None,
                            tp=None,trail_dict=None,
                            moving_grid_dict=None,
@@ -58,7 +59,7 @@ def tdc_plot_xp_movie__gui(calc_ids,
     if moving_grid_dict:
         pp  = tdc_Moving_Grid_Plotter(pp,moving_grid_dict)
     # movie frames
-    MF = Single_Panel_Movie_Frames(pp, ylim=ylim, **kwargs)
+    MF = Single_Panel_Movie_Frames(pp, ylim=ylim, xlim=xlim, **kwargs)
     # movie file maker
     MFM = Movie_File_Maker__GUI('XP' + '_' + calc_ids[0], fps)
     # movie maker

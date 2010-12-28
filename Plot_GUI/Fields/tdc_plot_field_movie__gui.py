@@ -9,6 +9,7 @@ from Plot_GUI.Movie import *
 def tdc_plot_field_movie__gui(calc_ids,
                               field_name,
                               ylim,
+                              xlim=None,
                               fps=None,
                               moving_grid_dict=None,
                               **kwargs):
@@ -43,7 +44,7 @@ def tdc_plot_field_movie__gui(calc_ids,
     if moving_grid_dict:
         fp  = tdc_Moving_Grid_Plotter(fp,moving_grid_dict)
     # movie frames
-    MF = Single_Panel_Movie_Frames(fp, ylim=ylim, **kwargs)
+    MF = Single_Panel_Movie_Frames(fp, ylim=ylim, xlim=xlim, **kwargs)
     # movie file maker
     MFM = Movie_File_Maker__GUI(field_name + '_' + calc_ids[0], fps)
     # movie maker

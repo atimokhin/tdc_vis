@@ -13,6 +13,7 @@ def tdc_plot_xp_movie__cmd(calc_ids,
                            particle_names,
                            sample_dict,
                            ylim,
+                           xlim=None,
                            fps=None,
                            tp=None,trail_dict=None,
                            moving_grid_dict=None,
@@ -64,4 +65,4 @@ def tdc_plot_xp_movie__cmd(calc_ids,
     movie_id = 'XP' + '_' + calc_ids[0]
     # -----------------------------------------
     # make movie
-    plot_movie__cmd( plotter, movie_id, ylim, fps, **kwargs)
+    plot_movie__cmd( plotter, movie_id, fps, ylim, xlim, **kwargs)

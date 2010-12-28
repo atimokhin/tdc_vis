@@ -7,6 +7,7 @@ from Plot_CMD.Movie import *
 
 
 def tdc_plot_field_movie__cmd(calc_ids, field_name, ylim,
+                              xlim=None,
                               moving_grid_dict=None,
                               fps=None,
                               **kwargs):
@@ -48,7 +49,7 @@ def tdc_plot_field_movie__cmd(calc_ids, field_name, ylim,
     movie_id = field_name + '_' + calc_ids[0]
     # -----------------------------------------
     # make movie
-    plot_movie__cmd( plotter, movie_id, ylim, fps, **kwargs)
+    plot_movie__cmd( plotter, movie_id, fps, ylim, xlim, **kwargs)
 
 
 
