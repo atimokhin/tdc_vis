@@ -13,7 +13,7 @@ def plot_movie__cmd( plotter, movie_id, fps, ylim, xlim=None, **kwargs ):
     **kwargs  -- goes to Single_Panel_Movie_Frames
     """
     # movie frames
-    MF = Single_Panel_Movie_Frames(plotter, ylim=ylim, **kwargs)    
+    MF = Single_Panel_Movie_Frames(plotter, ylim=ylim, xlim=xlim, **kwargs)    
     # movie file maker
     MFM = Movie_File_Maker__CMD(movie_id, fps)
     # write frames ----------------------------
