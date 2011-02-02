@@ -30,6 +30,8 @@ class tdc_SEDs_Plotter(tdc_Data_Plotter):
         self.plot_ylabel = r'$p\frac{\partial{}n}{\partial{}p}$'
         self.plot_xlabel = r'$p$'
         self.plot_idlabel='SED : '+self.data[0].calc_id
+        # initialize lines
+        self.lines = len(self.data)*[None]
         # additional lines for downward moving particle spectra
         self.lines_d=len(self.data)*[None]
         # xmin/xmax

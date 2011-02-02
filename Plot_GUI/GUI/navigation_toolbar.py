@@ -4,16 +4,18 @@ from matplotlib.backends.backend_gtkagg import NavigationToolbar2GTKAgg
 
 from button_label_from_stock import *
 
+from Plot_GUI.Movie import *
 
 class NavigationToolbar(NavigationToolbar2GTKAgg):
     
-    def __init__(self, canvas, window, movie_file_maker):
-
+    def __init__(self, window, movie_frames, movie_file_maker):
+        # set MPL NavigationToolbar
+        NavigationToolbar2GTKAgg.__init__(self, movie_frames.canvas, window)
+        # ===================================
         # movie file maker
+        # ===================================
         self.mfm = movie_file_maker
         self.mfm.set_update_number_of_recorded_frames_function(self.update_saved_frames_numer)
-        # set MPL NavigationToolbar
-        NavigationToolbar2GTKAgg.__init__(self,canvas, window)
         # Make Movie Button -----------------
         self.button_make_movie=gtk.ToolButton(gtk.STOCK_CDROM)
         self.button_make_movie.set_tooltip_text("Make movie file")
@@ -40,7 +42,6 @@ class NavigationToolbar(NavigationToolbar2GTKAgg):
         
     def update_saved_frames_numer(self, n):
         self.saved_frames_label.set_text(str(n))
-
     def make_movie_callback(self,widget,data=None):
         self.mfm.make_movie_file()
         

@@ -25,7 +25,7 @@ class Movie_File_Maker__GUI(Movie_File_Maker):
     """
 
     # default value for fps in GUI interface
-    __default_fps = 15
+    _default_fps = 15
 
     def __init__(self, movie_id, fps=None):
         """
@@ -33,7 +33,7 @@ class Movie_File_Maker__GUI(Movie_File_Maker):
         """
         # set fps to default value if it is not given in function call
         if not fps:
-            fps = self.__default_fps
+            fps = self._default_fps
         # setup base class
         Movie_File_Maker.__init__(self,movie_id,fps)
         # initialize internal list with frames in png format
@@ -107,11 +107,11 @@ class Movie_File_Maker__GUI(Movie_File_Maker):
         """
         Main function: Pops up parameter window and passes control to it
         """
-        mfm_params_window = Movie_File_Maker_Params(self)
+        Movie_File_Maker_Params_Window(self)
         
 
 
-class Movie_File_Maker_Params:
+class Movie_File_Maker_Params_Window:
     """
     This class is responsible for the window with
     Movie_File_Maker parameters

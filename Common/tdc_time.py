@@ -247,6 +247,20 @@ class tdc_Timetable(tdc_Time_Normalizer):
         dset.read( dspace, dspace, timesteps, dtype)
         return timesteps
 
+    def get_number_of_timeshots(self):
+        """
+        read /Timetable/NumberOfTimeshots
+        () => number_of_timeshots
+        """
+        dset_name = '/' + self.TimetableGrpName + '/' + self.TimeshotsName
+        dset = h5py.h5d.open(self.file_id, dset_name)
+        dtype  = dset.get_type()
+        dspace = dset.get_space()
+        (nt,) = dspace.get_simple_extent_dims()
+        number_of_timeshots = np.empty(nt,dtype=dtype)
+        dset.read( dspace, dspace, number_of_timeshots, dtype)
+        return number_of_timeshots[0]
+
 
 class tdc_Timetable_Cached(tdc_Time_Normalizer):
     """
@@ -271,6 +285,7 @@ class tdc_Timetable_Cached(tdc_Time_Normalizer):
         # setup arrays
         self.timesteps     = timetable.get_timestep_array()
         self.abstime_array = self.to_absolute_time(timetable.get_time_array())
+        self.number_of_timeshots = timetable.get_number_of_timeshots()
 
     def __repr__(self):
         return '%g [ %s ]' % ( self.get_time(), self.get_normalization() )
@@ -299,7 +314,11 @@ class tdc_Timetable_Cached(tdc_Time_Normalizer):
         """
         return self.timesteps
     
-
+    def get_number_of_timeshots(self):
+        """
+        return number_of_timeshots
+        """        
+        return self.number_of_timeshots
 
 
 

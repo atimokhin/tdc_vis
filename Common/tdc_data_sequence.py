@@ -4,7 +4,7 @@ class tdc_Data_Sequence:
     """
     Members:
     array__time       - array with continuous time of all ids
-    array__i_calc_id  - contains id if the corresponding sequence index
+    array__i_calc_id  - contains id of the corresponding sequence index
     array__i_timeshot - contains number of local to the curresponding id timeshot number
 
     data - array with data (single class instance for each individual id)

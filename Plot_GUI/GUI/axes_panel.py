@@ -4,24 +4,23 @@ from button_label_from_stock import *
 
 class AxesPanel(gtk.Frame):
 
-    def set_flags_to_default_values(self):
-        self.reset_axes_flag=False
-
-
-    def __init__(self,**kwargs):
-        self.set_flags_to_default_values()
-        
-        # constructor of the base class
-        gtk.Frame.__init__(self,**kwargs)
-        # size <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!
-        self.set_size_request(145,160)
-        # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!
-
+    def __init__(self,axes,axes_name):
+        # local copy of controlled Axes
+        self.Axes = axes
+        # controlling variables --------------------
         self.x_min=0
         self.x_max=0
         self.y_min=0
         self.y_max=0
-
+        # ==========================================
+        # setup GUI elements
+        # ==========================================
+        # constructor of the base class
+        gtk.Frame.__init__(self)
+        self.set_label(axes_name)
+        # size <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!
+        self.set_size_request(160,175)
+        # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!
         # Y axis limits -----------------------------
         self.y_min_entry = gtk.Entry()
         self.y_max_entry = gtk.Entry()
@@ -32,8 +31,7 @@ class AxesPanel(gtk.Frame):
         Y_frame=gtk.Frame('Y')
         Y_frame.set_border_width(5)
         Y_frame.add(box)
-        # --------------------------------------------
-
+        # -------------------------------------------
         # X axis limits -----------------------------
         self.x_min_entry = gtk.Entry()
         self.x_max_entry = gtk.Entry()
@@ -44,34 +42,45 @@ class AxesPanel(gtk.Frame):
         X_frame=gtk.Frame('X')
         X_frame.set_border_width(5)
         X_frame.add(box)
-        # --------------------------------------------
-
-        # REDRAW Button ----------------
+        # -------------------------------------------
+        # REDRAW Button -----------------------------
         self.button_redraw=gtk.Button()
-        label_box, label = button_label_from_stock(gtk.STOCK_REFRESH,'Reset Axes')
+        label_box, label = button_label_from_stock(gtk.STOCK_REFRESH,'Reset Axes Limits')
         self.button_redraw.add( label_box )
         self.button_redraw.set_border_width(5)
         self.button_redraw.modify_bg( gtk.STATE_PRELIGHT, gtk.gdk.color_parse("gray85"))
         self.button_redraw.connect("clicked",  self.reset_axes_callback  )
-        # ------------------------------
-
+        # -------------------------------------------
         vbox=gtk.VBox()
         vbox.pack_start(Y_frame,False)
         vbox.pack_start(X_frame,False)
         vbox.pack_start(self.button_redraw,False)
         self.add(vbox)
+        # ===========================================
+        # set initial values of axes limits
+        self.set_xlim_on_panel(self.Axes.get_xlim())
+        self.set_ylim_on_panel(self.Axes.get_ylim())
+        # Tie panel values to actual axes values
+        self.Axes.callbacks.connect('ylim_changed', self.update_ylim_on_panel)
+        self.Axes.callbacks.connect('xlim_changed', self.update_xlim_on_panel)
+        # ------------------------------------------
 
 
-    def set_xlim(self,xlim):
+    def update_xlim_on_panel(self,ax):
+        self.set_xlim_on_panel(self.Axes.get_xlim())
+
+    def update_ylim_on_panel(self,ax):
+        self.set_ylim_on_panel(self.Axes.get_ylim())
+        
+    def set_xlim_on_panel(self,xlim):
         self.x_min_entry.set_text(str(xlim[0]))
         self.x_max_entry.set_text(str(xlim[1]))
 
-    def set_ylim(self,ylim):
+    def set_ylim_on_panel(self,ylim):
         self.y_min_entry.set_text(str(ylim[0]))
         self.y_max_entry.set_text(str(ylim[1]))
 
     def reset_axes_callback(self,widget,data=None):
-        
         try:
             self.x_min=float( self.x_min_entry.get_text())
             self.x_max=float( self.x_max_entry.get_text())
@@ -89,4 +98,7 @@ class AxesPanel(gtk.Frame):
             response = dialog.run()
             dialog.destroy()
         else:
-            self.reset_axes_flag=True
+            # change axes limits ---------------------
+            self.Axes.set_xlim([self.x_min,self.x_max])
+            self.Axes.set_ylim([self.y_min,self.y_max])
+        

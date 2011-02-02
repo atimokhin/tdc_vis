@@ -3,18 +3,16 @@ from Common    import tdc_Data_Sequence, tdc_Data_Sequence_Initializer, tdc_Movi
 from Particles.tdc_xp_data           import tdc_XP_Data
 from Particles.tdc_xps_tp_plotter    import tdc_XPs_Plotter, tdc_XPs_TP_Plotter
 
-from Plot_GUI.Movie import *
-
-
-def tdc_plot_xp_movie__gui(calc_ids,
-                           particle_names,
-                           sample_dict,
-                           ylim,
-                           xlim=None,
-                           fps=None,
-                           tp=None,trail_dict=None,
-                           moving_grid_dict=None,
-                           **kwargs):
+def tdc_plot_xp_movie(plot_module,
+                      calc_ids,
+                      particle_names,
+                      sample_dict,
+                      ylim,
+                      xlim=None,
+                      fps=None,
+                      tp=None,trail_dict=None,
+                      moving_grid_dict=None,
+                      **kwargs):
     """
     calc_ids
        calculation id names
@@ -59,10 +57,9 @@ def tdc_plot_xp_movie__gui(calc_ids,
     if moving_grid_dict:
         pp  = tdc_Moving_Grid_Plotter(pp,moving_grid_dict)
     # movie frames
-    MF = Single_Panel_Movie_Frames(pp, ylim=ylim, xlim=xlim, **kwargs)
-    # movie file maker
-    MFM = Movie_File_Maker__GUI('XP' + '_' + calc_ids[0], fps)
-    # movie maker
-    MM = Movie_Maker(MF, MFM)
-    # play movie
-    MM.animate()
+    MF = plot_module.Movie.Single_Panel_Movie_Frames(pp, ylim=ylim, xlim=xlim, **kwargs)
+    # movie_id - directory with the movie file
+    movie_id = 'XP' + '_' + calc_ids[0]
+    # -----------------------------------------
+    # make movie
+    plot_module.Movie.plot_movie( MF, movie_id, fps)

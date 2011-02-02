@@ -18,7 +18,7 @@ class tdc_EP_Density_Plotter(tdc_Fields_Plotter):
         # label
         self.plot_ylabel = r'$\eta_{\pm}$'
         self.plot_idlabel='N_{e,p} : '+self.data[0].calc_id
-
+        # how to plot e and p number densities
         if e_density_negative:
             self.e_sign = -1
         else:
@@ -29,6 +29,7 @@ class tdc_EP_Density_Plotter(tdc_Fields_Plotter):
         "Plot Field into axes ax"
         self.lines[0], = ax.plot(self.data[0].x, self.e_sign*self.data[0].f,'b',**kwargs)
         self.lines[1], = ax.plot(self.data[1].x,             self.data[1].f,'r',**kwargs)
+        tdc_Data_vs_X_Plotter.plot(self,ax,**kwargs)
 
 
     def animation_update(self,ax,i_ts):

@@ -5,8 +5,8 @@ from Common import *
 # ============================================================
 # Interface
 # ============================================================
-## from Plot_GUI import *
-from Plot_CMD import *
+from Plot_GUI import *
+## from Plot_CMD import *
 
 # ============================================================
 # Directory
@@ -19,13 +19,7 @@ tdc_set_results_dir('../RESULTS/')
 # ============================================================
 # IDs 
 # ============================================================
-
-IDs=['SCLF_jp0.3_Pcf8e8_L1_nGJ1.6e5_nx8e3_dt3.125e-5__RhoLin2_0_m0.15_0.65__R6C_Xb0.5__inj8',
-'SCLF_jp0.3_Pcf8e8_L1_nGJ1.6e5_nx8e3_dt3.125e-5__RhoLin2_1.0_m0.15_0.65__R6C_Xb0.5__inj8',
-'SCLF_jp0.3_Pcf8e8_L1_nGJ1.6e5_nx8e3_dt3.125e-5__RhoLin2_1.0_p0.15_0.65__R6C_Xb0.5__inj8',
-'SCLF_jp0.3_Pcf8e8_L1_nGJ8e4_nx4e3_dt6.25e-5__RhoLin2_1.0_m0.15_0.65__R6C_Xb0.5__inj8',
-'SCLF_jp0.3_Pcf8e8_L1_nGJ8e4_nx4e3_dt6.25e-5__RhoLin2_1.0_p0.15_0.65__R6C_Xb0.5__inj8']
-
+IDs=['test_osc_2e']
 # ============================================================
 
 
@@ -48,11 +42,11 @@ def do_movie(IDs):
         ## tdc_plot_field_movie(ID,'Phi',ylim=[-.5,.1],moving_grid_dict=moving_grid_dict)
         ## # ~~~~~~~~~~~~~~~~~~~~~~~~
 
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-        ## # E_acc
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-        ## tdc_plot_field_movie(ID,'E_acc',ylim=[-1,1],moving_grid_dict=moving_grid_dict)
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        # E_acc
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        tdc_plot_field_movie(ID,'E_acc',ylim=[-3e-4,3e-4],moving_grid_dict=moving_grid_dict)
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
 
         ## # ~~~~~~~~~~~~~~~~~~~~~~~~
         ## # Particle Number Density
@@ -62,25 +56,25 @@ def do_movie(IDs):
         ##                           moving_grid_dict=moving_grid_dict)
         ## # ~~~~~~~~~~~~~~~~~~~~~~~~
 
-        # ~~~~~~~~~~~~~~~~~~~~~~~~
-        # XP Movie
-        # ~~~~~~~~~~~~~~~~~~~~~~~~
-        tp = None
-        tt = None    
-        ## tp = tdc_TP_Data()
-        ## tp.setup_from_file(ID,'p500_ts525')
-        ## tp.delete(range(0,47,2))
+        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+        ## # XP Movie
+        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+        ## tp = None
+        ## tt = None    
+        ## ## tp = tdc_TP_Data()
+        ## ## tp.setup_from_file(ID,'p500_ts525')
+        ## ## tp.delete(range(0,47,2))
 
-        sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
-        particle_names = ['Electrons','Positrons','Pairs','Protons']
-        ## particle_names = ['Electrons']
+        ## sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
+        ## particle_names = ['Electrons','Positrons','Pairs','Protons']
+        ## ## particle_names = ['Electrons']
 
-        tdc_plot_xp_movie(ID, particle_names, sample_dict,
-                          tp=tp, trail_dict=dict(length=18,marker='numbers'),
-                          tt=tt,
-                          ylim=[-1.6e7,1.6e7],
-                          moving_grid_dict=moving_grid_dict)
-        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        ## tdc_plot_xp_movie(ID, particle_names, sample_dict,
+        ##                   tp=tp, trail_dict=dict(length=18,marker='numbers'),
+        ##                   tt=tt,
+        ##                   ylim=[-1.6e7,1.6e7],
+        ##                   moving_grid_dict=moving_grid_dict)
+        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
         ## # ~~~~~~~~~~~~~~~~~~~~~~~~

@@ -32,7 +32,10 @@ class tdc_XP_Data:
     file_id  -- HDF5 file_id (with field file)
     """
 
-    def __init__(self, calc_id, particle_name, sample_dict=None, get_weight=False):
+    def __init__(self, calc_id, particle_name,
+                 sample_dict=None,
+                 get_weight=False,
+                 time_normalization = 'flyby'):
         """
         Opens HDF5 file, setup time class
         particle attributes are not read yet and all variables except
@@ -58,8 +61,8 @@ class tdc_XP_Data:
         self.file_id = h5py.h5f.open(h5_filename,flags=h5py.h5f.ACC_RDONLY)
         # tdc_Timetable class member -----
         self.timetable = tdc_Timetable(self.file_id)
-        # set time to flyby time
-        self.timetable.set_flyby_time()
+        # set time normalization
+        self.timetable.set_normalization(time_normalization)
         # define members ----------------
         self.i_ts=None
         self.__dspace=None
@@ -105,7 +108,7 @@ class tdc_XP_Data:
                 self.setup_dataspaces(p_dset_name, sample_dict)
                 self.p = self.read_dataset(p_dset_name)
                 self.x = self.read_dataset(x_dset_name)
-                self.x = self.x.reshape(len(self.x))    # must be reshaped
+                self.x.resize(len(self.x))    # must be reshaped
             else:
                 x_dset_name    = '/X_em/'   + str(self.i_ts)
                 p_dset_name    = '/Energy/' + str(self.i_ts)
@@ -117,8 +120,8 @@ class tdc_XP_Data:
                 self.x_em = self.read_dataset(x_dset_name)
                 self.x_cr = self.read_dataset(x_cr_dset_name)       
                 self.t_cr = self.read_dataset(t_cr_dset_name)                
-                self.x_em = self.x_em.reshape(len(self.x_em))    # must be reshaped
-                self.x_cr = self.x_cr.reshape(len(self.x_cr))    # must be reshaped
+                self.x_em.resize(len(self.x_em))    # must be reshaped
+                self.x_cr.resize(len(self.x_cr))    # must be reshaped
                 self.x    = self.x_em.copy()
                 # change Pairs positions: calculate actual position of the photon 
                 dx_ph = self.x_cr - self.x_em       

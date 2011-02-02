@@ -1,7 +1,7 @@
 from tdc_plot_xp        import *
 from tdc_plot_sed       import *
 
-## from tdc_plot_xp_movie__cmd import tdc_plot_xp_movie__cmd  as tdc_plot_xp_movie
+from tdc_plot_xp_movie  import tdc_plot_xp_movie
 
 from TrackParticles     import *
 

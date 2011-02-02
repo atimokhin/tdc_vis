@@ -46,27 +46,28 @@ class tdc_Mesh:
         self.xmax=self.x_b[-1]
         
 
-    def x2cell(self,x):
+    def x2cell(self,xx):
         """
         Transforms positions x into cell boundaries numbers
-        x
+        xx
           Positions
         ()=>
           Cell #s
         """
-        if isinstance(x, (list,tuple)):
-            x=np.array(x)
-        return x/self.dx
+        if isinstance(xx, (list,tuple)):
+            return [ x/self.dx for x in xx ]
+        return xx/self.dx
 
-    def cell2x(self,c):
+    def cell2x(self,cc):
         """
         Transforms cell boundaries numbers into positions
-        c
+        cc
           Cell #s
         ()=>
           Positions
         """
-        if isinstance(c, (list,tuple)):
-            c=np.array(c)
-        return c*self.dx
+        if isinstance(cc, (list,tuple)):
+            return [ c*self.dx for c in cc ]
+        else:
+            return cc*self.dx
         

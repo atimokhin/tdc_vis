@@ -3,15 +3,19 @@ from Common.tdc_filenames  import *
 from Common   import tdc_Data_Sequence, tdc_Data_Sequence_Initializer, tdc_Moving_Grid_Plotter
 from Fields   import tdc_Field_Data, tdc_Fields_Plotter
 
-from Plot_CMD.Movie import *
-
-
-def tdc_plot_field_movie__cmd(calc_ids, field_name, ylim,
-                              xlim=None,
-                              moving_grid_dict=None,
-                              fps=None,
-                              **kwargs):
+def tdc_plot_field_movie(plot_module,
+                         calc_ids,
+                         field_name,
+                         ylim,
+                         xlim=None,
+                         fps=None,
+                         moving_grid_dict=None,
+                         use_cell_coordinates=False,
+                         show_cells=False,
+                         **kwargs):
     """
+    plot_module
+       module with plot_movie function
     calc_ids
        calculation id names
     field_name
@@ -27,31 +31,28 @@ def tdc_plot_field_movie__cmd(calc_ids, field_name, ylim,
     moving_grid_dict
        if specified plot moving grid
        moving_grid_dict = dict(n_lines=20, speed=1)
-    fps
-       fps for movie file
     """
-    # make sure calc_id is a sequence
+    # make sure calc_id is a sequence ----------------
     if not isinstance( calc_ids, (list,tuple) ):
-        calc_ids = (calc_ids,)
-    # -----------------------------------------
-    # field specific part
-    # -----------------------------------------
-    # field sequence 
+        calc_ids = (calc_ids,)        
+    # field sequence ---------------------------------
     fs  = tdc_Data_Sequence_Initializer( tdc_Field_Data,
                                          calc_ids=calc_ids,
                                          field_name=field_name,
                                          **kwargs)
-    plotter  = tdc_Fields_Plotter(fs)
+    # field plotter
+    fp  = tdc_Fields_Plotter(fs)
+    if use_cell_coordinates:
+        fp.use_cell_coordinates()
+    if show_cells:
+        fp.show_cells_on()
     # plot moving grid if asked
     if moving_grid_dict:
-        plotter  = tdc_Moving_Grid_Plotter(plotter,moving_grid_dict)
+        fp  = tdc_Moving_Grid_Plotter(fp,moving_grid_dict)
+    # movie frames
+    MF = plot_module.Movie.Single_Panel_Movie_Frames(fp, ylim=ylim, xlim=xlim, **kwargs)
     # movie_id - directory with the movie file
     movie_id = field_name + '_' + calc_ids[0]
     # -----------------------------------------
     # make movie
-    plot_movie__cmd( plotter, movie_id, fps, ylim, xlim, **kwargs)
-
-
-
-
-        
+    plot_module.Movie.plot_movie( MF, movie_id, fps)

@@ -2,18 +2,19 @@ from single_panel_movie_frames  import Single_Panel_Movie_Frames
 from movie_file_maker__cmd      import Movie_File_Maker__CMD
 
 
-def plot_movie__cmd( plotter, movie_id, fps, ylim, xlim=None, **kwargs ):
+def plot_movie( movie_frames, movie_id, fps):
     """
     plot_movie__cmd( plotter, movie_id, ylim, fps, **kwargs )
     Common function for creating movie file from the command line interface
-    plotter
-    movie_id  -- name of directory where frames and later movie file will be stored
-    ylim
+    ------------
+    params:
+    ------------
+    movie_frames -- MovieFrames class instance
+    movie_id     -- name of directory where frames and later movie file will be stored
     fps
-    **kwargs  -- goes to Single_Panel_Movie_Frames
     """
     # movie frames
-    MF = Single_Panel_Movie_Frames(plotter, ylim=ylim, xlim=xlim, **kwargs)    
+    MF = movie_frames
     # movie file maker
     MFM = Movie_File_Maker__CMD(movie_id, fps)
     # write frames ----------------------------

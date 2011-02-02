@@ -19,7 +19,9 @@ class tdc_Field_Data:
 
     __default_Filename = 'fields.h5'
 
-    def __init__(self, calc_id, field_name, filename=__default_Filename):
+    def __init__(self, calc_id, field_name,
+                 time_normalization = 'flyby',
+                 filename=__default_Filename ):
         """
         Opens HDF5 file, reads positions
         the field is not read yet and all variables except
@@ -46,8 +48,8 @@ class tdc_Field_Data:
         # --------------------------------
         # Timetable class member ---------
         self.timetable = tdc_Timetable(self.file_id)
-        # set time to flyby time
-        self.timetable.set_flyby_time()
+        # set time normalization
+        self.timetable.set_normalization(time_normalization)
         # --------------------------------
         # define publically available members
         self.f    = None
@@ -99,6 +101,7 @@ class tdc_Field_Data:
         # ===============================================
         if re_read_x:
             self.__dset_x.read(self.__dspace_x, self.__dspace_x, self.x, self.__dtype_x)
+
 
     def __repr__(self):
         s  = 'tdc_Field_Data:\n'

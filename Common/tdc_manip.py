@@ -51,9 +51,9 @@ class tdc_Manip:
     def plot(self, ylim=None, xlim=None,
              print_id=False,**kwargs):
         """
-        Plot DATA  for  already set i_ts
+        Plot DATA  for already set i_ts.
         All plotting is done via plotter
-        accepts only
+        ----------
         ylim --    axes limits
         xlim |
         print_id  -- print label on the plot? <False>
@@ -99,11 +99,11 @@ class tdc_Manip:
 
     def set_xlabel(self,xlabel):
         coord = self.fg.xlabel_pos()
-        self.fig.text( *coord, s=xlabel, va='center',ha='center', size=self._label_size)
+        self.x_label=self.fig.text( *coord, s=xlabel, va='center',ha='center', size=self._label_size)
 
     def set_ylabel(self,ylabel):
         coord = self.fg.ylabel_pos()
-        self.fig.text( *coord, s=ylabel, va='center',ha='left', size=self._label_size)
+        self.y_label=self.fig.text( *coord, s=ylabel, va='center',ha='left', size=self._label_size)
 
     def set_xlim(self, *args, **kwargs):
         "call set_xlim command for axes"
@@ -164,35 +164,33 @@ class tdc_Manip:
         self.interactive=False
 
 
+
 class tdc_Manip_Plot_vs_X(tdc_Manip):
     """
     Manipulators for plots vs x-coordinate
+    Adds:
+    - switching between X and CELL coordinates
+    - switching between CELL boundaries ON/OFF
     """
-
-    def __init__(self, plotter, **kwargs):
-        tdc_Manip.__init__(self,plotter,**kwargs)
-
-    def plot(self, ylim=None, xlim=None,
-             print_id=False,
-             **kwargs):
-        "Reimplements tdc_Manip adding creation of new cell class in plotter"
-        tdc_Manip.plot(self, ylim, xlim,print_id,**kwargs)
-        self.plotter.new_cell_boundary_class()
         
-    def to_cell_cordinates(self):
+    def to_cell_coordinates(self):
         """
         Convert CURRENT plot to cell cordinates
         """
-        self.plotter.to_cell_cordinates(self.ax)
-        self.fig.set_xlabel(self.plotter.plot_xlabel)
+        self.plotter.to_cell_coordinates(self.ax)
+        self.plotter.replot(self.ax)
+        self.plotter.cells.draw(self.ax)
+        self.x_label.set_text(self.plotter.plot_xlabel)
         self.fig.canvas.draw()
 
-    def to_x_cordinates(self):
+    def to_x_coordinates(self):
         """
         Convert CURRENT plot to x cordinates
         """
-        self.plotter.to_x_cordinates(self.ax)
-        self.fig.set_xlabel(self.plotter.plot_xlabel)
+        self.plotter.to_x_coordinates(self.ax)
+        self.plotter.replot(self.ax)
+        self.plotter.cells.draw(self.ax)
+        self.x_label.set_text(self.plotter.plot_xlabel)
         self.fig.canvas.draw()
         
     def cells_on(self):

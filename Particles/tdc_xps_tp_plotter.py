@@ -43,6 +43,20 @@ class tdc_XPs_TP_Plotter(tdc_XPs_Plotter):
         if self.tpp:
             self.tpp.plot(ax,**kwargs)
 
+    def replot(self,ax):
+        """
+        Replot particles
+        """
+        tdc_XPs_Plotter.replot(self,ax)
+        if self.tpp:
+            self.tpp.replot(ax)
+
+    def update_plot(self,ax):
+        """
+        Plot particles for animation at timestep# i_ts
+        """
+        self.replot(ax)
+
     def set_animated(self,val):
         "Set animated property of the each plot"
         tdc_XPs_Plotter.set_animated(self,val)

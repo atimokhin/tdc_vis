@@ -5,3 +5,5 @@ from tdc_xps_plotter    import *
 from tdc_seds_plotter   import *
 
 from TrackParticles     import *
+
+from tdc_plot_xp_movie  import tdc_plot_xp_movie

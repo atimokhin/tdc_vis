@@ -138,9 +138,8 @@ class tdc_TP_Plotter(tdc_Data_vs_X_Plotter):
                 lp.set_animated(val)
                 lt.set_animated(val)
 
-    def animation_update(self,ax,i_ts):
-        "Read and plot particles for animation at timestep# i_ts"
-        self.read(i_ts)
+    def replot(self,ax):
+        "Relot particles for animation at timestep# i_ts"
         for name,tps in self.TP.items():
             for i,tp in enumerate(self.__selected_tp(tps,self.tp_idxs)):
                 x_p,p_p,x_t,p_t = self.__get_track_data( tp )
@@ -164,6 +163,14 @@ class tdc_TP_Plotter(tdc_Data_vs_X_Plotter):
             for lp,lt in zip(lps,lts):
                 ax.draw_artist(lp)
                 ax.draw_artist(lt)
+
+    def update_plot(self,ax):
+        self.replot(ax)
+        
+    def animation_update(self,ax,i_ts):
+        "Read and plot particles for animation at timestep# i_ts"
+        self.read(i_ts)
+        self.update_plot(ax)
 
 
     def __get_track_data(self,tp):

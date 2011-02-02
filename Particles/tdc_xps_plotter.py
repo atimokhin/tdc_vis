@@ -28,6 +28,9 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
         """
         # base class initialization is enough
         tdc_Data_vs_X_Plotter.__init__(self,xps)
+        # X coordinates are read at every timestep and must be
+        # renormalized
+        self.new_x_at_every_read_flag = True
         # set y-label:
         # if only one particle kind is plotted -- set specific label
         # if more than one -- set it to 'p'
@@ -37,6 +40,8 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
             self.plot_ylabel=self.__plotlabel[xps[0].name]
         # id label
         self.plot_idlabel='XP : ' + self.data[0].calc_id
+        # initialize lines
+        self.lines = len(self.data)*[None]
 
 
     def plot(self,ax,**kwargs):
@@ -47,17 +52,31 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
         for i,xp in enumerate(self.data):
             self.lines[i], = ax.plot(xp.x, xp.p,
                                      *self.__plotstyle[xp.name],
-                                     markersize=.5,
+                                     markersize=12.5,
                                      **kwargs)
             #ax.set_yscale('symlog',linthreshy=1e2)
+        tdc_Data_vs_X_Plotter.plot(self,ax,**kwargs)
 
 
-    def animation_update(self,ax,i_ts):
-        "Read and plot particles for animation at timestep# i_ts"
-        self.read(i_ts)
+    def replot(self,ax):
+        """
+        Plot particles for animation at timestep# i_ts
+        """
         for i,line in enumerate(self.lines):
             line.set_xdata(self.data[i].x)
             line.set_ydata(self.data[i].p)
         for line in self.lines:    
             ax.draw_artist(line)
 
+    def update_plot(self,ax):
+        """
+        Plot particles for animation at timestep# i_ts
+        """
+        self.replot(ax)
+
+    def set_animated(self,val):
+        """
+        Set animated property in all lines
+        """
+        for line in self.lines:
+            line.set_animated(val)
