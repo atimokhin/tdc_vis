@@ -15,4 +15,4 @@ then
 fi
 
 # start simulations
-python make_movie.py
+python _working/rs/make_movie.py

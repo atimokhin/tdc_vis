@@ -4,7 +4,7 @@ from Common    import *
 
 from PhysicalProperties    import *
 
-from Plot_CMD  import *
+from Plots  import *
 
 ## RESULTS_DIR='../RESULTS/FreeAgent/'
 RESULTS_DIR='../RESULTS/'

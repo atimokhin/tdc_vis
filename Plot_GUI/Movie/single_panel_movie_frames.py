@@ -6,7 +6,7 @@ class Single_Panel_Movie_Frames(MovieFrames__GUI):
     in other opartions relies on MovieFrames__GUI
     """
 
-    def __init__(self, seq_plotter, ylim, xlim=None, **kwargs):
+    def __init__(self, seq_plotter, ylim, xlim=None):
         # makes sequences from scalar parameters
         xlim=[xlim]
         ylim=[ylim]

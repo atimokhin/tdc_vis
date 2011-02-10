@@ -1,19 +1,15 @@
 #!/usr/bin/python
 
-# import ATbase module
-import sys
-sys.path.append('/home/atim/WORK/C++/ATbase2/lib_python/')
-sys.path.append('/home/atim/WORK/PULSARS/TDC/tdc_vis/')
-import ATbase as AT
-
 from Common  import *
 from Plots   import *
+
+from plot_test_e_e_gauss_movie import *
 
 # ============================================================
 # Interface
 # ============================================================
-## import Plot_GUI as plot_module
-import Plot_CMD as plot_module
+import Plot_GUI as plot_module
+## import Plot_CMD as plot_module
 
 # ============================================================
 # Directory
@@ -33,32 +29,36 @@ ID=['test_osc_2e']
 def do_movie(ID):
     ## moving_grid_dict = dict(n_lines=30, speed=1)
     moving_grid_dict = None
+    tt = None    
+    ## tt = [0,4]
     
-    ## plot_test_E_acc(ID,
-    ##                 ylim=[[-150,5],[-1e-3,1e-3]],
-    ##                 use_cell_coordinates=False,
-    ##                 show_cells=False,
-    ##                 time_normalization = 'absolute')
+    # ~~~~~~~~~~~~~~~~~~~~~~~~
+    # plot Electric field and difference between Gauss' and Ampere's Electric fields
+    # ~~~~~~~~~~~~~~~~~~~~~~~~
+    plot_test_e_e_gauss_movie(plot_module,
+                              ID,
+                              ylim=[[-3e-4,3e-4],[-1e-16,1e-16]],
+                              use_cell_coordinates=False,
+                              show_cells=False,
+                              time_normalization = 'absolute',
+                              ghost_points=True)
+    # ~~~~~~~~~~~~~~~~~~~~~~~~
+    
 
-    ## plot_test_E_acc_cmd(ID,
-    ##                     ylim=[[-150,5],[-1e-3,1e-3]],
-    ##                     use_cell_coordinates=False,
-    ##                     show_cells=False,
-    ##                     time_normalization = 'absolute')
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~
-    # Rho
-    # ~~~~~~~~~~~~~~~~~~~~~~~~
-    tdc_plot_field_movie(plot_module,
-                         ID,
-                         'Rho',
-                         ylim=[-150,5],
-                         tt = [0,.4],
-                         fps=15,
-                         moving_grid_dict=moving_grid_dict,
-                         use_cell_coordinates = True,
-                         time_normalization = 'absolute')
-    # ~~~~~~~~~~~~~~~~~~~~~~~~
+    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+    ## # Rho
+    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+    ## tdc_plot_field_movie(plot_module,
+    ##                      ID,
+    ##                      'Rho',
+    ##                      ylim=[-150,5],
+    ##                      tt=tt,
+    ##                      fps=15,
+    ##                      moving_grid_dict=moving_grid_dict,
+    ##                      use_cell_coordinates=True,
+    ##                      ghost_points=True,
+    ##                      time_normalization='absolute')
+    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
 
     ## # ~~~~~~~~~~~~~~~~~~~~~~~~
     ## # J
@@ -70,40 +70,53 @@ def do_movie(ID):
     ##                      time_normalization = 'absolute')
     ## # ~~~~~~~~~~~~~~~~~~~~~~~~
     
-    ## ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-    ## ## # Phi
-    ## ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-    ## ## tdc_plot_field_movie(ID,'Phi',ylim=[-.5,.1],moving_grid_dict=moving_grid_dict)
-    ## ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+    # ~~~~~~~~~~~~~~~~~~~~~~~~
+    # Phi
+    # ~~~~~~~~~~~~~~~~~~~~~~~~
+    tdc_plot_field_movie(plot_module,
+                         ID,
+                         'Phi',
+                         ylim=[-2e-9,2e-9],
+                         moving_grid_dict=moving_grid_dict,
+                         ghost_points=True,
+                         time_normalization = 'absolute')
+    # ~~~~~~~~~~~~~~~~~~~~~~~~
     
     ## # ~~~~~~~~~~~~~~~~~~~~~~~~
     ## # E_acc
     ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-    ## tdc_plot_field_movie(ID,
+    ## tdc_plot_field_movie(plot_module,
+    ##                      ID,
     ##                      'E_acc',
     ##                      ylim=[-3e-4,3e-4],
+    ##                      tt=tt,
     ##                      moving_grid_dict=moving_grid_dict,
+    ##                      ghost_points=True,
     ##                      time_normalization = 'absolute')
     ## # ~~~~~~~~~~~~~~~~~~~~~~~~
     
-    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-    ## # XP Movie
-    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-    ## tp = None
-    ## tt = None    
-    ## tt = [0,.4]
+    # ~~~~~~~~~~~~~~~~~~~~~~~~
+    # XP Movie
+    # ~~~~~~~~~~~~~~~~~~~~~~~~
+    tp = None
+    trail_dict=dict(length=18,marker='numbers')
+    trail_dict = None
+    
+    sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
+    particle_names = ['Electrons']
 
-    ## sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
-    ## particle_names = ['Electrons']
-
-    ## tdc_plot_xp_movie(plot_module,
-    ##                   ID, particle_names, sample_dict,
-    ##                   tp=tp, trail_dict=dict(length=18,marker='numbers'),
-    ##                   tt=tt,
-    ##                   ylim=[-2e-4,2e-4],
-    ##                   moving_grid_dict=moving_grid_dict,
-    ##                   time_normalization = 'absolute')
-    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+    tdc_plot_xp_movie(plot_module,
+                      ID,
+                      particle_names,
+                      ## sample_dict,
+                      tp=tp,
+                      trail_dict=trail_dict,
+                      tt=tt,
+                      ylim=[-2e-4,2e-4],
+                      moving_grid_dict=moving_grid_dict,
+                      use_cell_coordinates=True,
+                      time_normalization = 'absolute')
+    # ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 

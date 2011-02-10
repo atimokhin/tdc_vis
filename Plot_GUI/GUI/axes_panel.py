@@ -73,12 +73,12 @@ class AxesPanel(gtk.Frame):
         self.set_ylim_on_panel(self.Axes.get_ylim())
         
     def set_xlim_on_panel(self,xlim):
-        self.x_min_entry.set_text(str(xlim[0]))
-        self.x_max_entry.set_text(str(xlim[1]))
+        self.x_min_entry.set_text('%g' % xlim[0])
+        self.x_max_entry.set_text('%g' % xlim[1])
 
     def set_ylim_on_panel(self,ylim):
-        self.y_min_entry.set_text(str(ylim[0]))
-        self.y_max_entry.set_text(str(ylim[1]))
+        self.y_min_entry.set_text('%g' % ylim[0])
+        self.y_max_entry.set_text('%g' % ylim[1])
 
     def reset_axes_callback(self,widget,data=None):
         try:

@@ -16,7 +16,7 @@ class tdc_Data_Sequence:
     current data are set after call to read(iseq)
     """
 
-    def __init__(self, data, tt=None, **kwargs):
+    def __init__(self, data, tt=None):
         """
         data
            sequence with tdc_*_Data class instances 

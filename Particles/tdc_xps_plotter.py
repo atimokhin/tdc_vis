@@ -9,14 +9,14 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
     line       -- Line artists with plotted field
     """
 
-    __plotstyle = { 'Electrons' : ['.b'],
-                    'Positrons' : ['.r'],
-                    'Protons'   : ['om'],  
-                    'Pairs'     : ['.k']   }
+    __plotstyle = { 'Electrons' : {'linestyle':'None','color':'b','marker':'.','markersize':1},
+                    'Positrons' : {'linestyle':'None','color':'r','marker':'.','markersize':1},
+                    'Protons'   : {'linestyle':'None','color':'m','marker':'.','markersize':5},  
+                    'Pairs'     : {'linestyle':'None','color':'k','marker':'.','markersize':1}   }
 
     __plotlabel = { 'Electrons' : r'$p_{-}$' ,
                     'Positrons' : r'$p_{+}$' ,
-                    'Protons'   : r'$p_{\mbox{p}}$',
+                    'Protons'   : r'$p_{p}$',
                     'Pairs'     : r'$p_\gamma$'   }
 
 
@@ -49,11 +49,16 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
         Plot particles into axes ax
         **kwargs goes to ax.plot(..)
         """
+        plot_kwargs={}
         for i,xp in enumerate(self.data):
+            plot_kwargs.update(self.__plotstyle[xp.name])
+            plot_kwargs.update(kwargs)
             self.lines[i], = ax.plot(xp.x, xp.p,
-                                     *self.__plotstyle[xp.name],
-                                     markersize=12.5,
-                                     **kwargs)
+                                     **plot_kwargs)
+            ## self.lines[i], = ax.plot(xp.x, xp.p,
+            ##                          *self.__plotstyle[xp.name],
+            ##                          markersize=1.5,
+            ##                          **kwargs)
             #ax.set_yscale('symlog',linthreshy=1e2)
         tdc_Data_vs_X_Plotter.plot(self,ax,**kwargs)
 

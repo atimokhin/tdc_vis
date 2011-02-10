@@ -2,6 +2,8 @@ import numpy  as  np
 
 from tdc_mesh import tdc_Mesh
 
+from tdc_data_sequence import tdc_Data_Sequence
+
 class tdc_Data_Plotter:
     """
     Base class for data plotting on both single frame and in animation
@@ -138,11 +140,14 @@ class tdc_Data_vs_X_Plotter(tdc_Data_Plotter):
         Transform positions into cell
         coordinates if use_cell_coordinates_flag is True
         """
-        for i,d in enumerate(self.data):
-            self.data[i].read(i_ts, re_read_x=self._coordinates_chaged_flag,**kwargs)
+        for d in self.data:
+            d.read(i_ts, re_read_x=self._coordinates_chaged_flag,**kwargs)
+            # -----------------------------
             # this must be done because x is reassigned and is a member of
             # tdc_Data_Sequence class !
-            d.x = self.current_data.x
+            if isinstance(d, tdc_Data_Sequence):
+                d.x = d.current_data.x
+            # -----------------------------
             if self.use_cell_coordinates_flag and ( self._coordinates_chaged_flag or
                                                     self.new_x_at_every_read_flag ):
                 d.x /= self._Mesh.dx

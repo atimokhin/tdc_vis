@@ -32,20 +32,33 @@ class tdc_XP_Data:
     file_id  -- HDF5 file_id (with field file)
     """
 
-    def __init__(self, calc_id, particle_name,
+    __default_time_normalization='flyby'
+
+    def __init__(self,
+                 calc_id,
+                 particle_name,
                  sample_dict=None,
                  get_weight=False,
-                 time_normalization = 'flyby'):
+                 time_normalization=None):
         """
         Opens HDF5 file, setup time class
         particle attributes are not read yet and all variables except
         name, file_id are uninitialized
 
         by default read all particles
-        
-        if  get_weight is set to True the instanse will
-        read statistical weights too
+
+        --------
+        Options:
+        --------
+        sample_dict
+          <None>
+        get_weight
+          <False> if True read statistical weights too
+        time_normalization
+          <None> default time normalization is used ('flyby')
+                 time normalization is the same as in tdc_Timetable
         """
+        # setup class variables ----------
         # store calc_id
         self.calc_id = calc_id
         # store particle name
@@ -59,9 +72,11 @@ class tdc_XP_Data:
         # open HDF file -----------------
         h5_filename  = tdc_Filenames().get_full_filename(calc_id, self.name+'.h5')
         self.file_id = h5py.h5f.open(h5_filename,flags=h5py.h5f.ACC_RDONLY)
-        # tdc_Timetable class member -----
+        # Initialize Timetable -----------
         self.timetable = tdc_Timetable(self.file_id)
-        # set time normalization
+        # set time normalization <<<<<<<<<
+        if not time_normalization:
+            time_normalization=self.__default_time_normalization
         self.timetable.set_normalization(time_normalization)
         # define members ----------------
         self.i_ts=None

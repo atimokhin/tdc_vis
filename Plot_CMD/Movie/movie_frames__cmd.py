@@ -23,11 +23,13 @@ class MovieFrames__CMD(MovieFrames):
         (is called each time a new plot is needed)
         - calls MovieFrames.plot
         - plots time label
+        - sets 
         """
         MovieFrames.plot(self,**kwargs)
         self.p_time_label=[]
         # main plot
-        for P,A in zip(self.seq_plotter,self.ax):
+        for P,A,F in zip(self.seq_plotter,self.ax,self.formatter):
+            A.yaxis.set_major_formatter(F)
             self.p_time_label.append( A.text(0.02, 0.925,
                                              't=%.3f' % P.get_time(),
                                              transform = A.transAxes) )

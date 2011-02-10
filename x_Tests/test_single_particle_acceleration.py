@@ -4,15 +4,10 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
-# import ATbase module
-import sys
-sys.path.append('/home/atim/WORK/C++/ATbase2/lib_python/')
-sys.path.append('/home/atim/WORK/PULSARS/TDC/tdc_vis/')
 import ATbase as AT
 
-from Common import tdc_Filenames
+from Common    import tdc_Filenames
 from Particles import tdc_XP_Data
-
 
 
 def test_single_particle_acceleration(calc_id='test_single_particle_acceleration',

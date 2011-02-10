@@ -2,8 +2,11 @@ from Common  import tdc_Manip_Plot_vs_X
 from Fields  import tdc_Field_Data, tdc_Fields_Plotter
 
 
-def tdc_plot_field(calc_id, i_ts, field_name,
-                   ylim=None, xlim=None,
+def tdc_plot_field(calc_id,
+                   i_ts,
+                   field_name,
+                   ylim=None,
+                   xlim=None,
                    print_id=False,
                    no_plot=False,
                    **kwargs):
@@ -42,7 +45,7 @@ class tdc_Field_Manip(tdc_Manip_Plot_vs_X):
 
     def __init__(self, calc_id, field_name,**kwargs):
         # field 
-        self.field   = tdc_Field_Data(calc_id, field_name)
+        self.field   = tdc_Field_Data(calc_id, field_name,**kwargs)
         # set PLOTTER by calling base class constructor
         # with tdc_XPs_Plotter instanse
         tdc_Manip_Plot_vs_X.__init__(self, tdc_Fields_Plotter(self.field),**kwargs )

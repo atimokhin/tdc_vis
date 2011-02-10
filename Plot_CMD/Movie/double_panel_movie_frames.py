@@ -15,7 +15,7 @@ class Double_Panel_Movie_Frames(MovieFrames__CMD):
         xlim       
         """
         # initialize base class ======
-        MovieFrames__GUI.__init__(self, seq_plotter)
+        MovieFrames__CMD.__init__(self, seq_plotter)
         # set plot_idlabel -----------------------
         self.plot_idlabel = seq_plotter[0].plot_idlabel
         # setup graphic elements =====
@@ -25,4 +25,3 @@ class Double_Panel_Movie_Frames(MovieFrames__CMD):
         self.ax.append( self.figure.add_axes([0.08,.1,.4,.85]) )        
         self.ax.append( self.figure.add_axes([0.58,.1,.4,.85]) )        
         self.setup_axes(xlim, ylim) 
-        self.setup_timelabels() 

@@ -7,58 +7,65 @@ class tdc_Field_Data:
     """
     This class contains field and positions
     Members:
-    f    -- field
-    x    -- positions
+    self.f    -- field
+    self.x    -- positions
     
-    timetable -- Timetable instanse
+    self.timetable -- Timetable instanse
 
-    i_ts      -- # of currently stored timeshot
-    name      -- name of the field (dataset name in HDF file)
-    file_id   -- HDF5 file_id (with field file)
+    self.i_ts      -- # of currently stored timeshot
+    self.name      -- name of the field (dataset name in HDF file)
+    self.file_id   -- HDF5 file_id (with field file)
+
+    self.ghost_points -- whether to read the data from ghost points
     """
 
     __default_Filename = 'fields.h5'
+    __default_time_normalization='flyby'
 
-    def __init__(self, calc_id, field_name,
-                 time_normalization = 'flyby',
-                 filename=__default_Filename ):
+    def __init__(self,
+                 calc_id,
+                 field_name,
+                 time_normalization=None,
+                 ghost_points=False,
+                 filename=__default_Filename):
         """
-        Opens HDF5 file, reads positions
-        the field is not read yet and all variables except
-        x, name, plot_label, file_id are uninitialized
+        - opens HDF5 file (self.file_id)
+        - nothing is read yet except timetable (self.timetable)
+        --------
+        Options:
+        --------
+        time_normalization
+          <None> default time normalization is used ('flyby')
+                 time normalization is the same as in tdc_Timetable
+        ghost_points
+          <False> whether to read the data from ghost points
         """
+        # setup class variables ----------
         # store calc_id
         self.calc_id=calc_id
         # store field name
         self.name=field_name
+        # read ghost points?
+        self.ghost_points=ghost_points
         # open HDF file ------------------
         h5_filename=tdc_Filenames().get_full_filename(calc_id, filename)
         self.file_id=h5py.h5f.open(h5_filename,flags=h5py.h5f.ACC_RDONLY)
-        # --------------------------------
-        # read Positions -----------------
-        dset_name='/' + self.name + '/Positions'
-        self.__dset_x   = h5py.h5d.open(self.file_id,dset_name)
-        self.__dtype_x  = self.__dset_x.get_type()
-        self.__dspace_x = self.__dset_x.get_space()
-        (self.nx,) = self.__dspace_x.get_simple_extent_dims()
-        # preallocate space for positions <x> 
-        self.x = np.empty(self.nx, dtype=self.__dtype_x)
-        # read field positions
-        self.__dset_x.read(self.__dspace_x, self.__dspace_x, self.x, self.__dtype_x)
-        # --------------------------------
-        # Timetable class member ---------
+        # Initialize Timetable -----------
         self.timetable = tdc_Timetable(self.file_id)
-        # set time normalization
+        # set time normalization <<<<<<<<<
+        if not time_normalization:
+            time_normalization=self.__default_time_normalization
         self.timetable.set_normalization(time_normalization)
-        # --------------------------------
-        # define publically available members
+        # set other members to None ------
+        self.x    = None
         self.f    = None
         self.i_ts = None
-        # --------------------------------
+
 
     def read(self, i_ts, re_read_x=False,**kwargs):
         """
         Read field for timeshot i_ts
+        --------
         Options:
         --------
         re_read_x
@@ -71,36 +78,75 @@ class tdc_Field_Data:
         self.i_ts = i_ts
         self.timetable.read_time(i_ts)
         # ===============================================
-        # read field values
+        # Field dataset
         # ===============================================
         dset_name='/' + self.name + '/' + str(self.i_ts)
         dset=h5py.h5d.open(self.file_id,dset_name)
+        # ***********************************************
+        # ===============================================
+        # If fields and positions are read for the first time
+        # initialize HDF5 dataspaces and datattype
+        # ===============================================
         # -----------------------------------------------
-        # if field is read for the first time define
-        # dataspaces and datattype
-        if self.f == None:
+        # if Positions (self.x) are read for the first time 
+        # -----------------------------------------------
+        if self.x==None:
+            dset_x_name='/' + self.name + '/Positions'
+            self.__dset_x   = h5py.h5d.open(self.file_id,dset_x_name)
+            self.__dtype_x  = self.__dset_x.get_type()
+            self.__dspace_x = self.__dset_x.get_space()
+            (self.nx,) = self.__dspace_x.get_simple_extent_dims()
+        # -----------------------------------------------
+        # if Field (self.f) is read for the first time 
+        # -----------------------------------------------
+        if self.f==None:
             # field datatype
             self.__dtype=dset.get_type()
-            # preallocate f
-            self.f=np.empty(self.nx,dtype=self.__dtype)
             # field file dataspace
             self.__file_dspace=dset.get_space()
             (nf,)=self.__file_dspace.get_simple_extent_dims()
+            # adjust number of read elements if no ghost points are requested
             guard=(nf-self.nx)/2
-            self.__file_dspace.select_hyperslab( (guard,),
-                                                 (self.nx,),
+            nf_read = nf if self.ghost_points else self.nx
+            nf_ghost = 0 if self.ghost_points else guard
+            # preallocate self.f <=====
+            self.f=np.empty(nf_read,dtype=self.__dtype)
+            # field dataspace in file
+            self.__file_dspace.select_hyperslab( (nf_ghost,),
+                                                 (nf_read,),
                                                  (1,),
                                                  op=h5py.h5s.SELECT_SET )
             # field memory dataspace
-            self.__mem_dspace=h5py.h5s.create_simple( (self.nx,), (self.nx,) );
+            self.__mem_dspace=h5py.h5s.create_simple( (nf_read,), (nf_read,) );
         # -----------------------------------------------
-        # read field from file
+        # if Positions (self.x) are read for the first time 
+        # -----------------------------------------------
+        if self.x==None:
+            self.nx_ghost = guard if self.ghost_points else 0
+            # preallocate self.x <=====
+            self.x = np.empty(self.nx+self.nx_ghost*2, dtype=self.__dtype_x)
+        # ***********************************************
+        # ===============================================
+        # Read data
+        # ===============================================
+        # read field from file <<<<<<<<<<<<<<<<<<<<<<<<<<
         dset.read(self.__mem_dspace,self.__file_dspace, self.f, self.__dtype)
         # ===============================================
-        # re-read field positions if asked
+        # read or re-read field positions
         # ===============================================
-        if re_read_x:
-            self.__dset_x.read(self.__dspace_x, self.__dspace_x, self.x, self.__dtype_x)
+        # re-read field positions if asked <<<<<<<<<<<<<<
+        if re_read_x or self.x==None:
+            # read positions of physical points
+            self.__dset_x.read(self.__dspace_x,
+                               self.__dspace_x,
+                               self.x[self.nx_ghost:-self.nx_ghost],
+                               self.__dtype_x)
+            # set positions of ghost points [if requested] 
+            if self.ghost_points:
+                dx = self.x[self.nx_ghost+1] - self.x[self.nx_ghost]
+                for i in range(1,self.nx_ghost+1):
+                    self.x[self.nx_ghost-i]    = self.x[self.nx_ghost] - i*dx
+                    self.x[-self.nx_ghost+i-1] = self.x[-self.nx_ghost-1] + i*dx
 
 
     def __repr__(self):
@@ -108,5 +154,6 @@ class tdc_Field_Data:
         s += '  field name : %s\n' % self.name
         s += '     calc_id : %s\n' % self.calc_id
         s += '        i_ts : %g\n' % self.i_ts
+        s += 'ghost_points : %s\n' % str(self.ghost_points)
         return s
 
