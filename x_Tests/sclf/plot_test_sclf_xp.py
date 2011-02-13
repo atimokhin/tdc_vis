@@ -85,11 +85,12 @@ class test_sclf_XPs_Plotter:
         f0.close()
         # theoretical dependence p(x)
         self.xx = np.linspace(0,L,n_cells)
-        self.pp = 4.5**(1./3)*(self.xx/lambda_D)**(2./3)
+        self.pp_non_rel = 4.5**(1./3)*(self.xx/lambda_D)**(2./3)
+        self.pp_rel     = np.sqrt(2)*(self.xx/lambda_D)
         # off-set line (particle are injected at position -dX/2)
         self.xx -= dX/2
         # initialize lines
-        self.lines_theory = []
+        self.lines_theory = 2*[None]
 
     def __getattr__(self,attrname):
         "Redirects all non-implemented requests to self.XP_Plotter"
@@ -101,7 +102,8 @@ class test_sclf_XPs_Plotter:
         - plot theoretical lines
         """
         self.XP_Plotter.plot(ax,**kwargs)
-        self.lines_theory = ax.plot(self.xx, self.pp,'-g')
+        self.lines_theory[0], = ax.plot(self.xx, self.pp_non_rel,'-g')
+        self.lines_theory[1], = ax.plot(self.xx, self.pp_rel,'-r')
 
     def replot(self,ax):
         """
