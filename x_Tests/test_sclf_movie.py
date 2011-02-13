@@ -96,20 +96,20 @@ def do_movie(ID):
     ##                      ghost_points=ghost_points)
     ## # ~~~~~~~~~~~~~~~~~~~~~~~~
 
-    # ~~~~~~~~~~~~~~~~~~~~~~~~
-    # plot Electric field and difference between Gauss' and Ampere's Electric fields
-    # ~~~~~~~~~~~~~~~~~~~~~~~~
-    plot_test_e_e_gauss_movie(plot_module,
-                              ID,
-                              ylim=[[-4,4],[-1e-1,1e-1]],
-                              xlim=[xlim,xlim],
-                              tt=tt,
-                              fps=15,
-                              use_cell_coordinates=False,
-                              show_cells=False,
-                              time_normalization = 'absolute',
-                              ghost_points=True)
-    # ~~~~~~~~~~~~~~~~~~~~~~~~
+    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+    ## # plot Electric field and difference between Gauss' and Ampere's Electric fields
+    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+    ## plot_test_e_e_gauss_movie(plot_module,
+    ##                           ID,
+    ##                           ylim=[[-4,4],[-1e-1,1e-1]],
+    ##                           xlim=[xlim,xlim],
+    ##                           tt=tt,
+    ##                           fps=15,
+    ##                           use_cell_coordinates=False,
+    ##                           show_cells=False,
+    ##                           time_normalization = 'absolute',
+    ##                           ghost_points=True)
+    ## # ~~~~~~~~~~~~~~~~~~~~~~~~
     
     # ~~~~~~~~~~~~~~~~~~~~~~~~
     # XP Movie with theoretical curves
@@ -126,7 +126,7 @@ def do_movie(ID):
                                  particle_names,
                                  sample_dict=sample_dict,
                                  tt=tt,
-                                 ylim=[-0.5,2],
+                                 ylim=[-0.5,1e3],
                                  xlim=xlim,
                                  moving_grid_dict=moving_grid_dict)
 

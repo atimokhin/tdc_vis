@@ -29,8 +29,9 @@ ID=['test_osc_2e']
 def do_movie(ID):
     ## moving_grid_dict = dict(n_lines=30, speed=1)
     moving_grid_dict = None
-    tt = None    
+    tt = [0,0.5]   
     ## tt = [0,4]
+    xlim =  None
     
     # ~~~~~~~~~~~~~~~~~~~~~~~~
     # plot Electric field and difference between Gauss' and Ampere's Electric fields
@@ -38,6 +39,7 @@ def do_movie(ID):
     plot_test_e_e_gauss_movie(plot_module,
                               ID,
                               ylim=[[-3e-4,3e-4],[-1e-16,1e-16]],
+                              tt=tt,
                               use_cell_coordinates=False,
                               show_cells=False,
                               time_normalization = 'absolute',
@@ -77,6 +79,7 @@ def do_movie(ID):
                          ID,
                          'Phi',
                          ylim=[-2e-9,2e-9],
+                         tt=tt,
                          moving_grid_dict=moving_grid_dict,
                          ghost_points=True,
                          time_normalization = 'absolute')
@@ -113,6 +116,7 @@ def do_movie(ID):
                       trail_dict=trail_dict,
                       tt=tt,
                       ylim=[-2e-4,2e-4],
+                      xlim=xlim,
                       moving_grid_dict=moving_grid_dict,
                       use_cell_coordinates=True,
                       time_normalization = 'absolute')

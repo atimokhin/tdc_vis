@@ -24,6 +24,31 @@ class MovieFrames__GUI(MovieFrames):
         # set redraw_flag 
         self.redraw_flag=False
 
+    def setup_figure_and_axes(self, mfs, xlim, ylim):
+        """
+        Creates figure and axes accordinng to sized in class mds
+        -------
+        Params:
+        -------
+        mfs
+          MovieFrames_Sizes class instance, contains figure sizes and axes boxes
+        xlim
+        ylim
+          axes limits
+        """
+        # plot window ----------------------------
+        self.figure = Figure(facecolor='white')
+        self.canvas = FigureCanvas(self.figure)
+        self.canvas.set_size_request( *mfs.figsize_points )
+        # axes -----------------------------------
+        # add as many axes as there are entries in mfs.axes_boxes
+        for box in mfs.axes_boxes:
+            self.ax.append( self.figure.add_axes(box) )
+        # setup axes limits
+        self.setup_axes(xlim, ylim) 
+        # setup timelabel artists
+        self.setup_timelabels() 
+
     def setup_axes(self,xlim,ylim):
         """
         - calls MovieFrames.setup_axes(self,xlim,ylim)
