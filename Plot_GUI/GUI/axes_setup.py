@@ -178,7 +178,10 @@ class Axes_Setup_Window:
 
     def dont_show_cells_callback(self, widget, callback_data):
         button, i = callback_data
-        self.Plotters[i].show_cells_flag = not button.get_active()
+        if button.get_active():
+            self.Plotters[i].show_cells_off()
+        else:
+            self.Plotters[i].show_cells_on()
         self.MovieFrames.redraw_flag=True
 
     def dont_use_cell_coords_callback(self, widget, callback_data):

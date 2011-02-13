@@ -4,6 +4,7 @@ from Common  import *
 from Plots   import *
 
 import x_Tests.sclf as sclf
+
 from plot_test_e_e_gauss_movie import *
 
 # ============================================================
@@ -128,6 +129,8 @@ def do_movie(ID):
                                  tt=tt,
                                  ylim=[-0.5,1e3],
                                  xlim=xlim,
+                                 use_cell_coordinates=False,
+                                 show_cells=False,
                                  moving_grid_dict=moving_grid_dict)
 
 

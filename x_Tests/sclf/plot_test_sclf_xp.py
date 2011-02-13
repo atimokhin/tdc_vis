@@ -63,6 +63,11 @@ class test_sclf_XPs_Plotter:
     theoretical dependence for non-relativistic and ultra-relativistic
     space charge limited flow
     ==> all non-implemented requests are delegated to self.XP_Plotter
+    -----------------
+    -----------------
+    can be used as a template for complex animation-capable plotters
+    implements all necessary methods
+    -----------------
     """
 
     def __init__(self, calc_id, xps):
@@ -102,8 +107,8 @@ class test_sclf_XPs_Plotter:
         - plot theoretical lines
         """
         self.XP_Plotter.plot(ax,**kwargs)
-        self.lines_theory[0], = ax.plot(self.xx, self.pp_non_rel,'-g')
-        self.lines_theory[1], = ax.plot(self.xx, self.pp_rel,'-r')
+        self.lines_theory[0], = ax.plot(self.xx, self.pp_non_rel,'-g',**kwargs)
+        self.lines_theory[1], = ax.plot(self.xx, self.pp_rel,'-r',**kwargs)
 
     def replot(self,ax):
         """
@@ -112,7 +117,8 @@ class test_sclf_XPs_Plotter:
         """
         self.XP_Plotter.replot(ax)
         # theoretical lines
-        for line in self.lines_theory:    
+        for line in self.lines_theory:
+            line.set_xdata(self.xx)
             ax.draw_artist(line)
 
     def update_plot(self,ax):
@@ -129,3 +135,15 @@ class test_sclf_XPs_Plotter:
         # theoretical lines        
         for line in self.lines_theory:
             line.set_animated(val)
+
+    def animation_update(self,ax,i_ts):
+        self.XP_Plotter.animation_update(ax,i_ts)
+        self.update_plot(ax)
+
+    def to_cell_coordinates(self,ax):
+        if self.XP_Plotter.to_cell_coordinates(ax):
+            self.xx /= self.XP_Plotter._Mesh.dx
+            
+    def to_x_coordinates(self,ax):
+        if self.XP_Plotter.to_x_coordinates(ax):
+            self.xx *= self.XP_Plotter._Mesh.dx
