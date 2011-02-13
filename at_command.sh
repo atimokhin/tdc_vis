@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#PBS -N make_movie
-#PBS -e ../RESULTS_VIS/make_movie.err
-#PBS -o ../RESULTS_VIS/make_movie.out
+#PBS -N make_movie_sclf
+#PBS -e ../RESULTS_VIS/make_movie_sclf.err
+#PBS -o ../RESULTS_VIS/make_movie_sclf.out
 
 #PBS -l nodes=1:ppn=1,walltime=72:00:00
 #PBS -q henyey_serial 
@@ -15,4 +15,4 @@ then
 fi
 
 # start simulations
-python _working/rs/make_movie.py
+python _working/sclf/make_movie_pairs.py

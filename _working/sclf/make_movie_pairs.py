@@ -1,5 +1,10 @@
 #!/usr/bin/python
 
+#
+# SCLF cascade with pair creation -> plotted ranges of parameters are larger
+# 
+
+
 from Common import *
 from Plots  import *
 
@@ -21,7 +26,10 @@ tdc_set_results_dir('../RESULTS/')
 # ============================================================
 # IDs 
 # ============================================================
-IDs=['RS__R6_jp1.0_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU']
+IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx2.5e3_dt8e-5__RhoGJConst__R6C_Xb0.7__inj12',
+     'SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx2.5e3_dt8e-5__RhoGJConst__R6C_Xb0.7__inj6',
+     'SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx2.5e3_dt8e-5__RhoGJConst__R6C_Xb0.7__inj2',
+     'SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx2.5e3_dt8e-5__RhoGJConst__R6C_Xb0.7__inj4']
 # ============================================================
 
 
@@ -32,14 +40,14 @@ def do_movie(IDs):
         ## moving_grid_dict = dict(n_lines=30, speed=1)
         moving_grid_dict = None
         tt=None
-        xlim=[-0.005,0.305]
+        xlim=[-0.005,1.005]
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         # plot Electric field and difference between Gauss' and Ampere's Electric fields
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         plot_test_e_e_gauss_movie(plot_module,
                                   ID,
-                                  ylim=[[-1,1],[-1e-1,1e-1]],
+                                  ylim=[[-2,2],[-1e-1,1e-1]],
                                   xlim=[xlim,xlim],
                                   tt=tt,
                                   fps=15,
@@ -129,7 +137,7 @@ def do_movie(IDs):
         tdc_plot_xp_movie(plot_module,
                           ID,
                           particle_names,
-                          ylim=[-1.6e7,1.6e7],
+                          ylim=[-1e7,1e7],
                           xlim=xlim,
                           sample_dict=sample_dict,
                           tt=tt,
