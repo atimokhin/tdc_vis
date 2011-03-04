@@ -26,10 +26,9 @@ tdc_set_results_dir('../RESULTS/')
 # ============================================================
 # IDs 
 # ============================================================
-IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx2.5e3_dt8e-5__RhoGJConst__R6C_Xb0.7__inj12',
-     'SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx2.5e3_dt8e-5__RhoGJConst__R6C_Xb0.7__inj6',
-     'SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx2.5e3_dt8e-5__RhoGJConst__R6C_Xb0.7__inj2',
-     'SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx2.5e3_dt8e-5__RhoGJConst__R6C_Xb0.7__inj4']
+IDs=['SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx2.5e3_dt8e-5__RhoGJConst__R6C_Xb0.7__inj12',
+     'SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx2.5e3_dt8e-5__RhoGJConst__R6C_Xb0.7__inj6',
+     'SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx2.5e3_dt8e-5__RhoGJConst__R6C_Xb0.7__inj12']
 # ============================================================
 
 

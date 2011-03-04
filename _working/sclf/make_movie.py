@@ -21,8 +21,11 @@ tdc_set_results_dir('../RESULTS/')
 # ============================================================
 # IDs 
 # ============================================================
-IDs=['SCLF__jm0.5_Pcf1e8_L1_nGJ5e4_nx2.5e3_dt8e-5__RhoGJConst__R6C_Xb0.7__inj2',
-     'SCLF__jm0.5_Pcf1e8_L1_nGJ5e4_nx2.5e3_dt8e-5__RhoGJConst__R6C_Xb0.7__inj4']
+IDs=['SCLF__jm0.5_Pcf1e5_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJConst__noMC__dP_inj6',
+     'SCLF__jm0.5_Pcf1e5_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJConst__noMC__dP_inj8',
+     'SCLF__jm0.5_Pcf1e5_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJConst__noMC__dP_inj12',
+     'SCLF__jm0.25_Pcf1e5_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJConst__noMC__dP_inj6',
+     'SCLF__jm0.25_Pcf1e5_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJConst__noMC__dP_inj8']
 # ============================================================
 
 
@@ -35,46 +38,46 @@ def do_movie(IDs):
         tt=None
         xlim=[-0.005,1.005]
 
-        # ~~~~~~~~~~~~~~~~~~~~~~~~
-        # plot Electric field and difference between Gauss' and Ampere's Electric fields
-        # ~~~~~~~~~~~~~~~~~~~~~~~~
-        plot_test_e_e_gauss_movie(plot_module,
-                                  ID,
-                                  ylim=[[-1e-2,1e-2],[-1e-5,1e-5]],
-                                  xlim=[xlim,xlim],
-                                  tt=tt,
-                                  fps=15,
-                                  use_cell_coordinates=False,
-                                  show_cells=False,
-                                  time_normalization = 'absolute',
-                                  ghost_points=True)
-        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+        ## # plot Electric field and difference between Gauss' and Ampere's Electric fields
+        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+        ## plot_test_e_e_gauss_movie(plot_module,
+        ##                           ID,
+        ##                           ylim=[[-1e-2,1e-2],[-1e-2,1e-2]],
+        ##                           xlim=[xlim,xlim],
+        ##                           tt=tt,
+        ##                           fps=15,
+        ##                           use_cell_coordinates=False,
+        ##                           show_cells=False,
+        ##                           time_normalization = 'absolute',
+        ##                           ghost_points=True)
+        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
 
-        # ~~~~~~~~~~~~~~~~~~~~~~~~
-        # Rho
-        # ~~~~~~~~~~~~~~~~~~~~~~~~
-        tdc_plot_field_movie(plot_module,
-                             ID,
-                             'Rho',
-                             ylim=[-5,5],
-                             xlim=xlim,
-                             moving_grid_dict=moving_grid_dict,
-                             tt=tt,
-                             ghost_points=True)
-        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+        ## # Rho
+        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+        ## tdc_plot_field_movie(plot_module,
+        ##                      ID,
+        ##                      'Rho',
+        ##                      ylim=[-3,3],
+        ##                      xlim=xlim,
+        ##                      moving_grid_dict=moving_grid_dict,
+        ##                      tt=tt,
+        ##                      ghost_points=True)
+        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
         
-        # ~~~~~~~~~~~~~~~~~~~~~~~~
-        # J
-        # ~~~~~~~~~~~~~~~~~~~~~~~~
-        tdc_plot_field_movie(plot_module,
-                             ID,
-                             'J',
-                             ylim=[-5,5],
-                             xlim=xlim,
-                             moving_grid_dict=moving_grid_dict,
-                             tt=tt,
-                             ghost_points=True)
-        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+        ## # J
+        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+        ## tdc_plot_field_movie(plot_module,
+        ##                      ID,
+        ##                      'J',
+        ##                      ylim=[-3,3],
+        ##                      xlim=xlim,
+        ##                      moving_grid_dict=moving_grid_dict,
+        ##                      tt=tt,
+        ##                      ghost_points=True)
+        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
 
         ## # ~~~~~~~~~~~~~~~~~~~~~~~~
         ## # Phi
@@ -130,7 +133,7 @@ def do_movie(IDs):
         tdc_plot_xp_movie(plot_module,
                           ID,
                           particle_names,
-                          ylim=[-1e3,1e3],
+                          ylim=[-6,6],
                           xlim=xlim,
                           sample_dict=sample_dict,
                           tt=tt,
