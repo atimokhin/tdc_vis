@@ -8,14 +8,14 @@ from x_Tests.plot_test_e_e_gauss_movie import *
 # ============================================================
 # Interface
 # ============================================================
-## import Plot_GUI as plot_module
-import Plot_CMD as plot_module
+import Plot_GUI as plot_module
+## import Plot_CMD as plot_module
 
 # ============================================================
 # Directory
 # ============================================================
-tdc_set_results_dir('../RESULTS/')
-## tdc_set_results_dir('../RESULTS/FreeAgent/')
+## tdc_set_results_dir('../RESULTS/')
+tdc_set_results_dir('../RESULTS/FreeAgent/')
 
 
 # ============================================================
@@ -37,21 +37,6 @@ def do_movie(IDs):
         moving_grid_dict = None
         tt=None
         xlim=[-0.005,1.005]
-
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-        ## # plot Electric field and difference between Gauss' and Ampere's Electric fields
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-        ## plot_test_e_e_gauss_movie(plot_module,
-        ##                           ID,
-        ##                           ylim=[[-1e-2,1e-2],[-1e-2,1e-2]],
-        ##                           xlim=[xlim,xlim],
-        ##                           tt=tt,
-        ##                           fps=15,
-        ##                           use_cell_coordinates=False,
-        ##                           show_cells=False,
-        ##                           time_normalization = 'absolute',
-        ##                           ghost_points=True)
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
 
         ## # ~~~~~~~~~~~~~~~~~~~~~~~~
         ## # Rho
@@ -86,6 +71,22 @@ def do_movie(IDs):
         ## # ~~~~~~~~~~~~~~~~~~~~~~~~
 
         ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+        ## # E_acc__E_Gauss:
+        ## #  plot Electric field and difference between Gauss' and Ampere's Electric fields
+        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+        ## plot_test_e_e_gauss_movie(plot_module,
+        ##                           ID,
+        ##                           ylim=[[-1e-2,1e-2],[-1e-2,1e-2]],
+        ##                           xlim=[xlim,xlim],
+        ##                           tt=tt,
+        ##                           fps=15,
+        ##                           use_cell_coordinates=False,
+        ##                           show_cells=False,
+        ##                           time_normalization = 'absolute',
+        ##                           ghost_points=True)
+        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+
+        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
         ## # E_acc
         ## # ~~~~~~~~~~~~~~~~~~~~~~~~
         ## tdc_plot_field_movie(plot_module,
@@ -97,6 +98,7 @@ def do_movie(IDs):
         ##                      tt=tt,
         ##                      ghost_points=True)
         ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+
         ## # ~~~~~~~~~~~~~~~~~~~~~~~~
         ## # E_Gauss
         ## # ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -127,7 +129,7 @@ def do_movie(IDs):
         ## tp.delete(range(0,47,2))
 
         sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
-        particle_names = ['Electrons','Positrons','Pairs']
+        particle_names = ['Electrons','Protons','Positrons','Pairs']
         ## particle_names = ['Electrons']
 
         tdc_plot_xp_movie(plot_module,

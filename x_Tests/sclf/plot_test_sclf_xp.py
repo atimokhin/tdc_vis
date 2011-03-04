@@ -88,14 +88,27 @@ class test_sclf_XPs_Plotter:
         n_cells  = f0['/GridProps/NCells'].value
         dX       = f0['/GridProps/dX'].value
         f0.close()
-        # theoretical dependence p(x)
-        self.xx = np.linspace(0,L,n_cells)
-        self.pp_non_rel = 4.5**(1./3)*(self.xx/lambda_D)**(2./3)
+        # interpolated values for p(x) from numerical solutions
+        # of Child's equation
+        # read hdf file with interpolation of p(x)
+        f1 = h5py.File('x_Tests/sclf/sclf_j1.h5','r')
+        self.pp_itpl = f1['Dataset1'].value[:,1]
+        self.xx_itpl = f1['Dataset1'].value[:,0]
+        # renormalize and off-set line (particle are injected at position -dX/2)
+        self.xx_itpl = self.xx_itpl*lambda_D - dX/2
+        # select points in the current domain
+        mask = self.xx_itpl<=L
+        self.xx_itpl = self.xx_itpl[mask]
+        self.pp_itpl = self.pp_itpl[mask]
+        # -----------------------------------------------------
+        # analythical theoretical dependence p(x)
+        self.xx = np.linspace(0,L,n_cells*5)
+        self.pp_non_rel = 4.5**(1./3.)*(self.xx/lambda_D)**(2./3.)
         self.pp_rel     = np.sqrt(2)*(self.xx/lambda_D)
         # off-set line (particle are injected at position -dX/2)
         self.xx -= dX/2
         # initialize lines
-        self.lines_theory = 2*[None]
+        self.lines_theory = 3*[None]
 
     def __getattr__(self,attrname):
         "Redirects all non-implemented requests to self.XP_Plotter"
@@ -107,8 +120,9 @@ class test_sclf_XPs_Plotter:
         - plot theoretical lines
         """
         self.XP_Plotter.plot(ax,**kwargs)
-        self.lines_theory[0], = ax.plot(self.xx, self.pp_non_rel,'-g',**kwargs)
-        self.lines_theory[1], = ax.plot(self.xx, self.pp_rel,'-r',**kwargs)
+        self.lines_theory[0], = ax.plot(self.xx, self.pp_non_rel,'--g',**kwargs)
+        self.lines_theory[1], = ax.plot(self.xx, self.pp_rel,'--m',**kwargs)
+        self.lines_theory[2], = ax.plot(self.xx_itpl, self.pp_itpl,'-r',**kwargs)
 
     def replot(self,ax):
         """
@@ -117,8 +131,10 @@ class test_sclf_XPs_Plotter:
         """
         self.XP_Plotter.replot(ax)
         # theoretical lines
-        for line in self.lines_theory:
-            line.set_xdata(self.xx)
+        self.lines_theory[0].set_xdata(self.xx)
+        self.lines_theory[1].set_xdata(self.xx)
+        self.lines_theory[2].set_xdata(self.xx_itpl)
+        for line in self.lines_theory:        
             ax.draw_artist(line)
 
     def update_plot(self,ax):
@@ -143,7 +159,9 @@ class test_sclf_XPs_Plotter:
     def to_cell_coordinates(self,ax):
         if self.XP_Plotter.to_cell_coordinates(ax):
             self.xx /= self.XP_Plotter._Mesh.dx
+            self.xx_itpl /= self.XP_Plotter._Mesh.dx
             
     def to_x_coordinates(self,ax):
         if self.XP_Plotter.to_x_coordinates(ax):
             self.xx *= self.XP_Plotter._Mesh.dx
+            self.xx_itpl *= self.XP_Plotter._Mesh.dx
