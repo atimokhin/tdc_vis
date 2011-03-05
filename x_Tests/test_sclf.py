@@ -10,8 +10,8 @@ from plot_test_e_e_gauss_movie import *
 # ============================================================
 # Interface
 # ============================================================
-import Plot_GUI as plot_module
-## import Plot_CMD as plot_module
+## import Plot_GUI as plot_module
+import Plot_CMD as plot_module
 
 # ============================================================
 # Directory

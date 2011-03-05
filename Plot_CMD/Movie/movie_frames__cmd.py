@@ -50,11 +50,16 @@ class MovieFrames__CMD(MovieFrames):
         - plots time label
         - sets 
         """
-        MovieFrames.plot(self,**kwargs)
-        self.p_time_label=[]
-        # main plot
-        for P,A,F in zip(self.seq_plotter,self.ax,self.formatter):
+        # set axes limits and formatter (again)
+        for A,F,xl,yl in zip(self.ax,self.formatter,self.xlim,self.ylim):
             A.yaxis.set_major_formatter(F)
+            A.set_xlim(xl)
+            A.set_ylim(yl)
+        # main plot
+        MovieFrames.plot(self,**kwargs)
+        # plot time label on top of the plot
+        self.p_time_label=[]
+        for P,A in zip(self.seq_plotter,self.ax):
             self.p_time_label.append( A.text(0.02, 0.925,
                                              't=%.3f' % P.get_time(),
                                              transform = A.transAxes) )

@@ -299,12 +299,9 @@ class _CellBoundaries:
         """
         Shows boundaries of all cells on the current plot,
         i.e. only on the visible part of the screen
-        - removes previously plotted cells
         - calculate cell line coordinates
-        - calls draw fucntion to plot cells
+        - calls draw fucntion to remove previously plotted cells and plot new ones
         """
-        # clear existing cell lines
-        self.off(ax)
         # get current axes limits
         xlims = ax.get_xlim()
         # transform x limits
@@ -313,18 +310,24 @@ class _CellBoundaries:
         else:
             xlims_cell = self._Mesh.x2cell(xlims)
         # calculate cell boundaries (ndarray -easy to change values)
-        self.xx_cells = np.arange(int(xlims_cell[0]),int(xlims_cell[1]))
+        self.xx_cells = np.arange(int(xlims_cell[0]),int(xlims_cell[1]))         
         if not use_cell_coordinates:
            self.xx_cells = self._Mesh.cell2x(self.xx_cells)
-        # draw cell boundaries
+        # clear existing cell boundaries (if any) and draw new ones
         self.draw(ax)
         
     def off(self,ax):
         """
-        Remove cell boundaries from plot
+        Remove cell boundaries from the plot
         """
+        # remove cell lines if thery are on the plot
+        # (if new axes are created the cell lines will be not there)
         for line in self.cell_lines:
-            ax.lines.remove(line)
+            try:
+                ax.lines.remove(line)
+            except ValueError:
+                pass
+        # set lines and coordinates to empty lists 
         self.cell_lines = []
         self.xx_cells   = []
 
@@ -346,14 +349,16 @@ class _CellBoundaries:
         """
         Plot cell boundaries using already calculated positions
         """
-        ylims = ax.get_ylim()
-        # delete already existing cell lines
+        # remove cell lines if thery are on the plot
+        # (if new axes are created the cell lines will be not there)
         for line in self.cell_lines:
-            ax.lines.remove(line)
+            try:
+                ax.lines.remove(line)
+            except ValueError:
+                pass
         # create new list with cell boundaries
+        ylims = ax.get_ylim()
         self.cell_lines = [ ax.plot(xx,ylims,'k:')[0] 
                             for xx in zip(self.xx_cells,self.xx_cells) ]
-        # draw cell boundaries
-        for line in self.cell_lines:
-            ax.draw_artist(line)
+
         

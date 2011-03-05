@@ -74,10 +74,10 @@ class Movie_File_Maker:
                        "-mf fps="        + str(self.fps)       + " " +\
                        "-of rawvideo -ovc x264 -x264encopts "        +\
                        "subq=6:partitions=all:me=umh:frameref=5:bframes=0:weight_b" +\
-                       ";" +\
+                       "; " +\
                        "MP4Box -fps " + str(self.fps) + " " +\
                        "-new -add " + self.h264_filename + " " + self.movie_filename +\
-                       ";" +\
+                       "; " +\
                        "rm -f " + self.h264_filename
 
         p = subprocess.Popen(command_string, shell=True,

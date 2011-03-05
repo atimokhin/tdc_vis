@@ -77,8 +77,6 @@ class MovieFrames:
         # main plot
         for P,A,xl,yl in zip(self.seq_plotter,self.ax,self.xlim,self.ylim):
             P.plot(A,**kwargs)
-            A.set_xlim(xl)
-            A.set_ylim(yl)
             # set axes labels
             A.set_ylabel(P.plot_ylabel,size='x-large')
             A.set_xlabel(P.plot_xlabel,size='x-large')

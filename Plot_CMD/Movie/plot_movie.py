@@ -1,6 +1,4 @@
-from single_panel_movie_frames  import Single_Panel_Movie_Frames
 from movie_file_maker__cmd      import Movie_File_Maker__CMD
-
 
 def plot_movie( movie_frames, movie_id, fps):
     """
