@@ -6,7 +6,8 @@ from Particles.TrackParticles.tdc_tp_plotter    import tdc_TP_Plotter
 from Plot_CMD.Movie import *
 
 
-def tdc_plot_tp_movie__cmd(tp,
+def tdc_plot_tp_movie__cmd(plot_module,
+                           tp,
                            ylim,
                            xlim=None,
                            fps=None,
