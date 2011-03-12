@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#PBS -N make_movie_sclf_nopairs
-#PBS -e ../RESULTS_VIS/make_movie_sclf_nopairs.err
-#PBS -o ../RESULTS_VIS/make_movie_sclf_nopairs.out
+#PBS -N make_movie_jm0.75
+#PBS -e ../RESULTS_VIS/make_movie_jm0.75.err
+#PBS -o ../RESULTS_VIS/make_movie_jm0.75.out
 
 #PBS -l nodes=1:ppn=1,walltime=72:00:00
 #PBS -q henyey_serial 
