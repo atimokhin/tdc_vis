@@ -1,14 +1,11 @@
 #!/usr/bin/python
 
-#
-# SCLF cascade with pair creation -> plotted ranges of parameters are larger
-# 
-
-
 from Common import *
 from Plots  import *
 
 from x_Tests.plot_test_e_e_gauss_movie import *
+
+
 
 # ============================================================
 # Interface
@@ -36,11 +33,31 @@ xlim = [-0.01,1.01]
 ylim_xp = [-2e6,2e6]
 ylim_e  = [-.04,.04]
 
-tt=[0,3]
+## # jm0.5 ---
+## ylim_xp = [-50,50]
+## ylim_e  = [-1,1]
+## # -----------------
+## # jp0.5 ---
+## ylim_xp = [-2e7,2e7]
+## ylim_e  = [-1,1]
+## # -----------------
+## # jp1.5 ---
+## ylim_xp = [-2e7,2e7]
+## ylim_e  = [-1,1]
+## # -----------------
+## # jm1.5 ---
+## ylim_xp = [-1.5e7,1.5e7]
+## ylim_e  = [-1,1]
+## #-----------------
+
+tt = [0,3]
+
+fps = 14
 
 use_cell_coordinates=False
 show_cells=False
-# -----------------
+# ==================
+
 
 
 # ============================================================
@@ -91,6 +108,7 @@ def do_movie(IDs):
                               xlim=xlim,
                               sample_dict=sample_dict,
                               tt=tt,
+                              fps=fps,
                               use_cell_coordinates=use_cell_coordinates,
                               show_cells=show_cells,
                               tp=tp,
@@ -110,6 +128,7 @@ def do_movie(IDs):
                                  xlim=xlim,
                                  moving_grid_dict=moving_grid_dict,
                                  tt=tt,
+                                 fps=fps,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
                                  ghost_points=True)
@@ -142,6 +161,7 @@ def do_movie(IDs):
                                  xlim=xlim,
                                  moving_grid_dict=moving_grid_dict,
                                  tt=tt,
+                                 fps=fps,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
                                  ghost_points=True)
@@ -158,6 +178,7 @@ def do_movie(IDs):
                                  xlim=xlim,
                                  moving_grid_dict=moving_grid_dict,
                                  tt=tt,
+                                 fps=fps,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
                                  ghost_points=True)
@@ -189,6 +210,8 @@ def do_movie(IDs):
                                  ID,
                                  'Phi',
                                  ylim=[-.5,.1],
+                                 tt=tt,
+                                 fps=fps,
                                  moving_grid_dict=moving_grid_dict)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -199,6 +222,8 @@ def do_movie(IDs):
             tdc_plot_ep_density_movie(plot_module,
                                       ID,
                                       ylim=[0,60],
+                                      tt=tt,
+                                      fps=fps,
                                       e_density_negative=False,
                                       moving_grid_dict=moving_grid_dict)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
