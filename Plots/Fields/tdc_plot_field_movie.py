@@ -10,6 +10,7 @@ def tdc_plot_field_movie(plot_module,
                          xlim=None,
                          tt=None,
                          fps=None,
+                         keep_frame_files=None,
                          moving_grid_dict=None,
                          use_cell_coordinates=False,
                          show_cells=False,
@@ -67,4 +68,4 @@ def tdc_plot_field_movie(plot_module,
     movie_id = field_name + '_' + calc_ids[0]
     # -----------------------------------------
     # make movie
-    plot_module.Movie.plot_movie( MF, movie_id, fps)
+    plot_module.Movie.plot_movie( MF, movie_id, fps, keep_frame_files)

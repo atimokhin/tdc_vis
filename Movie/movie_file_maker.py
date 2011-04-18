@@ -26,9 +26,11 @@ class Movie_File_Maker:
     _frame_filename          = 'frame'
     _default_movie_filename  = 'animation'
 
-    def __init__(self, movie_id, fps):
+    def __init__(self, movie_id, fps, keep_frame_files):
         """
         movie_id  -- subdirectorty whewre movie files will be stored
+        fps       -- fps of created movie
+        keep_frame_files -- whether to keep .png frame files 
         """
         # FPS
         self.fps = fps
@@ -44,7 +46,7 @@ class Movie_File_Maker:
                                                    self.__index_filename)
         self.set_movie_filenames(self._default_movie_filename)
         # keep_frame_files_flag
-        self.set_keep_frame_files_flag(False)
+        self.set_keep_frame_files_flag(keep_frame_files)
 
 
     def set_movie_filenames(self,filename):
@@ -77,9 +79,8 @@ class Movie_File_Maker:
                        "; " +\
                        "MP4Box -fps " + str(self.fps) + " " +\
                        "-new -add " + self.h264_filename + " " + self.movie_filename +\
-                       "; " 
-                       #+\
-                       #"rm -f " + self.h264_filename
+                       "; " +\
+                       "rm -f " + self.h264_filename
 
         p = subprocess.Popen(command_string, shell=True,
                              stdin  = subprocess.PIPE,

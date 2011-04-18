@@ -18,18 +18,12 @@ class Movie_File_Maker__CMD(Movie_File_Maker):
        default - False
     """
 
-    # default value for fps in CMD interface
-    __default_fps = 7
-
-    def __init__(self, movie_id, fps=None):
+    def __init__(self, movie_id, fps, keep_frame_files):
         """
         movie_id  -- subdirectorty where movie files will be stored
         """
-        # set fps to default value if it is not given in function call
-        if not fps:
-            fps = self.__default_fps
         # setup base class
-        Movie_File_Maker.__init__(self,movie_id,fps)
+        Movie_File_Maker.__init__(self,movie_id,fps,keep_frame_files)
         self.index_file = None
         # frame counter
         self.i_frame = 0

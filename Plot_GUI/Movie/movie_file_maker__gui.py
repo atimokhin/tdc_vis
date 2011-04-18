@@ -24,18 +24,12 @@ class Movie_File_Maker__GUI(Movie_File_Maker):
        function which updated # of recorded frames shown in GUI
     """
 
-    # default value for fps in GUI interface
-    _default_fps = 15
-
-    def __init__(self, movie_id, fps=None):
+    def __init__(self, movie_id, fps, keep_frame_files):
         """
         movie_id  -- subdirectorty whewre movie files will be stored
         """
-        # set fps to default value if it is not given in function call
-        if not fps:
-            fps = self._default_fps
         # setup base class
-        Movie_File_Maker.__init__(self,movie_id,fps)
+        Movie_File_Maker.__init__(self,movie_id,fps,keep_frame_files)
         # initialize internal list with frames in png format
         self.frames_png = []
         # main window - needed for Movie_File_Maker parameter window

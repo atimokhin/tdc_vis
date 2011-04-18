@@ -1,6 +1,6 @@
 from movie_file_maker__cmd      import Movie_File_Maker__CMD
 
-def plot_movie( movie_frames, movie_id, fps):
+def plot_movie( movie_frames, movie_id, fps, keep_frame_files):
     """
     plot_movie__cmd( plotter, movie_id, ylim, fps, **kwargs )
     Common function for creating movie file from the command line interface
@@ -14,7 +14,7 @@ def plot_movie( movie_frames, movie_id, fps):
     # movie frames
     MF = movie_frames
     # movie file maker
-    MFM = Movie_File_Maker__CMD(movie_id, fps)
+    MFM = Movie_File_Maker__CMD(movie_id, fps, keep_frame_files)
     # write frames ----------------------------
     MFM.open_index_file()
     for i in range(MF.i_frame_min, MF.i_frame_max):

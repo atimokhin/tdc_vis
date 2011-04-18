@@ -23,7 +23,7 @@ tdc_set_results_dir('../RESULTS/')
 # ============================================================
 # IDs 
 # ============================================================
-IDs=['SCLF__Arons_IV_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJlin2_A1_AAm0.2__R6C__dP5e-2_inj5_s1']
+IDs=['SCLF__Arons_III_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJlin2_A1_AAm0.2__R6C__dP5e-2_inj5_s1']
 
 #-----------------
 # plot limits:
@@ -50,12 +50,14 @@ ylim_e  = [-.04,.04]
 ## ylim_e  = [-1,1]
 ## #-----------------
 
-tt = [0,3]
+tt = None
 
 fps = 14
 
 use_cell_coordinates=False
 show_cells=False
+
+keep_frame_files=True
 # ==================
 
 
@@ -66,7 +68,7 @@ show_cells=False
 Plots = {'XP'           : True,
          'Rho'          : False,
          'J'            : False,
-         'E_acc'        : True,
+         'E_acc'        : False,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
          'Phi'          : False,
@@ -109,6 +111,7 @@ def do_movie(IDs):
                               sample_dict=sample_dict,
                               tt=tt,
                               fps=fps,
+                              keep_frame_files=keep_frame_files,
                               use_cell_coordinates=use_cell_coordinates,
                               show_cells=show_cells,
                               tp=tp,

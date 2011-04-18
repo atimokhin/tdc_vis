@@ -11,6 +11,7 @@ def tdc_plot_xp_movie(plot_module,
                       xlim=None,
                       tt=None,
                       fps=None,
+                      keep_frame_files=None,
                       tp=None,
                       trail_dict=None,
                       moving_grid_dict=None,
@@ -81,4 +82,4 @@ def tdc_plot_xp_movie(plot_module,
     movie_id = 'XP' + '_' + calc_ids[0]
     # -----------------------------------------
     # make movie
-    plot_module.Movie.plot_movie( MF, movie_id, fps)
+    plot_module.Movie.plot_movie( MF, movie_id, fps, keep_frame_files)
