@@ -29,7 +29,7 @@ ID=['test_osc_2e']
 def do_movie(ID):
     ## moving_grid_dict = dict(n_lines=30, speed=1)
     moving_grid_dict = None
-    tt = [0,0.5]   
+    tt = None   
     ## tt = [0,4]
     xlim =  None
     

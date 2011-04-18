@@ -23,7 +23,7 @@ tdc_set_results_dir('../RESULTS/')
 # ============================================================
 # ID 
 # ============================================================
-ID=['sclf_test_nx2e3_jm1.0_injP']
+ID=['sclf_test_nx5e2_jm1.0']
 
 # ============================================================
 # Plots 
@@ -31,8 +31,8 @@ ID=['sclf_test_nx2e3_jm1.0_injP']
 Plots = {'Rho'          : True,
          'J'            : True,
          'E_acc'        : True,
-         'E_Gauss'      : True,
-         'E__E_Gauss'   : True,
+         'E_Gauss'      : False,
+         'E__E_Gauss'   : False,
          'Phi'          : True,
          'XP'           : True}
 # ============================================================
@@ -48,7 +48,7 @@ def do_movie(ID):
     show_cells=False
 
     xlim=[-0.05,1.05]
-    ylim=[-0.5,12]
+    
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~
     # Rho
@@ -156,7 +156,7 @@ def do_movie(ID):
                                      particle_names,
                                      sample_dict=sample_dict,
                                      tt=tt,
-                                     ylim=ylim,
+                                     ylim=[-0.5,16],
                                      xlim=xlim,
                                      use_cell_coordinates=use_cell_coordinates,
                                      show_cells=show_cells,
