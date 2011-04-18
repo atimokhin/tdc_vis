@@ -23,33 +23,36 @@ tdc_set_results_dir('../RESULTS/')
 # ============================================================
 # IDs 
 # ============================================================
-IDs=['SCLF__jm0.75_L100_X0.5_nGJ2e5_nx5e3_dt4e-3__RhoGJConst__noMC__dP5e-2_inj15',
-     'SCLF__jm0.75_L100_X0.5_nGJ2e5_nx5e3_dt4e-3__RhoGJConst__noMC__dP5e-2_inj20']
+IDs=['SCLF__jm0.95_L800_X0.5_nGJ8e5_nx4e4_dt4e-3__RhoGJConst__noMC__dP5e-2_inj10']
 
 #-----------------
 # plot limits:
 # ----------------
-xlim = [-1,101]
+xlim = [-1,801]
 
 ## # jm0.1 ---
 ## ylim_xp = [-0.8,0.8]
-## ylim_e  = [-10,10]
+## ylim_e  = [-1,1]
 ## # jm0.25 ---
 ## ylim_xp = [-1.5,1.5]
-## ylim_e  = [-10,10]
+## ylim_e  = [-1.5,1.5]
 ## # jm0.5 ---
 ## ylim_xp = [-4,4]
-## ylim_e  = [-10,10]
+## ylim_e  = [-3,3]
 ## # jm0.75 ---
-ylim_xp = [-10,10]
-ylim_e  = [-7,7]
+## ylim_xp = [-10,10]
+## ylim_e  = [-5,5]
 ## # jm0.9 ---
 ## ylim_xp = [-25,25]
-## # jm0.95 ---
-## ylim_xp = [-35,35]
+## ylim_e  = [-7,7]
+# jm0.95 ---
+ylim_xp = [-40,40]
+ylim_e  = [-7,7]
 ## # jm1 ---
 ## ylim_xp = [-10,150]
 ## ylim_e  = [-10,1]
+
+tt=None
 # -----------------
 
 
@@ -59,7 +62,7 @@ ylim_e  = [-7,7]
 Plots = {'XP'           : True,
          'Rho'          : False,
          'J'            : False,
-         'E_acc'        : True,
+         'E_acc'        : False,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
          'Phi'          : False,
@@ -82,8 +85,6 @@ def do_movie(IDs):
 
         use_cell_coordinates=False
         show_cells=False
-
-        tt = None
         #.........................
 
 

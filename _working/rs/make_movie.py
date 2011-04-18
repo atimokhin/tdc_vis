@@ -5,6 +5,8 @@ from Plots  import *
 
 from x_Tests.plot_test_e_e_gauss_movie import *
 
+
+
 # ============================================================
 # Interface
 # ============================================================
@@ -21,7 +23,46 @@ tdc_set_results_dir('../RESULTS/')
 # ============================================================
 # IDs 
 # ============================================================
-IDs=['RS__R6_jp1.0_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU']
+IDs=['RS__R6_jp1.0_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_s1']
+
+#-----------------
+# plot limits:
+# ----------------
+xlim = [-0.005,0.305]
+
+# s1 initial discharge:
+## ylim_xp  = [-1.7e7,1.7e7]
+## ylim_xp  = [-1.7e6,1.7e6]
+ylim_xp  = [-1.7e5,1.7e5]
+ylim_rho = [-100,100]
+ylim_j   = [-100,100]
+ylim_e   = [-2.001,2.001]
+ylim_phi = [-0.5,0.5]
+# ---------------------
+
+tt = [0,2.4]
+
+fps = 8
+
+ghost_points=False
+
+use_cell_coordinates=False
+show_cells=False
+# -----------------
+
+
+# ============================================================
+# Plots 
+# ============================================================
+Plots = {'XP'           : True,
+         'Rho'          : False,
+         'J'            : False,
+         'E_acc'        : False,
+         'E_Gauss'      : False,
+         'E__E_Gauss'   : False,
+         'Phi'          : False,
+         'EP'           : False,
+         'Trajectories' : False }
 # ============================================================
 
 
@@ -29,113 +70,158 @@ IDs=['RS__R6_jp1.0_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU']
 def do_movie(IDs):
     # iterate over IDs <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     for ID in IDs:
+        
+        #.........................
+        # plot parameters:
+        # *xlim*, *ylim_xp* are set above!
+        #.........................
         ## moving_grid_dict = dict(n_lines=30, speed=1)
         moving_grid_dict = None
-        tt=None
-        xlim=[-0.005,0.305]
+
+        #.........................
+
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~
-        # plot Electric field and difference between Gauss' and Ampere's Electric fields
+        # XP Movie
         # ~~~~~~~~~~~~~~~~~~~~~~~~
-        plot_test_e_e_gauss_movie(plot_module,
-                                  ID,
-                                  ylim=[[-1,1],[-1e-1,1e-1]],
-                                  xlim=[xlim,xlim],
-                                  tt=tt,
-                                  fps=15,
-                                  use_cell_coordinates=False,
-                                  show_cells=False,
-                                  time_normalization = 'absolute',
-                                  ghost_points=True)
+        if Plots['XP']:
+            tp = None
+            ## tp = tdc_TP_Data()
+            ## tp.setup_from_file(ID,'p500_ts525')
+            ## tp.delete(range(0,47,2))
+            
+            sample_dict    = dict(name='regular',n_reduce=10,n_min=1000)
+            particle_names = ['Electrons', 'Positrons', 'Pairs']
+
+            tdc_plot_xp_movie(plot_module,
+                              ID,
+                              particle_names,
+                              ylim=ylim_xp,
+                              xlim=xlim,
+                              sample_dict=sample_dict,
+                              tt=tt,
+                              fps=fps,
+                              use_cell_coordinates=use_cell_coordinates,
+                              show_cells=show_cells,
+                              tp=tp,
+                              trail_dict=dict(length=18,marker='numbers'),
+                              moving_grid_dict=moving_grid_dict)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
+
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         # Rho
         # ~~~~~~~~~~~~~~~~~~~~~~~~
-        tdc_plot_field_movie(plot_module,
-                             ID,
-                             'Rho',
-                             ylim=[-15,15],
-                             xlim=xlim,
-                             moving_grid_dict=moving_grid_dict,
-                             tt=tt,
-                             ghost_points=True)
+        if Plots['Rho']:
+            tdc_plot_field_movie(plot_module,
+                                 ID,
+                                 'Rho',
+                                 ylim=ylim_rho,
+                                 xlim=xlim,
+                                 moving_grid_dict=moving_grid_dict,
+                                 tt=tt,
+                                 fps=fps,
+                                 use_cell_coordinates=use_cell_coordinates,
+                                 show_cells=show_cells,
+                                 ghost_points=ghost_points)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         # J
         # ~~~~~~~~~~~~~~~~~~~~~~~~
-        tdc_plot_field_movie(plot_module,
-                             ID,
-                             'J',
-                             ylim=[-15,15],
-                             xlim=xlim,
-                             moving_grid_dict=moving_grid_dict,
-                             tt=tt,
-                             ghost_points=True)
+        if Plots['J']:
+            tdc_plot_field_movie(plot_module,
+                                 ID,
+                                 'J',
+                                 ylim=ylim_j,
+                                 xlim=xlim,
+                                 moving_grid_dict=moving_grid_dict,
+                                 tt=tt,
+                                 fps=fps,
+                                 use_cell_coordinates=use_cell_coordinates,
+                                 show_cells=show_cells,
+                                 ghost_points=ghost_points)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-        ## # Phi
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-        ## tdc_plot_field_movie(ID,'Phi',ylim=[-.5,.1],moving_grid_dict=moving_grid_dict)
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-        ## # E_acc
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-        ## tdc_plot_field_movie(plot_module,
-        ##                      ID,
-        ##                      'E_acc',
-        ##                      ylim=[-1,1],
-        ##                      xlim=xlim,
-        ##                      moving_grid_dict=moving_grid_dict,
-        ##                      tt=tt,
-        ##                      ghost_points=True)
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-        ## # E_Gauss
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-        ## tdc_plot_field_movie(plot_module,
-        ##                      ID,
-        ##                      'E_Gauss',
-        ##                      ylim=[-1,1],
-        ##                      xlim=xlim,
-        ##                      moving_grid_dict=moving_grid_dict,
-        ##                      tt=tt,
-        ##                      ghost_points=True)
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-        ## # Particle Number Density
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
-        ## tdc_plot_ep_density_movie(ID, ylim=[0,60],
-        ##                           e_density_negative=False,
-        ##                           moving_grid_dict=moving_grid_dict)
-        ## # ~~~~~~~~~~~~~~~~~~~~~~~~
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        # E_acc
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        if Plots['E_acc']:
+            tdc_plot_field_movie(plot_module,
+                                 ID,
+                                 'E_acc',
+                                 ylim=ylim_e,
+                                 xlim=xlim,
+                                 moving_grid_dict=moving_grid_dict,
+                                 tt=tt,
+                                 fps=fps,
+                                 use_cell_coordinates=use_cell_coordinates,
+                                 show_cells=show_cells,
+                                 ghost_points=ghost_points)
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~
-        # XP Movie
+        # E_Gauss
         # ~~~~~~~~~~~~~~~~~~~~~~~~
-        tp = None
-        ## tp = tdc_TP_Data()
-        ## tp.setup_from_file(ID,'p500_ts525')
-        ## tp.delete(range(0,47,2))
+        if Plots['E_Gauss']:
+            tdc_plot_field_movie(plot_module,
+                                 ID,
+                                 'E_Gauss',
+                                 ylim=ylim_e,
+                                 xlim=xlim,
+                                 moving_grid_dict=moving_grid_dict,
+                                 tt=tt,
+                                 fps=fps,
+                                 use_cell_coordinates=use_cell_coordinates,
+                                 show_cells=show_cells,
+                                 ghost_points=ghost_points)
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
 
-        sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
-        particle_names = ['Electrons','Positrons','Pairs']
-        ## particle_names = ['Electrons']
 
-        tdc_plot_xp_movie(plot_module,
-                          ID,
-                          particle_names,
-                          ylim=[-1.6e7,1.6e7],
-                          xlim=xlim,
-                          sample_dict=sample_dict,
-                          tt=tt,
-                          tp=tp,
-                          trail_dict=dict(length=18,marker='numbers'),
-                          moving_grid_dict=moving_grid_dict)
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        # E__E_Gauss
+        #  plot Electric field and difference between Gauss' and Ampere's Electric fields
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        if Plots['E__E_Gauss']:
+            plot_test_e_e_gauss_movie(plot_module,
+                                      ID,
+                                      ylim=[ylim_e,[-1e-2,1e-2]],
+                                      xlim=[xlim,xlim],
+                                      tt=tt,
+                                      fps=fps,
+                                      use_cell_coordinates=use_cell_coordinates,
+                                      show_cells=show_cells,
+                                      time_normalization = 'absolute',
+                                      ghost_points=ghost_points)
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        # Phi
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        if Plots['Phi']:
+            tdc_plot_field_movie(plot_module,
+                                 ID,
+                                 'Phi',
+                                 ylim=ylim_phi,
+                                 xlim=xlim,
+                                 moving_grid_dict=moving_grid_dict,
+                                 tt=tt,
+                                 fps=fps,
+                                 use_cell_coordinates=use_cell_coordinates,
+                                 show_cells=show_cells,
+                                 ghost_points=ghost_points)
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        # Particle Number Density
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        if Plots['EP']:
+            tdc_plot_ep_density_movie(plot_module,
+                                      ID,
+                                      ylim=[0,60],
+                                      fps=fps,
+                                      e_density_negative=False,
+                                      moving_grid_dict=moving_grid_dict)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
