@@ -55,6 +55,5 @@ class tdc_TP_Manip(tdc_Manip_Plot_vs_X):
                                      tdc_TP_Plotter(tp=self.tp, trail_dict=trail_dict),
                                      **kwargs )
 
-
     def __repr__(self):
         return self.tp.__repr__()

@@ -80,8 +80,6 @@ class tdc_XP_Data:
         self.timetable.set_normalization(time_normalization)
         # define members ----------------
         self.i_ts=None
-        self.__dspace=None
-        self.__mem_dspace=None
         self.x=np.empty(0)
         self.p=np.empty(0)
         self.w=np.empty(0)
@@ -89,7 +87,24 @@ class tdc_XP_Data:
             self.x_em=np.empty(0)
             self.x_cr=np.empty(0)
             self.t_cr=np.empty(0)
+        # set auxilary members to None ---
+        self.__dspace=None
+        self.__mem_dspace=None
 
+    def get_pure_data_copy(self):
+        """
+        Returns copy containing only data necessary for producing a sinle plot,
+        without HDF file specific info
+        Used for saving data for subsequent restoring of plot without
+        accesing original data files
+        """
+        import copy
+        data=copy.copy(self)
+        data.file_id      = None
+        data.__dspace     = None
+        data.__mem_dspace = None
+        data.timetable    = data.timetable.get_pure_data_copy() 
+        return data
 
     def __len__(self):
         "Return number of currently stored particles"

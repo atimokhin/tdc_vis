@@ -64,6 +64,18 @@ class tdc_SED_Data:
         setup_props = tdc_Setup_Props(calc_id)
         self.W0 = setup_props.get_papam('FMPProps/W0')
 
+    def get_pure_data_copy(self):
+        """
+        Returns copy containing only data necessary for producing a sinle plot,
+        without HDF file specific info
+        Used for saving data for subsequent restoring of plot without
+        accesing original data files
+        """
+        import copy
+        data=copy.copy(self)
+        data.xp=data.xp.get_pure_data_copy() 
+        return data
+
     def __getattr__(self,attrname):
         "Redirect non-implemented requests to XP_Data self.xp"
         return getattr(self.xp, attrname)
@@ -195,14 +207,14 @@ class tdc_SED_Data:
         """
         Set **default** space interval for which particle spectrum
         will be calculated
-        NB: Reads meash.h5 !
+        NB: Reads mesh.h5 !
         xx
           (x1,x2), if None [default] use whole computational domain
         """
         if xx:
             self.xx_default = xx
         else:
-            # read mesh
+            # read Mesh <=== !
             mesh = tdc_Mesh(self.xp.calc_id)
             self.xx_default = (mesh.xmin,mesh.xmax)
 

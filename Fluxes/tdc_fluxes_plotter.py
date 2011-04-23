@@ -23,8 +23,8 @@ class tdc_Fluxes_Plotter(tdc_Data_Plotter):
         self.plot_xlabel  = r'$t$'
         self.plot_ylabel  = self.__labels[fluxes[0].name]
         self.plot_idlabel = self.data[0].name+' : '+self.data[0].calc_ids[0]
-
-
+        # initialize lines
+        self.lines = len(self.data)*[None]
 
     def plot(self,ax,**kwargs):
         for i,flux in enumerate(self.data):

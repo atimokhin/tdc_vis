@@ -10,8 +10,8 @@ from x_Tests.plot_test_e_e_gauss_movie import *
 # ============================================================
 # Interface
 # ============================================================
-## import Plot_GUI as plot_module
-import Plot_CMD as plot_module
+import Plot_GUI as plot_module
+## import Plot_CMD as plot_module
 
 # ============================================================
 # Directory
@@ -23,7 +23,7 @@ tdc_set_results_dir('../RESULTS/')
 # ============================================================
 # IDs 
 # ============================================================
-IDs=['SCLF__Arons_III_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJlin2_A1_AAm0.2__R6C__dP5e-2_inj5_s1']
+IDs=['SCLF__Arons_II_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJlin2_A1_AAm0.2__R6C__dP5e-2_inj5_s1']
 
 #-----------------
 # plot limits:
@@ -72,7 +72,7 @@ Plots = {'XP'           : True,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
          'Phi'          : False,
-         'EP'           : False,
+         'EP'           : True,
          'Trajectories' : False }
 # ============================================================
 

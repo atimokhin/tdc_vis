@@ -1,0 +1,10 @@
+fig_style = dict( fig_width_abs      = 3.5,
+                  aspect_ratio       = 1.618,
+                  left_margin_abs    = 0.45,
+                  right_margin_abs   = 0.05,
+                  top_margin_abs     = 0.05,
+                  bottom_margin_abs  = 0.25,
+                  f_ylabel_left      = 0.1,
+                  f_xlabel_bottom    = 0.2,
+                  label_size         = 10,
+                  ticklabel_fontsize = 7 )

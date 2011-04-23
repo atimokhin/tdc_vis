@@ -28,10 +28,12 @@ class tdc_Mesh:
         """
         # open HDF file
         h5_filename=tdc_Filenames().get_full_filename(calc_id, self.__default_Filename)
-        self.file_id=h5py.h5f.open(h5_filename,flags=h5py.h5f.ACC_RDONLY)
+        ## self.file_id=h5py.h5f.open(h5_filename,flags=h5py.h5f.ACC_RDONLY)
+        file_id=h5py.h5f.open(h5_filename,flags=h5py.h5f.ACC_RDONLY)
         # read positions parameters from HDF file
         dset_name='/Mesh/CellBoundaries'
-        dset=h5py.h5d.open(self.file_id,dset_name)
+        ## dset=h5py.h5d.open(self.file_id,dset_name)
+        dset=h5py.h5d.open(file_id,dset_name)
         dtype=dset.get_type()
         dspace=dset.get_space()
         (self.nx,)=dspace.get_simple_extent_dims()

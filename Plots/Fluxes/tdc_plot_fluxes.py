@@ -32,11 +32,39 @@ def tdc_plot_fluxes( calc_ids,
        <False> if True do not call plot in Manipulator
        useful if additional plot modifications are required
     """       
-    manip = tdc_Flux_Manip(calc_ids, flux_name, prefix, **kwargs)
+    manip = tdc_Flux_Manip(**kwargs)
+    manip.setup_from_data(calc_ids, flux_name, prefix)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
     return manip
 
+
+def tdc_plot_fluxes_restored(filename,
+                             ylim=None,
+                             xlim=None,
+                             print_id=False,
+                             no_plot=False,
+                             **kwargs):
+    """
+    filename
+       pickle file name is 'filename.pickle'
+    Options:
+    --------
+    print_id
+       <False> whether to put id label on the figure
+    no_plot
+       <False> if True do not call plot in Manipulator
+       useful if additional plot modifications are required
+    Returns:
+    --------
+    ()=> tdc_Flux_Manip
+    """
+    # create Manip
+    manip = tdc_Flux_Manip(**kwargs)
+    manip.restore(filename)
+    if not no_plot:
+        manip.plot(ylim, xlim, print_id)
+    return manip
 
 
 class tdc_Flux_Manip(tdc_Manip):
@@ -45,7 +73,14 @@ class tdc_Flux_Manip(tdc_Manip):
     """
     __default_prefix = ('lc','ns')
 
-    def __init__(self, calc_ids, flux_name, prefix=None, **kwargs):
+    def __init__(self,**kwargs):
+        tdc_Manip.__init__(self, **kwargs)
+
+    def setup_from_data(self,
+                        calc_ids,
+                        flux_name,
+                        prefix=None,
+                        **kwargs):
         # fluxes
         self.fluxes = dict()
         # prefix
@@ -58,13 +93,43 @@ class tdc_Flux_Manip(tdc_Manip):
             self.fluxes[pref] = tdc_Flux_Data(calc_ids, flux_name, pref)
         # set PLOTTER by calling base class constructor
         # with tdc_XPs_Plotter instanse
-        tdc_Manip.__init__(self, tdc_Fluxes_Plotter(self.fluxes.values()), **kwargs)
+        self.set_plotter( tdc_Fluxes_Plotter( self.fluxes.values() ) )
+
+    def restore(self,
+                filename):
+        """
+        setup Manip by reading the pickle'd data dumped
+        by Manip called before
+        """
+        import pickle
+        # set restored_from_dump flag so the data cannot be read again
+        self.restored_from_dump=True
+        # Flux DATA <<<<<<<
+        self.fluxes = pickle.load( open(filename+'.pickle','r') )
+        # set PLOTTER by calling base class method
+        self.set_plotter( tdc_Fluxes_Plotter( self.fluxes.values() ) )
+
+    def dump_data(self,filename):
+        """
+        get pure data from plotter and dump it into the pickle file filename.pickle 
+        """
+        import pickle
+        fluxes = self.fluxes
+        for pref in fluxes.keys():
+            fluxes[pref] = fluxes[pref].get_pure_data_copy()
+        pickle.dump( fluxes, open(filename+'.pickle','w') )
 
     def __repr__(self):
-        s =  'tdc_Flux_Manip:\n\n'
+        s = self._manip_name('tdc_Flux_Manip')
+        s += 'calc_ids = %s\n' %  str(self.fluxes[ self.fluxes.keys()[0] ].calc_ids)
+        s += '\nFluxes:\n'
+        for f in self.fluxes.values():
+            s += '\n' + str(f)
         return s
 
-    def plot(self, ylim=None, xlim=None,
+    def plot(self,
+             ylim=None,
+             xlim=None,
              print_id=False,
              **kwargs):
         """
@@ -75,7 +140,9 @@ class tdc_Flux_Manip(tdc_Manip):
                             print_id,
                             **kwargs)
 
-    def semilogy(self, ylim=None, xlim=None,
+    def semilogy(self,
+                 ylim=None,
+                 xlim=None,
                  print_id=False,
                  **kwargs):
         """

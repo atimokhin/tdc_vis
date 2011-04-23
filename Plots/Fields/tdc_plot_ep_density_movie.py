@@ -8,6 +8,7 @@ def tdc_plot_ep_density_movie(plot_module,
                               ylim,
                               xlim=None,
                               fps=None,
+                              keep_frame_files=None,
                               tt=None,
                               e_density_negative=True,
                               moving_grid_dict=None,
@@ -70,4 +71,4 @@ def tdc_plot_ep_density_movie(plot_module,
     movie_id = 'EP' + '_' + calc_ids[0]
     # -----------------------------------------
     # make movie
-    plot_module.Movie.plot_movie( MF, movie_id, fps)
+    plot_module.Movie.plot_movie( MF, movie_id, fps, keep_frame_files)

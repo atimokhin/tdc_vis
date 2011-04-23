@@ -205,6 +205,22 @@ class tdc_Timetable(tdc_Time_Normalizer):
         # define i_ts
         self.i_ts = None
 
+    def get_pure_data_copy(self):
+        """
+        Returns copy containing only data necessary for producing a sinle plot,
+        without HDF file specific info
+        Used for saving data for subsequent restoring of plot without
+        accesing original data files
+        """
+        import copy
+        data=copy.copy(self)
+        data.file_id = None
+        data.__dset = None
+        data.__dtype = None 
+        data.__dspace = None 
+        data.__mem_dspace = None
+        return data
+
     def __repr__(self):
         return '%g [ %s ]' % ( self.get_time(), self.get_normalization() )
 

@@ -18,7 +18,7 @@ class tdc_Manip:
     __label_size         = 15
     __ticklabel_fontsize = 10
 
-    def __init__(self, plotter, **kwargs):
+    def __init__(self, **kwargs):
         # ----------------------------------------
         # setup figure parameters
         self._label_size         = kwargs.get('label_size',
@@ -28,28 +28,39 @@ class tdc_Manip:
         # ----------------------------------------
         #figure geometry
         self.fg = tdc_Single_FigureGeometry(**kwargs) 
-        # by default set into interactive mode
-        self.interactive=True
         # PLOTTER <<<<
-        self.plotter = plotter
-        # i_ts
-        self.i_ts = None
+        self.plotter = None
         # FIGURE <<<<<
         self.fig = None
         # AXES <<<<<<<
         self.ax  = None
+        # i_ts
+        self.i_ts = None
+        # by default set into interactive mode
+        self.interactive=True
+        # if True data are restored from dump file
+        # and are not connected to the data file
+        self.restored_from_dump=False
 
+    def set_plotter(self,plotter):
+        # PLOTTER <<<<
+        self.plotter = plotter        
 
     def read(self, i_ts,**kwargs):
         """
         Reads DATA through plotter class interface at timeshot# i_ts
         """
-        self.i_ts=i_ts
-        self.plotter.read(i_ts,**kwargs)
+        if not self.restored_from_dump:
+            self.i_ts = i_ts
+            self.plotter.read(i_ts,**kwargs)
+        else:
+            print '\nData are restored from dump file and cannot be read for another i_ts!\n'
 
-
-    def plot(self, ylim=None, xlim=None,
-             print_id=False,**kwargs):
+    def plot(self,
+             ylim=None,
+             xlim=None,
+             print_id=False,
+             **kwargs):
         """
         Plot DATA  for already set i_ts.
         All plotting is done via plotter
@@ -85,7 +96,6 @@ class tdc_Manip:
         self.set_xlabel(self.plotter.plot_xlabel)
         # change fontsize
         self._change_ticklabel_fonsize()
-
 
     def print_info(self):
         print self
@@ -163,6 +173,21 @@ class tdc_Manip:
         """
         self.interactive=False
 
+    def dump_data(self,filename):
+        """
+        get pure data from plotter and dump it into the pickle file filename.pickle 
+        """
+        import pickle
+        data = [ d.get_pure_data_copy() for d in self.plotter.data ]
+        pickle.dump( data, open(filename+'.pickle','w') )
+
+    def _manip_name(self,name):
+        """
+        Return properly formatted name on the Manip class
+        taking restored_from_dump flag into account
+        """
+        s = ' ==> RESTORED <== ' if self.restored_from_dump else ''
+        return name + ':' + s + '\n\n'
 
 
 class tdc_Manip_Plot_vs_X(tdc_Manip):
@@ -172,7 +197,7 @@ class tdc_Manip_Plot_vs_X(tdc_Manip):
     - switching between X and CELL coordinates
     - switching between CELL boundaries ON/OFF
     """
-        
+    
     def to_cell_coordinates(self):
         """
         Convert CURRENT plot to cell cordinates

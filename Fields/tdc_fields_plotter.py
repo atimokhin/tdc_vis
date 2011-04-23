@@ -37,7 +37,7 @@ class tdc_Fields_Plotter(tdc_Data_vs_X_Plotter):
             line.set_xdata(self.data[i].x)
         for line in self.lines:    
             ax.draw_artist(line)
-        
+
     def update_plot(self,ax):
         """
         Change f data for existing lines and replot them
@@ -60,7 +60,7 @@ class _Field_Labels:
     This class contains string representation
     for labeling plots for different fields
     """
-
+    
     TeX_Label={\
         'Rho'    : r'$\eta$',\
         'RhoGJ'  : r'$\eta_{\mathrm{GJ}}$',\

@@ -86,11 +86,23 @@ class tdc_Flux_Data:
         self.time_normalizer.set_flyby_time()
         self.reset()
 
+    def get_pure_data_copy(self):
+        """
+        Returns copy containing only data necessary for producing a sinle plot,
+        without HDF file specific info
+        Used for saving data for subsequent restoring of plot without
+        accesing original data files
+        """
+        import copy
+        data=copy.copy(self)
+        data.file_id = None
+        return data
+
     def __repr__(self):
         s  = 'tdc_Flux_Data:\n'
         s += '      flux : "%s"\n' % self.name 
         s += ' direction : %s\n'   % self.prefix 
-        s += '      time : ( %g, %g )  [%s]' %  (self.t[0],self.t[-1],self.time_normalizer)
+        s += '      time : ( %g, %g )  [%s]\n' %  (self.t[0],self.t[-1],self.time_normalizer)
         return s
 
     def set_time(self,tt):

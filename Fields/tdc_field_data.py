@@ -60,7 +60,33 @@ class tdc_Field_Data:
         self.x    = None
         self.f    = None
         self.i_ts = None
+        # set auxilary members to None ---
+        self.__dtype       = None
+        self.__dset_x      = None
+        self.__dtype_x     = None
+        self.__dspace_x    = None
+        self.__file_dspace = None
+        self.__mem_dspace  = None
+        
 
+    def get_pure_data_copy(self):
+        """
+        Returns copy containing only data necessary for producing a sinle plot,
+        without HDF file specific info
+        Used for saving data for subsequent restoring of plot without
+        accesing original data files
+        """
+        import copy
+        data=copy.copy(self)
+        data.file_id       = None
+        data.__dtype       = None
+        data.__dset_x      = None
+        data.__dtype_x     = None
+        data.__dspace_x    = None
+        data.__file_dspace = None
+        data.__mem_dspace  = None
+        data.timetable=data.timetable.get_pure_data_copy() 
+        return data
 
     def read(self, i_ts, re_read_x=False,**kwargs):
         """

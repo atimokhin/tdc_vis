@@ -1,6 +1,6 @@
 import numpy as np
 
-from Common  import tdc_Mesh, tdc_Setup_Props
+from Common  import tdc_Mesh,  tdc_Setup_Props
 from Common  import tdc_Manip
 
 from Particles.tdc_xp_data       import tdc_XP_Data
@@ -12,7 +12,8 @@ def tdc_plot_sed(calc_id, i_ts,
                  particle_names=None,
                  p_bins=None,
                  xx=None,
-                 ylim=None, xlim=None,
+                 ylim=None,
+                 xlim=None,
                  print_id=False,
                  no_plot=False,
                  **kwargs):
@@ -39,9 +40,11 @@ def tdc_plot_sed(calc_id, i_ts,
     --------
     ()=> tdc_SED_Manip
     """
-    
-    manip = tdc_SED_Manip(calc_id, particle_names,
-                          p_bins, xx,
+    manip = tdc_SED_Manip(**kwargs)
+    manip.setup_from_data(calc_id,
+                          particle_names,
+                          p_bins,
+                          xx,
                           **kwargs)
     manip.read(i_ts)
     if not no_plot:
@@ -49,6 +52,35 @@ def tdc_plot_sed(calc_id, i_ts,
     return manip
 
 
+def tdc_plot_sed_restored(filename,
+                          ylim=None,
+                          xlim=None,
+                          print_id=False,
+                          no_plot=False,
+                          **kwargs):
+    """
+    filename
+       pickle file name is 'filename.pickle'
+    Options:
+    --------
+    xlim 
+    ylim
+       <None>  axis limits
+    print_id
+       <False> whether to put id label on the figure
+    no_plot
+       <False> if True do not call plot in Manipulator
+       useful if additional plot modifications are required
+    Returns:
+    --------
+    ()=> tdc_XP_Manip
+    """
+    # create Manip
+    manip = tdc_SED_Manip(**kwargs)
+    manip.restore(filename)
+    if not no_plot:
+        manip.plot(ylim, xlim, print_id)
+    return manip
 
 
 class tdc_SED_Manip(tdc_Manip):
@@ -58,12 +90,17 @@ class tdc_SED_Manip(tdc_Manip):
     __default_particle_names = ['Electrons', 'Positrons', 'Pairs']
     __default_p_bins = (1,1e8,100)
 
-    def __init__(self, calc_id,
-                 particle_names=None, 
-                 p_bins=None,
-                 xx=None,
-                 **kwargs):
+    def __init__(self,**kwargs):
+        tdc_Manip.__init__(self,**kwargs)
 
+    def setup_from_data(self, calc_id,
+                        particle_names=None, 
+                        p_bins=None,
+                        xx=None,
+                        **kwargs):
+        """
+        setup Manip by reading the original data file
+        """        
         # use default particle_names if not set in arguments
         if not particle_names:
             particle_names = self.__default_particle_names
@@ -73,29 +110,68 @@ class tdc_SED_Manip(tdc_Manip):
         # default energy bins
         if not p_bins:
             p_bins=self.__default_p_bins
-        # DATA <<<<<<<
+        # SEDs <<<<<<<
         self.seds=[]
         for pname in particle_names:
             self.seds.append( tdc_SED_Data( calc_id,
                                             particle_name=pname,
                                             p_bins=p_bins,
                                             xx=xx) )
-        # set PLOTTER by calling base class constructor
-        # with tdc_SEDs_Plotter instanse
-        tdc_Manip.__init__(self, tdc_SEDs_Plotter(self.seds),**kwargs )
+        # set PLOTTER by calling base class method
+        self.set_plotter( tdc_SEDs_Plotter(self.seds) )
         # setup normalization constants
         setup_props = tdc_Setup_Props(calc_id)
         self.OmegaPl     = setup_props.get_papam('PlasmaProps/OmegaPl')
         self.LambdaDebye = setup_props.get_papam('PlasmaProps/LambdaDebye')
-        # initialize plasma params to empty dictionsry
+        # initialize plasma params to empty dictionary
         self.plasma_params = {}
         # initialize number of particles dictionary
         self.n_p = {}
         # read mesh
         self._Mesh = tdc_Mesh(calc_id)
 
+    def restore(self,
+                filename,
+                p_bins=None,
+                xx=None):
+        """
+        setup Manip by reading the pickle'd data dumped
+        by Manip called before
+        """
+        import pickle
+        # set restored_from_dump flag so the data cannot be read again
+        self.restored_from_dump=True
+        # SED DATA <<<<<<<
+        dump_dict = pickle.load( open(filename+'.pickle','r') )
+        self.seds = dump_dict['seds']
+        self.set_plotter( tdc_SEDs_Plotter(self.seds) )
+        # i_ts
+        self.i_ts = self.seds[0].i_ts
+        # additional parameters
+        self.OmegaPl       = dump_dict['OmegaPl']
+        self.LambdaDebye   = dump_dict['LambdaDebye']
+        self.plasma_params = dump_dict['plasma_params']
+        self.n_p   = dump_dict['n_p'] 
+        self._Mesh = dump_dict['_Mesh']
+
+
+    def dump_data(self,filename):
+        """
+        get pure data from plotter and dump it into the pickle file filename.pickle 
+        """
+        import pickle
+        data = [ d.get_pure_data_copy() for d in self.plotter.data ]
+        dump_dict={}
+        dump_dict['seds'] = data
+        dump_dict['OmegaPl']       = self.OmegaPl
+        dump_dict['LambdaDebye']   = self.LambdaDebye
+        dump_dict['plasma_params'] = self.plasma_params
+        dump_dict['n_p']   = self.n_p 
+        dump_dict['_Mesh'] = self._Mesh
+        pickle.dump( dump_dict, open(filename+'.pickle','w') )
+
     def __repr__(self):
-        s =  'tdc_SED_Manip:\n\n'
+        s = self._manip_name('tdc_SED_Manip')
         s += 'calc_id = \"%s\"\n'       % self.seds[0].calc_id
         s += '   i_ts = %d\n'           % self.i_ts
         s += '   time = %s\n'           % self.seds[0].timetable
@@ -111,10 +187,16 @@ class tdc_SED_Manip(tdc_Manip):
         Read sparticles at timeshot# i_ts
         and calculates sed for already set p_bins and xx
         """
-        self.read_particles(i_ts)
-        self.calculate_sed()
+        if not self.restored_from_dump:
+            self.i_ts = i_ts
+            self.read_particles(i_ts)
+            self.calculate_sed()
+        else:
+            print '\nData are restored from dump file and cannot be read for another i_ts!\n'
 
-    def plot(self, ylim=None, xlim=None,
+    def plot(self,
+             ylim=None,
+             xlim=None,
              print_id=False,
              **kwargs):
         """
@@ -153,7 +235,9 @@ class tdc_SED_Manip(tdc_Manip):
         self._change_ticklabel_fonsize()
 
     def calculate_sed(self, xx=None):
-        "Calculates sed for already set p_bins and given xx"
+        """
+        Calculates sed for already set p_bins and given xx
+        """
         for sed in self.seds:
             sed.calculate_sed(xx)
         # calculate plasma parameters
@@ -184,19 +268,26 @@ class tdc_SED_Manip(tdc_Manip):
             self.n_p[sed.name] = sed.get_number_of_particles(pp)
         
     def set_momentum_bins(self,p_bins):
-        "Sets 4-momentum bins p_bins for all SEDs"
+        """
+        Sets 4-momentum bins p_bins for all SEDs
+        """
         for sed in self.seds:
             sed.set_momentum_bins(p_bins)
 
     def set_xx_default(self,xx=None):
-        "Set xx_default for all SEDs"
+        """
+        Set xx_default for all SEDs
+        Avoid reading Mesh, save to use on restored data
+        """
+        if not xx:
+            xx = [self._Mesh.xmin, self._Mesh.xmax]
         for sed in self.seds:
             sed.set_xx_default(xx)
 
     def read_particles(self, i_ts):
-        "Read sparticles at timeshot# i_ts"
-        self.i_ts=i_ts
-        # read and plot
+        """
+        Read sparticles at timeshot# i_ts
+        """
         for sed in self.seds:
             sed.read_particles(i_ts)
         # clear plasma params dictionary
@@ -220,3 +311,4 @@ class tdc_SED_Manip(tdc_Manip):
         print 'Plasma properties:\n'
         for key  in sorted(self.plasma_params.keys()):
             print '%10s = %g' % (key,self.plasma_params[key])
+            

@@ -1,4 +1,6 @@
+from Common             import tdc_Data_vs_X_Plotter
 from tdc_fields_plotter import tdc_Fields_Plotter
+
 
 class tdc_EP_Density_Plotter(tdc_Fields_Plotter):
     """
