@@ -53,6 +53,12 @@ ylim_e  = [-7,7]
 ## ylim_e  = [-10,1]
 
 tt=None
+fps = 14
+
+use_cell_coordinates=False
+show_cells=False
+
+keep_frame_files=False
 # -----------------
 
 
@@ -82,9 +88,6 @@ def do_movie(IDs):
         #.........................
         ## moving_grid_dict = dict(n_lines=30, speed=1)
         moving_grid_dict = None
-
-        use_cell_coordinates=False
-        show_cells=False
         #.........................
 
 
@@ -108,6 +111,8 @@ def do_movie(IDs):
                               xlim=xlim,
                               sample_dict=sample_dict,
                               tt=tt,
+                              fps=fps,
+                              keep_frame_files=keep_frame_files,
                               use_cell_coordinates=use_cell_coordinates,
                               show_cells=show_cells,
                               tp=tp,
@@ -127,6 +132,7 @@ def do_movie(IDs):
                                  xlim=xlim,
                                  moving_grid_dict=moving_grid_dict,
                                  tt=tt,
+                                 fps=fps,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
                                  ghost_points=True)
@@ -143,6 +149,7 @@ def do_movie(IDs):
                                  xlim=xlim,
                                  moving_grid_dict=moving_grid_dict,
                                  tt=tt,
+                                 fps=fps,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
                                  ghost_points=True)
@@ -159,6 +166,7 @@ def do_movie(IDs):
                                  xlim=xlim,
                                  moving_grid_dict=moving_grid_dict,
                                  tt=tt,
+                                 fps=fps,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
                                  ghost_points=True)
@@ -175,6 +183,7 @@ def do_movie(IDs):
                                  xlim=xlim,
                                  moving_grid_dict=moving_grid_dict,
                                  tt=tt,
+                                 fps=fps,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
                                  ghost_points=True)
