@@ -58,6 +58,9 @@ use_cell_coordinates=False
 show_cells=False
 
 keep_frame_files=True
+
+## moving_grid_dict = dict(n_lines=30, speed=1)
+moving_grid_dict = None
 # ==================
 
 
@@ -82,15 +85,6 @@ def do_movie(IDs):
     # iterate over IDs <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     for ID in IDs:
         
-        #.........................
-        # plot parameters:
-        # *xlim*, *ylim_xp* are set above!
-        #.........................
-        ## moving_grid_dict = dict(n_lines=30, speed=1)
-        moving_grid_dict = None
-        #.........................
-
-
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         # XP Movie
         # ~~~~~~~~~~~~~~~~~~~~~~~~

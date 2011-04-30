@@ -52,7 +52,7 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
         plot_kwargs={}
         for i,xp in enumerate(self.data):
             plot_kwargs.update(self.__plotstyle[xp.name])
-            plot_kwargs.update(kwargs)
+            plot_kwargs.update(kwargs)            
             self.lines[i], = ax.plot(xp.x, xp.p,
                                      **plot_kwargs)
             ## self.lines[i], = ax.plot(xp.x, xp.p,

@@ -96,7 +96,7 @@ class tdc_XP_Manip(tdc_Manip_Plot_vs_X):
         self.xps=None
         # TP 
         self.tp=None
-
+        
     def setup_from_data(self, calc_id,
                         particle_names=None,
                         sample_dict=None,

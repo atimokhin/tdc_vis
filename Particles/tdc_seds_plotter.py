@@ -3,8 +3,6 @@ from Common import tdc_Data_Plotter
 class tdc_SEDs_Plotter(tdc_Data_Plotter):
     """
     This class is SED plotter
-
-
     """
     __plotstyle_separated = { 'Electrons' : ['k--'] ,
                               'Positrons' : ['k'] ,

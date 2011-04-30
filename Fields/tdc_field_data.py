@@ -1,7 +1,7 @@
 import numpy as np
 import h5py
 
-from Common  import tdc_Filenames, tdc_Timetable, tdc_Setup_Props
+from Common  import tdc_Filenames, tdc_Timetable, tdc_Setup_Props, tdc_Mesh
 
 class tdc_Field_Data:
     """
@@ -56,6 +56,8 @@ class tdc_Field_Data:
         if not time_normalization:
             time_normalization=self.__default_time_normalization
         self.timetable.set_normalization(time_normalization)
+        # Initialize Mesh ---------------
+        self._Mesh = tdc_Mesh(self.calc_id)
         # set other members to None ------
         self.x    = None
         self.f    = None

@@ -1,4 +1,4 @@
-from tdc_mpp                        import tdc_MPP_H, tdc_MPP_V
+from tdc_mpp                        import tdc_MPP, tdc_MPP_H, tdc_MPP_V
 
 from tdc_mpp_timeseries             import tdc_MPP_Timeseries
 

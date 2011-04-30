@@ -75,7 +75,7 @@ class tdc_Field_Manip(tdc_Manip_Plot_vs_X):
     """
     Manipulator class for Field
     """
-    
+
     def __init__(self,**kwargs):
         tdc_Manip_Plot_vs_X.__init__(self,**kwargs)
         # Field DATA <<<<<<<
@@ -92,7 +92,7 @@ class tdc_Field_Manip(tdc_Manip_Plot_vs_X):
         self.field = tdc_Field_Data(calc_id, field_name,**kwargs)
         # set PLOTTER by calling base class method
         self.set_plotter( tdc_Fields_Plotter(self.field) )
-        
+
     def restore(self,
                 filename):
         """

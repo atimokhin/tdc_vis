@@ -87,6 +87,7 @@ class tdc_SED_Manip(tdc_Manip):
     """
     Manipulator class for SED
     """
+    
     __default_particle_names = ['Electrons', 'Positrons', 'Pairs']
     __default_p_bins = (1,1e8,100)
 
@@ -127,8 +128,8 @@ class tdc_SED_Manip(tdc_Manip):
         self.plasma_params = {}
         # initialize number of particles dictionary
         self.n_p = {}
-        # read mesh
-        self._Mesh = tdc_Mesh(calc_id)
+        # get Mesh
+        self._Mesh = self.seds[0].xp._Mesh
 
     def restore(self,
                 filename,
@@ -145,6 +146,8 @@ class tdc_SED_Manip(tdc_Manip):
         dump_dict = pickle.load( open(filename+'.pickle','r') )
         self.seds = dump_dict['seds']
         self.set_plotter( tdc_SEDs_Plotter(self.seds) )
+        # Mesh
+        self._Mesh = self.seds[0].xp._Mesh
         # i_ts
         self.i_ts = self.seds[0].i_ts
         # additional parameters
@@ -152,7 +155,6 @@ class tdc_SED_Manip(tdc_Manip):
         self.LambdaDebye   = dump_dict['LambdaDebye']
         self.plasma_params = dump_dict['plasma_params']
         self.n_p   = dump_dict['n_p'] 
-        self._Mesh = dump_dict['_Mesh']
 
 
     def dump_data(self,filename):
@@ -167,7 +169,6 @@ class tdc_SED_Manip(tdc_Manip):
         dump_dict['LambdaDebye']   = self.LambdaDebye
         dump_dict['plasma_params'] = self.plasma_params
         dump_dict['n_p']   = self.n_p 
-        dump_dict['_Mesh'] = self._Mesh
         pickle.dump( dump_dict, open(filename+'.pickle','w') )
 
     def __repr__(self):

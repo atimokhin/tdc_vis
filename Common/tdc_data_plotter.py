@@ -123,8 +123,8 @@ class tdc_Data_vs_X_Plotter(tdc_Data_Plotter):
     def __init__(self, data):
         # setup base class
         tdc_Data_Plotter.__init__(self,data)
-        # read mesh
-        self._Mesh = tdc_Mesh(self.data[0].calc_id)
+        # set alias for mesh
+        self._Mesh = self.data[0]._Mesh
         # set flag, xmin/max, x-label
         self.use_x_coordinates()
         # initialize cells

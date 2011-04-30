@@ -3,7 +3,8 @@ import h5py
 import math
 
 import Common
-from Common import tdc_Filenames, tdc_Timetable, tdc_Setup_Props
+from   Common import tdc_Filenames, tdc_Timetable, tdc_Setup_Props, tdc_Mesh
+
 
 from tdc_xp_samples import *
 
@@ -65,7 +66,7 @@ class tdc_XP_Data:
         self.name    = particle_name
         # default sample class
         if sample_dict==None:
-            sample_dict=dict(name='regular')
+            sample_dict=dict(name='regular', n_reduce=1, n_min=1)
         self.sample = tdc_get_XP_Sample(sample_dict)
         # set get_weight_flag
         self.get_weight_flag = get_weight
@@ -78,6 +79,8 @@ class tdc_XP_Data:
         if not time_normalization:
             time_normalization=self.__default_time_normalization
         self.timetable.set_normalization(time_normalization)
+        # Initialize Mesh ---------------
+        self._Mesh = tdc_Mesh(self.calc_id)
         # define members ----------------
         self.i_ts=None
         self.x=np.empty(0)

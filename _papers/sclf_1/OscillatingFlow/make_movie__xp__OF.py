@@ -3,7 +3,7 @@
 from Common  import *
 from Plots   import *
 
-import plot_xp_sclf_analytical as sclf_analytical
+from plot_xp__OF_movie import *
 
 
 
@@ -25,24 +25,36 @@ tdc_set_results_dir('../RESULTS/')
 ID=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1']
 
 # ============================================================
+# OF solution file 
+# ============================================================
+of__filename = 'OF__j05'
+
+# ============================================================
 # Plots 
 # ============================================================
 Plots = {'XP'           : True}
 # ============================================================
 
+#-----------------
+# plot limits:
+# ----------------
+xlim=[-0.05,50.05]
+# ----------------
+
+tt=None
+fps = 14
+
+use_cell_coordinates=False
+show_cells=False
+
+keep_frame_files=False
+
+## moving_grid_dict = dict(n_lines=30, speed=1)
+moving_grid_dict = None
+# ================
 
 
 def do_movie(ID):
-    moving_grid_dict = None
-
-    tt = None    
-    ghost_points = True  
-    use_cell_coordinates=False
-    show_cells=False
-
-    xlim=[-0.05,50.05]
-    
-
     
     # ~~~~~~~~~~~~~~~~~~~~~~~~
     # XP Movie with theoretical curves
@@ -54,16 +66,17 @@ def do_movie(ID):
         sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
         particle_names = ['Electrons']
         
-        sclf_analytical.plot_xp_sclf_analytical(plot_module,
-                                                ID,
-                                                particle_names,
-                                                sample_dict=sample_dict,
-                                                tt=tt,
-                                                ylim=[-4,4],
-                                                xlim=xlim,
-                                                use_cell_coordinates=use_cell_coordinates,
-                                                show_cells=show_cells,
-                                                moving_grid_dict=moving_grid_dict)
+        plot_xp__OF_movie(plot_module,
+                          ID,
+                          particle_names,
+                          ylim=[-4,4],
+                          of__filename=of__filename,
+                          sample_dict=sample_dict,
+                          tt=tt,
+                          xlim=xlim,
+                          use_cell_coordinates=use_cell_coordinates,
+                          show_cells=show_cells,
+                          moving_grid_dict=moving_grid_dict)
 
 
 if __name__ == "__main__":

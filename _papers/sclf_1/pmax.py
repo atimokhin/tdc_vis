@@ -10,15 +10,15 @@ from Common  import tdc_Manip, tdc_Data_Plotter
 # filled manually <=====================
 # --------------------------------------
 pmax_dict= {
-    0.1  : [0.1, 0.2],
-    0.25 : [0.2, 0.3],
-    0.5  : [1.1, 2],
-    0.75 : [0.1, 0.2],
-    0.9  : [0.2, 0.3],
-    0.95 : [1.1, 2]
+    0.1  : [0.26, 0.47],
+    0.25 : [0.87, 1.2],
+    0.5  : [2, 3],
+    0.75 : [4.17, 8.34],
+    0.9  : [10.62, 18.93],
+    0.95 : [20.72, 33.34]
     }
 
-ksi_max=0.95
+ksi_max=0.984
 # --------------------------------------
 
 
@@ -71,7 +71,8 @@ def tdc_plot_pmax(nn, ksi_max,
     ()=> Pmax_Manip
     """
 
-    manip = Pmax_Manip(nn, ksi_max, **kwargs)
+    manip = Pmax_Manip(**kwargs)
+    manip.setup_from_data(nn, ksi_max)
     if not no_plot:
         manip.plot(ylim, xlim, print_id=print_id)
     return manip
@@ -81,12 +82,12 @@ class Pmax_Manip(tdc_Manip):
     """
     Manipulator class for pmax plot
     """
-
-    def __init__(self, nn, ksi_max, **kwargs):
-        # set PLOTTER by calling base class constructor
-        tdc_Manip.__init__(self,
-                           Pmax_Plotter(nn,ksi_max),
-                           **kwargs )
+    
+    def setup_from_data(self,
+                        nn,
+                        ksi_max):
+        self.set_plotter( Pmax_Plotter(nn,ksi_max) )
+        
 
     def __repr__(self):
         s =  'Pmax Plotter:\n'

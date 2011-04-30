@@ -10,8 +10,8 @@ from x_Tests.plot_test_e_e_gauss_movie import *
 # ============================================================
 # Interface
 # ============================================================
-## import Plot_GUI as plot_module
-import Plot_CMD as plot_module
+import Plot_GUI as plot_module
+## import Plot_CMD as plot_module
 
 # ============================================================
 # Directory
@@ -23,12 +23,13 @@ tdc_set_results_dir('../RESULTS/')
 # ============================================================
 # IDs 
 # ============================================================
-IDs=['SCLF__jm0.95_L800_X0.5_nGJ8e5_nx4e4_dt4e-3__RhoGJConst__noMC__dP5e-2_inj10']
+IDs=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1']
+
 
 #-----------------
 # plot limits:
 # ----------------
-xlim = [-1,801]
+xlim = [-1,51]
 
 ## # jm0.1 ---
 ## ylim_xp = [-0.8,0.8]
@@ -36,18 +37,18 @@ xlim = [-1,801]
 ## # jm0.25 ---
 ## ylim_xp = [-1.5,1.5]
 ## ylim_e  = [-1.5,1.5]
-## # jm0.5 ---
-## ylim_xp = [-4,4]
-## ylim_e  = [-3,3]
+# jm0.5 ---
+ylim_xp = [-4,4]
+ylim_e  = [-3,3]
 ## # jm0.75 ---
 ## ylim_xp = [-10,10]
 ## ylim_e  = [-5,5]
 ## # jm0.9 ---
 ## ylim_xp = [-25,25]
 ## ylim_e  = [-7,7]
-# jm0.95 ---
-ylim_xp = [-40,40]
-ylim_e  = [-7,7]
+## # jm0.95 ---
+## ylim_xp = [-40,40]
+## ylim_e  = [-7,7]
 ## # jm1 ---
 ## ylim_xp = [-10,150]
 ## ylim_e  = [-10,1]
@@ -59,6 +60,9 @@ use_cell_coordinates=False
 show_cells=False
 
 keep_frame_files=False
+
+## moving_grid_dict = dict(n_lines=30, speed=1)
+moving_grid_dict = None
 # -----------------
 
 
@@ -81,15 +85,6 @@ Plots = {'XP'           : True,
 def do_movie(IDs):
     # iterate over IDs <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     for ID in IDs:
-        
-        #.........................
-        # plot parameters:
-        # *xlim*, *ylim_xp* are set above!
-        #.........................
-        ## moving_grid_dict = dict(n_lines=30, speed=1)
-        moving_grid_dict = None
-        #.........................
-
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         # XP Movie

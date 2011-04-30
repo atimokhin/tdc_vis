@@ -7,9 +7,10 @@ from tdc_mpp_figure_geometry import tdc_MPP_FigureGeometry
 class tdc_MPP:
     """
     Multiple Panel Plot
-    This is the calss which creates figure for MPP plots! 
-
+    This is the class which creates figure for MPP plots! 
+    --------
     Members:
+    --------
     fg
     fig
     grid
@@ -19,7 +20,7 @@ class tdc_MPP:
     __label_size         = 10
     __ticklabel_fontsize = 7
     __time_label_size    = 8
-    
+
     def __init__(self,nx,ny, **kwargs):
         """
         This function setup figure and axes grid (nx x ny),
@@ -43,8 +44,6 @@ class tdc_MPP:
         # grid of axes
         self.grid=[ [self.fig.add_axes( self.fg.axes_rectangle(i,j) ) for j in range(0,nx)]\
                     for i in range(0,ny) ]
-        # get rid of top tick labels
-        self._delete_xlabels_for_middle_plots()
     
     def _change_fonsize(self,axes_list):
         "function for changing fontsize for axes"
@@ -136,13 +135,15 @@ class tdc_MPP_H(tdc_MPP):
     x_labelled_axes
     y_labelled_axes
     """
-    
+
     def __init__(self,nx,ny, **kwargs):
         """
         Call tdc_MPP.__init__
         Set y_labelled_axes and x_labelled_axes
         """
         tdc_MPP.__init__(self,nx,ny, **kwargs)
+        # get rid of top tick labels
+        self._delete_xlabels_for_middle_plots()
         # get rid of right tick labels
         self._delete_ylabels_for_middle_plots()
         # list of labelled axis
@@ -194,13 +195,15 @@ class tdc_MPP_V(tdc_MPP):
     x_labelled_axes
     y_labelled_axes
     """
-    
+
     def __init__(self,nx,ny, **kwargs):
         """
         Call tdc_MPP.__init__
         Set y_labelled_axes and x_labelled_axes
         """
         tdc_MPP.__init__(self,nx,ny, **kwargs)
+        # get rid of top tick labels
+        self._delete_xlabels_for_middle_plots()
         # list of labelled axis
         self.y_labelled_axes=flatten(self.grid)
         self.x_labelled_axes=[ self.grid[ny-1][j]  for j in range(0,nx) ]
