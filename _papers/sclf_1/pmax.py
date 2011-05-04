@@ -23,7 +23,17 @@ ksi_max=0.984
 
 
 tick_and_labels_commands="""
+manip_pmax.set_xlim([-0.025,1.025])
+manip_pmax.set_xticks(np.arange(0,1.1,0.2))
+manip_pmax.set_xticklabels(['0','0.2','0.4','0.6','0.8','1'])
+manip_pmax.set_xticks(np.arange(0.1,1.1,0.2),minor=True)
+
+manip_pmax.set_ylim([-1.5,36])
+manip_pmax.set_yticks([0,10,20,30])
+manip_pmax.set_yticklabels(['0','10','20','30'])
+manip_pmax.set_yticks(np.arange(0,36,2),minor=True)
 """
+
 
 
 
@@ -36,13 +46,13 @@ def do_plot():
     tdc_set_hardcopy_rcparams()
 
     manip_pmax = tdc_plot_pmax(100, ksi_max=ksi_max, **fig_style)
+    tdc_set_default_rcparams()
     manip_pmax.interactive_off()
 
     exec tick_and_labels_commands
 
     manip_pmax.interactive_on()
     plt.show()
-    tdc_set_default_rcparams()
 
 
 

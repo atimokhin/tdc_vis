@@ -17,18 +17,27 @@ class tdc_MPP:
     x_labelled_axes
     y_labelled_axes
     """
-    __label_size         = 10
-    __ticklabel_fontsize = 7
-    __time_label_size    = 8
+    __default_label_fontsize     = 11
+    __default_ticklabel_fontsize = 8
+    __default_timelabel_format   = '%.3f'
+    __default_timelabel_fontsize = 8
 
     def __init__(self,nx,ny, **kwargs):
         """
         This function setup figure and axes grid (nx x ny),
         changes fonts and creates
         x_labelled_axes, y_labelled_axes  lists
-
-        __label_size           -- size of labels            [ 'x-small' ]
-        __ticklabel_fontsize   -- fontsize of ticklabels    [ 7 ]
+        ---------------
+        Options:
+        ---------------
+        _label_fontsize
+            size of labels            [ 10 ]
+        _ticklabel_fontsize
+            fontsize of ticklabels    [ 8 ]
+        timelabel_format
+           string format for timelabel [ '%.3f' ]
+        timelabel_fontsize
+           font size for timelabel     [ 8 ]
         """
         # by default set into interactive mode
         self.interactive=True
@@ -44,15 +53,26 @@ class tdc_MPP:
         # grid of axes
         self.grid=[ [self.fig.add_axes( self.fg.axes_rectangle(i,j) ) for j in range(0,nx)]\
                     for i in range(0,ny) ]
+        # setup label fontsizes
+        self._label_fontsize = kwargs.get('label_fontsize',
+                                          tdc_MPP.__default_label_fontsize)
+        self._ticklabel_fontsize = kwargs.get('ticklabel_fontsize',
+                                              tdc_MPP.__default_ticklabel_fontsize)
+        # set timelabel formats
+        self._timelabel_format = kwargs.get('timelabel_format',
+                                            self.__default_timelabel_format)
+        self._timelabel_fontsize = kwargs.get('timelabel_fontsize',
+                                              self.__default_timelabel_fontsize)
+        
     
     def _change_fonsize(self,axes_list):
         "function for changing fontsize for axes"
         for ax in axes_list:
             for label in ax.xaxis.get_ticklabels():
-                label.set_size(self.__ticklabel_fontsize)
-                for label in ax.yaxis.get_ticklabels():
-                    label.set_size(self.__ticklabel_fontsize)
-
+                label.set_size(self._ticklabel_fontsize)
+            for label in ax.yaxis.get_ticklabels():
+                label.set_size(self._ticklabel_fontsize)
+            
     def _delete_xlabels_for_middle_plots(self):
         "delete x labels in all but bottom plots"
         for i in range(0,self.ny-1):
@@ -63,17 +83,17 @@ class tdc_MPP:
     def set_ylabel(self,i,label):
         "function for labeling of i'th row"
         coord = self.fg.left_ylabel_pos(i)
-        return self.fig.text( *coord, s=label, va='center',ha='left', size=self.__label_size)
+        return self.fig.text( *coord, s=label, va='center',ha='left', size=self._label_fontsize)
 
     def set_top_xlabel(self,j, label):
         "function for labeling of j'th column"
         coord = self.fg.top_xlabel_pos(j)
-        return self.fig.text( *coord, s=label, va='top',ha='center', size=self.__label_size)
+        return self.fig.text( *coord, s=label, va='top',ha='center', size=self._label_fontsize)
     
     def set_bottom_xlabel(self,j, label):
         "function for labeling coordinates of j'th column "
         coord = self.fg.bottom_xlabel_pos(j)
-        return self.fig.text( *coord, s=label, va='top',ha='center', size=self.__label_size)
+        return self.fig.text( *coord, s=label, va='top',ha='center', size=self._label_fontsize)
 
     def set_xlim(self, *args, **kwargs):
         "call set_xlim command for each axes in grid"
@@ -87,7 +107,7 @@ class tdc_MPP:
             ax.xaxis.set_ticks(*args, **kwargs)
         if self.interactive: self.fig.canvas.draw()
 
-    def set_xticklabels(self, labels, tex=True, *args, **kwargs):
+    def set_xticklabels(self, labels, tex=False, *args, **kwargs):
         """
         call set_ticklabels for each xaxis in the grid,
         if tex is True, format each label L as "$L$"
@@ -173,7 +193,7 @@ class tdc_MPP_H(tdc_MPP):
                 ax.yaxis.set_ticks(*args, **kwargs)
         if self.interactive: self.fig.canvas.draw()
 
-    def set_yticklabels(self, rows, labels,tex=True, *args, **kwargs):
+    def set_yticklabels(self, rows, labels,tex=False, *args, **kwargs):
         """
         call set_ticklabels for labelled yaxis in the i'th row,
         if tex is True, format each label L as "$L$"
@@ -226,7 +246,7 @@ class tdc_MPP_V(tdc_MPP):
                 ax.yaxis.set_ticks(*args, **kwargs)
         if self.interactive: self.fig.canvas.draw()
 
-    def set_yticklabels(self, columns, labels,tex=True, *args, **kwargs):
+    def set_yticklabels(self, columns, labels,tex=False, *args, **kwargs):
         """
         call set_ticklabels for labelled yaxis in the i'th row,
         if tex is True, format each label L as "$L$"

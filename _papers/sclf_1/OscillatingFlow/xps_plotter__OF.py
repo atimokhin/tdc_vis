@@ -34,9 +34,7 @@ class XPs_Plotter__OF:
         # read properties file
         h5_filename  = tdc_Filenames().get_full_filename(calc_id, 'setup_properties.h5')
         f0 = h5py.File(h5_filename,'r')
-        #lambda_D = f0['/PlasmaProps/LambdaDebye'].value
         L        = f0['/GridProps/L'].value
-        #n_cells  = f0['/GridProps/NCells'].value
         dX       = f0['/GridProps/dX'].value
         f0.close()
         # interpolated values for p(x) from numerical solutions

@@ -12,8 +12,8 @@ class tdc_Single_FigureGeometry:
     right_margin_abs  = 0.1
     top_margin_abs    = 0.3
     bottom_margin_abs = 0.5
-    f_ylabel_left     = 0.2
-    f_xlabel_bottom   = 0.2
+    xlabel_bottom_y_abs = 0.16
+    ylabel_left_x_abs   = 0.01
 
     def __init__(self,**kwargs):
         """
@@ -22,10 +22,10 @@ class tdc_Single_FigureGeometry:
         # setup figure parameters
         self.fig_width_abs   = kwargs.get('fig_width_abs',
                                           tdc_Single_FigureGeometry.fig_width_abs)
-        self.f_ylabel_left   = kwargs.get('f_ylabel_left',
-                                          tdc_Single_FigureGeometry.f_ylabel_left)
-        self.f_xlabel_bottom = kwargs.get('f_xlabel_bottom',
-                                          tdc_Single_FigureGeometry.f_xlabel_bottom)
+        xlabel_bottom_y_abs = kwargs.get('xlabel_bottom_y_abs',
+                                         tdc_Single_FigureGeometry.xlabel_bottom_y_abs)
+        ylabel_left_x_abs   = kwargs.get('ylabel_left_x_abs',
+                                         tdc_Single_FigureGeometry.ylabel_left_x_abs)
         left_margin_abs  = kwargs.get('left_margin_abs',
                                       tdc_Single_FigureGeometry.left_margin_abs)
         right_margin_abs = kwargs.get('right_margin_abs',
@@ -47,16 +47,19 @@ class tdc_Single_FigureGeometry:
         # formatter ------------------------------
         self.formatter=ScalarFormatter()
         self.formatter.set_powerlimits((-3, 4))
+        # label positions
+        self.xlabel_bottom_y = float(xlabel_bottom_y_abs)/self.fig_height_abs
+        self.ylabel_left_x   = float(ylabel_left_x_abs)/self.fig_width_abs
 
 
     def xlabel_pos(self):
         "x label position in figure coordinates"
         return ( self.left_margin+.5*self.dx_ax,
-                 self.f_xlabel_bottom*self.bottom_margin)
+                 self.xlabel_bottom_y)
 
     def ylabel_pos(self):
         "y label position in figure coordinates"
-        return ( self.f_ylabel_left*self.left_margin,
+        return ( self.ylabel_left_x,
                  self.bottom_margin+.5*self.dy_ax)
 
     def create_figure(self,**kwargs):

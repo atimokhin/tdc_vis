@@ -10,7 +10,6 @@ class tdc_MPP_SED_Timeseries_H ( tdc_MPP_H ):
     Members:
     top_xlabels
     """
-    __timelabel_format = '%.3f'
 
     def __init__(self, plotter, timeshots, xxs, **kwargs):
         """
@@ -18,9 +17,6 @@ class tdc_MPP_SED_Timeseries_H ( tdc_MPP_H ):
         len(plotters)*len(timeshots) grid marks time of each
         timeshot at the top and labels each plot row at the left
         """
-        timelabel_format = kwargs.get('timelabel_format',
-                                      tdc_MPP_SED_Timeseries_H.__timelabel_format)
-
         # check length of parameter arrays
         if len(timeshots)!=len(xxs):
             print '\n len(timeshots)!=len(xxs) : %g != %g\n\n' % (len(timeshots),len(xxs))
@@ -40,7 +36,7 @@ class tdc_MPP_SED_Timeseries_H ( tdc_MPP_H ):
             plotter.plot( self.grid[0][j], prefix = 'lc' )
             plotter.plot( self.grid[1][j], prefix = 'ns' )
             # top x labels <-- times
-            t_str = timelabel_format % plotter.get_time()
+            t_str = self._timelabel_format % plotter.get_time()
             self.top_xlabels.append( self.set_top_xlabel(j, '$t='+t_str+'$') )
         # bottom x labels
         #for j in range(nx): set_bottom_xlabel(j,'$x$')

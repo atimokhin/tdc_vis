@@ -23,13 +23,13 @@ class tdc_MPP_FigureGeometry:
     left_margin_abs   = 0.45
     right_margin_abs  = 0.05
     top_margin_abs    = 0.2
-    bottom_margin_abs = 0.25
-    f_ylabel_left   = 0.2
-    f_ylabel_right  = 0.3333
-    f_xlabel_bottom = 0.3333
-    f_xlabel_top    = 0.25
+    bottom_margin_abs = 0.35
+    xlabel_bottom_y_abs = 0.16
+    xlabel_top_y_abs    = 0.01
+    ylabel_left_x_abs   = 0.01
+    ylabel_right_x_abs  = 0.10
     aspect_ratio = 1.618
-
+    
     def __init__(self,nx,ny,**kwargs):
         """
         for gives number of column nx and rows ny calculates all
@@ -50,14 +50,14 @@ class tdc_MPP_FigureGeometry:
                                        tdc_MPP_FigureGeometry.top_margin_abs)
         bottom_margin_abs = kwargs.get('bottom_margin_abs',
                                        tdc_MPP_FigureGeometry.bottom_margin_abs)
-        self.f_ylabel_left = kwargs.get('f_ylabel_left',
-                                        tdc_MPP_FigureGeometry.f_ylabel_left)
-        self.f_ylabel_right = kwargs.get('f_ylabel_right',
-                                         tdc_MPP_FigureGeometry.f_ylabel_right)
-        self.f_xlabel_top = kwargs.get('f_xlabel_top',
-                                       tdc_MPP_FigureGeometry.f_xlabel_top)
-        self.f_xlabel_bottom = kwargs.get('f_xlabel_bottom',
-                                          tdc_MPP_FigureGeometry.f_xlabel_bottom)
+        xlabel_bottom_y_abs = kwargs.get('xlabel_bottom_y_abs',
+                                         tdc_MPP_FigureGeometry.xlabel_bottom_y_abs)
+        xlabel_top_y_abs    = kwargs.get('xlabel_top_y_abs',
+                                         tdc_MPP_FigureGeometry.xlabel_top_y_abs)
+        ylabel_left_x_abs   = kwargs.get('ylabel_left_x_abs',
+                                         tdc_MPP_FigureGeometry.ylabel_left_x_abs)
+        ylabel_right_x_abs  = kwargs.get('ylabel_right_x_abs',
+                                         tdc_MPP_FigureGeometry.ylabel_right_x_abs)
         
         dx_pad_abs = kwargs.get('dx_pad_abs',tdc_MPP_FigureGeometry.dx_pad_abs)
         dy_pad_abs = kwargs.get('dy_pad_abs',tdc_MPP_FigureGeometry.dy_pad_abs)
@@ -104,6 +104,11 @@ class tdc_MPP_FigureGeometry:
         self.dy_ax_abs  = dy_ax_abs
         self.dx_pad_abs = dx_pad_abs
         self.dy_pad_abs = dy_pad_abs
+        # label positions
+        self.xlabel_bottom_y = float(xlabel_bottom_y_abs)/self.fig_height_abs
+        self.xlabel_top_y    = float(xlabel_top_y_abs)/self.fig_height_abs
+        self.ylabel_left_x   = float(ylabel_left_x_abs)/self.fig_width_abs
+        self.ylabel_right_x  = float(ylabel_right_x_abs)/self.fig_width_abs
 
 
     def get_figsize_abs(self):
@@ -122,21 +127,21 @@ class tdc_MPP_FigureGeometry:
     def top_xlabel_pos(self, j):
         "top x label position for j'th column in figure coordinates"
         return ( self.rect(0,j)[0]+self.rect(0,j)[2]/2.,
-                 1-self.top_margin*self.f_xlabel_top)
+                 1-self.xlabel_top_y)
 
     def bottom_xlabel_pos(self, j):
         "bottom x label position for j'th column in figure coordinates"
         return ( self.rect(0,j)[0]+self.rect(0,j)[2]/2.,
-                 self.bottom_margin*self.f_xlabel_bottom)
+                 self.xlabel_bottom_y)
 
     def left_ylabel_pos(self, i):
         "left y label position for i'th row in figure coordinates"
-        return ( self.left_margin*self.f_ylabel_left,
+        return ( self.ylabel_left_x,
                  self.rect(i,0)[1]+self.rect(i,0)[3]/2.)
 
     def right_ylabel_pos(self, i):
         "right y label position for i'th row in figure coordinates"
-        return ( 1-self.right_margin*self.f_ylabel_right,
+        return ( 1-self.ylabel_right_x,
                  self.rect(i,0)[1]+self.rect(i,0)[3]/2.)
 
 

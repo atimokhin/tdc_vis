@@ -15,16 +15,16 @@ class tdc_Manip:
     i_ts
        current timeshot for data
     """
-    __label_size         = 15
-    __ticklabel_fontsize = 10
+    __default_label_fontsize     = 15
+    __default_ticklabel_fontsize = 10
 
     def __init__(self, **kwargs):
         # ----------------------------------------
         # setup figure parameters
-        self._label_size         = kwargs.get('label_size',
-                                              tdc_Manip.__label_size)
+        self._label_fontsize = kwargs.get('label_fontsize',
+                                          tdc_Manip.__default_label_fontsize)
         self._ticklabel_fontsize = kwargs.get('ticklabel_fontsize',
-                                              tdc_Manip.__ticklabel_fontsize)
+                                              tdc_Manip.__default_ticklabel_fontsize)
         # ----------------------------------------
         #figure geometry
         self.fg = tdc_Single_FigureGeometry(**kwargs) 
@@ -109,11 +109,11 @@ class tdc_Manip:
 
     def set_xlabel(self,xlabel):
         coord = self.fg.xlabel_pos()
-        self.x_label=self.fig.text( *coord, s=xlabel, va='center',ha='center', size=self._label_size)
+        self.x_label=self.fig.text( *coord, s=xlabel, va='top',ha='center', size=self._label_fontsize)
 
     def set_ylabel(self,ylabel):
         coord = self.fg.ylabel_pos()
-        self.y_label=self.fig.text( *coord, s=ylabel, va='center',ha='left', size=self._label_size)
+        self.y_label=self.fig.text( *coord, s=ylabel, va='center',ha='left', size=self._label_fontsize)
 
     def set_xlim(self, *args, **kwargs):
         "call set_xlim command for axes"
@@ -125,7 +125,7 @@ class tdc_Manip:
         self.ax.xaxis.set_ticks(*args, **kwargs)
         if self.interactive: self.fig.canvas.draw()
 
-    def set_xticklabels(self, labels, tex=True, *args, **kwargs):
+    def set_xticklabels(self, labels, tex=False, *args, **kwargs):
         """
         call set_ticklabels for xaxis 
         if tex is True, format each label L as "$L$"
@@ -147,7 +147,7 @@ class tdc_Manip:
         self.ax.yaxis.set_ticks(*args, **kwargs)
         if self.interactive: self.fig.canvas.draw()
 
-    def set_yticklabels(self, labels, tex=True, *args, **kwargs):
+    def set_yticklabels(self, labels, tex=False, *args, **kwargs):
         """
         call set_ticklabels for yaxis 
         if tex is True, format each label L as "$L$"
