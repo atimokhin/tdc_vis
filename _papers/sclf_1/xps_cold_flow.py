@@ -8,6 +8,7 @@ from Particles import *
 
 from MPP import tdc_MPP
 
+from plot_params import mpp_params
 
 
 tick_and_labels_commands="""
@@ -62,10 +63,11 @@ mpp.grid[1][2].set_yticklabels(['-40','-20','0','20','40'])
 j_label_coord={'x' : 0.038, 'y' : .75}
 j_label_fontsize = 8
     
-fig_style = dict( dx_pad_abs          = 0.30,
-                  dy_pad_abs          = 0.25,
-                  left_margin_abs     = 0.40,
-                  top_margin_abs      = 0.1 )
+mpp_params['dx_pad_abs']      = 0.30
+mpp_params['dy_pad_abs']      = 0.25
+mpp_params['left_margin_abs'] = 0.40
+mpp_params['top_margin_abs']  = 0.1
+
 # ---------------------------------
 
 sed_list=[['0.1' , 'sed_jm0.1_2' ],
@@ -76,7 +78,7 @@ sed_list=[['0.1' , 'sed_jm0.1_2' ],
           ['0.95', 'sed_jm0.95_2']]
 
 # create MPP
-mpp=tdc_MPP(3,2, **fig_style)
+mpp=tdc_MPP(3,2, **mpp_params)
 # set parameters (after figure is created)
 tdc_set_hardcopy_rcparams()
 

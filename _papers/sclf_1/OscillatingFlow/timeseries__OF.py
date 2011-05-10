@@ -4,9 +4,12 @@ import numpy             as np
 from Common           import *
 from Particles        import tdc_XP_Data
 
+from Common           import tdc_Data_Sequence_Initializer
+import MPP
+
 from  xps_plotter__OF import XPs_Plotter__OF
 
-import MPP
+from _papers.sclf_1.plot_params import mpp_params
 
 tdc_set_hardcopy_rcparams()
 
@@ -22,10 +25,11 @@ plot_flag = 'jm05'
 # ------------------------------------------------------------
 
 if ( plot_flag == 'jm05' ):
-    ID='SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1'
+    ID=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1',
+        'SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__1']
     of__filename = 'OF__j05'
     select =()
-    timeshots = (2,5,7,9, 10,11,12,13, 20,30,40,50, 100,350,600,800);
+    timeshots = (2,5,7,9, 10,11,12,13, 20,30,40,50, 100,350,600,850);
     shape     = (4,4)
     tick_and_labels_commands="""
 mpp.set_xlim([-1,23])
@@ -55,13 +59,17 @@ mpp.set_yticks((3,),np.arange(-3.5,4,1), minor=True)
 
 # DATA ---------------------
 # XP data
-f2 = tdc_XP_Data(calc_id=ID, particle_name='Electrons')
+f2 = tdc_Data_Sequence_Initializer( tdc_XP_Data,
+                                    calc_ids=ID,
+                                    particle_name='Electrons' )
+
+#f2 = tdc_XP_Data(calc_id=ID, particle_name='Electrons')
 # PLOTTER -----------------
 # field plotter
 p2 = XPs_Plotter__OF( (f2,), of__filename)
 # MFP instance -------------
-mpp = MPP.tdc_MPP_Timeseries( shape, p2, timeshots,select)
-mpp.set_window_title(ID)
+mpp = MPP.tdc_MPP_Timeseries( shape, p2, timeshots,select, **mpp_params)
+mpp.set_window_title(ID[0])
 mpp.interactive_off()
 
 # xlabels

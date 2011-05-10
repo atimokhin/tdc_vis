@@ -1,7 +1,6 @@
 #
 # insert ylabel later in inkscape !
 #
-
 import matplotlib.pyplot as plt
 import numpy             as np
 
@@ -11,6 +10,8 @@ from Particles import *
 from MPP import tdc_MPP_H
 
 import pickle
+
+from plot_params import mpp_params
 
 #tdc_set_results_dir('../RESULTS/FreeAgent/')
 
@@ -31,10 +32,10 @@ mpp._delete_ylabels_for_middle_plots()
 j_label_coord={'x' : 0.09, 'y' : 5}
 j_label_fontsize=8
     
-fig_style = dict( dx_pad_abs         = 0.07,
-                  dy_pad_abs         = 0.07,
-                  left_margin_abs    = 0.55,
-                  top_margin_abs     = 0.1 )
+mpp_params['dx_pad_abs']      = 0.07
+mpp_params['dy_pad_abs']      = 0.07
+mpp_params['left_margin_abs'] = 0.55
+mpp_params['top_margin_abs']  = 0.1
 # ---------------------------------
 
 sed_list=[['0.1' , 'sed_jm0.1_2' ],
@@ -45,7 +46,7 @@ sed_list=[['0.1' , 'sed_jm0.1_2' ],
           ['0.95', 'sed_jm0.95_2']]
 
 # create MPP
-mpp=tdc_MPP_H(3,2, **fig_style)
+mpp=tdc_MPP_H(3,2, **mpp_params)
 # set parameters (after figure is created)
 tdc_set_hardcopy_rcparams()
 # plotters and labels

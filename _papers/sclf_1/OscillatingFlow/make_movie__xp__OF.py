@@ -22,7 +22,8 @@ tdc_set_results_dir('../RESULTS/')
 # ============================================================
 # ID 
 # ============================================================
-ID=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1']
+ID=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1',
+    'SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__1']
 
 # ============================================================
 # OF solution file 
@@ -73,6 +74,7 @@ def do_movie(ID):
                           of__filename=of__filename,
                           sample_dict=sample_dict,
                           tt=tt,
+                          fps=fps,
                           xlim=xlim,
                           use_cell_coordinates=use_cell_coordinates,
                           show_cells=show_cells,

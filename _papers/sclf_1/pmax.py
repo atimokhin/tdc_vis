@@ -4,6 +4,7 @@ import numpy             as np
 from Common  import *
 from Common  import tdc_Manip, tdc_Data_Plotter
 
+from plot_params import single_plot_params
 
 # --------------------------------------
 # dictionary with data takent from plots
@@ -41,11 +42,9 @@ manip_pmax.set_yticks(np.arange(0,36,2),minor=True)
 def do_plot():
     global manip_pmax
 
-    from single_figure_style import fig_style
-
     tdc_set_hardcopy_rcparams()
 
-    manip_pmax = tdc_plot_pmax(100, ksi_max=ksi_max, **fig_style)
+    manip_pmax = tdc_plot_pmax(100, ksi_max=ksi_max, **single_plot_params)
     tdc_set_default_rcparams()
     manip_pmax.interactive_off()
 

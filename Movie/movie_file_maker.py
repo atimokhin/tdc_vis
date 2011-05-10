@@ -68,10 +68,15 @@ class Movie_File_Maker:
         2) MP4Box puts .h264 file into .mp4 container
         3) deletes .h264 temporaty file
         """
+        # [shifruemsya na klastere] ---
+        import socket
+        # mencoder command [shifruemsya na klastere]
+        mencoder_command = 'mencoder' if socket.gethostname()!='ln000' else 'combine.exe'        
+        # -----------------------------
         # run mencoder which combines frames into a movie
         # mpeg4 movie
         command_string = \
-                       "mencoder mf://@" + self.index_filename + " " +\
+                       mencoder_command + " mf://@" + self.index_filename + " " +\
                        "-o "             + self.h264_filename  + " " +\
                        "-mf fps="        + str(self.fps)       + " " +\
                        "-of rawvideo -ovc x264 -x264encopts "        +\
