@@ -69,9 +69,10 @@ class Movie_File_Maker:
         3) deletes .h264 temporaty file
         """
         # [shifruemsya na klastere] ---
-        import socket
+        import os
+        my_host = os.environ.get('MY_HOST','nohost')
         # mencoder command [shifruemsya na klastere]
-        mencoder_command = 'mencoder' if socket.gethostname()!='ln000' else 'combine.exe'        
+        mencoder_command = 'combine.exe' if my_host=='henyey' else 'mencoder'        
         # -----------------------------
         # run mencoder which combines frames into a movie
         # mpeg4 movie
