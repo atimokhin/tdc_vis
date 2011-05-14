@@ -18,37 +18,44 @@ import Plot_GUI as plot_module
 # Directory
 # ============================================================
 tdc_set_results_dir('../RESULTS/')
+##tdc_set_results_dir('../RESULTS/__TDC_2/')
 ## tdc_set_results_dir('../RESULTS/FreeAgent/')
 
 # ============================================================
 # ID 
 # ============================================================
-ID=['sclf_test_nx5e2_jm1.0']
+ID=['sclf_test_nx2e3_jm1.0']
+## ID=['sclf_test_nx5e2_jm1.0']
+## ID=['SCLF__jm1.0_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1']
+## ID=['SCLF__jm1.0_L25_X0.5_nGJ2e5_nx5e3_dt1e-3__RhoGJConst__noMC__dP5e-2_inj15_s1']
+## ID=['SCLF__jm1.0_L6.25_X0.5_nGJ2e5_nx5e3_dt2.5e-4__RhoGJConst__noMC__dP5e-4_inj15_s1']
+## ID=['SCLF__jm1.0_L6.25_X0.5_nGJ2e5_nx5e3_dt2.5e-4__RhoGJConst__noMC__dP5e-4_inj10_s1']
 
 # ============================================================
 # Plots 
 # ============================================================
-Plots = {'Rho'          : True,
-         'J'            : True,
-         'E_acc'        : True,
+Plots = {'Rho'          : False,
+         'J'            : False,
+         'E_acc'        : False,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
-         'Phi'          : True,
+         'Phi'          : False,
          'XP'           : True}
 # ============================================================
 
+moving_grid_dict = None
 
+tt = None    
+ghost_points = True  
+use_cell_coordinates=False
+show_cells=False
+
+xlim=[-0.05,5.05]
+ylim_xp = [-.5,40]
+    
 
 def do_movie(ID):
-    moving_grid_dict = None
 
-    tt = None    
-    ghost_points = True  
-    use_cell_coordinates=False
-    show_cells=False
-
-    xlim=[-0.05,1.05]
-    
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~
     # Rho
@@ -156,7 +163,7 @@ def do_movie(ID):
                                      particle_names,
                                      sample_dict=sample_dict,
                                      tt=tt,
-                                     ylim=[-0.5,16],
+                                     ylim=ylim_xp,
                                      xlim=xlim,
                                      use_cell_coordinates=use_cell_coordinates,
                                      show_cells=show_cells,
