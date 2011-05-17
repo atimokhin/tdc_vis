@@ -19,7 +19,7 @@ tdc_set_results_dir('../RESULTS/')
 # ============================================================
 ## ID=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1',
 ##     'SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__1']
-ID=['sclf_test_L50_nx2e3_jm1.0_injP_inj8_xinjI']
+ID=['sclf_test_L50_nx5e3_jm1.0_injP_inj8_xinjI']
 # ============================================================
 # OF solution file 
 # ============================================================

@@ -11,7 +11,7 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
 
     __plotstyle = { 'Electrons' : {'linestyle':'None','color':'b','marker':'.','markersize':1},
                     'Positrons' : {'linestyle':'None','color':'r','marker':'.','markersize':1},
-                    'Protons'   : {'linestyle':'None','color':'m','marker':'.','markersize':5},  
+                    'Protons'   : {'linestyle':'None','color':'m','marker':'.','markersize':4},  
                     'Pairs'     : {'linestyle':'None','color':'k','marker':'.','markersize':1}   }
 
     __plotlabel = { 'Electrons' : r'$p_{-}$' ,
