@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import os
 
 from Common  import *
 from Plots   import *
@@ -6,13 +7,7 @@ from Plots   import *
 from plot_xp__OF_movie import *
 
 
-
-# ============================================================
-# Interface
-# ============================================================
-import Plot_GUI as plot_module
-## import Plot_CMD as plot_module
-
+        
 # ============================================================
 # Directory
 # ============================================================
@@ -22,13 +17,14 @@ tdc_set_results_dir('../RESULTS/')
 # ============================================================
 # ID 
 # ============================================================
-ID=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1',
-    'SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__1']
-
+## ID=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1',
+##     'SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__1']
+ID=['sclf_test_L50_nx2e3_jm1.0_injP_inj8_xinjI']
 # ============================================================
 # OF solution file 
 # ============================================================
-of__filename = 'OF__j05'
+## of__filename = 'OF__j05'
+of__filename = 'OF__j10'
 
 # ============================================================
 # Plots 
@@ -41,6 +37,14 @@ Plots = {'XP'           : True}
 # ----------------
 xlim=[-0.05,50.05]
 # ----------------
+
+## # j= 0.5 j_GJ
+## ylim_xp=[-4,4]
+## # -----------
+# j= 1.0 j_GJ
+ylim_xp=[-1,75]
+# -----------
+
 
 tt=None
 fps = 14
@@ -56,6 +60,16 @@ moving_grid_dict = None
 
 
 def do_movie(ID):
+    # ==========================================
+    # Interface
+    # ==========================================
+    interface = os.environ.get('MPL_INTERFACE','GUI')
+    if interface=='GUI':
+        import Plot_GUI as plot_module
+    else:
+        import Plot_CMD as plot_module
+    # ==========================================
+
     
     # ~~~~~~~~~~~~~~~~~~~~~~~~
     # XP Movie with theoretical curves
@@ -70,7 +84,7 @@ def do_movie(ID):
         plot_xp__OF_movie(plot_module,
                           ID,
                           particle_names,
-                          ylim=[-4,4],
+                          ylim=ylim_xp,
                           of__filename=of__filename,
                           sample_dict=sample_dict,
                           tt=tt,

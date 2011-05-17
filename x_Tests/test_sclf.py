@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import os
 
 from Common  import *
 from Plots   import *
@@ -9,27 +10,17 @@ from plot_test_e_e_gauss_movie import *
 
 
 # ============================================================
-# Interface
-# ============================================================
-import Plot_GUI as plot_module
-## import Plot_CMD as plot_module
-
-# ============================================================
 # Directory
 # ============================================================
 tdc_set_results_dir('../RESULTS/')
-##tdc_set_results_dir('../RESULTS/__TDC_2/')
+## tdc_set_results_dir('../RESULTS/__TDC_2/')
 ## tdc_set_results_dir('../RESULTS/FreeAgent/')
 
 # ============================================================
 # ID 
 # ============================================================
-ID=['sclf_test_nx2e3_jm1.0']
-## ID=['sclf_test_nx5e2_jm1.0']
+ID=['sclf_test_L50_nx2e3_jm1.0_injP_inj8_xinjI']
 ## ID=['SCLF__jm1.0_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1']
-## ID=['SCLF__jm1.0_L25_X0.5_nGJ2e5_nx5e3_dt1e-3__RhoGJConst__noMC__dP5e-2_inj15_s1']
-## ID=['SCLF__jm1.0_L6.25_X0.5_nGJ2e5_nx5e3_dt2.5e-4__RhoGJConst__noMC__dP5e-4_inj15_s1']
-## ID=['SCLF__jm1.0_L6.25_X0.5_nGJ2e5_nx5e3_dt2.5e-4__RhoGJConst__noMC__dP5e-4_inj10_s1']
 
 # ============================================================
 # Plots 
@@ -50,11 +41,20 @@ ghost_points = True
 use_cell_coordinates=False
 show_cells=False
 
-xlim=[-0.05,5.05]
+xlim=[-0.05,50.05]
 ylim_xp = [-.5,40]
     
 
 def do_movie(ID):
+    # ==========================================
+    # Interface
+    # ==========================================
+    interface = os.environ.get('MPL_INTERFACE','GUI')
+    if interface=='GUI':
+        import Plot_GUI as plot_module
+    else:
+        import Plot_CMD as plot_module
+    # ==========================================
 
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~

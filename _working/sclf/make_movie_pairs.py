@@ -1,17 +1,11 @@
 #!/usr/bin/python
+import os
 
 from Common import *
 from Plots  import *
 
 from x_Tests.plot_test_e_e_gauss_movie import *
 
-
-
-# ============================================================
-# Interface
-# ============================================================
-import Plot_GUI as plot_module
-## import Plot_CMD as plot_module
 
 # ============================================================
 # Directory
@@ -82,6 +76,16 @@ Plots = {'XP'           : True,
 
 
 def do_movie(IDs):
+    # ==========================================
+    # Interface
+    # ==========================================
+    interface = os.environ.get('MPL_INTERFACE','GUI')
+    if interface=='GUI':
+        import Plot_GUI as plot_module
+    else:
+        import Plot_CMD as plot_module
+    # ==========================================
+
     # iterate over IDs <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     for ID in IDs:
         
