@@ -11,20 +11,21 @@ from plot_xp__OF_movie import *
 # ============================================================
 # Directory
 # ============================================================
-tdc_set_results_dir('../RESULTS/')
+## tdc_set_results_dir('../RESULTS/')
+tdc_set_results_dir('../RESULTS/__TDC_2')
 ## tdc_set_results_dir('../RESULTS/FreeAgent/')
 
 # ============================================================
 # ID 
 # ============================================================
-## ID=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1',
-##     'SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__1']
-ID=['sclf_test_L50_nx5e3_jm1.0_injP_inj8_xinjI']
+ID=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1',
+    'SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__1']
+## ID=['sclf_test_L50_nx2e3_jm1.0_injP_inj8_xinjII']
 # ============================================================
 # OF solution file 
 # ============================================================
-## of__filename = 'OF__j05'
-of__filename = 'OF__j10'
+of__filename = 'OF__j05'
+## of__filename = 'OF__j10'
 
 # ============================================================
 # Plots 
@@ -35,19 +36,20 @@ Plots = {'XP'           : True}
 #-----------------
 # plot limits:
 # ----------------
-xlim=[-0.05,50.05]
-# ----------------
 
-## # j= 0.5 j_GJ
-## ylim_xp=[-4,4]
-## # -----------
-# j= 1.0 j_GJ
-ylim_xp=[-1,75]
+# j= 0.5 j_GJ
+xlim=[-0.05,50.05]
+ylim_xp=[-4,4]
 # -----------
+## # j= 1.0 j_GJ
+## xlim=[-2,102]
+## ylim_xp=[-2,150]
+## # -----------
 
 
 tt=None
-fps = 14
+tt=[0,4]
+fps = 11
 
 use_cell_coordinates=False
 show_cells=False
