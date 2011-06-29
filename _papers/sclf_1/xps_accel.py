@@ -1,19 +1,18 @@
+import matplotlib.pyplot as plt
+import numpy             as np
+
+from Common  import *
 from Common  import tdc_Manip_Plot_vs_X
 
 from Particles.tdc_xp_data          import tdc_XP_Data
 from Particles.tdc_xps_tp_plotter   import tdc_XPs_TP_Plotter
 
+from plot_params import single_plot_params
+
 
 tick_and_labels_commands="""
-manip_pmax.set_xlim([-0.025,1.025])
-manip_pmax.set_xticks(np.arange(0,1.1,0.2))
-manip_pmax.set_xticklabels(['0','0.2','0.4','0.6','0.8','1'])
-manip_pmax.set_xticks(np.arange(0.1,1.1,0.2),minor=True)
-
-manip_pmax.set_ylim([-1.5,36])
-manip_pmax.set_yticks([0,10,20,30])
-manip_pmax.set_yticklabels(['0','10','20','30'])
-manip_pmax.set_yticks(np.arange(0,36,2),minor=True)
+manip_xps_accel.set_ylim([-130,2800])
+manip_xps_accel.set_xlim([-4,102])
 """
 filename='xps_accel'
 
@@ -37,13 +36,13 @@ def do_plot(filename):
     tdc_set_hardcopy_rcparams()
     tdc_set_results_dir('../RESULTS/__TDC_2')
 
-    manip_xps_accel = tdc_plot_xp_accel_restored(filename)
+    manip_xps_accel = tdc_plot_xp_accel_restored(filename, **single_plot_params)
     tdc_set_default_rcparams()
     manip_xps_accel.interactive_off()
 
     exec tick_and_labels_commands
 
-    manip_pmax.interactive_on()
+    manip_xps_accel.interactive_on()
     plt.show()
 
 
@@ -122,7 +121,7 @@ def tdc_plot_xp_accel_restored(filename,
     """
     # create Manip
     manip = XP_Manip_Accel(**kwargs)
-    manip.restore(filename)
+    manip.restore('../RESULTS/__TDC_2/' + filename)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
     return manip
@@ -210,4 +209,4 @@ class XP_Manip_Accel(tdc_Manip_Plot_vs_X):
 
 
 if __name__ == "__main__":
-    do_plot()
+    do_plot(filename)

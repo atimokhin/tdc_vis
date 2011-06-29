@@ -20,7 +20,7 @@ class MovieGUI(gtk.Window):
     cp      -- Control panel
     toolbar -- Toolbar
     """
-
+    
     def make_control_box(self):
         "make VBox with various control panels"
         # define various control panels
@@ -66,7 +66,7 @@ class MovieGUI(gtk.Window):
         canvas_frame.set_border_width(3)
         # make |control box|
         ctrl_box = self.make_control_box()
-        # put |canas| and |control box| into an *HBox
+        # put |canvas| and |control box| into an *HBox
         hbox = gtk.HBox()
         hbox.pack_start(canvas_frame,True,True)
         hbox.pack_start(ctrl_box,False)

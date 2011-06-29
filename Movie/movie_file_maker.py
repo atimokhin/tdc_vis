@@ -21,7 +21,7 @@ class Movie_File_Maker:
        whether to keep png frame files after creating movie
        default - False
     """
-
+    
     __index_filename         = 'index.txt'
     _frame_filename          = 'frame'
     _default_movie_filename  = 'animation'

@@ -76,10 +76,10 @@ class tdc_SED_Data:
         data.xp=data.xp.get_pure_data_copy() 
         return data
 
-    def __getattr__(self,attrname):
-        "Redirect non-implemented requests to XP_Data self.xp"
-        return getattr(self.xp, attrname)
-
+    ## def __getattr__(self,attrname):
+    ##     "Redirect non-implemented requests to XP_Data self.xp"
+    ##     return getattr(self.xp, attrname)
+    
     def __repr__(self):
         s  = 'tdc_SED_Data:\n'
         s += ' particle name : %s\n' % self.name

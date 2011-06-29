@@ -27,7 +27,7 @@ class MovieFrames:
     self.p_time_label
     self.formatter
     """
-
+    
     def __init__(self, seq_plotter):
         # sequence plotter
         if not isinstance( seq_plotter, (tuple,list)):
