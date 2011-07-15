@@ -10,22 +10,32 @@ from x_Tests.plot_test_e_e_gauss_movie import *
 # ============================================================
 # Directory
 # ============================================================
-tdc_set_results_dir('../RESULTS/')
+## tdc_set_results_dir('../RESULTS/')
 ## tdc_set_results_dir('../RESULTS/FreeAgent/')
+tdc_set_results_dir('../RESULTS/WD/')
 
 
 # ============================================================
 # IDs 
 # ============================================================
-IDs=['SCLF__Arons_II_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJlin2_A1_AAm0.2__R6C__dP5e-2_inj5_s1']
+## IDs=['SCLF__Arons_II_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJlin2_A1_AAm0.2__R6C__dP5e-2_inj5_s1']
+IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1']
+IDs=['SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj5_sU_P']
+IDs=['SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj7_sU']
+
 
 #-----------------
 # plot limits:
 # ----------------
 xlim = [-0.01,1.01]
 
-ylim_xp = [-2e6,2e6]
-ylim_e  = [-.04,.04]
+##  jp0.5 ---
+ylim_xp  = [-5e8,5e8]
+ylim_rho = [-4,4]
+ylim_j   = [-4,4]
+ylim_e   = [-1.1,1.1]
+ylim_phi   = [-1.1,1.1]
+ylim_ep  = [-0.5,120]
 
 ## # jm0.5 ---
 ## ylim_xp = [-50,50]
@@ -44,14 +54,17 @@ ylim_e  = [-.04,.04]
 ## ylim_e  = [-1,1]
 ## #-----------------
 
+symlog=True
+linthreshy=5
+
 tt = None
 
-fps = 14
+fps = 9
 
 use_cell_coordinates=False
 show_cells=False
 
-keep_frame_files=True
+keep_frame_files=False
 
 ## moving_grid_dict = dict(n_lines=30, speed=1)
 moving_grid_dict = None
@@ -69,7 +82,9 @@ Plots = {'XP'           : True,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
          'Phi'          : False,
-         'EP'           : True,
+         'EP'           : False,
+         'EPG'          : True,
+         'EPGP'         : False,
          'Trajectories' : False }
 # ============================================================
 
@@ -85,7 +100,7 @@ def do_movie(IDs):
     else:
         import Plot_CMD as plot_module
     # ==========================================
-
+    
     # iterate over IDs <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     for ID in IDs:
         
@@ -99,7 +114,7 @@ def do_movie(IDs):
             ## tp.delete(range(0,47,2))
             
             sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
-            particle_names = ['Positrons','Electrons','Pairs']
+            particle_names = ['Positrons','Electrons','Pairs','Protons']
 
             tdc_plot_xp_movie(plot_module,
                               ID,
@@ -114,7 +129,9 @@ def do_movie(IDs):
                               show_cells=show_cells,
                               tp=tp,
                               trail_dict=dict(length=18,marker='numbers'),
-                              moving_grid_dict=moving_grid_dict)
+                              moving_grid_dict=moving_grid_dict,
+                              symlog=symlog,
+                              linthreshy=linthreshy)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -125,7 +142,7 @@ def do_movie(IDs):
             tdc_plot_field_movie(plot_module,
                                  ID,
                                  'Rho',
-                                 ylim=[-3,3],
+                                 ylim=ylim_rho,
                                  xlim=xlim,
                                  moving_grid_dict=moving_grid_dict,
                                  tt=tt,
@@ -142,10 +159,11 @@ def do_movie(IDs):
             tdc_plot_field_movie(plot_module,
                                  ID,
                                  'J',
-                                 ylim=[-3,3],
+                                 ylim=ylim_j,
                                  xlim=xlim,
                                  moving_grid_dict=moving_grid_dict,
                                  tt=tt,
+                                 fps=fps,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
                                  ghost_points=True)
@@ -210,7 +228,7 @@ def do_movie(IDs):
             tdc_plot_field_movie(plot_module,
                                  ID,
                                  'Phi',
-                                 ylim=[-.5,.1],
+                                 ylim=ylim_phi,
                                  tt=tt,
                                  fps=fps,
                                  moving_grid_dict=moving_grid_dict)
@@ -222,11 +240,37 @@ def do_movie(IDs):
         if Plots['EP']:
             tdc_plot_ep_density_movie(plot_module,
                                       ID,
-                                      ylim=[0,60],
+                                      ylim=ylim_ep,
                                       tt=tt,
                                       fps=fps,
                                       e_density_negative=False,
                                       moving_grid_dict=moving_grid_dict)
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        # Particle Number Density
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        if Plots['EPG']:
+            tdc_plot_epg_density_movie(plot_module,
+                                       ID,
+                                       ylim=ylim_ep,
+                                       tt=tt,
+                                       fps=fps,
+                                       e_density_negative=False,
+                                       moving_grid_dict=moving_grid_dict)
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        # Particle Number Density
+        # ~~~~~~~~~~~~~~~~~~~~~~~~
+        if Plots['EPGP']:
+            tdc_plot_epgp_density_movie(plot_module,
+                                        ID,
+                                        ylim=ylim_ep,
+                                        tt=tt,
+                                        fps=fps,
+                                        e_density_negative=False,
+                                        moving_grid_dict=moving_grid_dict)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
 

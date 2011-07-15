@@ -64,7 +64,7 @@ class MovieFrames__CMD(MovieFrames):
                                              't=%.3f' % P.get_time(),
                                              transform = A.transAxes) )
 
-    def animation_update(self,i_frame):
+    def animation_update(self,i_frame,**kwargs):
         """
         - reads data for i_frame's frame
         - clear axes
@@ -73,5 +73,5 @@ class MovieFrames__CMD(MovieFrames):
         for P,A in zip(self.seq_plotter,self.ax):
             P.read(i_frame)
             A.cla()
-        self.plot()
+        self.plot(**kwargs)
 

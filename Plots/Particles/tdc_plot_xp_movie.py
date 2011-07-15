@@ -18,6 +18,8 @@ def tdc_plot_xp_movie(plot_module,
                       use_cell_coordinates=False,
                       show_cells=False,
                       time_normalization=None,
+                      symlog=False,
+                      linthreshy=5,
                       **kwargs):
     """
     calc_ids
@@ -82,4 +84,7 @@ def tdc_plot_xp_movie(plot_module,
     movie_id = 'XP' + '_' + calc_ids[0]
     # -----------------------------------------
     # make movie
-    plot_module.Movie.plot_movie( MF, movie_id, fps, keep_frame_files)
+    plot_module.Movie.plot_movie( MF, movie_id, fps, keep_frame_files,
+                                  symlog=symlog,
+                                  linthreshy=linthreshy
+                                  )

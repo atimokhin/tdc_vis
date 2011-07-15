@@ -11,6 +11,8 @@ def tdc_plot_xp(calc_id, i_ts,
                 trail_dict=None,
                 ylim=None,
                 xlim=None,
+                symlog=False,
+                linthreshy=5,
                 print_id=False,
                 no_plot=False,
                 **kwargs):

@@ -6,13 +6,19 @@ from Common.tdc_moving_grid_plotter       import tdc_Moving_Grid_Plotter
 
 from MPP       import *
 
+
 def tdc_mpp_v__e_rho_n(ID,timeshots,
                        moving_grid_dict=None,
                        **kwarg):
     """
-    plots e/p number density, charge density, and electric field for
-    timeshots, returns tdc_MPP_Comparative_Timeseries_V class instance with the
-    plot
+    for *timeshots* plots:
+    [1] e/p number density
+    [2] charge density
+    [3] electric field
+    --------
+    Returns:
+    --------
+    ()=>  tdc_MPP_Comparative_Timeseries_V instance with the plot
     """
     # electric field
     f1 = tdc_Field_Data(calc_id=ID, field_name='E_acc')
@@ -32,6 +38,3 @@ def tdc_mpp_v__e_rho_n(ID,timeshots,
     # MFP instance
     mpp = tdc_MPP_Comparative_Timeseries_V( (fp1,fp2,fp3), timeshots, **kwarg)
     return mpp
-
-
-

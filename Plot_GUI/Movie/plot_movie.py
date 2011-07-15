@@ -1,7 +1,7 @@
 from movie_file_maker__gui import Movie_File_Maker__GUI
 from movie_maker import Movie_Maker
 
-def plot_movie( movie_frames, movie_id, fps, keep_frame_files ):
+def plot_movie( movie_frames, movie_id, fps, keep_frame_files,**kwargs):
     """
     plot_movie( movie_frames, movie_id, fps )
     Common function for creating movie -- specific for GUI
@@ -19,4 +19,5 @@ def plot_movie( movie_frames, movie_id, fps, keep_frame_files ):
     # movie maker
     MM = Movie_Maker(MF, MFM)
     # play movie
-    MM.animate()
+    # ====> here keyword parameters go to the plotter's plot method <=====
+    MM.animate(**kwargs)

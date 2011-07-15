@@ -27,7 +27,7 @@ class tdc_Manip:
                                               tdc_Manip.__default_ticklabel_fontsize)
         # ----------------------------------------
         #figure geometry
-        self.fg = tdc_Single_FigureGeometry(**kwargs) 
+        self.fig_geom = tdc_Single_FigureGeometry(**kwargs) 
         # PLOTTER <<<<
         self.plotter = None
         # FIGURE <<<<<
@@ -70,7 +70,7 @@ class tdc_Manip:
         print_id  -- print label on the plot? <False>
         """
         # FIGURE ---------------------------------
-        self.fig = self.fg.create_figure(facecolor='w')
+        self.fig = self.fig_geom.create_figure(facecolor='w')
         # set window title
         # id_label
         id_label = self.plotter.plot_idlabel   +\
@@ -108,11 +108,11 @@ class tdc_Manip:
             label.set_size(self._ticklabel_fontsize)
 
     def set_xlabel(self,xlabel):
-        coord = self.fg.xlabel_pos()
+        coord = self.fig_geom.xlabel_pos()
         self.x_label=self.fig.text( *coord, s=xlabel, va='top',ha='center', size=self._label_fontsize)
 
     def set_ylabel(self,ylabel):
-        coord = self.fg.ylabel_pos()
+        coord = self.fig_geom.ylabel_pos()
         self.y_label=self.fig.text( *coord, s=ylabel, va='center',ha='left', size=self._label_fontsize)
 
     def set_xlim(self, *args, **kwargs):

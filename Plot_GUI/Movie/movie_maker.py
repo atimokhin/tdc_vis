@@ -21,7 +21,10 @@ class Movie_Maker:
         self.GUI.set_title(self.F.plot_idlabel) 
 
 
-    def animate(self):
+    def animate(self,**kwargs):
         self.GUI.show_all()
+        # set plot keywords
+        self.ME.set_plot_keywords(**kwargs)
+        # add ME.animate to idle queue
         gobject.idle_add(self.ME.animate)
         gtk.main()

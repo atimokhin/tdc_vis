@@ -7,9 +7,14 @@ from MPP       import *
 
 def tdc_mpp__n_rho_e(ID,timeshots,**kwarg):
     """
-    plots e/p number density, charge density, and electric field for
-    timeshots, returns tdc_MPP_Comparative_Timeseries_H class instance with the
-    plot
+    for *timeshots* plots:
+    [1] e/p number density
+    [2] charge density
+    [3] electric field
+    --------
+    Returns:
+    --------
+    ()=>  tdc_MPP_Comparative_Timeseries_H instance with the plot
     """
     # electron and positron number densities
     f1_e = tdc_Field_Data(calc_id=ID, field_name='N', filename='prop_Electrons.h5' )
@@ -25,6 +30,3 @@ def tdc_mpp__n_rho_e(ID,timeshots,**kwarg):
     # MFP instance
     mpp = tdc_MPP_Comparative_Timeseries_H( (fp1,fp2,fp3), timeshots, **kwarg)
     return mpp
-
-
-

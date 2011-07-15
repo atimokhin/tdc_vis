@@ -1,8 +1,8 @@
 from movie_file_maker__cmd      import Movie_File_Maker__CMD
 
-def plot_movie( movie_frames, movie_id, fps, keep_frame_files):
+def plot_movie( movie_frames, movie_id, fps, keep_frame_files, **kwargs):
     """
-    plot_movie__cmd( plotter, movie_id, ylim, fps, **kwargs )
+    plot_movie( plotter, movie_id, ylim, fps, **kwargs )
     Common function for creating movie file from the command line interface
     ------------
     params:
@@ -18,7 +18,8 @@ def plot_movie( movie_frames, movie_id, fps, keep_frame_files):
     # write frames ----------------------------
     MFM.open_index_file()
     for i in range(MF.i_frame_min, MF.i_frame_max):
-        MF.animation_update(i)
+        # ====> here keyword parameters go to the plotter's plot method <=====
+        MF.animation_update(i,**kwargs)
         print 'Saving frame %4d (out of %d)' % (i,MF.i_frame_max)  
         MFM.store_snapshot(MF.figure)
     MFM.close_index_file()

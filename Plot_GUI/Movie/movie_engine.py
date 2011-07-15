@@ -20,7 +20,11 @@ class MovieEngine:
         self.tstart = time.time()
         # flags
         self.redraw_flag=False
+        # plot keywords
+        self.plot_keywords=None
 
+    def set_plot_keywords(self,**kwargs):
+        self.plot_keywords=kwargs
 
     def set_frame_number_limits(self, i_min=1,i_max=1):
         self.i_frame_min=i_min
@@ -45,7 +49,7 @@ class MovieEngine:
         # ----------------------------
         if not self.background:
             # plot
-            F.plot(animated=True)
+            F.plot(animated=True,**self.plot_keywords)
             F.canvas.draw()
             self.background = [ F.canvas.copy_from_bbox(A.bbox) for A in F.ax ]
         # ----------------------------
@@ -53,7 +57,7 @@ class MovieEngine:
         # ----------------------------
         if F.redraw_flag:
             # clear axes and plot again
-            F.replot()
+            F.replot(**self.plot_keywords)
             F.canvas.draw()
             self.background = [ F.canvas.copy_from_bbox(A.bbox) for A in F.ax ]
             F.redraw_flag=False

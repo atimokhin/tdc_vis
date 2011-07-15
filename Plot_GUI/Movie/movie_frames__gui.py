@@ -95,7 +95,7 @@ class MovieFrames__GUI(MovieFrames):
             xlim.append( A.get_xlim() )
             ylim.append( A.get_ylim() )
         # do plot
-        self.plot(animated=True)
+        self.plot(animated=True,**kwargs)
         # restore axes limits
         for A,xl,yl in zip(self.ax,xlim,ylim):
             A.set_xlim( xl )

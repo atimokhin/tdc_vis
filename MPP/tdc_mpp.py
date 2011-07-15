@@ -155,7 +155,7 @@ class tdc_MPP_H(tdc_MPP):
     x_labelled_axes
     y_labelled_axes
     """
-
+    
     def __init__(self,nx,ny, **kwargs):
         """
         Call tdc_MPP.__init__
@@ -178,7 +178,14 @@ class tdc_MPP_H(tdc_MPP):
         for i in range(0,self.ny):
             for j in range(1,self.nx):
                 self.grid[i][j].yaxis.set_ticklabels([])
-    
+
+    def set_yscale(self, rows, type='linear', linthreshy=5):
+        "call set_yscale command for each axes in the i'th row"
+        for i in flatten([rows]):
+            for ax in self.grid[i]:
+                ax.set_yscale(type, linthreshy=linthreshy)
+        if self.interactive: self.fig.canvas.draw()
+            
     def set_ylim(self, rows, *args, **kwargs):
         "call set_ylim command for each axes in the i'th row"
         for i in flatten([rows]):
@@ -215,7 +222,7 @@ class tdc_MPP_V(tdc_MPP):
     x_labelled_axes
     y_labelled_axes
     """
-
+    
     def __init__(self,nx,ny, **kwargs):
         """
         Call tdc_MPP.__init__
@@ -231,6 +238,12 @@ class tdc_MPP_V(tdc_MPP):
         self._change_fonsize(self.y_labelled_axes)
         self._change_fonsize(self.x_labelled_axes)
     
+    def set_yscale(self, columns, type='linear', linthreshy=5):
+        "call set_yscale command for each axes in the j'th column"
+        for j in flatten([columns]):
+            for ax in [ axs[j] for axs in self.grid ]:
+                ax.set_yscale(type, linthreshy=linthreshy)
+        if self.interactive: self.fig.canvas.draw()
 
     def set_ylim(self, columns, *args, **kwargs):
         "call set_ylim command for each axes in the j'th column"

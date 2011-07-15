@@ -43,11 +43,24 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
         # initialize lines
         self.lines = len(self.data)*[None]
 
+    def change_default_plotstyle(self,particle_name, **kwargs):
+        self.__plotstyle[particle_name].update(kwargs) 
 
-    def plot(self,ax,**kwargs):
+    def plot(self,
+             ax,
+             symlog=False,
+             linthreshy=5,
+             **kwargs):
         """
         Plot particles into axes ax
         **kwargs goes to ax.plot(..)
+        ----------
+        Options:
+        ----------
+        symlog
+           <False>/True --  whether to plot in semi-logarithmic scale
+        linthreshy   
+           <1>     The range (-x, x) within which the plot is linear
         """
         plot_kwargs={}
         for i,xp in enumerate(self.data):
@@ -55,11 +68,9 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
             plot_kwargs.update(kwargs)            
             self.lines[i], = ax.plot(xp.x, xp.p,
                                      **plot_kwargs)
-            ## self.lines[i], = ax.plot(xp.x, xp.p,
-            ##                          *self.__plotstyle[xp.name],
-            ##                          markersize=1.5,
-            ##                          **kwargs)
-            #ax.set_yscale('symlog',linthreshy=1e2)
+            # make scaling semi-logatithmic if asked
+            if symlog:
+                ax.set_yscale('symlog',linthreshy=linthreshy)
         tdc_Data_vs_X_Plotter.plot(self,ax,**kwargs)
 
 
