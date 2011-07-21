@@ -22,12 +22,21 @@ def tdc_plot_sed(calc_id, i_ts,
        calculation id name
     i_ts
        timeshot#
+    --------
     Options:
     --------
     particle_names
-       name(s) of particles whose phase prtraits are to be plotted
+       <None> name(s) of particles whose distribution functions will be plotted
+              if None, default value ['Electrons', 'Positrons', 'Pairs'] will be used
+              {default value set in tdc_SED_Manip}
     p_bins
+       <None> energy bins for distribution function
+              if None, default value (1,1e8,100) will be used
+              {default value set in tdc_SED_Manip}
     xx    
+       <None> spatial domain fordistribution function
+              if None, the whole domain will be used
+              {default value set in tdc_SED_Data}
     xlim 
     ylim
        <None>  axis limits
@@ -36,6 +45,7 @@ def tdc_plot_sed(calc_id, i_ts,
     no_plot
        <False> if True do not call plot in Manipulator
        useful if additional plot modifications are required
+    --------
     Returns:
     --------
     ()=> tdc_SED_Manip
@@ -61,6 +71,7 @@ def tdc_plot_sed_restored(filename,
     """
     filename
        pickle file name is 'filename.pickle'
+    --------
     Options:
     --------
     xlim 
@@ -71,9 +82,10 @@ def tdc_plot_sed_restored(filename,
     no_plot
        <False> if True do not call plot in Manipulator
        useful if additional plot modifications are required
+    --------
     Returns:
     --------
-    ()=> tdc_XP_Manip
+    ()=> tdc_SED_Manip
     """
     # create Manip
     manip = tdc_SED_Manip(**kwargs)
@@ -101,6 +113,15 @@ class tdc_SED_Manip(tdc_Manip):
                         **kwargs):
         """
         setup Manip by reading the original data file
+        --------
+        Options:
+        --------
+        particle_names
+           <None> name(s) of particles whose distribution functions will be plotted
+                  if None, default value ['Electrons', 'Positrons', 'Pairs'] will be used
+        p_bins
+           <None> energy bins for distribution function
+                  if None, default value (1,1e8,100)
         """        
         # use default particle_names if not set in arguments
         if not particle_names:
@@ -128,6 +149,8 @@ class tdc_SED_Manip(tdc_Manip):
         self.plasma_params = {}
         # initialize number of particles dictionary
         self.n_p = {}
+        # initialize particle energy dictionary
+        self.e_p = {}
         # get Mesh
         self._Mesh = self.seds[0].xp._Mesh
 
@@ -149,12 +172,13 @@ class tdc_SED_Manip(tdc_Manip):
         # Mesh
         self._Mesh = self.seds[0].xp._Mesh
         # i_ts
-        self.i_ts = self.seds[0].i_ts
+        self.i_ts = self.seds[0].xp.i_ts
         # additional parameters
         self.OmegaPl       = dump_dict['OmegaPl']
         self.LambdaDebye   = dump_dict['LambdaDebye']
         self.plasma_params = dump_dict['plasma_params']
         self.n_p   = dump_dict['n_p'] 
+        self.e_p   = dump_dict['e_p'] 
 
 
     def dump_data(self,filename):
@@ -169,6 +193,7 @@ class tdc_SED_Manip(tdc_Manip):
         dump_dict['LambdaDebye']   = self.LambdaDebye
         dump_dict['plasma_params'] = self.plasma_params
         dump_dict['n_p']   = self.n_p 
+        dump_dict['e_p']   = self.e_p 
         pickle.dump( dump_dict, open(filename+'.pickle','w') )
 
     def __repr__(self):
@@ -208,7 +233,7 @@ class tdc_SED_Manip(tdc_Manip):
         print_id  -- print label on the plot? <False>
         """
         # FIGURE ------------------------------------
-        self.fig = self.fg.create_figure(facecolor='w')
+        self.fig = self.fig_geom.create_figure(facecolor='w')
         xx_str = '[%g, %g]' % tuple(self.seds[0].xx)
         # id label
         id_label = self.plotter.plot_idlabel         +\
@@ -267,6 +292,25 @@ class tdc_SED_Manip(tdc_Manip):
         """
         for sed in self.seds:
             self.n_p[sed.name] = sed.get_number_of_particles(pp)
+
+    def calculate_particle_energy(self, pp=None):
+        """
+        Calculate particle energy in momentum interval pp
+        if pp==None -- use the whole momentum interval
+        """
+        for sed in self.seds:
+            self.e_p[sed.name] = sed.get_particle_energy(pp)
+
+    def calculate_info(self, pp=None):
+        """
+        Calculate additional information:
+        - plasma parameters
+        - number of particles
+        - particle energy
+        """
+        self.calculate_plasma_params()
+        self.calculate_number_of_particles(pp)
+        self.calculate_particle_energy(pp)
         
     def set_momentum_bins(self,p_bins):
         """
@@ -294,22 +338,65 @@ class tdc_SED_Manip(tdc_Manip):
         # clear plasma params dictionary
         self.plasma_params={}        
 
-    def print_number_of_particles(self):
+
+    def info_str__number_of_particles(self):
         """
-        Print # of particles calculated before by calling
-        calculate_number_of_particles()
+        Print # of particles into a string
+        Number of particles is calculated before by calling calculate_number_of_particles()
         """
+        s = '\n%s\nNumber of Particles:\n%s\n' % (30*'-',30*'-')
         for name,np in self.n_p.items():
-            print '%s :' % name
-            print '%8s = [ %g, %g ]' %  ('pp', np['pp'][0], np['pp'][1])
+            s += '%s :\n' % name
+            s += '%8s = [ %g, %g ]\n' %  ('pp', np['pp'][0], np['pp'][1])
             for key  in ('UP','DOWN','TOTAL'):
-                print '%8s = %g' %  (key, np[key])
+                s += '%8s = %g\n' %  (key, np[key])
+        return s
+
+    def info_str__particle_energy(self):
+        """
+        Print particle energy into a string
+        Energies are calculated before by calling calculate_particle_energy()
+        """
+        e_up_total=0
+        e_down_total=0
+        s = '\n%s\nEnergy:\n%s\n' % (30*'-',30*'-')
+        for name,ep in self.e_p.items():
+            s += '%s :\n' % name
+            s += '%8s = [ %g, %g ]\n' %  ('pp', ep['pp'][0], ep['pp'][1])
+            for key  in ('UP','DOWN','TOTAL'):
+                s += '%8s = %g\n' %  (key, ep[key])
+            e_up_total   += ep['UP']
+            e_down_total += ep['DOWN']
+        s += '\nTotal Energy:\n'
+        s += '      UP:  %g\n' % e_up_total
+        s += '    DOWN:  %g\n' % e_down_total
+        s += ' UP/DOWN:  %g\n' % (e_up_total/e_down_total,)
+        return s
+
+    def info_str__plasma_params(self):
+        """
+        Prints parameters of the plasma in the current spatial domain into a string
+        """
+        s = '\n%s\nPlasma properties:\n%s\n' % (30*'-',30*'-')
+        for key  in sorted(self.plasma_params.keys()):
+            s += '%10s = %g' % (key,self.plasma_params[key])
+        return s
+
+    def print_particle_energy(self):
+        print self.info_str__particle_energy()
+
+    def print_number_of_particles(self):
+        print self.info_str__number_of_particles()
 
     def print_plasma_params(self):
+        print self.info_str__plasma_params()
+
+    def dump_info(self,filename):
         """
-        Prints parameters of the plasma in the current spatial domain
+        Write info into a text file
         """
-        print 'Plasma properties:\n'
-        for key  in sorted(self.plasma_params.keys()):
-            print '%10s = %g' % (key,self.plasma_params[key])
-            
+        f = open(filename,'w')
+        f.write( str(self) )
+        f.write( self.info_str__number_of_particles() )
+        f.write( self.info_str__particle_energy() )
+        f.close()

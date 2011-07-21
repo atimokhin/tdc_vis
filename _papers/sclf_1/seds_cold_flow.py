@@ -1,6 +1,15 @@
 #
 # insert ylabel later in inkscape !
 #
+
+# -------------------------
+# let LaTeX draw all labels
+# -------------------------
+from matplotlib import rc
+rc('text', usetex=True)
+rc('font',**{'family':'serif','serif':['Times']})
+# -------------------------
+
 import matplotlib.pyplot as plt
 import numpy             as np
 
@@ -34,7 +43,7 @@ j_label_fontsize=8
     
 mpp_params['dx_pad_abs']      = 0.07
 mpp_params['dy_pad_abs']      = 0.07
-mpp_params['left_margin_abs'] = 0.55
+mpp_params['left_margin_abs'] = 0.65
 mpp_params['top_margin_abs']  = 0.1
 # ---------------------------------
 
@@ -71,6 +80,10 @@ for i in range(0,mpp.ny):
 # xlabels
 for j in range(mpp.nx):
     mpp.set_bottom_xlabel(j, r'$|p|$')
+# ylabels
+ylabel=r'$\displaystyle{}p\:\frac{\partial\!n}{\partial{}\!p}$'
+mpp.set_ylabel(0,ylabel)
+mpp.set_ylabel(1,ylabel)
 # draw figure
 mpp.fig.canvas.draw()
 

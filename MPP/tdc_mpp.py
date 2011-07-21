@@ -155,7 +155,7 @@ class tdc_MPP_H(tdc_MPP):
     x_labelled_axes
     y_labelled_axes
     """
-    
+
     def __init__(self,nx,ny, **kwargs):
         """
         Call tdc_MPP.__init__
@@ -222,7 +222,7 @@ class tdc_MPP_V(tdc_MPP):
     x_labelled_axes
     y_labelled_axes
     """
-    
+
     def __init__(self,nx,ny, **kwargs):
         """
         Call tdc_MPP.__init__

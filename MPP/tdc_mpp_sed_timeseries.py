@@ -28,8 +28,6 @@ class tdc_MPP_SED_Timeseries_H ( tdc_MPP_H ):
         tdc_MPP_H.__init__(self,nx,ny, **kwargs)
         # do actual plotting
         self.top_xlabels=[]
-        self.set_ylabel(0,plotter.plot_ylabel)
-        self.set_ylabel(1,plotter.plot_ylabel)
         for j in range(nx):
             # read and plot field
             plotter.read( timeshots[j], xx=xxs[j] )

@@ -12,12 +12,11 @@ class tdc_SED_Data:
     X and P are dimensionless quantities
 
     NB: redirects all non-defined requests to XP class
-
+    -----------
     Attributes:
     -----------
     xp
        tdc_XP_Data
-
     W0
        GJ normalization parameter
     xx_default
@@ -40,13 +39,21 @@ class tdc_SED_Data:
 
     def __init__(self, calc_id, particle_name, p_bins, xx=None):
         """
-        Opens particle HDF5 file, 
-        setup 4-momentum bins,
-        setup default space interval
+        - opens particle HDF5 file, 
+        - setup 4-momentum bins,
+        - setup default space interval
         NB: Reads setup_properties.h5
-        
+        ---------
+        Parameters:
+        ---------
+        calc_id
+        particle_name
         p_bins = (Pmin,Pmax,nP)
-        xx     = (x1,x2) <None> by default the whole domain will be used
+        ---------
+        Options:
+        ---------
+        xx     = (x1,x2)
+            <None> by default the whole domain will be used
         """
         # name and calc_id
         self.name    = particle_name
@@ -54,6 +61,8 @@ class tdc_SED_Data:
         # setup XP_Data
         sample_dict = dict(name='regular', n_reduce=1, n_min=1)
         self.xp = tdc_XP_Data(calc_id, particle_name, sample_dict, get_weight=True)
+        # interface to timetable
+        self.timetable = self.xp.timetable
         # set 4-momentum bins
         self.set_momentum_bins(p_bins)
         # set default space interval
@@ -164,7 +173,7 @@ class tdc_SED_Data:
         """
         Return dictionary with number of particles
         in the 4-momentum range pp = (P1,P2)
-        
+        ------------        
         n_p['UP']     : # of particles moving UP   
         n_p['DOWN']   : # of particles moving DOWN
         n_p['TOTAL']  : total number of particles
@@ -183,6 +192,31 @@ class tdc_SED_Data:
         n_p['DOWN']  = self.dN_dlogPdX_d[idxs].sum()*self.dlogP*(self.xx[1]-self.xx[0])
         n_p['TOTAL'] = n_p['UP']+n_p['DOWN']
         return n_p
+
+
+    def get_particle_energy(self, pp=None):
+        """
+        Return dictionary with total energy of particles
+        in the 4-momentum range pp = (P1,P2)
+        ------------
+        e_p['UP']     : # of particles moving UP   
+        e_p['DOWN']   : # of particles moving DOWN
+        e_p['TOTAL']  : total number of particles
+        e_p['pp']     : momentum range
+        """
+        if not pp:
+            idxs = np.r_[0:len(self.P_bins)]
+        else:
+            idxs = np.intersect1d( np.where(self.P_bins>=pp[0])[0],
+                                   np.where(self.P_bins<=pp[1])[0] )
+        if not len(idxs):
+            print 'Wrong momentum range :', pp
+        e_p=dict()
+        e_p['pp']    = [ self.P_bins[idxs[0]],  self.P_bins[idxs[-1]] ]
+        e_p['UP']    = (self.dN_dlogPdX_u[idxs]*self.P_bins[idxs]).sum()*self.dlogP*(self.xx[1]-self.xx[0])
+        e_p['DOWN']  = (self.dN_dlogPdX_d[idxs]*self.P_bins[idxs]).sum()*self.dlogP*(self.xx[1]-self.xx[0])
+        e_p['TOTAL'] = e_p['UP']+e_p['DOWN']
+        return e_p
 
 
     def set_momentum_bins(self,p_bins):
