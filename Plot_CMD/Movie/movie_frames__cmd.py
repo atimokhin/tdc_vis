@@ -29,14 +29,16 @@ class MovieFrames__CMD(MovieFrames):
         ylim
           axes limits
         """
+        # set MFS
+        self.set_movie_frames_sizes(mfs)
         # get dpi and calculate figure size in inches 
         dpi = matplotlib.rcParams['figure.dpi']
-        figsize_inch = [ x/dpi for x in  mfs.figsize_points ]
+        figsize_inch = [ x/dpi for x in  self.MFS.figsize_points ]
         # plot window ----------------------------
         self.figure = matplotlib.pyplot.figure(facecolor='white', figsize=figsize_inch)
         # axes -----------------------------------
         # add as many axes as there are entries in mfs.axes_boxes
-        for box in mfs.axes_boxes:
+        for box in self.MFS.axes_boxes:
             self.ax.append( self.figure.add_axes(box) )        
         # setup axes limits
         self.setup_axes(xlim, ylim) 

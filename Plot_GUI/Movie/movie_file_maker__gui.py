@@ -63,6 +63,8 @@ class Movie_File_Maker__GUI(Movie_File_Maker):
         if frame buffer is not empty
         """
         if len(self.frames_png):
+            # setup output directory
+            self.setup_directory()
             # open index file
             index_file = open(self.index_filename, 'w')
             print 'total # of stored frames', len(self.frames_png)

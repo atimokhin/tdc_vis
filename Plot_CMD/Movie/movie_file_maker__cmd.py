@@ -43,6 +43,8 @@ class Movie_File_Maker__CMD(Movie_File_Maker):
         self.i_frame += 1
         
     def open_index_file(self):
+        # setup output directory
+        self.setup_directory()
         # open index file
         self.index_file = open(self.index_filename, 'w')
         # clear number of snapshots

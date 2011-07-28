@@ -10,7 +10,7 @@ from x_Tests.plot_test_e_e_gauss_movie import *
 # ============================================================
 # Directory
 # ============================================================
-## tdc_set_results_dir('../RESULTS/')
+tdc_set_results_dir('../RESULTS/')
 ## tdc_set_results_dir('../RESULTS/FreeAgent/')
 tdc_set_results_dir('../RESULTS/WD/')
 
@@ -23,36 +23,84 @@ IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_i
 IDs=['SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj5_sU_P']
 IDs=['SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj7_sU']
 
+IDs=[['Arons__j1.102_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj10_sU',
+     'Arons__j1.102_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj10_sU__1']]
+## IDs=['Arons__j1.400_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj5_sU']
 
-#-----------------
+IDs=['Arons__j1.300_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj5_sU',
+     'Arons__j1.400_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj5_sU',
+     'Arons__j1.500_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj5_sU',
+     'Arons__j1.600_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj5_sU']
+
+## IDs=['Arons__j1.110_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAp0.2__R6C__dP5e-2_inj5_sU']
+
+## IDs=['Arons__j2.000_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAm0.1__R6C__dP5e-2_inj5_sU']
+
+## IDs=['Arons__jp0.500_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj5_sU',
+##      'Arons__j2.000_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj5_sU']
+
+
+# ============================================================
 # plot limits:
-# ----------------
+# ============================================================
 xlim = [-0.01,1.01]
 
-##  jp0.5 ---
-ylim_xp  = [-5e8,5e8]
-ylim_rho = [-4,4]
-ylim_j   = [-4,4]
-ylim_e   = [-1.1,1.1]
-ylim_phi   = [-1.1,1.1]
-ylim_ep  = [-0.5,120]
+# ----------------------------------------
+## #  Arons ---
+## ylim_xp  = [-5e8,5e8]
+## ylim_rho = [-2,0.5]
+## ylim_j   = [-2,0.5]
+## ylim_e   = [-0.1,0.05]
+## ylim_phi   = [-2.5e-3,2.5e-3]
+## ylim_ep  = [-0.5,5]
+## # ----------------------------------------
 
+# ----------------------------------------
+#  Arons --- j > 1.1
+ylim_xp  = [-5e8,5e8]
+ylim_rho = [-5,5]
+ylim_j   = [-5,5]
+ylim_e   = [-0.25,0.25]
+ylim_phi = [-0.25,0.25]
+ylim_ep  = [-0.5,100]
+# ----------------------------------------
+
+## # ----------------------------------------
+## ##  jp0.5 ---
+## ylim_xp  = [-5e8,5e8]
+## ylim_rho = [-4,4]
+## ylim_j   = [-4,4]
+## ylim_e   = [-1.1,1.1]
+## ylim_phi   = [-1.1,1.1]
+## ylim_ep  = [-0.5,120]
+## # ----------------------------------------
+
+## # ----------------------------------------
 ## # jm0.5 ---
 ## ylim_xp = [-50,50]
 ## ylim_e  = [-1,1]
-## # -----------------
+## # ----------------------------------------
+## # ----------------------------------------
 ## # jp0.5 ---
 ## ylim_xp = [-2e7,2e7]
 ## ylim_e  = [-1,1]
-## # -----------------
+## # ----------------------------------------
+## # ----------------------------------------
 ## # jp1.5 ---
 ## ylim_xp = [-2e7,2e7]
 ## ylim_e  = [-1,1]
-## # -----------------
+## # ----------------------------------------
+## # ----------------------------------------
 ## # jm1.5 ---
 ## ylim_xp = [-1.5e7,1.5e7]
 ## ylim_e  = [-1,1]
-## #-----------------
+## # ----------------------------------------
+
+
+sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
+## sample_dict    = dict(name='regular',n_reduce=10,n_min=2000)
+
+particle_names = ['Positrons','Electrons','Pairs','Protons']
 
 symlog=True
 linthreshy=5
@@ -60,11 +108,10 @@ linthreshy=5
 tt = None
 
 fps = 9
+keep_frame_files=False
 
 use_cell_coordinates=False
 show_cells=False
-
-keep_frame_files=False
 
 ## moving_grid_dict = dict(n_lines=30, speed=1)
 moving_grid_dict = None
@@ -76,12 +123,12 @@ moving_grid_dict = None
 # Plots 
 # ============================================================
 Plots = {'XP'           : True,
-         'Rho'          : False,
-         'J'            : False,
-         'E_acc'        : False,
+         'Rho'          : True,
+         'J'            : True,
+         'E_acc'        : True,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
-         'Phi'          : False,
+         'Phi'          : True,
          'EP'           : False,
          'EPG'          : True,
          'EPGP'         : False,
@@ -113,9 +160,6 @@ def do_movie(IDs):
             ## tp.setup_from_file(ID,'p500_ts525')
             ## tp.delete(range(0,47,2))
             
-            sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
-            particle_names = ['Positrons','Electrons','Pairs','Protons']
-
             tdc_plot_xp_movie(plot_module,
                               ID,
                               particle_names,
@@ -147,6 +191,7 @@ def do_movie(IDs):
                                  moving_grid_dict=moving_grid_dict,
                                  tt=tt,
                                  fps=fps,
+                                 keep_frame_files=keep_frame_files,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
                                  ghost_points=True)
@@ -164,6 +209,7 @@ def do_movie(IDs):
                                  moving_grid_dict=moving_grid_dict,
                                  tt=tt,
                                  fps=fps,
+                                 keep_frame_files=keep_frame_files,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
                                  ghost_points=True)
@@ -181,6 +227,7 @@ def do_movie(IDs):
                                  moving_grid_dict=moving_grid_dict,
                                  tt=tt,
                                  fps=fps,
+                                 keep_frame_files=keep_frame_files,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
                                  ghost_points=True)
@@ -198,6 +245,7 @@ def do_movie(IDs):
                                  moving_grid_dict=moving_grid_dict,
                                  tt=tt,
                                  fps=fps,
+                                 keep_frame_files=keep_frame_files,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
                                  ghost_points=True)
@@ -214,7 +262,8 @@ def do_movie(IDs):
                                       ylim=[ylim_e,[-1e-2,1e-2]],
                                       xlim=[xlim,xlim],
                                       tt=tt,
-                                      fps=15,
+                                      fps=fps,
+                                      keep_frame_files=keep_frame_files,
                                       use_cell_coordinates=use_cell_coordinates,
                                       show_cells=show_cells,
                                       time_normalization = 'absolute',
@@ -231,6 +280,10 @@ def do_movie(IDs):
                                  ylim=ylim_phi,
                                  tt=tt,
                                  fps=fps,
+                                 keep_frame_files=keep_frame_files,
+                                 use_cell_coordinates=use_cell_coordinates,
+                                 show_cells=show_cells,
+                                 time_normalization = 'absolute',
                                  moving_grid_dict=moving_grid_dict)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -241,9 +294,14 @@ def do_movie(IDs):
             tdc_plot_ep_density_movie(plot_module,
                                       ID,
                                       ylim=ylim_ep,
+                                      xlim=xlim,
                                       tt=tt,
-                                      fps=fps,
                                       e_density_negative=False,
+                                      fps=fps,
+                                      keep_frame_files=keep_frame_files,
+                                      use_cell_coordinates=use_cell_coordinates,
+                                      show_cells=show_cells,
+                                      time_normalization = 'absolute',
                                       moving_grid_dict=moving_grid_dict)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -254,9 +312,14 @@ def do_movie(IDs):
             tdc_plot_epg_density_movie(plot_module,
                                        ID,
                                        ylim=ylim_ep,
+                                       xlim=xlim,
                                        tt=tt,
-                                       fps=fps,
                                        e_density_negative=False,
+                                       fps=fps,
+                                       keep_frame_files=keep_frame_files,
+                                       use_cell_coordinates=use_cell_coordinates,
+                                       show_cells=show_cells,
+                                       time_normalization = 'absolute',
                                        moving_grid_dict=moving_grid_dict)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -267,9 +330,14 @@ def do_movie(IDs):
             tdc_plot_epgp_density_movie(plot_module,
                                         ID,
                                         ylim=ylim_ep,
+                                        xlim=xlim,
                                         tt=tt,
                                         fps=fps,
                                         e_density_negative=False,
+                                        keep_frame_files=keep_frame_files,
+                                        use_cell_coordinates=use_cell_coordinates,
+                                        show_cells=show_cells,
+                                        time_normalization = 'absolute',
                                         moving_grid_dict=moving_grid_dict)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 

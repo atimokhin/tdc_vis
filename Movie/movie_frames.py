@@ -27,6 +27,8 @@ class MovieFrames:
     self.p_time_label
     self.formatter
     """
+
+    _label_fontsize = 'xx-large'
     
     def __init__(self, seq_plotter):
         # sequence plotter
@@ -43,6 +45,7 @@ class MovieFrames:
         self.plot_idlabel = None
         # initialize base class variables
         self.main_Window = None
+        self.MFS = None
         self.figure = None
         self.ax = []
         self.xlim = []
@@ -50,6 +53,18 @@ class MovieFrames:
         self.p_time_label = []
         self.formatter= []
         
+    def set_movie_frames_sizes(self, mfs):
+        """
+        sets self.MFS
+        -------
+        Params:
+        -------
+        mfs
+          MovieFrames_Sizes class instance, contains figure sizes and axes boxes
+        """
+        self.MFS = mfs
+
+
     def setup_axes(self,xlim,ylim):
         """
         - applies formatter to each axes
@@ -75,11 +90,16 @@ class MovieFrames:
         it must be plotted in a child class
         """
         # main plot
-        for P,A,xl,yl in zip(self.seq_plotter,self.ax,self.xlim,self.ylim):
+        for P,A in zip(self.seq_plotter,self.ax):
             P.plot(A,**kwargs)
-            # set axes labels
-            A.set_ylabel(P.plot_ylabel,size='x-large')
-            A.set_xlabel(P.plot_xlabel,size='x-large')
+        # set axes labels
+        for i,P in enumerate(self.seq_plotter):
+            coord_x = self.MFS.xlabel_pos(i)
+            self.x_label=self.figure.text( *coord_x, s=P.plot_xlabel,
+                                           va='top',ha='center', size=self._label_fontsize)
+            coord_y = self.MFS.ylabel_pos(i)
+            self.y_label=self.figure.text( *coord_y, s=P.plot_ylabel,
+                                           va='center',ha='left', size=self._label_fontsize)
         
     def get__i_timeshot(self):
         return self.seq_plotter[0].get__i_timeshot()
@@ -89,3 +109,4 @@ class MovieFrames:
 
     def set_main_window(self,window):
         self.main_Window=window
+

@@ -7,10 +7,10 @@ def tdc_plot_ep_density_movie(plot_module,
                               calc_ids,
                               ylim,
                               xlim=None,
-                              fps=None,
-                              keep_frame_files=None,
                               tt=None,
                               e_density_negative=True,
+                              fps=None,
+                              keep_frame_files=None,
                               moving_grid_dict=None,
                               use_cell_coordinates=False,
                               show_cells=False,
@@ -18,34 +18,34 @@ def tdc_plot_ep_density_movie(plot_module,
                               **kwargs):
     """
     calc_ids
-       calculation id names
+        calculation id names
     ylim
-       Y axis limits   
+        Y axis limits   
     Options:
     --------
     xlim
-       <None> X axis limits
+        <None> X axis limits
     tt
-       <None> time interval <[t1,<t2>]>
+        <None> time interval <[t1,<t2>]>
     moving_grid_dict
-       <None>  if specified plot moving grid
-               moving_grid_dict = dict(n_lines=20, speed=1)
+        <None>  if specified plot moving grid
+            moving_grid_dict = dict(n_lines=20, speed=1)
     e_density_negative,
-       <True> plot electron density as negative (True) or positive (False) values
+        <True> plot electron density as negative (True) or positive (False) values
     use_cell_coordinates
-       <False>
+        <False>
     show_cells
-       <False>
+        <False>
     time_normalization
-       <None>
+        <None>
     **kwargs
-       go to tdc_*_Data via tdc_Data_Sequence_Initializer
+        go to tdc_*_Data via tdc_Data_Sequence_Initializer
     """
 
     # make sure calc_id is a sequence
     if not isinstance( calc_ids, (list,tuple) ):
         calc_ids = (calc_ids,)
-        
+
     # field sequence
     fe  = tdc_Data_Sequence_Initializer( tdc_Field_Data,
                                          calc_ids=calc_ids,
@@ -78,10 +78,10 @@ def tdc_plot_epg_density_movie(plot_module,
                                calc_ids,
                                ylim,
                                xlim=None,
-                               fps=None,
-                               keep_frame_files=None,
                                tt=None,
                                e_density_negative=True,
+                               fps=None,
+                               keep_frame_files=None,
                                moving_grid_dict=None,
                                use_cell_coordinates=False,
                                show_cells=False,
@@ -160,10 +160,10 @@ def tdc_plot_epgp_density_movie(plot_module,
                                 calc_ids,
                                 ylim,
                                 xlim=None,
-                                fps=None,
-                                keep_frame_files=None,
                                 tt=None,
                                 e_density_negative=True,
+                                fps=None,
+                                keep_frame_files=None,
                                 moving_grid_dict=None,
                                 use_cell_coordinates=False,
                                 show_cells=False,
@@ -175,34 +175,34 @@ def tdc_plot_epgp_density_movie(plot_module,
     ==> Movie is stored in  sub-directory {RESULTS_VIS}/EPGP{calc_ids[0]}
     =======
     calc_ids
-       calculation id names
+        calculation id names
     ylim
-       Y axis limits   
+        Y axis limits   
     Options:
     --------
     xlim
-       <None> X axis limits
+        <None> X axis limits
     tt
-       <None> time interval <[t1,<t2>]>
+        <None> time interval <[t1,<t2>]>
     moving_grid_dict
-       <None>  if specified plot moving grid
-               moving_grid_dict = dict(n_lines=20, speed=1)
+        <None>  if specified plot moving grid
+            moving_grid_dict = dict(n_lines=20, speed=1)
     e_density_negative,
-       <True> plot electron density as negative (True) or positive (False) values
+        <True> plot electron density as negative (True) or positive (False) values
     use_cell_coordinates
-       <False>
+        <False>
     show_cells
-       <False>
+        <False>
     time_normalization
-       <None>
+        <None>
     **kwargs
-       go to tdc_*_Data via tdc_Data_Sequence_Initializer
+        go to tdc_*_Data via tdc_Data_Sequence_Initializer
     """
 
     # make sure calc_id is a sequence
     if not isinstance( calc_ids, (list,tuple) ):
         calc_ids = (calc_ids,)
-        
+
     # field sequence
     fe  = tdc_Data_Sequence_Initializer( tdc_Field_Data,
                                          calc_ids=calc_ids,

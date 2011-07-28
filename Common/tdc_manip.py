@@ -15,7 +15,7 @@ class tdc_Manip:
     i_ts
        current timeshot for data
     """
-    __default_label_fontsize     = 15
+    __default_label_fontsize     = 17
     __default_ticklabel_fontsize = 10
 
     def __init__(self, **kwargs):

@@ -36,13 +36,15 @@ class MovieFrames__GUI(MovieFrames):
         ylim
           axes limits
         """
+        # set MFS
+        self.set_movie_frames_sizes(mfs)
         # plot window ----------------------------
         self.figure = Figure(facecolor='white')
         self.canvas = FigureCanvas(self.figure)
-        self.canvas.set_size_request( *mfs.figsize_points )
+        self.canvas.set_size_request( *self.MFS.figsize_points )
         # axes -----------------------------------
         # add as many axes as there are entries in mfs.axes_boxes
-        for box in mfs.axes_boxes:
+        for box in self.MFS.axes_boxes:
             self.ax.append( self.figure.add_axes(box) )
         # setup axes limits
         self.setup_axes(xlim, ylim) 

@@ -38,9 +38,9 @@ class Movie_File_Maker:
         self.movie_id = movie_id
         # directory where image and movie fiels will be saved
         self.movie_dir_name = tdc_get_vis_fielname(movie_id,'')
-        # if directory does not exist - create it
-        if not os.path.exists(self.movie_dir_name):
-            os.mkdir(self.movie_dir_name)
+        ## # if directory does not exist - create it
+        ## if not os.path.exists(self.movie_dir_name):
+        ##     os.mkdir(self.movie_dir_name)
         # filenames (frames and index)
         self.index_filename = tdc_get_vis_fielname(self.movie_id,
                                                    self.__index_filename)
@@ -48,7 +48,11 @@ class Movie_File_Maker:
         # keep_frame_files_flag
         self.set_keep_frame_files_flag(keep_frame_files)
 
-
+    def setup_directory(self):
+        # if directory does not exist - create it
+        if not os.path.exists(self.movie_dir_name):
+            os.mkdir(self.movie_dir_name)
+        
     def set_movie_filenames(self,filename):
         self.movie_filename = tdc_get_vis_fielname(self.movie_id, filename+".mp4")
         self.h264_filename  = tdc_get_vis_fielname(self.movie_id, filename+".h264")
@@ -59,7 +63,7 @@ class Movie_File_Maker:
     def set_keep_frame_files_flag(self,val):
         self.keep_frame_files_flag = val
 
-
+    
     def combine_frames_into_movie(self):
         """
         combines all snapshots into a single movie file

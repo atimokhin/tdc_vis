@@ -45,18 +45,26 @@ def tdc_plot_xp(calc_id, i_ts,
     """
     manip = tdc_XP_Manip(**kwargs)
     manip.setup_from_data(calc_id,
-                          particle_names, sample_dict,
-                          tp, trail_dict,
+                          particle_names,
+                          sample_dict,
+                          tp,
+                          trail_dict,
                           **kwargs)
     manip.read(i_ts)
     if not no_plot:
-        manip.plot(ylim, xlim, print_id)
+        manip.plot(ylim=ylim,
+                   xlim=xlim,
+                   print_id=print_id,
+                   symlog=symlog,
+                   linthreshy=linthreshy)
     return manip
 
 
 def tdc_plot_xp_restored(filename,
                          ylim=None,
                          xlim=None,
+                         symlog=False,
+                         linthreshy=5,
                          print_id=False,
                          no_plot=False,
                          **kwargs):
@@ -81,7 +89,11 @@ def tdc_plot_xp_restored(filename,
     manip = tdc_XP_Manip(**kwargs)
     manip.restore(filename)
     if not no_plot:
-        manip.plot(ylim, xlim, print_id)
+        manip.plot(ylim=ylim,
+                   xlim=xlim,
+                   print_id=print_id,
+                   symlog=symlog,
+                   linthreshy=linthreshy)
     return manip
 
 
@@ -98,7 +110,7 @@ class tdc_XP_Manip(tdc_Manip_Plot_vs_X):
         self.xps=None
         # TP 
         self.tp=None
-        
+
     def setup_from_data(self, calc_id,
                         particle_names=None,
                         sample_dict=None,
