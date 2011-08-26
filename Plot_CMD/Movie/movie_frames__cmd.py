@@ -12,7 +12,7 @@ class MovieFrames__CMD(MovieFrames):
     plot()
     animation_update()
     """
-
+    
     def __init__(self, seq_plotter):
         # initialize base class ======
         MovieFrames.__init__(self, seq_plotter)

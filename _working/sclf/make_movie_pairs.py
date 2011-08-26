@@ -12,58 +12,56 @@ from x_Tests.plot_test_e_e_gauss_movie import *
 # ============================================================
 tdc_set_results_dir('../RESULTS/')
 ## tdc_set_results_dir('../RESULTS/FreeAgent/')
-tdc_set_results_dir('../RESULTS/WD/')
+## tdc_set_results_dir('../RESULTS/WD/')
 
 
 # ============================================================
 # IDs 
 # ============================================================
-## IDs=['SCLF__Arons_II_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJlin2_A1_AAm0.2__R6C__dP5e-2_inj5_s1']
-IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1']
-IDs=['SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj5_sU_P']
-IDs=['SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj7_sU']
+## IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1']
+## IDs=['SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj5_sU_P']
+## IDs=['SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj7_sU']
 
-IDs=[['Arons__j1.102_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj10_sU',
-     'Arons__j1.102_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj10_sU__1']]
-## IDs=['Arons__j1.400_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj5_sU']
+## IDs=[['Arons__j1.102_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj10_sU',
+##       'Arons__j1.102_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj10_sU__1']]
 
-IDs=['Arons__j1.300_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj5_sU',
-     'Arons__j1.400_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj5_sU',
-     'Arons__j1.500_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj5_sU',
-     'Arons__j1.600_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj5_sU']
-
-## IDs=['Arons__j1.110_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAp0.2__R6C__dP5e-2_inj5_sU']
-
-## IDs=['Arons__j2.000_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAm0.1__R6C__dP5e-2_inj5_sU']
-
-## IDs=['Arons__jp0.500_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj5_sU',
-##      'Arons__j2.000_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj5_sU']
-
+## IDs=['Arons__j2.000_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj11_sU__1']
+IDs=['Arons__j1.058_Pcf9e8_L1_nGJ2.5e4_nx2.5e3_dt8e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj6_sU']
 
 # ============================================================
 # plot limits:
 # ============================================================
 xlim = [-0.01,1.01]
 
-# ----------------------------------------
+## #----------------------------------------
 ## #  Arons ---
 ## ylim_xp  = [-5e8,5e8]
 ## ylim_rho = [-2,0.5]
 ## ylim_j   = [-2,0.5]
-## ylim_e   = [-0.1,0.05]
+## ylim_e   = [-0.15,0.05]
 ## ylim_phi   = [-2.5e-3,2.5e-3]
 ## ylim_ep  = [-0.5,5]
+## ## # ----------------------------------------
+#----------------------------------------
+
+#  jm2.0 ---
+ylim_xp  = [-5e8,5e8]
+ylim_rho = [-10,10]
+ylim_j   = [-2,0.5]
+ylim_e   = [-0.2,0.05]
+ylim_phi   = [-2.5e-3,2.5e-3]
+ylim_ep  = [-0.5,100]
 ## # ----------------------------------------
 
-# ----------------------------------------
-#  Arons --- j > 1.1
-ylim_xp  = [-5e8,5e8]
-ylim_rho = [-5,5]
-ylim_j   = [-5,5]
-ylim_e   = [-0.25,0.25]
-ylim_phi = [-0.25,0.25]
-ylim_ep  = [-0.5,100]
-# ----------------------------------------
+## # ----------------------------------------
+## #  Arons --- j > 1.1
+## ylim_xp  = [-5e8,5e8]
+## ylim_rho = [-5,5]
+## ylim_j   = [-5,5]
+## ylim_e   = [-0.5,0.5]
+## ylim_phi = [-0.5,0.5]
+## ylim_ep  = [-0.5,100]
+## # ----------------------------------------
 
 ## # ----------------------------------------
 ## ##  jp0.5 ---
@@ -98,9 +96,10 @@ ylim_ep  = [-0.5,100]
 
 
 sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
-## sample_dict    = dict(name='regular',n_reduce=10,n_min=2000)
+## sample_dict    = dict(name='regular',n_reduce=20,n_min=3000)
 
 particle_names = ['Positrons','Electrons','Pairs','Protons']
+## particle_names = ['Positrons','Electrons','Pairs']
 
 symlog=True
 linthreshy=5
@@ -122,15 +121,16 @@ moving_grid_dict = None
 # ============================================================
 # Plots 
 # ============================================================
+
 Plots = {'XP'           : True,
          'Rho'          : True,
-         'J'            : True,
+         'J'            : False,
          'E_acc'        : True,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
-         'Phi'          : True,
+         'Phi'          : False,
          'EP'           : False,
-         'EPG'          : True,
+         'EPG'          : False,
          'EPGP'         : False,
          'Trajectories' : False }
 # ============================================================

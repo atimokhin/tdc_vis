@@ -146,13 +146,6 @@ class tdc_Field_Data:
                                                  op=h5py.h5s.SELECT_SET )
             # field memory dataspace
             self.__mem_dspace=h5py.h5s.create_simple( (nf_read,), (nf_read,) );
-        # -----------------------------------------------
-        # if Positions (self.x) are read for the first time 
-        # -----------------------------------------------
-        if self.x==None:
-            self.nx_ghost = guard if self.ghost_points else 0
-            # preallocate self.x <=====
-            self.x = np.empty(self.nx+self.nx_ghost*2, dtype=self.__dtype_x)
         # ***********************************************
         # ===============================================
         # Read data
@@ -160,10 +153,16 @@ class tdc_Field_Data:
         # read field from file <<<<<<<<<<<<<<<<<<<<<<<<<<
         dset.read(self.__mem_dspace,self.__file_dspace, self.f, self.__dtype)
         # ===============================================
-        # read or re-read field positions
+        # Read or re-read field positions (if asked)
         # ===============================================
-        # re-read field positions if asked <<<<<<<<<<<<<<
         if re_read_x or self.x==None:
+            # if Positions (self.x) are read for the first time
+            # allocate space for an numpy array
+            if self.x==None:
+                self.nx_ghost = guard if self.ghost_points else 0
+                # preallocate self.x <=====
+                self.x = np.empty(self.nx+self.nx_ghost*2, dtype=self.__dtype_x)
+            # -----------------------------------------------
             # read positions of physical points
             self.__dset_x.read(self.__dspace_x,
                                self.__dspace_x,
