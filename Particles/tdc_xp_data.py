@@ -2,8 +2,8 @@ import numpy as np
 import h5py
 import math
 
-import Common
-from   Common import tdc_Filenames, tdc_Timetable, tdc_Setup_Props, tdc_Mesh
+## import Common
+from   Auxiliary import tdc_Filenames, tdc_Timetable, tdc_Setup_Props, tdc_Mesh
 
 
 from tdc_xp_samples import *

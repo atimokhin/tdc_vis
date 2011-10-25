@@ -1,4 +1,4 @@
-from Common  import tdc_Manip_Plot_vs_X
+from Common_Data_Plot import tdc_Manip_Plot_vs_X
 
 from Particles.TrackParticles.tdc_tp_plotter  import tdc_TP_Plotter
 

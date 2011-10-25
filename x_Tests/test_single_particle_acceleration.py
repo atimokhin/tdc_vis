@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 import ATbase as AT
 
-from Common    import tdc_Filenames
+from Auxiliary import tdc_Filenames
 from Particles import tdc_XP_Data
 
 

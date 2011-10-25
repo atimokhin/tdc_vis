@@ -4,9 +4,11 @@
 import matplotlib.pyplot as plt
 import numpy             as np
 
-from Common        import *
-from Particles     import *
-from ComplexPlots  import tdc_mpp__sed
+from Auxiliary        import *
+from Common_Data_Plot import *
+
+from Particles  import *
+from Plots_MPP  import tdc_mpp__sed
 
 import MPP
 

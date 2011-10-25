@@ -4,7 +4,7 @@ from   matplotlib.ticker import ScalarFormatter
 class tdc_Single_FigureGeometry:
     """
     Class for single plot figures
-    sets fifure size, axes positions
+    sets figure size, axes positions
     """
     fig_width_abs     = 7;
     aspect_ratio      = 1.618
@@ -12,7 +12,7 @@ class tdc_Single_FigureGeometry:
     right_margin_abs  = 0.1
     top_margin_abs    = 0.3
     bottom_margin_abs = 0.5
-    xlabel_bottom_y_abs = 0.16
+    xlabel_bottom_y_abs = 0.01
     ylabel_left_x_abs   = 0.01
 
     def __init__(self,**kwargs):

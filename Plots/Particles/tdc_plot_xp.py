@@ -1,7 +1,7 @@
-from Common  import tdc_Manip_Plot_vs_X
+from Common_Data_Plot import tdc_Manip_Plot_vs_X
 
-from Particles.tdc_xp_data          import tdc_XP_Data
-from Particles.tdc_xps_tp_plotter   import tdc_XPs_TP_Plotter
+from Particles.tdc_xp_data        import tdc_XP_Data
+from Particles.tdc_xps_tp_plotter import tdc_XPs_TP_Plotter
 
 
 def tdc_plot_xp(calc_id, i_ts,

@@ -2,7 +2,7 @@ from Fields import tdc_Field_Data
 from Fields import tdc_Fields_Plotter
 from Fields import tdc_EP_Density_Plotter
 
-from Common.tdc_moving_grid_plotter       import tdc_Moving_Grid_Plotter
+from Auxiliary_Plotters import tdc_Moving_Grid_Plotter
 
 from MPP       import *
 

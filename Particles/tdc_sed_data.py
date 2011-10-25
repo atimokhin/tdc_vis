@@ -2,8 +2,8 @@ import numpy as np
 import h5py
 import math
 
-from Common         import tdc_Mesh, tdc_Setup_Props
-from tdc_xp_data    import tdc_XP_Data
+from Auxiliary             import tdc_Mesh, tdc_Setup_Props
+from Particles.tdc_xp_data import tdc_XP_Data
 
 class tdc_SED_Data:
     """
@@ -82,12 +82,9 @@ class tdc_SED_Data:
         """
         import copy
         data=copy.copy(self)
-        data.xp=data.xp.get_pure_data_copy() 
+        data.xp = data.xp.get_pure_data_copy()
+        data.timetable = data.timetable.get_pure_data_copy() 
         return data
-
-    ## def __getattr__(self,attrname):
-    ##     "Redirect non-implemented requests to XP_Data self.xp"
-    ##     return getattr(self.xp, attrname)
     
     def __repr__(self):
         s  = 'tdc_SED_Data:\n'

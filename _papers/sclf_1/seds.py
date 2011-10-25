@@ -11,9 +11,11 @@ rc('font',**{'family':'serif','serif':['Times']})
 import matplotlib.pyplot as plt
 import numpy             as np
 
-from Common        import *
-from Particles     import *
-from ComplexPlots  import tdc_mpp__sed
+from Auxiliary        import *
+from Common_Data_Plot import *
+
+from Particles  import *
+from Plots_MPP  import tdc_mpp__sed
 
 import MPP
 
@@ -81,8 +83,7 @@ fig_style = dict( dx_pad_abs         = 0.07,
                   dy_pad_abs         = 0.07,
                   left_margin_abs    = 0.65,
                   bottom_margin_abs  = 0.37,
-                  f_ylabel_left      = 0.0175,
-                  f_xlabel_bottom    = 0.35 )
+                  f_ylabel_left      = 0.0175)
     
 mpp = tdc_mpp__sed(ID, timeshots, xxs, **fig_style)
 mpp.set_window_title(ID)

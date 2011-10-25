@@ -4,8 +4,11 @@
 #
 #commands for raster graphics format 
 import matplotlib as mpl
-mpl.use('Agg')
-from Common        import *
+## mpl.use('Agg')
+
+from Auxiliary        import *
+from Common_Data_Plot import *
+
 tdc_set_hires_dpi()
 #------------------------------------
 
@@ -15,9 +18,8 @@ from   matplotlib.cbook  import flatten
 
 import numpy             as np
 
-from Common        import *
-from Particles     import *
-from ComplexPlots  import tdc_mpp__n_rho_j_e_xp_epgp
+from Particles  import *
+from Plots_MPP  import tdc_mpp__n_rho_j_e_xp_epgp
 
 import MPP
 #------------------------------------

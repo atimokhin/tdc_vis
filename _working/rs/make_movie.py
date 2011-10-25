@@ -1,7 +1,8 @@
 #!/usr/bin/python
 
-from Common import *
-from Plots  import *
+from Auxiliary        import *
+from Common_Data_Plot import *
+from Plots            import *
 
 from x_Tests.plot_test_e_e_gauss_movie import *
 

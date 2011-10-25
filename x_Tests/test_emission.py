@@ -2,7 +2,7 @@ import h5py
 import matplotlib.pyplot as plt
 import numpy as np
 
-from Common import tdc_Filenames as tdc_Filenames
+from Auxiliary import tdc_Filenames 
 
 def  test_emission(calc_id,n_bins):
 

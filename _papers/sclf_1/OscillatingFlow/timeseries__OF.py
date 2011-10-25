@@ -1,21 +1,24 @@
 import matplotlib.pyplot as plt
 import numpy             as np
 
-from Common           import *
-from Particles        import tdc_XP_Data
+from Auxiliary        import *
+from Common_Data_Plot import *
 
-from Common           import tdc_Data_Sequence_Initializer
+from Particles        import tdc_XP_Data
+from Common_Data_Plot import tdc_Data_Sequence_Initializer
+
 import MPP
 
-from  xps_plotter__OF import XPs_Plotter__OF
-
+from  xps_plotter__OF           import XPs_Plotter__OF
 from _papers.sclf_1.plot_params import mpp_params
+
 
 tdc_set_hardcopy_rcparams()
 
 
-tdc_set_results_dir('../RESULTS/')
+## tdc_set_results_dir('../RESULTS/')
 ## tdc_set_results_dir('../RESULTS/FreeAgent/')
+tdc_set_results_dir('../RESULTS/__TDC_2/')
 
 plot_flag = 'jm05'
 

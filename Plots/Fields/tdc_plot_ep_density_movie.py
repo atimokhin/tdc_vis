@@ -1,7 +1,8 @@
-from Common.tdc_filenames  import *
+from Auxiliary import tdc_Filenames
 
-from Common   import tdc_Data_Sequence_Initializer, tdc_Moving_Grid_Plotter
-from Fields   import tdc_Field_Data, tdc_EP_Density_Plotter, tdc_EPG_Density_Plotter, tdc_EPGP_Density_Plotter
+from Common_Data_Plot   import tdc_Data_Sequence_Initializer
+from Auxiliary_Plotters import tdc_Moving_Grid_Plotter
+from Fields import tdc_Field_Data, tdc_EP_Density_Plotter, tdc_EPG_Density_Plotter, tdc_EPGP_Density_Plotter
 
 def tdc_plot_ep_density_movie(plot_module,
                               calc_ids,

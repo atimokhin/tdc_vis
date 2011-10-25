@@ -93,7 +93,7 @@ class tdc_MPP:
     def set_bottom_xlabel(self,j, label):
         "function for labeling coordinates of j'th column "
         coord = self.fg.bottom_xlabel_pos(j)
-        return self.fig.text( *coord, s=label, va='top',ha='center', size=self._label_fontsize)
+        return self.fig.text( *coord, s=label, va='bottom',ha='center', size=self._label_fontsize)
 
     def set_xlim(self, *args, **kwargs):
         "call set_xlim command for each axes in grid"
@@ -150,7 +150,7 @@ class tdc_MPP_H(tdc_MPP):
     """
     Multiple Panel Plot
     Horizontally alighned similar plots
-
+    
     Members:
     x_labelled_axes
     y_labelled_axes

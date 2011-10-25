@@ -1,7 +1,8 @@
 #!/usr/bin/python
 import os
 
-from Common import *
+from Auxiliary        import *
+from Common_Data_Plot import *
 from Plots  import *
 
 from x_Tests.plot_test_e_e_gauss_movie import *
@@ -17,8 +18,9 @@ tdc_set_results_dir('../RESULTS/__TDC_2/')
 # ============================================================
 # IDs 
 # ============================================================
-IDs=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1']
+## IDs=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1']
 
+IDs=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__1']
 
 #-----------------
 # plot limits:
@@ -65,8 +67,8 @@ moving_grid_dict = None
 # ============================================================
 Plots = {'XP'           : True,
          'Rho'          : False,
-         'J'            : False,
-         'E_acc'        : False,
+         'J'            : True,
+         'E_acc'        : True,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
          'Phi'          : False,

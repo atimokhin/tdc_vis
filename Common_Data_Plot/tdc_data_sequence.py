@@ -1,4 +1,4 @@
-from tdc_functions import tdc_get_bound_index
+from Auxiliary import tdc_get_bound_index
 
 class tdc_Data_Sequence:
     """

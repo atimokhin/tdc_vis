@@ -1,7 +1,7 @@
 import numpy as np
 import h5py
 
-from Common  import tdc_Filenames, tdc_Time_Normalizer, tdc_Setup_Props
+from Auxiliary import tdc_Filenames, tdc_Time_Normalizer, tdc_Setup_Props
 
 class tdc_Flux_Data:
     """

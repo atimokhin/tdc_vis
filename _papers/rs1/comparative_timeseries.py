@@ -5,16 +5,18 @@
 #commands for raster graphics format 
 import matplotlib as mpl
 mpl.use('Agg')
-from Common        import *
+
+from Auxiliary        import *
+from Common_Data_Plot import *
+
 tdc_set_hires_dpi()
 #------------------------------------
 
 import matplotlib.pyplot as plt
 import numpy             as np
 
-from Common        import *
-from Particles     import *
-from ComplexPlots  import tdc_mpp__n_rho_e_xp
+from Particles  import *
+from Plots_MPP  import tdc_mpp__n_rho_e_xp
 
 import MPP
 

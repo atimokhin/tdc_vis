@@ -3,7 +3,7 @@ import time
 
 import subprocess
 
-from Common.tdc_filenames import *
+from Auxiliary.tdc_filenames import * 
 
 class Movie_File_Maker:
     """

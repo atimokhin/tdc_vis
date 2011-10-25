@@ -72,13 +72,13 @@ class tdc_Manip:
         # FIGURE ---------------------------------
         self.fig = self.fig_geom.create_figure(facecolor='w')
         # set window title
-        # id_label
-        id_label = self.plotter.plot_idlabel   +\
-                   '   i_ts=' +  str(self.i_ts)
-        self.fig.canvas.set_window_title(id_label) 
+        # id label
+        id_label = ('i_ts=%i:' % self.i_ts if self.i_ts else '') + self.plotter.plot_idlabel          
         # if asked put widnow title label  into figure too
         if print_id:
-            self.fig.suptitle(id_label,size='x-small' )
+            self.fig.suptitle(id_label, size='x-small')
+        id_label = 'Fig %i|' % self.fig.number + id_label
+        self.fig.canvas.set_window_title(id_label) 
         # AXES ------------------------------------ 
         self.ax  = self.fig.axes[0]
         # PLOT
@@ -109,7 +109,7 @@ class tdc_Manip:
 
     def set_xlabel(self,xlabel):
         coord = self.fig_geom.xlabel_pos()
-        self.x_label=self.fig.text( *coord, s=xlabel, va='top',ha='center', size=self._label_fontsize)
+        self.x_label=self.fig.text( *coord, s=xlabel, va='bottom',ha='center', size=self._label_fontsize)
 
     def set_ylabel(self,ylabel):
         coord = self.fig_geom.ylabel_pos()
@@ -197,7 +197,7 @@ class tdc_Manip_Plot_vs_X(tdc_Manip):
     - switching between X and CELL coordinates
     - switching between CELL boundaries ON/OFF
     """
-    
+
     def to_cell_coordinates(self):
         """
         Convert CURRENT plot to cell cordinates

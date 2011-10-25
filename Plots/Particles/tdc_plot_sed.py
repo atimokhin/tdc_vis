@@ -1,7 +1,7 @@
 import numpy as np
 
-from Common  import tdc_Mesh,  tdc_Setup_Props
-from Common  import tdc_Manip
+from Auxiliary        import tdc_Mesh, tdc_Setup_Props
+from Common_Data_Plot import tdc_Manip
 
 from Particles.tdc_xp_data       import tdc_XP_Data
 from Particles.tdc_sed_data      import tdc_SED_Data
@@ -99,7 +99,7 @@ class tdc_SED_Manip(tdc_Manip):
     """
     Manipulator class for SED
     """
-    
+
     __default_particle_names = ['Electrons', 'Positrons', 'Pairs']
     __default_p_bins = (1,1e8,100)
 
@@ -210,7 +210,7 @@ class tdc_SED_Manip(tdc_Manip):
 
     def read(self, i_ts, **kwargs):
         """
-        Read sparticles at timeshot# i_ts
+        Read particles at timeshot# i_ts
         and calculates sed for already set p_bins and xx
         """
         if not self.restored_from_dump:
@@ -234,15 +234,14 @@ class tdc_SED_Manip(tdc_Manip):
         """
         # FIGURE ------------------------------------
         self.fig = self.fig_geom.create_figure(facecolor='w')
-        xx_str = '[%g, %g]' % tuple(self.seds[0].xx)
         # id label
-        id_label = self.plotter.plot_idlabel         +\
-                   '   i_ts=' + str(self.i_ts)       +\
-                   '   xx='   + xx_str
-        self.fig.canvas.set_window_title(id_label) 
+        id_label = 'i_ts=%i:xx=[%g, %g]:' % (self.i_ts,self.seds[0].xx[0],self.seds[0].xx[1]) +\
+                   self.plotter.plot_idlabel          
         # if asked put widnow title label  into figure too
         if print_id:
-            self.fig.suptitle(id_label,size='x-small' )
+            self.fig.suptitle(id_label, size='x-small')
+        id_label = 'Fig %i|' % self.fig.number + id_label
+        self.fig.canvas.set_window_title(id_label) 
         # AXES --------------------------------------
         self.ax  = self.fig.axes[0]
         # PLOT --------------------------------------

@@ -1,8 +1,9 @@
 #!/usr/bin/python
 import os
 
-from Common  import *
-from Plots   import *
+from Auxiliary        import *
+from Common_Data_Plot import *
+from Plots            import *
 
 import x_Tests.sclf as sclf
 

@@ -1,6 +1,5 @@
-
-from Common   import tdc_Data_Sequence_Initializer
-from Fields   import tdc_Field_Data, tdc_Fields_Diff_Data, tdc_Fields_Plotter
+from Common_Data_Plot import tdc_Data_Sequence_Initializer
+from Fields           import tdc_Field_Data, tdc_Fields_Diff_Data, tdc_Fields_Plotter
 
 
 def plot_test_e_e_gauss_movie(plot_module,

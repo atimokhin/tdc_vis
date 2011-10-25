@@ -2,8 +2,8 @@ import h5py
 import matplotlib.pyplot as plt
 import numpy as np
 
-from Common  import tdc_Filenames as tdc_Filenames
-from Common  import tdc_Mesh      as tdc_Mesh
+from Auxiliary  import tdc_Filenames as tdc_Filenames
+from Auxiliary  import tdc_Mesh      as tdc_Mesh
 
 def pairs_from_single_particle( calc_id,
                                 n_bins_e,

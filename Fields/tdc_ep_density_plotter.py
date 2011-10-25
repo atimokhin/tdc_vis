@@ -1,4 +1,4 @@
-from Common             import tdc_Data_vs_X_Plotter
+from Common_Data_Plot   import tdc_Data_vs_X_Plotter
 from tdc_fields_plotter import tdc_Fields_Plotter
 
 
@@ -19,7 +19,7 @@ class tdc_EP_Density_Plotter(tdc_Fields_Plotter):
         tdc_Fields_Plotter.__init__(self, (f_e,f_p) )
         # label
         self.plot_ylabel = r'$\eta_{\pm}$'
-        self.plot_idlabel='N_{e,p} : '+self.data[0].calc_id
+        self.plot_idlabel='N_{e,p}:'+self.data[0].calc_id
         # how to plot e and p number densities
         if e_density_negative:
             self.e_sign = -1

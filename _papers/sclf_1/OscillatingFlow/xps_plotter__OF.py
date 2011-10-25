@@ -1,7 +1,9 @@
 import h5py
 
 from Particles import tdc_XPs_Plotter
-from Common    import tdc_Data_Sequence,  tdc_Filenames
+
+from Auxiliary        import tdc_Filenames
+from Common_Data_Plot import tdc_Data_Sequence
 
 class XPs_Plotter__OF:
     """

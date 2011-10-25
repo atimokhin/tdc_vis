@@ -1,5 +1,5 @@
-import Common
-from Common import tdc_Data_Plotter
+## import Common
+from Common_Data_Plot import tdc_Data_Plotter
 
 
 class tdc_Fluxes_Plotter(tdc_Data_Plotter):

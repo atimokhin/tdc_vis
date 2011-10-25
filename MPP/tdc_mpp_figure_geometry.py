@@ -34,7 +34,7 @@ class tdc_MPP_FigureGeometry:
     right_margin_abs  = 0.05
     top_margin_abs    = 0.2
     bottom_margin_abs = 0.35
-    xlabel_bottom_y_abs = 0.16
+    xlabel_bottom_y_abs = 0.01
     xlabel_top_y_abs    = 0.01
     ylabel_left_x_abs   = 0.01
     ylabel_right_x_abs  = 0.10

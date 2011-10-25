@@ -1,4 +1,4 @@
-from Common.tdc_filenames  import tdc_Filenames
+from Auxiliary import tdc_Filenames
 
 class tdc_Selected_Particles:
     """

@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy             as np
 
-from Common        import *
+from Auxiliary        import *
+from Common_Data_Plot import *
+
 from Particles     import *
 from Plot_CMD      import *
 

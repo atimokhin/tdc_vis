@@ -1,18 +1,16 @@
 import numpy  as  np
 
-from tdc_mesh import tdc_Mesh
+from Auxiliary import tdc_Mesh
 
 from tdc_data_sequence import tdc_Data_Sequence
 
-class tdc_Data_Plotter:
+
+class tdc_Plotter:
     """
-    Base class for data plotting on both single frame and in animation
-    it contains all required methods
-
-    plot()
-    animation_update()
-       must be implemented in children classes
-
+    Base class for Plotting on both single frame and in animation
+    it contains required methods
+    which must be implemented in children classes
+    -------
     Members:
     --------
     data
@@ -21,8 +19,6 @@ class tdc_Data_Plotter:
        TeX string label used for plot annotations
     line
        Line artists with plotted field
-
-    Redirects all non-implemented methods to data[0] instance
     """
 
     def __init__(self, data):
@@ -39,17 +35,6 @@ class tdc_Data_Plotter:
         self.plot_ylabel  = None
         self.plot_xlabel  = None
         self.plot_idlabel = None
-
-    def __getattr__(self,attrname):
-        """
-        Redirects all non-implemented methods to data[0] instance
-        """
-        return getattr(self.data[0], attrname)
-
-    def read(self,i_ts,**kwargs):
-        "Read data at i_ts timeshot"
-        for d in self.data:
-            d.read(i_ts,**kwargs)
 
     def plot(self,ax,**kwargs):
         """
@@ -78,6 +63,48 @@ class tdc_Data_Plotter:
         Must be implemented in a children class
         """
         pass
+    
+    def animation_update(self,ax,i_ts):
+        """
+        Update animation frame - EMPTY
+        Must be implemented in a children class
+        """
+        pass
+    
+
+class tdc_Data_Plotter(tdc_Plotter):
+    """
+    Base class for *Data* plotting on both single frame and in animation
+    it contains all required methods
+
+    plot()
+    animation_update()
+       must be implemented in children classes
+    Adds: ---
+    read()
+    get_time()
+
+    Redirects all non-implemented methods to data[0] instance
+    """
+
+    def __init__(self, data):
+        """
+        Sets internal variables 
+        data
+           data to be plotted
+        """
+        tdc_Plotter.__init__(self,data)
+
+    def __getattr__(self,attrname):
+        """
+        Redirects all non-implemented methods to data[0] instance
+        """
+        return getattr(self.data[0], attrname)
+
+    def read(self,i_ts,**kwargs):
+        "Read data at i_ts timeshot"
+        for d in self.data:
+            d.read(i_ts,**kwargs)
     
     def animation_update(self,ax,i_ts):
         """

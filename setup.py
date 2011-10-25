@@ -1,17 +1,17 @@
 import pickle
 
-from Common    import *
-
-from PhysicalProperties    import *
+from Auxiliary           import *
+from PhysicalProperties  import *
 
 from Plots  import *
 
 
-## RESULTS_DIR='../RESULTS/'
+## RESULTS_DIR = '../RESULTS/'
+## RESULTS_DIR = '../RESULTS/FreeAgent/'
 
-RESULTS_DIR='../RESULTS/WD/'
+## RESULTS_DIR = '../RESULTS/WD/'
 
-## RESULTS_DIR='../RESULTS/FreeAgent/'
+RESULTS_DIR = '../RESULTS/__TDC_2/'
 
 
 tdc_set_results_dir(RESULTS_DIR)

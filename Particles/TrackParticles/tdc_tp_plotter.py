@@ -1,4 +1,4 @@
-from Common import tdc_Data_vs_X_Plotter
+from Common_Data_Plot import tdc_Data_vs_X_Plotter
 
 class tdc_TP_Plotter(tdc_Data_vs_X_Plotter):
     """

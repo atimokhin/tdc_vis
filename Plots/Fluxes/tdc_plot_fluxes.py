@@ -1,4 +1,4 @@
-from Common  import tdc_Manip
+from Common_Data_Plot import tdc_Manip
 
 from Fluxes.tdc_flux_data       import tdc_Flux_Data
 from Fluxes.tdc_fluxes_plotter  import tdc_Fluxes_Plotter

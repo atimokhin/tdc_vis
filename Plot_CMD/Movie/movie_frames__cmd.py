@@ -1,5 +1,6 @@
-from Common   import *
-from Movie    import *
+from Auxiliary        import *
+from Common_Data_Plot import *
+from Movie            import *
 
 import matplotlib
 

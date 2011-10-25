@@ -1,4 +1,5 @@
-from Common    import tdc_Data_Sequence, tdc_Data_Sequence_Initializer, tdc_Moving_Grid_Plotter
+from Common_Data_Plot   import tdc_Data_Sequence, tdc_Data_Sequence_Initializer
+from Auxiliary_Plotters import tdc_Moving_Grid_Plotter
 
 from Particles.tdc_xp_data           import tdc_XP_Data
 from Particles.tdc_xps_tp_plotter    import tdc_XPs_Plotter, tdc_XPs_TP_Plotter

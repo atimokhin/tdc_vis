@@ -1,5 +1,5 @@
-from Common  import tdc_Manip_Plot_vs_X
-from Fields  import tdc_Field_Data, tdc_Fields_Plotter
+from Common_Data_Plot  import tdc_Manip_Plot_vs_X
+from Fields            import tdc_Field_Data, tdc_Fields_Plotter
 
 
 def tdc_plot_field(calc_id,

@@ -1,4 +1,4 @@
-from Common import tdc_Data_vs_X_Plotter
+from Common_Data_Plot import tdc_Data_vs_X_Plotter
 
 class tdc_Fields_Plotter(tdc_Data_vs_X_Plotter):
     """
@@ -15,7 +15,7 @@ class tdc_Fields_Plotter(tdc_Data_vs_X_Plotter):
         tdc_Data_vs_X_Plotter.__init__(self,fields)
         # labels
         self.plot_ylabel  = _Field_Labels().get_TeXLabel(self.data[0].name)
-        self.plot_idlabel = self.data[0].name+' : '+self.data[0].calc_id
+        self.plot_idlabel = self.data[0].name+':'+self.data[0].calc_id
         # initialize lines
         self.lines = len(self.data)*[None]
 

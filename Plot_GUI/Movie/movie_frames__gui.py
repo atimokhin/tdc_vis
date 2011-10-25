@@ -1,7 +1,8 @@
 import gtk, gobject
 
-from Common   import *
-from Movie    import *
+from Auxiliary        import *
+from Common_Data_Plot import *
+from Movie            import *
 
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_gtkagg import FigureCanvasGTKAgg as FigureCanvas

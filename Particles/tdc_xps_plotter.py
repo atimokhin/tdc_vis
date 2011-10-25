@@ -1,4 +1,4 @@
-from Common import tdc_Data_vs_X_Plotter
+from Common_Data_Plot import tdc_Data_vs_X_Plotter
 
 class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
     """
@@ -39,7 +39,7 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
         else:
             self.plot_ylabel=self.__plotlabel[xps[0].name]
         # id label
-        self.plot_idlabel='XP : ' + self.data[0].calc_id
+        self.plot_idlabel='XP:' + self.data[0].calc_id
         # initialize lines
         self.lines = len(self.data)*[None]
 

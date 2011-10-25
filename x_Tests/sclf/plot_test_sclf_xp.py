@@ -1,8 +1,8 @@
 import h5py
 import numpy as np
 
-from Particles import tdc_XP_Data, tdc_XPs_Plotter
-from Common    import tdc_Data_Sequence, tdc_Data_Sequence_Initializer, tdc_Filenames
+from Particles        import tdc_XP_Data, tdc_XPs_Plotter
+from Common_Data_Plot import tdc_Data_Sequence, tdc_Data_Sequence_Initializer, tdc_Filenames
 
 
 def plot_test_sclf_xp_movie(plot_module,

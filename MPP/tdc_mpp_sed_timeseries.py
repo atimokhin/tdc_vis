@@ -1,4 +1,4 @@
-from Common import tdc_Exception
+from Auxiliary import tdc_Exception
 
 from tdc_mpp import tdc_MPP_H
                        

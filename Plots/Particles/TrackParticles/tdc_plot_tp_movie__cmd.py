@@ -1,4 +1,4 @@
-from Common    import tdc_Data_Sequence
+from Common_Data_Plot import tdc_Data_Sequence
 
 from Particles.TrackParticles.tdc_tp_data       import tdc_TP_Data
 from Particles.TrackParticles.tdc_tp_plotter    import tdc_TP_Plotter

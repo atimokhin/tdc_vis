@@ -1,7 +1,7 @@
 import numpy as np
 import h5py
 
-from Common  import tdc_Filenames, tdc_Timetable, tdc_Setup_Props, tdc_Mesh
+from Auxiliary  import tdc_Filenames, tdc_Timetable, tdc_Setup_Props, tdc_Mesh
 
 class tdc_Field_Data:
     """
@@ -89,6 +89,7 @@ class tdc_Field_Data:
         data.__mem_dspace  = None
         data.timetable=data.timetable.get_pure_data_copy() 
         return data
+
 
     def read(self, i_ts, re_read_x=False,**kwargs):
         """

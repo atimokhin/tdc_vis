@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy             as np
 
-from Common  import *
-from Common  import tdc_Manip, tdc_Data_Plotter
+from Auxiliary        import *
+from Common_Data_Plot import *
+from Common_Data_Plot import tdc_Manip, tdc_Data_Plotter
 
 from plot_params import single_plot_params
 
@@ -91,13 +92,12 @@ class Pmax_Manip(tdc_Manip):
     """
     Manipulator class for pmax plot
     """
-    
+
     def setup_from_data(self,
                         nn,
                         ksi_max):
         self.set_plotter( Pmax_Plotter(nn,ksi_max) )
         
-
     def __repr__(self):
         s =  'Pmax Plotter:\n'
         return s
