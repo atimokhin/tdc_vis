@@ -24,6 +24,8 @@ def tdc_plot_fft(calc_id,
        timeshot#
     Options:
     --------
+    nk_plot
+       <20> length of plotting arrays
     xlim 
     ylim
        <None>  axis limits

@@ -47,7 +47,7 @@ class tdc_FFT_Fit:
     
     def __init__(self, fft_data, fitting_type='pl', nk_plot=20):
         """
-        nk
+        nk_plot
           length of plotting arrays
         """
         # tdc_FFT_Data instance

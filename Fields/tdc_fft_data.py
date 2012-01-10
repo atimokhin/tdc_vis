@@ -103,9 +103,9 @@ class tdc_FFT_Data:
 
     def read(self, i_ts, xx=None, **kwargs):
         """
-        Read particle data for timeshot i_ts and calculate SED for
+        Read field data for timeshot i_ts and calculate Fourier spectrum for
         specified space interval xx,
-        or if xx==None for the default one
+        or if xx==None for the default space interval
         """
         self.field.read(i_ts)
         self.calculate_spectrum(xx,self.power_2_flag)

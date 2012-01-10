@@ -34,6 +34,15 @@ def tdc_plot_xp(calc_id, i_ts,
     xlim 
     ylim
        <None>  axis limits
+    symlog
+       <False>
+       whether to plot momentum in symlog scale:
+       p is linear in the interval [-linthreshy,linthreshy]
+       and logarithmic outside
+    linthreshy
+       <5>
+       p is linear in the interval [-linthreshy,linthreshy]
+       and logarithmic outside
     print_id
        <False> whether to put id label on the figure
     no_plot
@@ -76,6 +85,15 @@ def tdc_plot_xp_restored(filename,
     xlim 
     ylim
        <None>  axis limits
+    symlog
+       <False>
+       whether to plot momentum in symlog scale:
+       p is linear in the interval [-linthreshy,linthreshy]
+       and logarithmic outside
+    linthreshy
+       <5>
+       p is linear in the interval [-linthreshy,linthreshy]
+       and logarithmic outside
     print_id
        <False> whether to put id label on the figure
     no_plot

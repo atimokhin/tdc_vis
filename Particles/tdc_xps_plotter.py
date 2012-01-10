@@ -9,10 +9,10 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
     line       -- Line artists with plotted field
     """
 
-    __plotstyle = { 'Electrons' : {'linestyle':'None','color':'b','marker':'.','markersize':1},
-                    'Positrons' : {'linestyle':'None','color':'r','marker':'.','markersize':1},
-                    'Protons'   : {'linestyle':'None','color':'m','marker':'.','markersize':4},  
-                    'Pairs'     : {'linestyle':'None','color':'k','marker':'.','markersize':1}   }
+    __plotstyle = { 'Electrons' : {'linestyle':'None','color':'b','markeredgecolor':'b','marker':'o','markersize':1},
+                    'Positrons' : {'linestyle':'None','color':'r','markeredgecolor':'r','marker':'o','markersize':1},
+                    'Protons'   : {'linestyle':'None','color':'m','markeredgecolor':'m','marker':'o','markersize':4},  
+                    'Pairs'     : {'linestyle':'None','color':'k','markeredgecolor':'k','marker':'o','markersize':1}  }
 
     __plotlabel = { 'Electrons' : r'$p_{-}$' ,
                     'Positrons' : r'$p_{+}$' ,

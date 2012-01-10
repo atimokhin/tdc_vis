@@ -11,9 +11,9 @@ from x_Tests.plot_test_e_e_gauss_movie import *
 # ============================================================
 # Directory
 # ============================================================
-## tdc_set_results_dir('../RESULTS/')
+tdc_set_results_dir('../RESULTS/')
 ## tdc_set_results_dir('../RESULTS/FreeAgent/')
-tdc_set_results_dir('../RESULTS/WD/')
+## tdc_set_results_dir('../RESULTS/WD/')
 
 
 # ============================================================
@@ -28,6 +28,8 @@ IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_i
 
 ## IDs=['Arons__j1.059_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU']
 
+IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1_noPairs']
+## IDs=['SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj5_sU_P_noPairs']
 
 # ============================================================
 # plot limits:
@@ -125,7 +127,7 @@ moving_grid_dict = None
 
 Plots = {'XP'           : True,
          'Rho'          : False,
-         'J'            : False,
+         'J'            : True,
          'E_acc'        : True,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
