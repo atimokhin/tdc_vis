@@ -173,13 +173,19 @@ class tdc_Manip:
         """
         self.interactive=False
 
-    def dump_data(self,filename):
+    def dump_data(self,filename,dump_id):
         """
-        get pure data from plotter and dump it into the pickle file filename.pickle 
+        get pure data from plotter and dump it into the pickle file
+           'tdc_Filenames.__VisResultsDir/dump_id/filename.pickle' 
         """
         import pickle
+        from   Auxiliary import tdc_Filenames
+        # get pure data copy
         data = [ d.get_pure_data_copy() for d in self.plotter.data ]
-        pickle.dump( data, open(filename+'.pickle','w') )
+        # full file name of the file with manipulator dump
+        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        pickle.dump( data, open(filename,'w') )
+        print '\nContent dumped in "%s" \n' % filename
 
     def _manip_name(self,name):
         """

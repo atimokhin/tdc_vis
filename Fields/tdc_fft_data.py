@@ -26,7 +26,7 @@ class tdc_FFT_Data:
        number of sampled points
     dx
        cell size (need for frequency calculation),
-       set by set_xx_default()
+       set by set_xx_default__and_dx()
 
     power_2_flag
        whether to adjust the desired number of sampled points toward the closest
@@ -67,8 +67,8 @@ class tdc_FFT_Data:
         self.field   = tdc_Field_Data(calc_id, field_name)
         # interface to timetable
         self.timetable = self.field.timetable
-        # set default space interval
-        self.set_xx_default(xx)
+        # set default space interval and dx
+        self.set_xx_default__and_dx(xx)
         # initialize xx
         self.xx = self.xx_default
         # initialize members
@@ -142,21 +142,21 @@ class tdc_FFT_Data:
 
 
  
-    def set_xx_default(self,xx=None):
+    def set_xx_default__and_dx(self,xx=None):
         """
         Set **default** space interval for which particle spectrum
-        will be calculated
+        will be calculated and also sets dx!
         NB: Reads mesh.h5 !
         xx
           (x1,x2), if None [default] use whole computational domain
         """
+        # read Mesh <=== !
+        mesh = tdc_Mesh(self.field.calc_id)
+        self.dx = mesh.dx
         if xx:
             self.xx_default = xx
         else:
-            # read Mesh <=== !
-            mesh = tdc_Mesh(self.field.calc_id)
             self.xx_default = (mesh.xmin,mesh.xmax)
-            self.dx = mesh.dx
 
 
 

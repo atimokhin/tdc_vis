@@ -70,6 +70,7 @@ def tdc_plot_xp(calc_id, i_ts,
 
 
 def tdc_plot_xp_restored(filename,
+                         dump_id,
                          ylim=None,
                          xlim=None,
                          symlog=False,
@@ -105,7 +106,7 @@ def tdc_plot_xp_restored(filename,
     """
     # create Manip
     manip = tdc_XP_Manip(**kwargs)
-    manip.restore(filename)
+    manip.restore(filename,dump_id)
     if not no_plot:
         manip.plot(ylim=ylim,
                    xlim=xlim,
@@ -163,6 +164,7 @@ class tdc_XP_Manip(tdc_Manip_Plot_vs_X):
 
     def restore(self,
                 filename,
+                dump_id,
                 tp=None,
                 trail_dict=None):
         """
@@ -170,10 +172,13 @@ class tdc_XP_Manip(tdc_Manip_Plot_vs_X):
         by Manip called before
         """
         import pickle
+        from   Auxiliary import tdc_Filenames
         # set restored_from_dump flag so the data cannot be read again
         self.restored_from_dump=True
         # XP DATA <<<<<<<
-        self.xps = pickle.load( open(filename+'.pickle','r') )
+        # full file name of the file with manipulator dump
+        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        self.xps = pickle.load( open(filename,'r') )
         # i_ts
         self.i_ts = self.xps[0].i_ts
         # TP

@@ -40,6 +40,7 @@ def tdc_plot_field(calc_id,
 
 
 def tdc_plot_field_restored(filename,
+                            dump_id,
                             ylim=None,
                             xlim=None,
                             print_id=False,
@@ -64,7 +65,7 @@ def tdc_plot_field_restored(filename,
     """
     # create Manip
     manip = tdc_Field_Manip(**kwargs)
-    manip.restore(filename)
+    manip.restore(filename,dump_id)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
     return manip
@@ -75,12 +76,12 @@ class tdc_Field_Manip(tdc_Manip_Plot_vs_X):
     """
     Manipulator class for Field
     """
-
+    
     def __init__(self,**kwargs):
         tdc_Manip_Plot_vs_X.__init__(self,**kwargs)
         # Field DATA <<<<<<<
         self.field=None
-
+        
     def setup_from_data(self,
                         calc_id,
                         field_name,
@@ -94,16 +95,20 @@ class tdc_Field_Manip(tdc_Manip_Plot_vs_X):
         self.set_plotter( tdc_Fields_Plotter(self.field) )
 
     def restore(self,
-                filename):
+                filename,
+                dump_id):
         """
         setup Manip by reading the pickle'd data dumped
         by Manip called before
         """
         import pickle
+        from   Auxiliary import tdc_Filenames
         # set restored_from_dump flag so the data cannot be read again
         self.restored_from_dump=True
         # Field <<<<<<<
-        fields = pickle.load( open(filename+'.pickle','r') )
+        # full file name of the file with manipulator dump
+        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        fields = pickle.load( open(filename,'r') )
         self.field = fields[0]
         # i_ts
         self.i_ts = self.field.i_ts

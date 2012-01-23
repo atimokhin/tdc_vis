@@ -40,6 +40,7 @@ def tdc_plot_fluxes( calc_ids,
 
 
 def tdc_plot_fluxes_restored(filename,
+                             dump_id,
                              ylim=None,
                              xlim=None,
                              print_id=False,
@@ -61,7 +62,7 @@ def tdc_plot_fluxes_restored(filename,
     """
     # create Manip
     manip = tdc_Flux_Manip(**kwargs)
-    manip.restore(filename)
+    manip.restore(filename,dump_id)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
     return manip
@@ -96,28 +97,36 @@ class tdc_Flux_Manip(tdc_Manip):
         self.set_plotter( tdc_Fluxes_Plotter( self.fluxes.values() ) )
 
     def restore(self,
-                filename):
+                filename,
+                dump_id):
         """
         setup Manip by reading the pickle'd data dumped
         by Manip called before
         """
         import pickle
+        from   Auxiliary import tdc_Filenames
         # set restored_from_dump flag so the data cannot be read again
         self.restored_from_dump=True
         # Flux DATA <<<<<<<
-        self.fluxes = pickle.load( open(filename+'.pickle','r') )
+        # full file name of the file with manipulator dump
+        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        self.fluxes = pickle.load( open(filename,'r') )
         # set PLOTTER by calling base class method
         self.set_plotter( tdc_Fluxes_Plotter( self.fluxes.values() ) )
 
-    def dump_data(self,filename):
+    def dump_data(self,filename,dump_id):
         """
         get pure data from plotter and dump it into the pickle file filename.pickle 
         """
         import pickle
+        from   Auxiliary import tdc_Filenames
         fluxes = self.fluxes
         for pref in fluxes.keys():
             fluxes[pref] = fluxes[pref].get_pure_data_copy()
-        pickle.dump( fluxes, open(filename+'.pickle','w') )
+        # full file name of the file with manipulator dump
+        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        pickle.dump( fluxes, open(filename,'w') )
+        print '\nContent dumped in "%s" \n' % filename
 
     def __repr__(self):
         s = self._manip_name('tdc_Flux_Manip')
@@ -193,7 +202,7 @@ class tdc_Flux_Manip(tdc_Manip):
         """
         # FIGURE
         # id_label
-        self.fig = self.fg.create_figure(facecolor='w')
+        self.fig = self.fig_geom.create_figure(facecolor='w')
         id_label = self.plotter.plot_idlabel+' : '
         for prefix in  self.fluxes.keys():       
             id_label += prefix + ' '

@@ -52,6 +52,7 @@ def tdc_plot_fft(calc_id,
 
 
 def tdc_plot_fft_restored(filename,
+                          dump_id,
                           ylim=None,
                           xlim=None,
                           print_id=False,
@@ -76,7 +77,7 @@ def tdc_plot_fft_restored(filename,
     """
     # create Manip
     manip = tdc_FFT_Manip(**kwargs)
-    manip.restore(filename)
+    manip.restore(filename,dump_id)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
     return manip
@@ -115,16 +116,19 @@ class tdc_FFT_Manip(tdc_Manip):
         # FFT Fit <<<<<<<
         self.set_fft_fit(fitting_type=fitting_type, nk_plot=nk_plot)
 
-    def restore(self,filename):
+    def restore(self,filename,dump_id):
         """
         setup Manip by reading the pickle'd data dumped
         by Manip called before
         """
         import pickle
+        from   Auxiliary import tdc_Filenames
         # set restored_from_dump flag so the data cannot be read again
         self.restored_from_dump=True
         # Field <<<<<<<
-        dump_dict = pickle.load( open(filename+'.pickle','r') )
+        # full file name of the file with manipulator dump
+        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        dump_dict = pickle.load( open(filename,'r') )
         self.fft = dump_dict['fft_data'][0]
         # i_ts
         self.i_ts = self.fft.field.i_ts
@@ -134,17 +138,21 @@ class tdc_FFT_Manip(tdc_Manip):
         self.set_fft_fit(fitting_type=dump_dict['fitting_type'],
                          nk_plot=dump_dict['nk_plot'])
 
-    def dump_data(self,filename):
+    def dump_data(self,filename,dump_id):
         """
         get pure data from plotter and dump it into the pickle file filename.pickle 
         """
         import pickle
+        from   Auxiliary import tdc_Filenames
         data = [ d.get_pure_data_copy() for d in self.plotter.data ]
         dump_dict={}
         dump_dict['fft_data'] = data
         dump_dict['fitting_type'] = self.fft_fit.type 
         dump_dict['nk_plot']   = self.fft_fit.nk_plot
-        pickle.dump( dump_dict, open(filename+'.pickle','w') )
+        # full file name of the file with manipulator dump
+        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        pickle.dump( dump_dict, open(filename,'w') )
+        print '\nContent dumped in "%s" \n' % filename
 
     def __repr__(self):
         s = self._manip_name('tdc_FFT_Manip')

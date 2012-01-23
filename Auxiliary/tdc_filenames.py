@@ -1,6 +1,6 @@
 class tdc_Filenames:
     """
-    class with methods for retriving full filename and setting sesults directory
+    class with methods for retriving full filename and setting results directory
     There are twom types of results directories:
         RESULTS     -- computation data
         RESULTS_VIS -- results of visualization (movie/pictures)
@@ -28,7 +28,7 @@ class tdc_Filenames:
     def get_vis_results_dir(self):
         return tdc_Filenames.__VisResultsDir
 
-    def get_full_vis_fielname(self,vis_id,fielname):
+    def get_full_vis_filename(self,vis_id,fielname):
         return tdc_Filenames.__VisResultsDir + '/' + vis_id + '/' + fielname
  
 
@@ -66,4 +66,4 @@ def tdc_get_vis_results_dir():
     return tdc_Filenames().get_vis_results_dir()
 
 def tdc_get_vis_fielname(vis_id,fielname):
-    return tdc_Filenames().get_full_vis_fielname(vis_id,fielname)
+    return tdc_Filenames().get_full_vis_filename(vis_id,fielname)

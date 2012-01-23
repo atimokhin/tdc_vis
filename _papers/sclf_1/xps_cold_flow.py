@@ -12,6 +12,10 @@ from MPP import tdc_MPP
 
 from plot_params import mpp_params
 
+# ------------------------------
+# SubDirectory with dumped files
+# ------------------------------
+dump_id='__TDC_2/SEDs__OF'
 
 tick_and_labels_commands="""
 for i in range(3):
@@ -92,7 +96,9 @@ plotters=[]
 j_labels=[]
 for jl,fn in sed_list:
     j_labels.append( r'$j_0 = %s\,j_{\rm GJ}$' % jl )
-    dump_dict = pickle.load( open('../RESULTS/__TDC_2/SEDs__OF/' + fn + '.pickle','r') )
+    # full file name of the file with manipulator dump
+    filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+    dump_dict = pickle.load( open(filename,'r') )
     plotters.append( tdc_XPs_Plotter( (dump_dict['seds'][0].xp,)) )
 # do plotting 
 mpp.interactive_off()

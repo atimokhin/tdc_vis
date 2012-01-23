@@ -1,6 +1,6 @@
 import numpy as np
 
-from Auxiliary        import tdc_Mesh, tdc_Setup_Props
+from Auxiliary        import tdc_Mesh, tdc_Setup_Props, tdc_Filenames
 from Common_Data_Plot import tdc_Manip
 
 from Particles.tdc_xp_data       import tdc_XP_Data
@@ -63,6 +63,7 @@ def tdc_plot_sed(calc_id, i_ts,
 
 
 def tdc_plot_sed_restored(filename,
+                          dump_id,
                           ylim=None,
                           xlim=None,
                           print_id=False,
@@ -89,7 +90,7 @@ def tdc_plot_sed_restored(filename,
     """
     # create Manip
     manip = tdc_SED_Manip(**kwargs)
-    manip.restore(filename)
+    manip.restore(filename,dump_id)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
     return manip
@@ -156,6 +157,7 @@ class tdc_SED_Manip(tdc_Manip):
 
     def restore(self,
                 filename,
+                dump_id,
                 p_bins=None,
                 xx=None):
         """
@@ -163,10 +165,13 @@ class tdc_SED_Manip(tdc_Manip):
         by Manip called before
         """
         import pickle
+        from   Auxiliary import tdc_Filenames
         # set restored_from_dump flag so the data cannot be read again
         self.restored_from_dump=True
         # SED DATA <<<<<<<
-        dump_dict = pickle.load( open(filename+'.pickle','r') )
+        # full file name of the file with manipulator dump
+        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        dump_dict = pickle.load( open(filename,'r') )
         self.seds = dump_dict['seds']
         self.set_plotter( tdc_SEDs_Plotter(self.seds) )
         # Mesh
@@ -181,7 +186,7 @@ class tdc_SED_Manip(tdc_Manip):
         self.e_p   = dump_dict['e_p'] 
 
 
-    def dump_data(self,filename):
+    def dump_data(self,filename,dump_id):
         """
         get pure data from plotter and dump it into the pickle file filename.pickle 
         """
@@ -194,7 +199,10 @@ class tdc_SED_Manip(tdc_Manip):
         dump_dict['plasma_params'] = self.plasma_params
         dump_dict['n_p']   = self.n_p 
         dump_dict['e_p']   = self.e_p 
-        pickle.dump( dump_dict, open(filename+'.pickle','w') )
+        # full file name of the file with manipulator dump
+        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        pickle.dump( dump_dict, open(filename,'w') )
+        print '\nContent dumped in "%s" \n' % filename
 
     def __repr__(self):
         s = self._manip_name('tdc_SED_Manip')
@@ -310,7 +318,7 @@ class tdc_SED_Manip(tdc_Manip):
         self.calculate_plasma_params()
         self.calculate_number_of_particles(pp)
         self.calculate_particle_energy(pp)
-        
+
     def set_momentum_bins(self,p_bins):
         """
         Sets 4-momentum bins p_bins for all SEDs
