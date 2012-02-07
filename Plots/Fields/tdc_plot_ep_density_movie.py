@@ -16,6 +16,8 @@ def tdc_plot_ep_density_movie(plot_module,
                               use_cell_coordinates=False,
                               show_cells=False,
                               time_normalization=None,
+                              xlabel=None,ylabel=None,idlabel=None,
+                              fig_param=None,
                               **kwargs):
     """
     calc_ids
@@ -62,12 +64,13 @@ def tdc_plot_ep_density_movie(plot_module,
                                          tt=tt,
                                          time_normalization=time_normalization,
                                          **kwargs)
-    plotter  = tdc_EP_Density_Plotter(fe,fp,e_density_negative)
+    plotter  = tdc_EP_Density_Plotter(fe,fp,e_density_negative,
+                                      xlabel=xlabel, ylabel=ylabel, idlabel=idlabel)
     # plot moving grid if asked
     if moving_grid_dict:
         plotter  = tdc_Moving_Grid_Plotter(plotter,moving_grid_dict)
     # movie frames
-    MF = plot_module.Movie.Single_Panel_Movie_Frames(plotter, ylim=ylim, xlim=xlim)
+    MF = plot_module.Movie.Single_Panel_Movie_Frames(plotter, ylim=ylim, xlim=xlim, fig_param=fig_param)
     # movie_id - directory with the movie file
     movie_id = 'EP' + '_' + calc_ids[0]
     # -----------------------------------------
@@ -87,6 +90,7 @@ def tdc_plot_epg_density_movie(plot_module,
                                use_cell_coordinates=False,
                                show_cells=False,
                                time_normalization=None,
+                               fig_param=None,
                                **kwargs):
     """
     Plots movie for number density of (e)lectrons, (p)positrons, (g)amma-rays
@@ -149,7 +153,7 @@ def tdc_plot_epg_density_movie(plot_module,
     if moving_grid_dict:
         plotter  = tdc_Moving_Grid_Plotter(plotter,moving_grid_dict)
     # movie frames
-    MF = plot_module.Movie.Single_Panel_Movie_Frames(plotter, ylim=ylim, xlim=xlim)
+    MF = plot_module.Movie.Single_Panel_Movie_Frames(plotter, ylim=ylim, xlim=xlim, fig_param=fig_param)
     # movie_id - directory with the movie file
     movie_id = 'EPG' + '_' + calc_ids[0]
     # -----------------------------------------
@@ -169,6 +173,7 @@ def tdc_plot_epgp_density_movie(plot_module,
                                 use_cell_coordinates=False,
                                 show_cells=False,
                                 time_normalization=None,
+                                fig_param=None,
                                 **kwargs):
     """
     Plots movie for number density of (e)lectrons, (p)positrons, (g)amma-rays, (p)rotons
@@ -238,7 +243,7 @@ def tdc_plot_epgp_density_movie(plot_module,
     if moving_grid_dict:
         plotter  = tdc_Moving_Grid_Plotter(plotter,moving_grid_dict)
     # movie frames
-    MF = plot_module.Movie.Single_Panel_Movie_Frames(plotter, ylim=ylim, xlim=xlim)
+    MF = plot_module.Movie.Single_Panel_Movie_Frames(plotter, ylim=ylim, xlim=xlim, fig_param=fig_param)
     # movie_id - directory with the movie file
     movie_id = 'EPGP' + '_' + calc_ids[0]
     # -----------------------------------------

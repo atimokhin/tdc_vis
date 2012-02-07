@@ -9,7 +9,10 @@ from  Fields  import tdc_Fields_Plotter
 
 import MPP
 
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 tdc_set_hardcopy_rcparams()
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 
 #tdc_set_results_dir('../RESULTS/')
 tdc_set_results_dir('../RESULTS/FreeAgent/')
@@ -232,4 +235,4 @@ mpp.interactive_on()
 
 # show figure
 plt.show()
-tdc_set_default_rcparams()
+

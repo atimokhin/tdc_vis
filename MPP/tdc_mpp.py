@@ -107,7 +107,7 @@ class tdc_MPP:
             ax.xaxis.set_ticks(*args, **kwargs)
         if self.interactive: self.fig.canvas.draw()
 
-    def set_xticklabels(self, labels, tex=False, *args, **kwargs):
+    def set_xticklabels(self, labels, tex=True, *args, **kwargs):
         """
         call set_ticklabels for each xaxis in the grid,
         if tex is True, format each label L as "$L$"

@@ -5,7 +5,6 @@ from Auxiliary        import *
 from Common_Data_Plot import *
 from Common_Data_Plot import tdc_Manip, tdc_Data_Plotter
 
-from plot_params import single_plot_params
 
 # --------------------------------------
 # dictionary with data takent from plots
@@ -43,9 +42,11 @@ manip_pmax.set_yticks(np.arange(0,36,2),minor=True)
 def do_plot():
     global manip_pmax
 
+    # <<<<<<<<<<<<<<<<<<<<<<<<<<<<
     tdc_set_hardcopy_rcparams()
+    # <<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-    manip_pmax = tdc_plot_pmax(100, ksi_max=ksi_max, **single_plot_params)
+    manip_pmax = tdc_plot_pmax(100, ksi_max=ksi_max, fig_param=paramSingleFig_MNRAS)
     tdc_set_default_rcparams()
     manip_pmax.interactive_off()
 
@@ -60,7 +61,7 @@ def tdc_plot_pmax(nn, ksi_max,
                   ylim=None, xlim=None,
                   print_id=False,
                   no_plot=False,
-                  **kwargs):
+                  fig_param=None):
     """
     nn
        # of points
@@ -81,7 +82,7 @@ def tdc_plot_pmax(nn, ksi_max,
     ()=> Pmax_Manip
     """
 
-    manip = Pmax_Manip(**kwargs)
+    manip = Pmax_Manip(fig_param)
     manip.setup_from_data(nn, ksi_max)
     if not no_plot:
         manip.plot(ylim, xlim, print_id=print_id)
@@ -105,18 +106,19 @@ class Pmax_Manip(tdc_Manip):
 
 class Pmax_Plotter(tdc_Data_Plotter):
     
-    def __init__(self,nn,ksi_max):
+    def __init__(self,nn,ksi_max, xlabel=None,ylabel=None,idlabel=None):
         # base class initialization is enough
-        tdc_Data_Plotter.__init__(self,None)
+        tdc_Data_Plotter.__init__(self,
+                                  None,
+                                  xlabel=r'$\xi$',
+                                  ylabel=r'$p_{\mathrm{beam}}$',
+                                  idlabel='Pmax')
+        #
         self.pa=Pmax_Analytical(nn,ksi_max)
         self.pn=Pmax_Numerical()
         #
         self.xmin=0
         self.xmax=1
-        # plot labels
-        self.plot_ylabel  = r'$p_\max$'
-        self.plot_xlabel  = r'$\xi$'
-        self.plot_idlabel = 'Pmax'
     
     def read(self, i_ts,**kwargs):
         pass

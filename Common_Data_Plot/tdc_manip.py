@@ -1,4 +1,5 @@
-from tdc_single_figure_geometry import tdc_Single_FigureGeometry
+import matplotlib
+from   tdc_figure_geometry import tdc_Single_FigureGeometry
 
 class tdc_Manip:
     """
@@ -15,19 +16,10 @@ class tdc_Manip:
     i_ts
        current timeshot for data
     """
-    __default_label_fontsize     = 17
-    __default_ticklabel_fontsize = 10
 
-    def __init__(self, **kwargs):
-        # ----------------------------------------
-        # setup figure parameters
-        self._label_fontsize = kwargs.get('label_fontsize',
-                                          tdc_Manip.__default_label_fontsize)
-        self._ticklabel_fontsize = kwargs.get('ticklabel_fontsize',
-                                              tdc_Manip.__default_ticklabel_fontsize)
-        # ----------------------------------------
-        #figure geometry
-        self.fig_geom = tdc_Single_FigureGeometry(**kwargs) 
+    def __init__(self, fig_param=None):
+        # figure geometry
+        self.fig_geom = tdc_Single_FigureGeometry(fig_param) 
         # PLOTTER <<<<
         self.plotter = None
         # FIGURE <<<<<
@@ -69,9 +61,9 @@ class tdc_Manip:
         xlim |
         print_id  -- print label on the plot? <False>
         """
-        # FIGURE ---------------------------------
-        self.fig = self.fig_geom.create_figure(facecolor='w')
-        # set window title
+        # Create figure and axes -----------
+        self.create_figure_and_axes()
+        # set window title -----------------
         # id label
         id_label = ('i_ts=%i:' % self.i_ts if self.i_ts else '') + self.plotter.plot_idlabel          
         # if asked put widnow title label  into figure too
@@ -79,8 +71,6 @@ class tdc_Manip:
             self.fig.suptitle(id_label, size='x-small')
         id_label = 'Fig %i|' % self.fig.number + id_label
         self.fig.canvas.set_window_title(id_label) 
-        # AXES ------------------------------------ 
-        self.ax  = self.fig.axes[0]
         # PLOT
         self.plotter.plot(self.ax,**kwargs)
         # set axes limits:
@@ -92,7 +82,10 @@ class tdc_Manip:
         if ylim!=None:
             self.ax.set_ylim(ylim)
         # labels
-        self.set_ylabel(self.plotter.plot_ylabel)
+        if matplotlib.rcParams['text.usetex']:
+            self.set_ylabel(self.plotter.plot_ylabel_latex)
+        else:
+            self.set_ylabel(self.plotter.plot_ylabel)
         self.set_xlabel(self.plotter.plot_xlabel)
         # change fontsize
         self._change_ticklabel_fonsize()
@@ -100,20 +93,39 @@ class tdc_Manip:
     def print_info(self):
         print self
 
+    def create_figure_and_axes(self):
+        """
+        Create figure and axes
+        """
+        # FIGURE ---------------------------
+        self.fig = matplotlib.pyplot.figure(facecolor='white',
+                                            figsize=self.fig_geom.figsize_inch,
+                                            dpi=self.fig_geom.dpi)
+        # AXES -----------------------------
+        self.ax = self.fig.add_axes([self.fig_geom.left_margin,
+                                     self.fig_geom.bottom_margin,
+                                     self.fig_geom.dx_ax,
+                                     self.fig_geom.dy_ax])
+        self.ax.yaxis.set_major_formatter(self.fig_geom.formatter)
+
     def _change_ticklabel_fonsize(self):
         "function for changing fontsize for axes"
         for label in self.ax.xaxis.get_ticklabels():
-            label.set_size(self._ticklabel_fontsize)
+            label.set_size(self.fig_geom.ticklabel_fontsize)
         for label in self.ax.yaxis.get_ticklabels():
-            label.set_size(self._ticklabel_fontsize)
+            label.set_size(self.fig_geom.ticklabel_fontsize)
 
     def set_xlabel(self,xlabel):
         coord = self.fig_geom.xlabel_pos()
-        self.x_label=self.fig.text( *coord, s=xlabel, va='bottom',ha='center', size=self._label_fontsize)
+        self.x_label=self.fig.text( *coord, s=xlabel,
+                                    va='bottom',ha='center',
+                                    size=self.fig_geom.label_fontsize)
 
     def set_ylabel(self,ylabel):
         coord = self.fig_geom.ylabel_pos()
-        self.y_label=self.fig.text( *coord, s=ylabel, va='center',ha='left', size=self._label_fontsize)
+        self.y_label=self.fig.text( *coord, s=ylabel,
+                                    va='center',ha='left',
+                                    size=self.fig_geom.label_fontsize)
 
     def set_xlim(self, *args, **kwargs):
         "call set_xlim command for axes"

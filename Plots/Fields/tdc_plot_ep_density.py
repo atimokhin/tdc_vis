@@ -9,7 +9,7 @@ def tdc_plot_ep_density(calc_id,
                         xlim=None,
                         print_id=False,
                         no_plot=False,
-                        **kwargs):
+                        fig_param=None):
     """
     calc_id
        calculation id name
@@ -34,8 +34,8 @@ def tdc_plot_ep_density(calc_id,
     --------
     ()=> tdc_EP_Density_Manip
     """
-    manip = tdc_EP_Density_Manip(**kwargs)
-    manip.setup_from_data(calc_id, e_density_negative,**kwargs)
+    manip = tdc_EP_Density_Manip(fig_param)
+    manip.setup_from_data(calc_id, e_density_negative)
     manip.read(i_ts)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
@@ -49,7 +49,7 @@ def tdc_plot_ep_density_restored(filename,
                                  xlim=None,
                                  print_id=False,
                                  no_plot=False,
-                                 **kwargs):
+                                 fig_param=None):
     """
     filename
        pickle file name is 'filename.pickle'
@@ -71,7 +71,7 @@ def tdc_plot_ep_density_restored(filename,
     ()=> tdc_EP_Density_Manip
     """
     # create Manip
-    manip = tdc_EP_Density_Manip(**kwargs)
+    manip = tdc_EP_Density_Manip(fig_param)
     manip.restore(filename,dump_id,e_density_negative)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
@@ -86,7 +86,7 @@ def tdc_plot_epg_density(calc_id,
                          xlim=None,
                          print_id=False,
                          no_plot=False,
-                         **kwargs):
+                         fig_param=None):
     """
     calc_id
        calculation id name
@@ -111,8 +111,8 @@ def tdc_plot_epg_density(calc_id,
     --------
     ()=> tdc_EPG_Density_Manip
     """
-    manip = tdc_EPG_Density_Manip(**kwargs)
-    manip.setup_from_data(calc_id, e_density_negative,**kwargs)
+    manip = tdc_EPG_Density_Manip(fig_param)
+    manip.setup_from_data(calc_id, e_density_negative)
     manip.read(i_ts)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
@@ -126,7 +126,7 @@ def tdc_plot_epg_density_restored(filename,
                                   xlim=None,
                                   print_id=False,
                                   no_plot=False,
-                                  **kwargs):
+                                  fig_param=None):
     """
     filename
        pickle file name is 'filename.pickle'
@@ -148,7 +148,7 @@ def tdc_plot_epg_density_restored(filename,
     ()=> tdc_EPG_Density_Manip
     """
     # create Manip
-    manip = tdc_EPG_Density_Manip(**kwargs)
+    manip = tdc_EPG_Density_Manip(fig_param)
     manip.restore(filename,dump_id,e_density_negative)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
@@ -163,7 +163,7 @@ def tdc_plot_epgp_density(calc_id,
                           xlim=None,
                           print_id=False,
                           no_plot=False,
-                          **kwargs):
+                          fig_param=None):
     """
     calc_id
        calculation id name
@@ -188,8 +188,8 @@ def tdc_plot_epgp_density(calc_id,
     --------
     ()=> tdc_EPGP_Density_Manip
     """
-    manip = tdc_EPGP_Density_Manip(**kwargs)
-    manip.setup_from_data(calc_id, e_density_negative,**kwargs)
+    manip = tdc_EPGP_Density_Manip(fig_param)
+    manip.setup_from_data(calc_id, e_density_negative)
     manip.read(i_ts)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
@@ -203,7 +203,7 @@ def tdc_plot_epgp_density_restored(filename,
                                    xlim=None,
                                    print_id=False,
                                    no_plot=False,
-                                   **kwargs):
+                                   fig_param=None):
     """
     filename
        pickle file name is 'filename.pickle'
@@ -225,7 +225,7 @@ def tdc_plot_epgp_density_restored(filename,
     ()=> tdc_EPGP_Density_Manip
     """
     # create Manip
-    manip = tdc_EPGP_Density_Manip(**kwargs)
+    manip = tdc_EPGP_Density_Manip(fig_param)
     manip.restore(filename,dump_id,e_density_negative)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
@@ -237,16 +237,15 @@ class tdc_EP_Density_Manip(tdc_Manip_Plot_vs_X):
     """
     Manipulator class for Field
     """
-    def __init__(self,**kwargs):
-        tdc_Manip_Plot_vs_X.__init__(self,**kwargs)
+    def __init__(self,fig_param=None):
+        tdc_Manip_Plot_vs_X.__init__(self,fig_param)
         # Field DATA <<<<<<<
         self.fe=None
         self.fp=None
-        
+
     def setup_from_data(self,
                         calc_id,
-                        e_density_negative=True,
-                        **kwargs):
+                        e_density_negative=True):
         # fields 
         self.fe = tdc_Field_Data(calc_id,
                                  field_name='N',
@@ -312,8 +311,9 @@ class tdc_EPG_Density_Manip(tdc_Manip_Plot_vs_X):
     """
     Manipulator class for Field
     """
-    def __init__(self,**kwargs):
-        tdc_Manip_Plot_vs_X.__init__(self,**kwargs)
+
+    def __init__(self,fig_param=None):
+        tdc_Manip_Plot_vs_X.__init__(self,fig_param)
         # Field DATA <<<<<<<
         self.fe=None
         self.fp=None
@@ -321,8 +321,7 @@ class tdc_EPG_Density_Manip(tdc_Manip_Plot_vs_X):
         
     def setup_from_data(self,
                         calc_id,
-                        e_density_negative=True,
-                        **kwargs):
+                        e_density_negative=True):
         # fields 
         self.fe = tdc_Field_Data(calc_id,
                                  field_name='N',
@@ -395,8 +394,9 @@ class tdc_EPGP_Density_Manip(tdc_Manip_Plot_vs_X):
     """
     Manipulator class for Field
     """
-    def __init__(self,**kwargs):
-        tdc_Manip_Plot_vs_X.__init__(self,**kwargs)
+
+    def __init__(self,fig_param=None):
+        tdc_Manip_Plot_vs_X.__init__(self,fig_param)
         # Field DATA <<<<<<<
         self.fe=None
         self.fp=None
@@ -405,8 +405,7 @@ class tdc_EPGP_Density_Manip(tdc_Manip_Plot_vs_X):
         
     def setup_from_data(self,
                         calc_id,
-                        e_density_negative=True,
-                        **kwargs):
+                        e_density_negative=True):
         # fields 
         self.fe = tdc_Field_Data(calc_id,
                                  field_name='N',

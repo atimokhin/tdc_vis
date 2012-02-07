@@ -11,7 +11,7 @@ def tdc_plot_fluxes( calc_ids,
                      xlim=None,
                      print_id=False,
                      no_plot=False,
-                     **kwargs):
+                     fig_param=None):
     """
     calc_ids
        calculation ids 
@@ -32,7 +32,7 @@ def tdc_plot_fluxes( calc_ids,
        <False> if True do not call plot in Manipulator
        useful if additional plot modifications are required
     """       
-    manip = tdc_Flux_Manip(**kwargs)
+    manip = tdc_Flux_Manip(fig_param)
     manip.setup_from_data(calc_ids, flux_name, prefix)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
@@ -45,7 +45,7 @@ def tdc_plot_fluxes_restored(filename,
                              xlim=None,
                              print_id=False,
                              no_plot=False,
-                             **kwargs):
+                             fig_param=None):
     """
     filename
        pickle file name is 'filename.pickle'
@@ -61,7 +61,7 @@ def tdc_plot_fluxes_restored(filename,
     ()=> tdc_Flux_Manip
     """
     # create Manip
-    manip = tdc_Flux_Manip(**kwargs)
+    manip = tdc_Flux_Manip(fig_param)
     manip.restore(filename,dump_id)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
@@ -74,14 +74,13 @@ class tdc_Flux_Manip(tdc_Manip):
     """
     __default_prefix = ('lc','ns')
 
-    def __init__(self,**kwargs):
-        tdc_Manip.__init__(self, **kwargs)
+    def __init__(self,fig_param=None):
+        tdc_Manip.__init__(self, fig_param)
 
     def setup_from_data(self,
                         calc_ids,
                         flux_name,
-                        prefix=None,
-                        **kwargs):
+                        prefix=None):
         # fluxes
         self.fluxes = dict()
         # prefix
@@ -200,15 +199,13 @@ class tdc_Flux_Manip(tdc_Manip):
         print_id
            print label on the plot? <False>
         """
-        # FIGURE
-        # id_label
-        self.fig = self.fig_geom.create_figure(facecolor='w')
+        # Create figure and axes -----------
+        self.create_figure_and_axes()
+        # id_label        
         id_label = self.plotter.plot_idlabel+' : '
         for prefix in  self.fluxes.keys():       
             id_label += prefix + ' '
         self.fig.canvas.set_window_title(id_label) 
-        # AXES 
-        self.ax  = self.fig.axes[0]
         # plot <----------------
         plot_function(self.ax)
         # ----------------------

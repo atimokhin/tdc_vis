@@ -18,7 +18,7 @@ class XPs_Plotter__OF:
     -----------------
     """
 
-    def __init__(self, xps, of__filename):
+    def __init__(self, xps, of__filename, xlabel=None,ylabel=None,idlabel=None):
         """
         reads data for the theoretical curve and sets internal variables
         xps
@@ -26,8 +26,11 @@ class XPs_Plotter__OF:
         of__filename
            theoretical curve  p(x) for oscillation solution is in the file 'of__filename.h5'
         """
-        # initialize XP plotter
-        self.XP_Plotter=tdc_XPs_Plotter(xps)
+        # initialize XP plotter ---------------------
+        if not xlabel:
+            xlabel = r'$x\;[\lambda_{\mathrm{D}}]$'
+        self.XP_Plotter=tdc_XPs_Plotter(xps, xlabel,ylabel,idlabel)
+        # -------------------------------------------
         # calc_id -- need to read 'setup_properties.h5'
         if isinstance(xps[0], tdc_Data_Sequence):
             calc_id = xps[0].current_data.calc_id

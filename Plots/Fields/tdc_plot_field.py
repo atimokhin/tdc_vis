@@ -9,7 +9,7 @@ def tdc_plot_field(calc_id,
                    xlim=None,
                    print_id=False,
                    no_plot=False,
-                   **kwargs):
+                   fig_param=None):
     """
     calc_id
        calculation id name
@@ -31,8 +31,8 @@ def tdc_plot_field(calc_id,
     --------
     ()=> tdc_Field_Manip
     """
-    manip = tdc_Field_Manip(**kwargs)
-    manip.setup_from_data(calc_id, field_name,**kwargs)
+    manip = tdc_Field_Manip(fig_param)
+    manip.setup_from_data(calc_id, field_name)
     manip.read(i_ts)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
@@ -45,7 +45,7 @@ def tdc_plot_field_restored(filename,
                             xlim=None,
                             print_id=False,
                             no_plot=False,
-                            **kwargs):
+                            fig_param=None):
     """
     filename
        pickle file name is 'filename.pickle'
@@ -64,7 +64,7 @@ def tdc_plot_field_restored(filename,
     ()=> tdc_Field_Manip
     """
     # create Manip
-    manip = tdc_Field_Manip(**kwargs)
+    manip = tdc_Field_Manip(fig_param)
     manip.restore(filename,dump_id)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
@@ -77,20 +77,19 @@ class tdc_Field_Manip(tdc_Manip_Plot_vs_X):
     Manipulator class for Field
     """
     
-    def __init__(self,**kwargs):
-        tdc_Manip_Plot_vs_X.__init__(self,**kwargs)
+    def __init__(self,fig_param=None):
+        tdc_Manip_Plot_vs_X.__init__(self,fig_param)
         # Field DATA <<<<<<<
         self.field=None
         
     def setup_from_data(self,
                         calc_id,
-                        field_name,
-                        **kwargs):
+                        field_name):
         """
         setup Manip by reading the original data file
         """
         # Field <<<<<<<
-        self.field = tdc_Field_Data(calc_id, field_name,**kwargs)
+        self.field = tdc_Field_Data(calc_id, field_name)
         # set PLOTTER by calling base class method
         self.set_plotter( tdc_Fields_Plotter(self.field) )
 

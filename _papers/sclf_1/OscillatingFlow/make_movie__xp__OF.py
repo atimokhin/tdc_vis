@@ -9,13 +9,19 @@ from Plots   import *
 from plot_xp__OF_movie import *
 
 
+# ============================================================
+# Figure Style Parameters
+# ============================================================
+fig_param = paramSingleFig_Presentation
+## fig_param = None
         
+
 # ============================================================
 # Directory
 # ============================================================
 ## tdc_set_results_dir('../RESULTS/')
 tdc_set_results_dir('../RESULTS/__TDC_2')
-## tdc_set_results_dir('../RESULTS/FreeAgent/')
+
 
 # ============================================================
 # ID 
@@ -40,8 +46,8 @@ Plots = {'XP'           : True}
 # ----------------
 
 # j= 0.5 j_GJ
-xlim=[-0.05,50.05]
-ylim_xp=[-4,4]
+xlim=[-0.5,25.5]
+ylim_xp=[-3.5,3.5]
 # -----------
 ## # j= 1.0 j_GJ
 ## xlim=[-2,102]
@@ -50,7 +56,7 @@ ylim_xp=[-4,4]
 
 
 tt=None
-tt=[0,4]
+tt=[0,6]
 fps = 11
 
 use_cell_coordinates=False
@@ -96,7 +102,8 @@ def do_movie(ID):
                           xlim=xlim,
                           use_cell_coordinates=use_cell_coordinates,
                           show_cells=show_cells,
-                          moving_grid_dict=moving_grid_dict)
+                          moving_grid_dict=moving_grid_dict,
+                          fig_param = fig_param)
 
 
 if __name__ == "__main__":

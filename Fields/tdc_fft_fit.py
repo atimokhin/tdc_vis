@@ -136,12 +136,12 @@ class tdc_FFT_Fit_Plotter(tdc_Plotter):
     Plotter for plotting FFT_Fit
     """
     
-    def __init__(self,fft_data_fit):
+    def __init__(self,fft_data_fit, xlabel=None,ylabel=None,idlabel=None):
         """
         fft_data_fit
            tdc_FFT_Data_Fit objects
         """
-        tdc_Plotter.__init__(self,fft_data_fit)
+        tdc_Plotter.__init__(self,fft_data_fit, xlabel,ylabel,idlabel)
         
     def plot(self,ax,**kwargs):
         """

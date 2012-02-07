@@ -9,7 +9,6 @@ import matplotlib as mpl
 from Auxiliary        import *
 from Common_Data_Plot import *
 
-tdc_set_hires_dpi()
 #------------------------------------
 
 #------------------------------------
@@ -24,8 +23,9 @@ from Plots_MPP  import tdc_mpp__n_rho_j_e_xp
 import MPP
 #------------------------------------
 
-
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 tdc_set_hardcopy_rcparams()
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     
 tdc_set_results_dir('../RESULTS/WD/')
 
@@ -450,6 +450,4 @@ exec tick_and_labels_commands
 mpp.interactive_on()
 
 plt.show()
-tdc_set_default_rcparams()
-
 # ============================================================

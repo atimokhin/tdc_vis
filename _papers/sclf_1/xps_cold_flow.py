@@ -12,10 +12,16 @@ from MPP import tdc_MPP
 
 from plot_params import mpp_params
 
+
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+tdc_set_hardcopy_rcparams()
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
 # ------------------------------
 # SubDirectory with dumped files
 # ------------------------------
-dump_id='__TDC_2/SEDs__OF'
+dump_id='__TDC_2/SEDs'
 
 tick_and_labels_commands="""
 for i in range(3):
@@ -73,7 +79,7 @@ mpp_params['dx_pad_abs']      = 0.30
 mpp_params['dy_pad_abs']      = 0.25
 mpp_params['left_margin_abs'] = 0.40
 mpp_params['top_margin_abs']  = 0.1
-
+mpp_params['ticklabel_fontsize'] =9
 # ---------------------------------
 
 sed_list=[['0.1' , 'sed_jm0.1_2' ],
@@ -85,16 +91,11 @@ sed_list=[['0.1' , 'sed_jm0.1_2' ],
 
 # create MPP
 mpp=tdc_MPP(3,2, **mpp_params)
-# set parameters (after figure is created)
-tdc_set_hardcopy_rcparams()
-
-# set parameters (after figure is created)
-tdc_set_hardcopy_rcparams()
 
 # plotters and labels
 plotters=[]
 j_labels=[]
-for jl,fn in sed_list:
+for jl,filename in sed_list:
     j_labels.append( r'$j_0 = %s\,j_{\rm GJ}$' % jl )
     # full file name of the file with manipulator dump
     filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
@@ -129,8 +130,9 @@ for i in range(0,mpp.ny):
         ip+=1
 #------------------
 mpp.interactive_on()
-tdc_set_default_rcparams()
+
 # draw figure
 mpp.fig.canvas.draw()
 plt.interactive(True)
 plt.show()
+

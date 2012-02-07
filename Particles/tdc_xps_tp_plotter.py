@@ -12,7 +12,7 @@ class tdc_XPs_TP_Plotter(tdc_XPs_Plotter):
     tdc_XPs_Plotter and tdc_TP_Plotter
     """
 
-    def __init__(self, xps, tp=None, trail_dict=None):
+    def __init__(self, xps, tp=None, trail_dict=None, xlabel=None,ylabel=None,idlabel=None):
         """
         xps
            XP data to be plotted
@@ -24,7 +24,7 @@ class tdc_XPs_TP_Plotter(tdc_XPs_Plotter):
            If None <default> -- default length will be used
         """
         # base class initialization
-        tdc_XPs_Plotter.__init__(self,xps)
+        tdc_XPs_Plotter.__init__(self,xps, xlabel,ylabel,idlabel)
         # if tp is not None, initialize tpp
         if tp:
             self.tpp=tdc_TP_Plotter(tp,trail_dict)

@@ -10,16 +10,20 @@ class tdc_EP_Density_Plotter(tdc_Fields_Plotter):
     - sets plot label
     """
 
-    def __init__(self, f_e, f_p, e_density_negative=True):
+    def __init__(self, f_e, f_p, e_density_negative=True, xlabel=None,ylabel=None,idlabel=None):
         """
         f_e -- field with electron number density
         f_p -- field with positron number density
         e_density_negative -- <True> if true Electron density is negative
         """
-        tdc_Fields_Plotter.__init__(self, (f_e,f_p) )
-        # label
-        self.plot_ylabel = r'$\eta_{\pm}$'
-        self.plot_idlabel='N_{e,p}:'+self.data[0].calc_id
+        # initialize base class
+        tdc_Fields_Plotter.__init__(self, (f_e,f_p), xlabel,ylabel,idlabel )
+        # labels -----------------------
+        if not ylabel:
+            self.plot_ylabel = r'$\eta_{\pm}$'
+        if not idlabel:
+            self.plot_idlabel='N_{e,p}:'+self.data[0].calc_id
+        # ------------------------------
         # how to plot e and p number densities
         if e_density_negative:
             self.e_sign = -1

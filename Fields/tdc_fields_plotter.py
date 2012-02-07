@@ -7,15 +7,18 @@ class tdc_Fields_Plotter(tdc_Data_vs_X_Plotter):
     plots all fields as black lines
     """
 
-    def __init__(self, fields):
+    def __init__(self, fields, xlabel=None,ylabel=None,idlabel=None):
         """
         fields -- list with fields to be plotted
         """
         # base class initialization is enough
-        tdc_Data_vs_X_Plotter.__init__(self,fields)
-        # labels
-        self.plot_ylabel  = _Field_Labels().get_TeXLabel(self.data[0].name)
-        self.plot_idlabel = self.data[0].name+':'+self.data[0].calc_id
+        tdc_Data_vs_X_Plotter.__init__(self,fields, xlabel,ylabel,idlabel)
+        # labels ---------------------------
+        if not ylabel:
+            self.plot_ylabel  = _Field_Labels().get_TeXLabel(self.data[0].name)
+        if not idlabel:
+            self.plot_idlabel = self.data[0].name+':'+self.data[0].calc_id
+        # ----------------------------------
         # initialize lines
         self.lines = len(self.data)*[None]
 

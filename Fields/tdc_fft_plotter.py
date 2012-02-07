@@ -7,15 +7,20 @@ class tdc_FFT_Plotter(tdc_Data_Plotter):
     plots spectrum as black line
     """
 
-    def __init__(self, spectrum):
+    def __init__(self, spectrum, xlabel=None,ylabel=None,idlabel=None):
         """
         spectrum -- field spectrum to be plotted
         """
-        tdc_Data_Plotter.__init__(self,spectrum)
-        # plot label
-        self.plot_ylabel = r'$I_k$'
-        self.plot_xlabel = r'$k$'
-        self.plot_idlabel='FFT:%s:%s' % (self.data[0].name, self.data[0].calc_id)
+        # initialize base class
+        tdc_Data_Plotter.__init__(self,spectrum, xlabel,ylabel,idlabel)
+        # plot labels -------------------
+        if not ylabel:
+            self.plot_ylabel = r'$I_k$'
+        if not xlabel:
+            self.plot_xlabel = r'$k$'
+        if not idlabel:
+            self.plot_idlabel='FFT:%s:%s' % (self.data[0].name, self.data[0].calc_id)
+        # -------------------------------
         # line
         self.line=None
         # xmin/xmax

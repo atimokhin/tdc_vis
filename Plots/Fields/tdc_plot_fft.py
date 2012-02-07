@@ -14,12 +14,12 @@ def tdc_plot_fft(calc_id,
                  xlim=None,
                  print_id=False,
                  no_plot=False,
-                 **kwargs):
+                 fig_param=None):
     """
     calc_id
        calculation id name
     field_name
-       name of the field which Furie transform will be plotted
+       name of the field which Fourier transform will be plotted
     i_ts
        timeshot#
     Options:
@@ -38,13 +38,12 @@ def tdc_plot_fft(calc_id,
     --------
     ()=> tdc_Field_Manip
     """
-    manip = tdc_FFT_Manip(**kwargs)
+    manip = tdc_FFT_Manip(fig_param)
     manip.setup_from_data(calc_id,
                           field_name,
                           xx,
                           fitting_type=fitting_type,
-                          nk_plot=nk_plot,
-                          **kwargs)
+                          nk_plot=nk_plot)
     manip.read(i_ts)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
@@ -57,7 +56,7 @@ def tdc_plot_fft_restored(filename,
                           xlim=None,
                           print_id=False,
                           no_plot=False,
-                          **kwargs):
+                          fig_param=None):
     """
     filename
        pickle file name is 'filename.pickle'
@@ -76,7 +75,7 @@ def tdc_plot_fft_restored(filename,
     ()=> tdc_Field_Manip
     """
     # create Manip
-    manip = tdc_FFT_Manip(**kwargs)
+    manip = tdc_FFT_Manip(fig_param)
     manip.restore(filename,dump_id)
     if not no_plot:
         manip.plot(ylim, xlim, print_id)
@@ -89,8 +88,8 @@ class tdc_FFT_Manip(tdc_Manip):
     Manipulator class for Field
     """
 
-    def __init__(self,**kwargs):
-        tdc_Manip.__init__(self,**kwargs)
+    def __init__(self,fig_param=None):
+        tdc_Manip.__init__(self,fig_param)
         # FFT Data <<<<<<<
         self.fft=None
         self.fft_fit=None
@@ -101,16 +100,14 @@ class tdc_FFT_Manip(tdc_Manip):
                         field_name,
                         xx,
                         fitting_type,
-                        nk_plot,
-                        **kwargs):
+                        nk_plot):
         """
         setup Manip by reading the original data file
         """
         # FFT <<<<<<<
         self.fft = tdc_FFT_Data(calc_id,
                                 field_name,
-                                xx=xx,
-                                **kwargs)
+                                xx=xx)
         # set PLOTTER by calling base class method
         self.set_plotter( tdc_FFT_Plotter(self.fft) )
         # FFT Fit <<<<<<<
@@ -175,8 +172,8 @@ class tdc_FFT_Manip(tdc_Manip):
         xlim |
         print_id  -- print label on the plot? <False>
         """
-        # FIGURE ------------------------------------
-        self.fig = self.fig_geom.create_figure(facecolor='w')
+        # Create figure and axes -----------
+        self.create_figure_and_axes()
         # id label
         id_label = 'i_ts=%i:xx=[%g, %g]:' % (self.i_ts,self.fft.xx[0],self.fft.xx[1]) +\
                    self.plotter.plot_idlabel          
@@ -185,8 +182,6 @@ class tdc_FFT_Manip(tdc_Manip):
             self.fig.suptitle(id_label, size='x-small')
         id_label = 'Fig %i|' % self.fig.number + id_label
         self.fig.canvas.set_window_title(id_label) 
-        # AXES --------------------------------------
-        self.ax  = self.fig.axes[0]
         # PLOT --------------------------------------
         self.plotter.plot(self.ax)
         # set axes limits:

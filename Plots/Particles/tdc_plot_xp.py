@@ -15,7 +15,7 @@ def tdc_plot_xp(calc_id, i_ts,
                 linthreshy=5,
                 print_id=False,
                 no_plot=False,
-                **kwargs):
+                fig_param=None):
     """
     calc_id
        calculation id name
@@ -52,13 +52,12 @@ def tdc_plot_xp(calc_id, i_ts,
     --------
     ()=> tdc_XP_Manip
     """
-    manip = tdc_XP_Manip(**kwargs)
+    manip = tdc_XP_Manip(fig_param)
     manip.setup_from_data(calc_id,
                           particle_names,
                           sample_dict,
                           tp,
-                          trail_dict,
-                          **kwargs)
+                          trail_dict)
     manip.read(i_ts)
     if not no_plot:
         manip.plot(ylim=ylim,
@@ -77,7 +76,7 @@ def tdc_plot_xp_restored(filename,
                          linthreshy=5,
                          print_id=False,
                          no_plot=False,
-                         **kwargs):
+                         fig_param=None):
     """
     filename
        pickle file name is 'filename.pickle'
@@ -105,7 +104,7 @@ def tdc_plot_xp_restored(filename,
     ()=> tdc_XP_Manip
     """
     # create Manip
-    manip = tdc_XP_Manip(**kwargs)
+    manip = tdc_XP_Manip(fig_param)
     manip.restore(filename,dump_id)
     if not no_plot:
         manip.plot(ylim=ylim,
@@ -123,8 +122,8 @@ class tdc_XP_Manip(tdc_Manip_Plot_vs_X):
     """
     __default_particle_names = ['Electrons', 'Positrons', 'Pairs']
 
-    def __init__(self,**kwargs):
-        tdc_Manip_Plot_vs_X.__init__(self,**kwargs)
+    def __init__(self,fig_param=None):
+        tdc_Manip_Plot_vs_X.__init__(self,fig_param)
         # XP DATA <<<<<<<
         self.xps=None
         # TP 
@@ -134,8 +133,7 @@ class tdc_XP_Manip(tdc_Manip_Plot_vs_X):
                         particle_names=None,
                         sample_dict=None,
                         tp=None,
-                        trail_dict=None,
-                        **kwargs):
+                        trail_dict=None):
         """
         setup Manip by reading the original data file
         """

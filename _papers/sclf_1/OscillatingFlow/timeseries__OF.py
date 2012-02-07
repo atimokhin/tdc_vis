@@ -13,7 +13,9 @@ from  xps_plotter__OF           import XPs_Plotter__OF
 from _papers.sclf_1.plot_params import mpp_params
 
 
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 tdc_set_hardcopy_rcparams()
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
 ## tdc_set_results_dir('../RESULTS/')
@@ -87,6 +89,8 @@ mpp.interactive_on()
 # show figure
 plt.interactive(True)
 plt.show()
-# restore default parameters
+
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 tdc_set_default_rcparams()
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 

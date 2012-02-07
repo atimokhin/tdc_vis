@@ -1,13 +1,3 @@
-# for printing use dpi=600
-#
-# -------------------------
-# let LaTeX draw all labels
-# -------------------------
-from matplotlib import rc
-rc('text', usetex=True)
-rc('font',**{'family':'serif','serif':['Times']})
-# -------------------------
-
 import matplotlib.pyplot as plt
 import numpy             as np
 
@@ -19,9 +9,14 @@ from Plots_MPP  import tdc_mpp__sed
 
 import MPP
 
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 tdc_set_hardcopy_rcparams()
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+# ---------------------------------
 tdc_set_results_dir('../RESULTS/WD/')
+# ---------------------------------
+
 
 plot_flag = 'jm1.5'
 plot_flag = 'jp0.5'
@@ -102,4 +97,5 @@ exec tick_and_labels_commands
 mpp.interactive_on()
 
 plt.show()
-tdc_set_default_rcparams()
+
+plt.interactive(True)

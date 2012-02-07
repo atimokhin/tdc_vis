@@ -17,17 +17,23 @@ class tdc_SEDs_Plotter(tdc_Data_Plotter):
                                'Pairs'     : ['k:']   }
 
 
-    def __init__(self, seds):
+    def __init__(self, seds, xlabel=None,ylabel=None,idlabel=None):
         """
         sets internal variables 
         seds -- xp data to be plotted
         """
         # base class initialization is enough
-        tdc_Data_Plotter.__init__(self,seds)
-        # plot label
-        self.plot_ylabel = r'$p\frac{\partial{}n}{\partial{}p}$'
-        self.plot_xlabel = r'$p$'
-        self.plot_idlabel='SED:'+self.data[0].calc_id
+        tdc_Data_Plotter.__init__(self,seds, xlabel,ylabel,idlabel)
+        # plot labels ---------------------
+        if not ylabel:
+            self.plot_ylabel = r'$p\frac{\partial{}n}{\partial{}p}$'
+            self.plot_ylabel_latex = r'$\displaystyle{}p\:\frac{\partial\!n}{\partial{}\!p}$'
+        if not idlabel:
+            self.plot_idlabel='SED:'+self.data[0].calc_id
+        # these will be used to choose the right xlabel
+        self.plot_xlabel_default = r'$p$'
+        self.plot_xlabel_total   = r'$|p|$'
+        # ---------------------------------
         # initialize lines
         self.lines = len(self.data)*[None]
         # additional lines for downward moving particle spectra
@@ -46,16 +52,18 @@ class tdc_SEDs_Plotter(tdc_Data_Plotter):
           axes
         prefix: < 'ns' | 'lc' | None >
           depending on prefix plot:
-           - None : plot SED for both ns and lc moving particles
-                    on  the same plot, use color lines
-           - 'ns' : plot SED for particles moving to the NS
-                    use solid/dashe/dotted b/w lines
-           - 'lc' : plot SED for particles moving to the LC
-                    use solid/dashe/dotted b/w lines
+           - None    : plot SED for both ns and lc moving particles
+                       on  the same plot, use color lines
+           - 'ns'    : plot SED for particles moving to the NS
+                       use solid/dashe/dotted b/w lines
+           - 'lc'    : plot SED for particles moving to the LC
+                       use solid/dashe/dotted b/w lines
+           - 'total' : plot SED for particles all particles as a function
+                       of |p|, summing dN_dlogPdX_u+dN_dlogPdX_u
         **kwargs goes to ax.plot(..)
         """
         # prefix and plotstyles
-        if not prefix:
+        if not prefix or prefix=='total':
             plotstyle_u = self.__plotstyle_u_combined
             plotstyle_d = self.__plotstyle_d_combined
         else:
@@ -77,6 +85,16 @@ class tdc_SEDs_Plotter(tdc_Data_Plotter):
                                              drawstyle='steps-pre',
                                              nonposx='clip',nonposy='clip',
                                              **kwargs)
+            # total SED
+            if prefix == 'total':
+                self.lines[i],   = ax.loglog(sed.P_bins, sed.dN_dlogPdX_u+sed.dN_dlogPdX_d,
+                                             *plotstyle_u[sed.name],
+                                             drawstyle='steps-pre',
+                                             nonposx='clip',nonposy='clip',
+                                             **kwargs)
+                self.plot_xlabel = self.plot_xlabel_total
+            else:
+                self.plot_xlabel = self.plot_xlabel_default
 
 
     def animation_update(self,ax,i_ts):

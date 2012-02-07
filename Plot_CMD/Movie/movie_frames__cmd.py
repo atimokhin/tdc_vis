@@ -13,12 +13,12 @@ class MovieFrames__CMD(MovieFrames):
     plot()
     animation_update()
     """
-    
+
     def __init__(self, seq_plotter):
         # initialize base class ======
         MovieFrames.__init__(self, seq_plotter)
 
-    def setup_figure_and_axes(self, mfs, xlim, ylim):
+    def setup_figure_and_axes(self, mfs, xlim, ylim, axes_commands):
         """
         Creates figure and axes accordinng to sized in class mds
         -------
@@ -32,17 +32,16 @@ class MovieFrames__CMD(MovieFrames):
         """
         # set MFS
         self.set_movie_frames_sizes(mfs)
-        # get dpi and calculate figure size in inches 
-        dpi = matplotlib.rcParams['figure.dpi']
-        figsize_inch = [ x/dpi for x in  self.MFS.figsize_points ]
         # plot window ----------------------------
-        self.figure = matplotlib.pyplot.figure(facecolor='white', figsize=figsize_inch)
+        self.figure = matplotlib.pyplot.figure(facecolor='white',
+                                               figsize=self.MFS.figsize_inch,
+                                               dpi=self.MFS.dpi)
         # axes -----------------------------------
         # add as many axes as there are entries in mfs.axes_boxes
         for box in self.MFS.axes_boxes:
             self.ax.append( self.figure.add_axes(box) )        
         # setup axes limits
-        self.setup_axes(xlim, ylim) 
+        self.setup_axes(xlim, ylim, axes_commands) 
 
 
     def plot(self,**kwargs):
@@ -58,6 +57,8 @@ class MovieFrames__CMD(MovieFrames):
             A.yaxis.set_major_formatter(F)
             A.set_xlim(xl)
             A.set_ylim(yl)
+        # force to call axes commands
+        self.set_axes_commands_executed_flag(False)
         # main plot
         MovieFrames.plot(self,**kwargs)
         # plot time label on top of the plot
@@ -65,7 +66,8 @@ class MovieFrames__CMD(MovieFrames):
         for P,A in zip(self.seq_plotter,self.ax):
             self.p_time_label.append( A.text(0.02, 0.925,
                                              't=%.3f' % P.get_time(),
-                                             transform = A.transAxes) )
+                                             transform = A.transAxes,
+                                             fontsize=self._ticklabel_fontsize) )
 
     def animation_update(self,i_frame,**kwargs):
         """

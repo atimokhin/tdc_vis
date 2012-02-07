@@ -9,37 +9,40 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
     line       -- Line artists with plotted field
     """
 
-    __plotstyle = { 'Electrons' : {'linestyle':'None','color':'b','markeredgecolor':'b','marker':'o','markersize':1},
-                    'Positrons' : {'linestyle':'None','color':'r','markeredgecolor':'r','marker':'o','markersize':1},
-                    'Protons'   : {'linestyle':'None','color':'m','markeredgecolor':'m','marker':'o','markersize':4},  
+    __plotstyle = { 'Electrons' : {'linestyle':'None','color':'b','markeredgecolor':'b','marker':'o','markersize':0.5},
+                    'Positrons' : {'linestyle':'None','color':'r','markeredgecolor':'r','marker':'o','markersize':0.5},
+                    'Protons'   : {'linestyle':'None','color':'m','markeredgecolor':'m','marker':'o','markersize':3},  
                     'Pairs'     : {'linestyle':'None','color':'k','markeredgecolor':'k','marker':'o','markersize':1}  }
 
-    __plotlabel = { 'Electrons' : r'$p_{-}$' ,
-                    'Positrons' : r'$p_{+}$' ,
-                    'Protons'   : r'$p_{p}$',
-                    'Pairs'     : r'$p_\gamma$'   }
+    __default_plot_ylabel = { 'Electrons' : r'$p_{-}$' ,
+                              'Positrons' : r'$p_{+}$' ,
+                              'Protons'   : r'$p_{p}$',
+                              'Pairs'     : r'$p_\gamma$'   }
 
 
-    def __init__(self, xps):
+    def __init__(self, xps, xlabel=None,ylabel=None,idlabel=None):
         """
         sets internal variables 
         xps
            XP data to be plotted
         """
         # base class initialization is enough
-        tdc_Data_vs_X_Plotter.__init__(self,xps)
+        tdc_Data_vs_X_Plotter.__init__(self,xps, xlabel,ylabel,idlabel)
+        # labels -----------------------
+        # ylabel: if only one particle kind is plotted -- set
+        #         specific label if more than one -- set to 'p'
+        if not ylabel:
+            if len(self.data)>1:
+                self.plot_ylabel=r'$p$'
+            else:
+                self.plot_ylabel=self.__default_plot_ylabel[xps[0].name]
+        # idlabel
+        if not idlabel:
+            self.plot_idlabel='XP:' + self.data[0].calc_id
+        # ------------------------------
         # X coordinates are read at every timestep and must be
         # renormalized
         self.new_x_at_every_read_flag = True
-        # set y-label:
-        # if only one particle kind is plotted -- set specific label
-        # if more than one -- set it to 'p'
-        if len(self.data)>1:
-            self.plot_ylabel=r'$p$'
-        else:
-            self.plot_ylabel=self.__plotlabel[xps[0].name]
-        # id label
-        self.plot_idlabel='XP:' + self.data[0].calc_id
         # initialize lines
         self.lines = len(self.data)*[None]
 
@@ -70,7 +73,7 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
                                      **plot_kwargs)
             # make scaling semi-logatithmic if asked
             if symlog:
-                ax.set_yscale('symlog',linthreshy=linthreshy)
+                ax.set_yscale('symlog',linthreshy=linthreshy,subsy=[1,10])
         tdc_Data_vs_X_Plotter.plot(self,ax,**kwargs)
 
 

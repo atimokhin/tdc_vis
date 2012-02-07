@@ -1,7 +1,8 @@
 import numpy as np
+import matplotlib
 
 from Auxiliary        import tdc_Mesh, tdc_Setup_Props, tdc_Filenames
-from Common_Data_Plot import tdc_Manip
+from Common_Data_Plot import tdc_Manip, paramSingleFig_SED_Work
 
 from Particles.tdc_xp_data       import tdc_XP_Data
 from Particles.tdc_sed_data      import tdc_SED_Data
@@ -12,11 +13,12 @@ def tdc_plot_sed(calc_id, i_ts,
                  particle_names=None,
                  p_bins=None,
                  xx=None,
+                 prefix=None,
                  ylim=None,
                  xlim=None,
                  print_id=False,
                  no_plot=False,
-                 **kwargs):
+                 fig_param=paramSingleFig_SED_Work):
     """
     calc_id
        calculation id name
@@ -37,6 +39,16 @@ def tdc_plot_sed(calc_id, i_ts,
        <None> spatial domain fordistribution function
               if None, the whole domain will be used
               {default value set in tdc_SED_Data}
+    prefix: < 'ns' | 'lc' | None >
+       depending on prefix plot:
+           - None    : plot SED for both ns and lc moving particles
+                       on  the same plot, use color lines
+           - 'ns'    : plot SED for particles moving to the NS
+                       use solid/dashe/dotted b/w lines
+           - 'lc'    : plot SED for particles moving to the LC
+                       use solid/dashe/dotted b/w lines
+           - 'total' : plot SED for particles all particles as a function
+                       of |p|, summing dN_dlogPdX_u+dN_dlogPdX_u
     xlim 
     ylim
        <None>  axis limits
@@ -50,31 +62,41 @@ def tdc_plot_sed(calc_id, i_ts,
     --------
     ()=> tdc_SED_Manip
     """
-    manip = tdc_SED_Manip(**kwargs)
+    manip = tdc_SED_Manip(fig_param)
     manip.setup_from_data(calc_id,
                           particle_names,
                           p_bins,
-                          xx,
-                          **kwargs)
+                          xx)
     manip.read(i_ts)
     if not no_plot:
-        manip.plot(ylim, xlim, print_id)
+        manip.plot(prefix=prefix, ylim=ylim, xlim=xlim, print_id=print_id)
     return manip
 
 
 def tdc_plot_sed_restored(filename,
                           dump_id,
+                          prefix=None,
                           ylim=None,
                           xlim=None,
                           print_id=False,
                           no_plot=False,
-                          **kwargs):
+                          fig_param=paramSingleFig_SED_Work):
     """
     filename
        pickle file name is 'filename.pickle'
     --------
     Options:
     --------
+    prefix: < 'ns' | 'lc' | None >
+       depending on prefix plot:
+           - None    : plot SED for both ns and lc moving particles
+                       on  the same plot, use color lines
+           - 'ns'    : plot SED for particles moving to the NS
+                       use solid/dashe/dotted b/w lines
+           - 'lc'    : plot SED for particles moving to the LC
+                       use solid/dashe/dotted b/w lines
+           - 'total' : plot SED for particles all particles as a function
+                       of |p|, summing dN_dlogPdX_u+dN_dlogPdX_u
     xlim 
     ylim
        <None>  axis limits
@@ -89,10 +111,10 @@ def tdc_plot_sed_restored(filename,
     ()=> tdc_SED_Manip
     """
     # create Manip
-    manip = tdc_SED_Manip(**kwargs)
+    manip = tdc_SED_Manip(fig_param)
     manip.restore(filename,dump_id)
     if not no_plot:
-        manip.plot(ylim, xlim, print_id)
+        manip.plot(prefix=prefix, ylim=ylim, xlim=xlim, print_id=print_id)
     return manip
 
 
@@ -104,14 +126,14 @@ class tdc_SED_Manip(tdc_Manip):
     __default_particle_names = ['Electrons', 'Positrons', 'Pairs']
     __default_p_bins = (1,1e8,100)
 
-    def __init__(self,**kwargs):
-        tdc_Manip.__init__(self,**kwargs)
+    def __init__(self,fig_param=None):
+        # leve more place for y label
+        tdc_Manip.__init__(self,fig_param)
 
     def setup_from_data(self, calc_id,
                         particle_names=None, 
                         p_bins=None,
-                        xx=None,
-                        **kwargs):
+                        xx=None):
         """
         setup Manip by reading the original data file
         --------
@@ -229,6 +251,7 @@ class tdc_SED_Manip(tdc_Manip):
             print '\nData are restored from dump file and cannot be read for another i_ts!\n'
 
     def plot(self,
+             prefix=None,
              ylim=None,
              xlim=None,
              print_id=False,
@@ -236,12 +259,22 @@ class tdc_SED_Manip(tdc_Manip):
         """
         Plots SED for already already set i_ts, p_bins, xx
         accepts only
+        prefix: < 'ns' | 'lc' | None >
+          depending on prefix plot:
+           - None    : plot SED for both ns and lc moving particles
+                       on  the same plot, use color lines
+           - 'ns'    : plot SED for particles moving to the NS
+                       use solid/dashe/dotted b/w lines
+           - 'lc'    : plot SED for particles moving to the LC
+                       use solid/dashe/dotted b/w lines
+           - 'total' : plot SED for particles all particles as a function
+                       of |p|, summing dN_dlogPdX_u+dN_dlogPdX_u
         ylim --    axes limits
         xlim |
         print_id  -- print label on the plot? <False>
         """
-        # FIGURE ------------------------------------
-        self.fig = self.fig_geom.create_figure(facecolor='w')
+        # Create figure and axes -----------
+        self.create_figure_and_axes()
         # id label
         id_label = 'i_ts=%i:xx=[%g, %g]:' % (self.i_ts,self.seds[0].xx[0],self.seds[0].xx[1]) +\
                    self.plotter.plot_idlabel          
@@ -250,10 +283,8 @@ class tdc_SED_Manip(tdc_Manip):
             self.fig.suptitle(id_label, size='x-small')
         id_label = 'Fig %i|' % self.fig.number + id_label
         self.fig.canvas.set_window_title(id_label) 
-        # AXES --------------------------------------
-        self.ax  = self.fig.axes[0]
         # PLOT --------------------------------------
-        self.plotter.plot(self.ax)
+        self.plotter.plot(self.ax,prefix=prefix,**kwargs)
         # set axes limits:
         # xlim -- if not set use the whole x range 
         if xlim!=None:
@@ -262,7 +293,10 @@ class tdc_SED_Manip(tdc_Manip):
         if ylim!=None:
             self.ax.set_ylim(ylim)
         # labels
-        self.set_ylabel(self.plotter.plot_ylabel)
+        if matplotlib.rcParams['text.usetex']:
+            self.set_ylabel(self.plotter.plot_ylabel_latex)
+        else:
+            self.set_ylabel(self.plotter.plot_ylabel)
         self.set_xlabel(self.plotter.plot_xlabel)
         # change ticklabel_fonsize
         self._change_ticklabel_fonsize()

@@ -21,6 +21,9 @@ def tdc_plot_xp_movie(plot_module,
                       time_normalization=None,
                       symlog=False,
                       linthreshy=5,
+                      axes_commands=None,
+                      xlabel=None,ylabel=None,idlabel=None,
+                      fig_param=None,
                       **kwargs):
     """
     calc_ids
@@ -47,6 +50,8 @@ def tdc_plot_xp_movie(plot_module,
        <False>
     time_normalization
        <None>
+    axes_commands
+       <None>
     **kwargs
        go to tdc_*_Data via tdc_Data_Sequence_Initializer
     """
@@ -71,7 +76,10 @@ def tdc_plot_xp_movie(plot_module,
     # tracked particles sequence
     tps = tdc_Data_Sequence(tp, tt=tt) if tp else None
     # plotter
-    pp  = tdc_XPs_TP_Plotter(xps=xps, tp=tps,trail_dict=trail_dict)
+    pp  = tdc_XPs_TP_Plotter(xps=xps,
+                             tp=tps,
+                             trail_dict=trail_dict,
+                             xlabel=xlabel, ylabel=ylabel, idlabel=idlabel)
     if use_cell_coordinates:
         pp.use_cell_coordinates()
     if show_cells:
@@ -80,7 +88,11 @@ def tdc_plot_xp_movie(plot_module,
     if moving_grid_dict:
         pp  = tdc_Moving_Grid_Plotter(pp,moving_grid_dict)
     # movie frames
-    MF = plot_module.Movie.Single_Panel_Movie_Frames(pp, ylim=ylim, xlim=xlim)
+    MF = plot_module.Movie.Single_Panel_Movie_Frames( pp,
+                                                      ylim=ylim,
+                                                      xlim=xlim,
+                                                      axes_commands=axes_commands,
+                                                      fig_param=fig_param)
     # movie_id - directory with the movie file
     movie_id = 'XP' + '_' + calc_ids[0]
     # -----------------------------------------

@@ -9,26 +9,36 @@ from x_Tests.plot_test_e_e_gauss_movie import *
 
 
 # ============================================================
+# Figure Style Parameters
+# ============================================================
+fig_param = paramSingleFig_Presentation
+## fig_param = None
+
+
+# ============================================================
 # Directory
 # ============================================================
-tdc_set_results_dir('../RESULTS/')
+## tdc_set_results_dir('../RESULTS/')
 ## tdc_set_results_dir('../RESULTS/FreeAgent/')
-## tdc_set_results_dir('../RESULTS/WD/')
+tdc_set_results_dir('../RESULTS/WD/')
 
 
 # ============================================================
 # IDs 
 # ============================================================
 IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1']
+
 ## IDs=['SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj5_sU_P']
 ## IDs=['SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj7_sU']
+
+IDs=['Arons__j2.000_Pcf9e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU']
 
 ## IDs=[['Arons__j1.102_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj10_sU',
 ##       'Arons__j1.102_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj10_sU__1']]
 
 ## IDs=['Arons__j1.059_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU']
 
-IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1_noPairs']
+## IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1_noPairs']
 ## IDs=['SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj5_sU_P_noPairs']
 
 # ============================================================
@@ -49,6 +59,9 @@ xlim = [-0.01,1.01]
 
 #  jm2.0 ---
 ylim_xp  = [-5e8,5e8]
+axes_commands_xp = ['set_yticks([-1e8,-1e4,0,1e4,1e8])']
+## axes_commands_xp = None
+
 ylim_rho = [-10,10]
 ylim_j   = [-2,0.5]
 ylim_e   = [-0.15,0.05]
@@ -117,6 +130,7 @@ show_cells=False
 
 ## moving_grid_dict = dict(n_lines=30, speed=1)
 moving_grid_dict = None
+
 # ==================
 
 
@@ -178,7 +192,9 @@ def do_movie(IDs):
                               trail_dict=dict(length=18,marker='numbers'),
                               moving_grid_dict=moving_grid_dict,
                               symlog=symlog,
-                              linthreshy=linthreshy)
+                              linthreshy=linthreshy,
+                              axes_commands = axes_commands_xp,
+                              fig_param = fig_param)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -189,17 +205,18 @@ def do_movie(IDs):
             tdc_plot_field_movie(plot_module,
                                  ID,
                                  'Rho',
-                                 ylim=ylim_rho,
+                                 ylim=[-3,3],
                                  xlim=xlim,
                                  moving_grid_dict=moving_grid_dict,
                                  tt=tt,
                                  fps=fps,
-                                 keep_frame_files=keep_frame_files,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
-                                 ghost_points=True)
+                                 ghost_points=True,
+                                 xlabel = xlabel_Debye,
+                                 fig_param = fig_param)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
-        
+       
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         # J
         # ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -215,7 +232,8 @@ def do_movie(IDs):
                                  keep_frame_files=keep_frame_files,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
-                                 ghost_points=True)
+                                 ghost_points=True,
+                                 fig_param = fig_param)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -233,7 +251,8 @@ def do_movie(IDs):
                                  keep_frame_files=keep_frame_files,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
-                                 ghost_points=True)
+                                 ghost_points=True,
+                                 fig_param = fig_param)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -251,7 +270,8 @@ def do_movie(IDs):
                                  keep_frame_files=keep_frame_files,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
-                                 ghost_points=True)
+                                 ghost_points=True,
+                                 fig_param = fig_param)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -270,7 +290,8 @@ def do_movie(IDs):
                                       use_cell_coordinates=use_cell_coordinates,
                                       show_cells=show_cells,
                                       time_normalization = 'absolute',
-                                      ghost_points=True)
+                                      ghost_points=True,
+                                      fig_param = fig_param)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -287,7 +308,8 @@ def do_movie(IDs):
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
                                  time_normalization = 'absolute',
-                                 moving_grid_dict=moving_grid_dict)
+                                 moving_grid_dict=moving_grid_dict,
+                                 fig_param = fig_param)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -305,7 +327,8 @@ def do_movie(IDs):
                                       use_cell_coordinates=use_cell_coordinates,
                                       show_cells=show_cells,
                                       time_normalization = 'absolute',
-                                      moving_grid_dict=moving_grid_dict)
+                                      moving_grid_dict=moving_grid_dict,
+                                      fig_param = fig_param)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -323,7 +346,8 @@ def do_movie(IDs):
                                        use_cell_coordinates=use_cell_coordinates,
                                        show_cells=show_cells,
                                        time_normalization = 'absolute',
-                                       moving_grid_dict=moving_grid_dict)
+                                       moving_grid_dict=moving_grid_dict,
+                                       fig_param = fig_param)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -341,7 +365,8 @@ def do_movie(IDs):
                                         use_cell_coordinates=use_cell_coordinates,
                                         show_cells=show_cells,
                                         time_normalization = 'absolute',
-                                        moving_grid_dict=moving_grid_dict)
+                                        moving_grid_dict=moving_grid_dict,
+                                        fig_param = fig_param)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
 

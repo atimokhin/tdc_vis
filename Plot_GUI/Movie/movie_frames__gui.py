@@ -25,9 +25,9 @@ class MovieFrames__GUI(MovieFrames):
         # set redraw_flag 
         self.redraw_flag=False
 
-    def setup_figure_and_axes(self, mfs, xlim, ylim):
+    def setup_figure_and_axes(self, mfs, xlim, ylim, axes_commands):
         """
-        Creates figure and axes accordinng to sized in class mds
+        Creates figure and axes accordinng to sized in class mfs
         -------
         Params:
         -------
@@ -36,11 +36,13 @@ class MovieFrames__GUI(MovieFrames):
         xlim
         ylim
           axes limits
+        axes_commands
+          commnads to be executed by axes
         """
         # set MFS
         self.set_movie_frames_sizes(mfs)
         # plot window ----------------------------
-        self.figure = Figure(facecolor='white')
+        self.figure = Figure(facecolor='white',dpi=self.MFS.dpi)
         self.canvas = FigureCanvas(self.figure)
         self.canvas.set_size_request( *self.MFS.figsize_points )
         # axes -----------------------------------
@@ -48,16 +50,16 @@ class MovieFrames__GUI(MovieFrames):
         for box in self.MFS.axes_boxes:
             self.ax.append( self.figure.add_axes(box) )
         # setup axes limits
-        self.setup_axes(xlim, ylim) 
+        self.setup_axes(xlim, ylim, axes_commands) 
         # setup timelabel artists
         self.setup_timelabels() 
 
-    def setup_axes(self,xlim,ylim):
+    def setup_axes(self,xlim,ylim, axes_commands):
         """
         - calls MovieFrames.setup_axes(self,xlim,ylim)
         - sets callback function for setting redraw_flag if axes limits change
         """
-        MovieFrames.setup_axes(self,xlim,ylim)
+        MovieFrames.setup_axes(self,xlim,ylim, axes_commands)
         # set redraw_flag if axes limits change
         for i,A in enumerate(self.ax):
             A.callbacks.connect('ylim_changed', self.axes_lims_changed_callback)
@@ -70,6 +72,7 @@ class MovieFrames__GUI(MovieFrames):
         # time label artist 
         self.p_time_label = [ A.text(0.02, 0.925, None,
                                      transform = A.transAxes,
+                                     fontsize=self.MFS.ticklabel_fontsize,
                                      animated=True)
                               for A in self.ax ]
 
@@ -89,18 +92,24 @@ class MovieFrames__GUI(MovieFrames):
         """
         - Clears axes
         - plots
-        - restores axes settings
+        - restores axes settings: limits and ticks
         """
         xlim=[]
         ylim=[]
-        # store current axes limits
+        xticks=[]
+        yticks=[]
+        # store current axes limits and ticks
         for A in self.ax:
             xlim.append( A.get_xlim() )
             ylim.append( A.get_ylim() )
+            xticks.append( A.get_xticks() )
+            yticks.append( A.get_yticks() )
         # do plot
         self.plot(animated=True,**kwargs)
-        # restore axes limits
-        for A,xl,yl in zip(self.ax,xlim,ylim):
+        # restore axes limits and ticks
+        for A, xl,yl, xt,yt  in zip(self.ax, xlim,ylim, xticks,yticks):
+            A.set_xticks( xt )
+            A.set_yticks( yt )
             A.set_xlim( xl )
             A.set_ylim( yl )
         

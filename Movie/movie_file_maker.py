@@ -80,23 +80,12 @@ class Movie_File_Maker:
         # -----------------------------
         # run mencoder which combines frames into a movie
         # mpeg4 movie
-        ## command_string = \
-        ##                mencoder_command + " mf://@" + self.index_filename + " " +\
-        ##                "-o "             + self.h264_filename  + " " +\
-        ##                "-mf fps="        + str(self.fps)       + " " +\
-        ##                "-of rawvideo -ovc x264 -x264encopts "        +\
-        ##                "bitrate=1500:subq=5:frameref=3:bframes=0:threads=auto" +\
-        ##                "; " +\
-        ##                "MP4Box -fps " + str(self.fps) + " " +\
-        ##                "-new -add " + self.h264_filename + " " + self.movie_filename +\
-        ##                "; " +\
-        ##                "rm -f " + self.h264_filename
         command_string = \
                        mencoder_command + " mf://@" + self.index_filename + " " +\
                        "-o "             + self.h264_filename  + " " +\
                        "-mf fps="        + str(self.fps)       + " " +\
                        "-of rawvideo -ovc x264 -x264encopts "        +\
-                       "bitrate=1500:subq=7:frameref=3:bframes=0:threads=auto" +\
+                       "bitrate=1500:subq=5:frameref=3:bframes=0:threads=auto" +\
                        "; " +\
                        "MP4Box -fps " + str(self.fps) + " " +\
                        "-new -add " + self.h264_filename + " " + self.movie_filename +\

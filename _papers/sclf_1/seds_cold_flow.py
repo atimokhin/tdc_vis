@@ -1,15 +1,3 @@
-#
-# insert ylabel later in inkscape !
-#
-
-# -------------------------
-# let LaTeX draw all labels
-# -------------------------
-from matplotlib import rc
-rc('text', usetex=True)
-rc('font',**{'family':'serif','serif':['Times']})
-# -------------------------
-
 import matplotlib.pyplot as plt
 import numpy             as np
 
@@ -23,13 +11,19 @@ from MPP import tdc_MPP_H
 import pickle
 
 from plot_params import mpp_params
+# -------------------------
+
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+tdc_set_hardcopy_rcparams()
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 
 #tdc_set_results_dir('../RESULTS/FreeAgent/')
 
 # ------------------------------
 # SubDirectory with dumped files
 # ------------------------------
-dump_id='__TDC_2/SEDs__OF'
+dump_id='__TDC_2/SEDs'
 
 
 tick_and_labels_commands="""
@@ -63,12 +57,10 @@ sed_list=[['0.1' , 'sed_jm0.1_2' ],
 
 # create MPP
 mpp=tdc_MPP_H(3,2, **mpp_params)
-# set parameters (after figure is created)
-tdc_set_hardcopy_rcparams()
 # plotters and labels
 plotters=[]
 j_labels=[]
-for jl,fn in sed_list:
+for jl,filename in sed_list:
     j_labels.append( r'$j_0 = %s\,j_{\rm GJ}$' % jl )
     # full file name of the file with manipulator dump
     filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
@@ -99,7 +91,7 @@ mpp.fig.canvas.draw()
 exec tick_and_labels_commands
 
 mpp.interactive_on()
-tdc_set_default_rcparams()
+
+plt.show()
 
 plt.interactive(True)
-plt.show()

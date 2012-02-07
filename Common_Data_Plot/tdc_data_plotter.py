@@ -21,7 +21,7 @@ class tdc_Plotter:
        Line artists with plotted field
     """
 
-    def __init__(self, data):
+    def __init__(self, data, xlabel,ylabel,idlabel ):
         """
         Sets internal variables 
         data
@@ -32,9 +32,11 @@ class tdc_Plotter:
             data = (data,)
         self.data=data
         # plot labels
-        self.plot_ylabel  = None
-        self.plot_xlabel  = None
-        self.plot_idlabel = None
+        self.plot_ylabel  = ylabel
+        # this label can be more complex, it will be rendered by LaTeX
+        self.plot_ylabel_latex  = self.plot_ylabel
+        self.plot_xlabel  = xlabel
+        self.plot_idlabel = idlabel
 
     def plot(self,ax,**kwargs):
         """
@@ -87,13 +89,13 @@ class tdc_Data_Plotter(tdc_Plotter):
     Redirects all non-implemented methods to data[0] instance
     """
 
-    def __init__(self, data):
+    def __init__(self, data, xlabel,ylabel,idlabel):
         """
         Sets internal variables 
         data
            data to be plotted
         """
-        tdc_Plotter.__init__(self,data)
+        tdc_Plotter.__init__(self,data, xlabel,ylabel,idlabel)
 
     def __getattr__(self,attrname):
         """
@@ -147,11 +149,16 @@ class tdc_Data_vs_X_Plotter(tdc_Data_Plotter):
     redirection to data class does not work!
     """
     
-    def __init__(self, data):
+    def __init__(self, data, xlabel,ylabel,idlabel):
         # setup base class
-        tdc_Data_Plotter.__init__(self,data)
+        tdc_Data_Plotter.__init__(self,data, xlabel,ylabel,idlabel)
         # set alias for mesh
         self._Mesh = self.data[0]._Mesh
+        # default xlabel
+        if not xlabel:
+            self._default_plot_xlabel = r'$x$'
+        else:
+            self._default_plot_xlabel = xlabel
         # set flag, xmin/max, x-label
         self.use_x_coordinates()
         # initialize cells
@@ -290,7 +297,7 @@ class tdc_Data_vs_X_Plotter(tdc_Data_Plotter):
         self.xmin = self._Mesh.xmin
         self.xmax = self._Mesh.xmax
         # set xlabel
-        self.plot_xlabel  = r'$x$'
+        self.plot_xlabel = self._default_plot_xlabel
         # set coordinates_chaged_flag
         self._coordinates_chaged_flag = True
 

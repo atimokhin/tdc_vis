@@ -16,6 +16,8 @@ def tdc_plot_field_movie(plot_module,
                          use_cell_coordinates=False,
                          show_cells=False,
                          time_normalization=None,
+                         xlabel=None,ylabel=None,idlabel=None,
+                         fig_param=None,
                          **kwargs):
     """
     plot_module
@@ -55,7 +57,8 @@ def tdc_plot_field_movie(plot_module,
                                          time_normalization=time_normalization,
                                          **kwargs)
     # field plotter
-    fp  = tdc_Fields_Plotter(fs)
+    fp  = tdc_Fields_Plotter(fs,
+                             xlabel=xlabel, ylabel=ylabel, idlabel=idlabel)
     if use_cell_coordinates:
         fp.use_cell_coordinates()
     if show_cells:
@@ -64,7 +67,7 @@ def tdc_plot_field_movie(plot_module,
     if moving_grid_dict:
         fp  = tdc_Moving_Grid_Plotter(fp,moving_grid_dict)
     # movie frames
-    MF = plot_module.Movie.Single_Panel_Movie_Frames(fp, ylim=ylim, xlim=xlim)
+    MF = plot_module.Movie.Single_Panel_Movie_Frames(fp, ylim=ylim, xlim=xlim, fig_param=fig_param)
     # movie_id - directory with the movie file
     movie_id = field_name + '_' + calc_ids[0]
     # -----------------------------------------

@@ -21,6 +21,7 @@ def plot_xp__OF_movie(plot_module,
                       use_cell_coordinates=False,
                       show_cells=False,
                       time_normalization=None,
+                      fig_param=None,
                       **kwargs):
     """
     plots XP phase portrait movie on top of theoretical dependence p(x)
@@ -55,7 +56,7 @@ def plot_xp__OF_movie(plot_module,
     if moving_grid_dict:
         pp  = tdc_Moving_Grid_Plotter(pp,moving_grid_dict)
     # movie frames
-    MF = plot_module.Movie.Single_Panel_Movie_Frames(pp, ylim=ylim, xlim=xlim)
+    MF = plot_module.Movie.Single_Panel_Movie_Frames(pp, ylim=ylim, xlim=xlim, fig_param=fig_param)
     # movie_id - directory with the movie file
     movie_id = 'XP' + '_' + calc_ids[0]
     # -----------------------------------------

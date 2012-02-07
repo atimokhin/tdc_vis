@@ -7,6 +7,11 @@ from Plots  import *
 
 from x_Tests.plot_test_e_e_gauss_movie import *
 
+# ============================================================
+# Figure Style Parameters
+# ============================================================
+fig_param = paramSingleFig_Presentation
+
 
 # ============================================================
 # Directory
@@ -20,8 +25,14 @@ tdc_set_results_dir('../RESULTS/__TDC_2/')
 # ============================================================
 ## IDs=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1']
 
-IDs=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__1']
+IDs=[['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1',
+      'SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__1']]
 
+#-----------------
+# xlabel
+#-----------------
+xlabel_Debye=r'$x\;[\lambda_{\mathrm{D}}]$'
+                              
 #-----------------
 # plot limits:
 # ----------------
@@ -34,7 +45,8 @@ xlim = [-1,51]
 ## ylim_xp = [-1.5,1.5]
 ## ylim_e  = [-1.5,1.5]
 # jm0.5 ---
-ylim_xp = [-4,4]
+ylim_xp = [-3.5,3.5]
+axes_commands_xp = None
 ylim_e  = [-3,3]
 ## # jm0.75 ---
 ## ylim_xp = [-10,10]
@@ -59,16 +71,16 @@ keep_frame_files=False
 
 ## moving_grid_dict = dict(n_lines=30, speed=1)
 moving_grid_dict = None
-# -----------------
+# ==================
 
 
 # ============================================================
 # Plots 
 # ============================================================
 Plots = {'XP'           : True,
-         'Rho'          : False,
-         'J'            : True,
-         'E_acc'        : True,
+         'Rho'          : True,
+         'J'            : False,
+         'E_acc'        : False,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
          'Phi'          : False,
@@ -118,7 +130,10 @@ def do_movie(IDs):
                               show_cells=show_cells,
                               tp=tp,
                               trail_dict=dict(length=18,marker='numbers'),
-                              moving_grid_dict=moving_grid_dict)
+                              moving_grid_dict=moving_grid_dict,
+                              axes_commands = axes_commands_xp,
+                              xlabel = xlabel_Debye,
+                              fig_param = fig_param)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -136,9 +151,11 @@ def do_movie(IDs):
                                  fps=fps,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
-                                 ghost_points=True)
+                                 ghost_points=True,
+                                 xlabel = xlabel_Debye,
+                                 fig_param = fig_param)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
-        
+
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         # J
         # ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -153,7 +170,8 @@ def do_movie(IDs):
                                  fps=fps,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
-                                 ghost_points=True)
+                                 ghost_points=True,
+                                 xlabel = xlabel_Debye)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -170,7 +188,8 @@ def do_movie(IDs):
                                  fps=fps,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
-                                 ghost_points=True)
+                                 ghost_points=True,
+                                 xlabel = xlabel_Debye)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -187,7 +206,8 @@ def do_movie(IDs):
                                  fps=fps,
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
-                                 ghost_points=True)
+                                 ghost_points=True,
+                                 xlabel = xlabel_Debye)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -205,8 +225,11 @@ def do_movie(IDs):
                                       use_cell_coordinates=use_cell_coordinates,
                                       show_cells=show_cells,
                                       time_normalization = 'absolute',
-                                      ghost_points=True)
+                                      ghost_points=True,
+                                      xlabel = xlabel_Debye,
+                                      fig_param = fig_param)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
+
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         # Phi
@@ -227,7 +250,8 @@ def do_movie(IDs):
                                       ID,
                                       ylim=[0,60],
                                       e_density_negative=False,
-                                      moving_grid_dict=moving_grid_dict)
+                                      moving_grid_dict=moving_grid_dict,
+                                      xlabel = xlabel_Debye)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
 

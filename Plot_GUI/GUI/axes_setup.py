@@ -53,7 +53,7 @@ class Axes_Setup_Window:
     """
     This class is responsible for the window with Axes setup
     """
-
+    
     def __init__(self, movie_frames, plotter_list, axes_list, parent_widget):
         # -----------------------------
         # parent widget - i.e the button which starts this window
