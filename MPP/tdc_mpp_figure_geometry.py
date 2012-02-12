@@ -1,3 +1,4 @@
+from Common_Data_Plot import paramMPP_MNRAS
 
 class tdc_MPP_FigureGeometry:
     """
@@ -25,22 +26,8 @@ class tdc_MPP_FigureGeometry:
     self.ylabel_left_x   
     self.ylabel_right_x  
     """
-    # Default values:
-    fig_width_abs = 7;
-    aspect_ratio  = 1.618
-    dx_pad_abs = 0.1
-    dy_pad_abs = 0.1
-    left_margin_abs   = 0.45
-    right_margin_abs  = 0.05
-    top_margin_abs    = 0.2
-    bottom_margin_abs = 0.35
-    xlabel_bottom_y_abs = 0.01
-    xlabel_top_y_abs    = 0.01
-    ylabel_left_x_abs   = 0.01
-    ylabel_right_x_abs  = 0.10
 
-
-    def __init__(self,nx,ny,**kwargs):
+    def __init__(self,nx,ny,fig_param=None):
         """
         for gives number of column nx and rows ny calculates all
         geometry parameters of mupltiple plots
@@ -48,35 +35,31 @@ class tdc_MPP_FigureGeometry:
         all ..._abs quantities are measured in inches
         all other quantities  -- in figure coordinates
         """
+        # set figure parameyters
+        # use paramMPP_MNRAS as default and update it with actually passed values
+        fig_param_current = paramMPP_MNRAS.copy()
+        if fig_param:
+            fig_param_current.update(fig_param)
         # ========================================
         # setup figure parameters in absolute units [inches]
         # ========================================
         # figure width
-        self.fig_width_abs = kwargs.get('self.fig_width_abs',
-                                        tdc_MPP_FigureGeometry.fig_width_abs)
+        self.fig_width_abs = fig_param_current['fig_width_abs']
         # margins --------------------------------
-        left_margin_abs   = kwargs.get('left_margin_abs',
-                                       tdc_MPP_FigureGeometry.left_margin_abs)
-        right_margin_abs  = kwargs.get('right_margin_abs',
-                                       tdc_MPP_FigureGeometry.right_margin_abs)
-        top_margin_abs    = kwargs.get('top_margin_abs',
-                                       tdc_MPP_FigureGeometry.top_margin_abs)
-        bottom_margin_abs = kwargs.get('bottom_margin_abs',
-                                       tdc_MPP_FigureGeometry.bottom_margin_abs)
+        left_margin_abs   = fig_param_current['left_margin_abs']
+        right_margin_abs  = fig_param_current['right_margin_abs']
+        top_margin_abs    = fig_param_current['top_margin_abs']
+        bottom_margin_abs = fig_param_current['bottom_margin_abs']
         # axis alabe positions -------------------
-        xlabel_bottom_y_abs = kwargs.get('xlabel_bottom_y_abs',
-                                         tdc_MPP_FigureGeometry.xlabel_bottom_y_abs)
-        xlabel_top_y_abs    = kwargs.get('xlabel_top_y_abs',
-                                         tdc_MPP_FigureGeometry.xlabel_top_y_abs)
-        ylabel_left_x_abs   = kwargs.get('ylabel_left_x_abs',
-                                         tdc_MPP_FigureGeometry.ylabel_left_x_abs)
-        ylabel_right_x_abs  = kwargs.get('ylabel_right_x_abs',
-                                         tdc_MPP_FigureGeometry.ylabel_right_x_abs)
+        xlabel_bottom_y_abs = fig_param_current['xlabel_bottom_y_abs']
+        xlabel_top_y_abs    = fig_param_current['xlabel_top_y_abs']
+        ylabel_left_x_abs   = fig_param_current['ylabel_left_x_abs']
+        ylabel_right_x_abs  = fig_param_current['ylabel_right_x_abs']
         # padding between individual plots ------
-        dx_pad_abs = kwargs.get('dx_pad_abs',tdc_MPP_FigureGeometry.dx_pad_abs)
-        dy_pad_abs = kwargs.get('dy_pad_abs',tdc_MPP_FigureGeometry.dy_pad_abs)
+        dx_pad_abs = fig_param_current['dx_pad_abs']
+        dy_pad_abs = fig_param_current['dy_pad_abs']
         # aspect ratio
-        aspect_ratio = kwargs.get('aspect_ratio',tdc_MPP_FigureGeometry.aspect_ratio)
+        aspect_ratio = fig_param_current['aspect_ratio']
         # ========================================
         # figure parameters in relative units
         # ========================================
@@ -115,6 +98,14 @@ class tdc_MPP_FigureGeometry:
         self.xlabel_top_y    = float(xlabel_top_y_abs)/self.fig_height_abs
         self.ylabel_left_x   = float(ylabel_left_x_abs)/self.fig_width_abs
         self.ylabel_right_x  = float(ylabel_right_x_abs)/self.fig_width_abs
+        # label sizes
+        self.label_fontsize      = fig_param_current['label_fontsize']
+        self.ticklabel_fontsize  = fig_param_current['ticklabel_fontsize']
+        self.yticklabel_fontsize = fig_param_current['yticklabel_fontsize']
+        # timelabel
+        self.timelabel_format    = fig_param_current['timelabel_format']
+        self.timelabel_fontsize  = fig_param_current['timelabel_fontsize']
+        
 
 
     def get_figsize_abs(self):

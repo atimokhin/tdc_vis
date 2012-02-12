@@ -47,7 +47,6 @@ def do_plot():
     # <<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     manip_pmax = tdc_plot_pmax(100, ksi_max=ksi_max, fig_param=paramSingleFig_MNRAS)
-    tdc_set_default_rcparams()
     manip_pmax.interactive_off()
 
     exec tick_and_labels_commands

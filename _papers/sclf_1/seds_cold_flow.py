@@ -33,19 +33,19 @@ mpp.set_xticklabels(['0.1','1','10'])
 
 mpp.set_ylim( (0,1), [3e-4,30])
 mpp.set_yticks( (0,1), [1e-3, 1e-2, 0.1, 1, 10] )
-mpp.set_yticklabels( (0,1),['10^{-3}','10^{-2}','0.1','1','10'], tex=True, size=8 )
+mpp.set_yticklabels( (0,1),['10^{-3}','10^{-2}','0.1','1','10'] )
 
 mpp._delete_xlabels_for_middle_plots()
 mpp._delete_ylabels_for_middle_plots()
 """
 
-j_label_coord={'x' : 0.09, 'y' : 5}
-j_label_fontsize=8
+j_label_coord={'x' : 0.09, 'y' : 4}
+j_label_fontsize=9
     
-mpp_params['dx_pad_abs']      = 0.07
-mpp_params['dy_pad_abs']      = 0.07
-mpp_params['left_margin_abs'] = 0.65
-mpp_params['top_margin_abs']  = 0.1
+fig_param = dict( dx_pad_abs          = 0.07,
+                  dy_pad_abs          = 0.07,
+                  left_margin_abs     = 0.65,
+                  top_margin_abs      = 0.1)
 # ---------------------------------
 
 sed_list=[['0.1' , 'sed_jm0.1_2' ],
@@ -56,7 +56,7 @@ sed_list=[['0.1' , 'sed_jm0.1_2' ],
           ['0.95', 'sed_jm0.95_2']]
 
 # create MPP
-mpp=tdc_MPP_H(3,2, **mpp_params)
+mpp=tdc_MPP_H(3,2, fig_param=fig_param)
 # plotters and labels
 plotters=[]
 j_labels=[]

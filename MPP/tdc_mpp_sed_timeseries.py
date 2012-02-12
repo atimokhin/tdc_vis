@@ -11,7 +11,7 @@ class tdc_MPP_SED_Timeseries_H ( tdc_MPP_H ):
     top_xlabels
     """
 
-    def __init__(self, plotter, timeshots, xxs, **kwargs):
+    def __init__(self, plotter, timeshots, xxs, fig_param=None):
         """
         gets list of plotters and timeshots, plots
         len(plotters)*len(timeshots) grid marks time of each
@@ -25,7 +25,7 @@ class tdc_MPP_SED_Timeseries_H ( tdc_MPP_H ):
         nx = len(timeshots)
         ny = 2
         # make figure and grid
-        tdc_MPP_H.__init__(self,nx,ny, **kwargs)
+        tdc_MPP_H.__init__(self,nx,ny, fig_param)
         # do actual plotting
         self.top_xlabels=[]
         for j in range(nx):
@@ -34,7 +34,7 @@ class tdc_MPP_SED_Timeseries_H ( tdc_MPP_H ):
             plotter.plot( self.grid[0][j], prefix = 'lc' )
             plotter.plot( self.grid[1][j], prefix = 'ns' )
             # top x labels <-- times
-            t_str = self._timelabel_format % plotter.get_time()
+            t_str = self.fg.timelabel_format % plotter.get_time()
             self.top_xlabels.append( self.set_top_xlabel(j, '$t='+t_str+'$') )
         # bottom x labels
         #for j in range(nx): set_bottom_xlabel(j,'$x$')

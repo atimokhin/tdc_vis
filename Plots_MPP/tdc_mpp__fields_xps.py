@@ -10,7 +10,7 @@ from Particles  import tdc_XPs_Plotter
 from MPP        import *
 
 
-def tdc_mpp__n_rho_e_xp(ID,timeshots,**kwargs):
+def tdc_mpp__n_rho_e_xp(ID,timeshots,sample_dict=None,fig_param=None):
     """
     for *timeshots* plots:
     [1] e/p number density
@@ -34,7 +34,8 @@ def tdc_mpp__n_rho_e_xp(ID,timeshots,**kwargs):
     # electric field
     f3 = tdc_Field_Data(ID, 'E_acc')
     # phase space portraits
-    sample_dict = kwargs.get('sample_dict',dict(name='regular',n_reduce=10,n_min=200))
+    if not sample_dict:
+        sample_dict = dict(name='regular',n_reduce=10,n_min=200)
     xp_e = tdc_XP_Data(ID, 'Electrons', sample_dict)
     xp_p = tdc_XP_Data(ID, 'Positrons', sample_dict)
     xp_g = tdc_XP_Data(ID, 'Pairs',     sample_dict)
@@ -48,12 +49,12 @@ def tdc_mpp__n_rho_e_xp(ID,timeshots,**kwargs):
     p5 = tdc_XPs_Plotter( (xp_e,) )
     p6 = tdc_XPs_Plotter( (xp_g,) )
     # MFP instance -------------
-    mpp = tdc_MPP_Comparative_Timeseries_H( (p1,p2,p3,p4,p5,p6), timeshots, **kwargs)
+    mpp = tdc_MPP_Comparative_Timeseries_H( (p1,p2,p3,p4,p5,p6), timeshots, fig_param=fig_param)
     return mpp
 
 
 
-def tdc_mpp__n_rho_j_e_xp(ID,timeshots,**kwargs):
+def tdc_mpp__n_rho_j_e_xp(ID,timeshots,sample_dict=None,fig_param=None):
     """
     for *timeshots* plots:
     [1] e/p number density
@@ -80,7 +81,8 @@ def tdc_mpp__n_rho_j_e_xp(ID,timeshots,**kwargs):
     # electric field
     f4 = tdc_Field_Data(ID, 'E_acc')
     # phase space portraits
-    sample_dict = kwargs.get('sample_dict',dict(name='regular',n_reduce=10,n_min=200))
+    if not sample_dict:
+        sample_dict = dict(name='regular',n_reduce=10,n_min=200)
     xp_e = tdc_XP_Data(ID, 'Electrons', sample_dict)
     xp_p = tdc_XP_Data(ID, 'Positrons', sample_dict)
     xp_g = tdc_XP_Data(ID, 'Pairs',     sample_dict)
@@ -95,11 +97,11 @@ def tdc_mpp__n_rho_j_e_xp(ID,timeshots,**kwargs):
     p6 = tdc_XPs_Plotter( (xp_e,) )
     p7 = tdc_XPs_Plotter( (xp_g,) )
     # MFP instance -------------
-    mpp = tdc_MPP_Comparative_Timeseries_H( (p1,p2,p3,p4,p5,p6,p7), timeshots, **kwargs)
+    mpp = tdc_MPP_Comparative_Timeseries_H( (p1,p2,p3,p4,p5,p6,p7), timeshots, fig_param=fig_param)
     return mpp
 
 
-def tdc_mpp__n_rho_j_e_xp_epgp(ID,timeshots,**kwargs):
+def tdc_mpp__n_rho_j_e_xp_epgp(ID,timeshots,sample_dict=None,fig_param=None):
     """
     for *timeshots* plots:
     [1] e/p number density
@@ -127,7 +129,8 @@ def tdc_mpp__n_rho_j_e_xp_epgp(ID,timeshots,**kwargs):
     # electric field
     f4 = tdc_Field_Data(ID, 'E_acc')
     # phase space portraits
-    sample_dict = kwargs.get('sample_dict',dict(name='regular',n_reduce=10,n_min=200))
+    if not sample_dict:
+        sample_dict = dict(name='regular',n_reduce=10,n_min=200)
     xp_e = tdc_XP_Data(ID, 'Electrons', sample_dict)
     xp_p = tdc_XP_Data(ID, 'Positrons', sample_dict)
     xp_g = tdc_XP_Data(ID, 'Pairs',     sample_dict)
@@ -146,5 +149,5 @@ def tdc_mpp__n_rho_j_e_xp_epgp(ID,timeshots,**kwargs):
     # make Protons markersize equal to those of the other particles
     p8.change_default_plotstyle('Protons',markersize=1)
     # MFP instance -------------
-    mpp = tdc_MPP_Comparative_Timeseries_H( (p1,p2,p3,p4,p5,p6,p7,p8), timeshots, **kwargs)
+    mpp = tdc_MPP_Comparative_Timeseries_H( (p1,p2,p3,p4,p5,p6,p7,p8), timeshots, fig_param=fig_param)
     return mpp

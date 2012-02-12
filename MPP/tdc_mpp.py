@@ -17,12 +17,8 @@ class tdc_MPP:
     x_labelled_axes
     y_labelled_axes
     """
-    __default_label_fontsize     = 11
-    __default_ticklabel_fontsize = 8
-    __default_timelabel_format   = '%.3f'
-    __default_timelabel_fontsize = 8
 
-    def __init__(self,nx,ny, **kwargs):
+    def __init__(self,nx,ny,fig_param=None):
         """
         This function setup figure and axes grid (nx x ny),
         changes fonts and creates
@@ -47,31 +43,21 @@ class tdc_MPP:
         self.nx = nx
         self.ny = ny
         #figure geometry
-        self.fg = tdc_MPP_FigureGeometry(nx,ny,**kwargs) 
+        self.fg = tdc_MPP_FigureGeometry(nx,ny,fig_param) 
         # figure object
         self.fig = plt.figure( figsize=self.fg.get_figsize_abs(), facecolor='w' )
         # grid of axes
         self.grid=[ [self.fig.add_axes( self.fg.axes_rectangle(i,j) ) for j in range(0,nx)]\
                     for i in range(0,ny) ]
-        # setup label fontsizes
-        self._label_fontsize = kwargs.get('label_fontsize',
-                                          tdc_MPP.__default_label_fontsize)
-        self._ticklabel_fontsize = kwargs.get('ticklabel_fontsize',
-                                              tdc_MPP.__default_ticklabel_fontsize)
-        # set timelabel formats
-        self._timelabel_format = kwargs.get('timelabel_format',
-                                            self.__default_timelabel_format)
-        self._timelabel_fontsize = kwargs.get('timelabel_fontsize',
-                                              self.__default_timelabel_fontsize)
         
     
     def _change_fonsize(self,axes_list):
         "function for changing fontsize for axes"
         for ax in axes_list:
             for label in ax.xaxis.get_ticklabels():
-                label.set_size(self._ticklabel_fontsize)
+                label.set_size(self.fg.ticklabel_fontsize)
             for label in ax.yaxis.get_ticklabels():
-                label.set_size(self._ticklabel_fontsize)
+                label.set_size(self.fg.yticklabel_fontsize)
             
     def _delete_xlabels_for_middle_plots(self):
         "delete x labels in all but bottom plots"
@@ -83,17 +69,17 @@ class tdc_MPP:
     def set_ylabel(self,i,label):
         "function for labeling of i'th row"
         coord = self.fg.left_ylabel_pos(i)
-        return self.fig.text( *coord, s=label, va='center',ha='left', size=self._label_fontsize)
+        return self.fig.text( *coord, s=label, va='center',ha='left', size=self.fg.label_fontsize)
 
     def set_top_xlabel(self,j, label):
         "function for labeling of j'th column"
         coord = self.fg.top_xlabel_pos(j)
-        return self.fig.text( *coord, s=label, va='top',ha='center', size=self._label_fontsize)
+        return self.fig.text( *coord, s=label, va='top',ha='center', size=self.fg.label_fontsize)
     
     def set_bottom_xlabel(self,j, label):
         "function for labeling coordinates of j'th column "
         coord = self.fg.bottom_xlabel_pos(j)
-        return self.fig.text( *coord, s=label, va='bottom',ha='center', size=self._label_fontsize)
+        return self.fig.text( *coord, s=label, va='bottom',ha='center', size=self.fg.label_fontsize)
 
     def set_xlim(self, *args, **kwargs):
         "call set_xlim command for each axes in grid"
@@ -156,12 +142,12 @@ class tdc_MPP_H(tdc_MPP):
     y_labelled_axes
     """
 
-    def __init__(self,nx,ny, **kwargs):
+    def __init__(self,nx,ny, fig_param=None):
         """
         Call tdc_MPP.__init__
         Set y_labelled_axes and x_labelled_axes
         """
-        tdc_MPP.__init__(self,nx,ny, **kwargs)
+        tdc_MPP.__init__(self,nx,ny, fig_param)
         # get rid of top tick labels
         self._delete_xlabels_for_middle_plots()
         # get rid of right tick labels
@@ -223,12 +209,12 @@ class tdc_MPP_V(tdc_MPP):
     y_labelled_axes
     """
 
-    def __init__(self,nx,ny, **kwargs):
+    def __init__(self,nx,ny, fig_param=None):
         """
         Call tdc_MPP.__init__
         Set y_labelled_axes and x_labelled_axes
         """
-        tdc_MPP.__init__(self,nx,ny, **kwargs)
+        tdc_MPP.__init__(self,nx,ny, fig_param)
         # get rid of top tick labels
         self._delete_xlabels_for_middle_plots()
         # list of labelled axis

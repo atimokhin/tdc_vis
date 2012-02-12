@@ -30,7 +30,7 @@ tdc_set_hardcopy_rcparams()
 tdc_set_results_dir('../RESULTS/WD/')
 
 
-fig_style=dict()
+fig_param=dict()
 
 #------------------------------------
 # PLot Flags
@@ -60,7 +60,7 @@ if ( plot_flag == 'jm1.5__1' ):
     ID='SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1'
     timeshots1 = [470, 472, 474, 476]
     sample_dict=dict(name='regular',n_reduce=1,n_min=400)
-    fig_style=dict(aspect_ratio = 1.618*1.355)
+    fig_param=dict(aspect_ratio = 1.618*1.355)
     tick_and_labels_commands="""
 mpp.set_xlim([-0.02,1.02])
 mpp.set_xticks(np.arange(0,1.2,.2))
@@ -100,7 +100,7 @@ elif ( plot_flag == 'jm1.5__2' ):
     ID='SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1'
     timeshots1 = [477, 483, 489, 495]
     sample_dict=dict(name='regular',n_reduce=1,n_min=400)
-    fig_style=dict(aspect_ratio = 1.618*1.355)
+    fig_param=dict(aspect_ratio = 1.618*1.355)
     tick_and_labels_commands="""
 mpp.set_xlim([-0.02,1.02])
 mpp.set_xticks(np.arange(0,1.2,.2))
@@ -140,7 +140,7 @@ elif ( plot_flag == 'jm1.5__3' ):
     ID='SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1'
     timeshots1 = [496, 506, 516, 526]
     sample_dict=dict(name='regular',n_reduce=1,n_min=400)
-    fig_style=dict(aspect_ratio = 1.618*1.355)
+    fig_param=dict(aspect_ratio = 1.618*1.355)
     tick_and_labels_commands="""
 mpp.set_xlim([-0.02,1.02])
 mpp.set_xticks(np.arange(0,1.2,.2))
@@ -185,7 +185,7 @@ elif ( plot_flag == 'jp0.5__1' ):
     ID='SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj5_sU_P'
     timeshots1 = [803, 811, 819, 827]
     sample_dict=dict(name='regular',n_reduce=1,n_min=400)
-    fig_style=dict(aspect_ratio = 1.618*1.355)
+    fig_param=dict(aspect_ratio = 1.618*1.355)
     tick_and_labels_commands="""
 mpp.set_xlim([-0.02,1.02])
 mpp.set_xticks(np.arange(0,1.2,.2))
@@ -225,7 +225,7 @@ elif ( plot_flag == 'jp0.5__2' ):
     ID='SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj5_sU_P'
     timeshots1 = [828, 836, 844, 852]
     sample_dict=dict(name='regular',n_reduce=1,n_min=400)
-    fig_style=dict(aspect_ratio = 1.618*1.355)
+    fig_param=dict(aspect_ratio = 1.618*1.355)
     tick_and_labels_commands="""
 mpp.set_xlim([-0.02,1.02])
 mpp.set_xticks(np.arange(0,1.2,.2))
@@ -265,7 +265,7 @@ elif ( plot_flag == 'jp0.5__3' ):
     ID='SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj5_sU_P'
     timeshots1 = [858, 872, 886, 900]
     sample_dict=dict(name='regular',n_reduce=1,n_min=400)
-    fig_style=dict(aspect_ratio = 1.618*1.355)
+    fig_param=dict(aspect_ratio = 1.618*1.355)
     tick_and_labels_commands="""
 mpp.set_xlim([-0.02,1.02])
 mpp.set_xticks(np.arange(0,1.2,.2))
@@ -310,7 +310,7 @@ elif ( plot_flag == 'RhoGJ_lin2__jm2.0__1' ):
     ID='Arons__j2.000_Pcf9e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU'
     timeshots1 = [786, 795, 804, 813]
     sample_dict=dict(name='regular',n_reduce=1,n_min=400)
-    fig_style=dict(aspect_ratio = 1.618*1.355)
+    fig_param=dict(aspect_ratio = 1.618*1.355)
     tick_and_labels_commands="""
 mpp.set_xlim([-0.02,1.02])
 mpp.set_xticks(np.arange(0,1.2,.2))
@@ -350,7 +350,7 @@ elif ( plot_flag == 'RhoGJ_lin2__jm2.0__2' ):
     ID='Arons__j2.000_Pcf9e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU'
     timeshots1 = [816, 819, 839, 859]
     sample_dict=dict(name='regular',n_reduce=1,n_min=400)
-    fig_style=dict(aspect_ratio = 1.618*1.355)
+    fig_param=dict(aspect_ratio = 1.618*1.355)
     tick_and_labels_commands="""
 mpp.set_xlim([-0.02,1.02])
 mpp.set_xticks(np.arange(0,1.2,.2))
@@ -394,7 +394,7 @@ elif ( plot_flag == 'RhoGJ_lin2__jm1.059' ):
     ID='Arons__j1.059_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU'
     timeshots1 = [441, 521, 581, 681]
     sample_dict=dict(name='regular',n_reduce=1,n_min=400)
-    fig_style=dict(aspect_ratio = 1.618*1.355)
+    fig_param=dict(aspect_ratio = 1.618*1.355)
     tick_and_labels_commands="""
 mpp.set_xlim([-0.02,1.02])
 mpp.set_xticks(np.arange(0,1.2,.2))
@@ -437,7 +437,10 @@ mpp._delete_ylabels_for_middle_plots()
 # Actual Plotting Commands
 # ============================================================
     
-mpp = tdc_mpp__n_rho_j_e_xp(ID,timeshots1,sample_dict=sample_dict,**fig_style)
+mpp = tdc_mpp__n_rho_j_e_xp( ID,
+                             timeshots1,
+                             sample_dict=sample_dict,
+                             fig_param=fig_param)
 mpp.set_window_title(ID)
 mpp.interactive_off()
 

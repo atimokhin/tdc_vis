@@ -29,7 +29,7 @@ paramSingleFig_Presentation = dict(label_fontsize     = 22,
 paramSingleFig_MNRAS = dict( figsize_inch       = [3.5,2.254],
                              axes_boxes         = [[0.129,.155,.857,.823]],
                              label_fontsize     = 11,
-                             ticklabel_fontsize = 8   )
+                             ticklabel_fontsize = 9   )
 
 
 # -----------------------------------------------

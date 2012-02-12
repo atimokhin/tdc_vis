@@ -5,7 +5,7 @@ from Fields import tdc_EP_Density_Plotter
 
 from MPP       import *
 
-def tdc_mpp__n_rho_e(ID,timeshots,**kwarg):
+def tdc_mpp__n_rho_e(ID,timeshots,fig_param=None):
     """
     for *timeshots* plots:
     [1] e/p number density
@@ -28,5 +28,5 @@ def tdc_mpp__n_rho_e(ID,timeshots,**kwarg):
     fp2=tdc_Fields_Plotter(f2)
     fp3=tdc_Fields_Plotter(f3)
     # MFP instance
-    mpp = tdc_MPP_Comparative_Timeseries_H( (fp1,fp2,fp3), timeshots, **kwarg)
+    mpp = tdc_MPP_Comparative_Timeseries_H( (fp1,fp2,fp3), timeshots, fig_param=fig_param)
     return mpp

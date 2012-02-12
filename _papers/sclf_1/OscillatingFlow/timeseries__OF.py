@@ -10,7 +10,6 @@ from Common_Data_Plot import tdc_Data_Sequence_Initializer
 import MPP
 
 from  xps_plotter__OF           import XPs_Plotter__OF
-from _papers.sclf_1.plot_params import mpp_params
 
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -21,6 +20,11 @@ tdc_set_hardcopy_rcparams()
 ## tdc_set_results_dir('../RESULTS/')
 ## tdc_set_results_dir('../RESULTS/FreeAgent/')
 tdc_set_results_dir('../RESULTS/__TDC_2/')
+
+
+fig_param = dict( yticklabel_fontsize = 9 )
+
+
 
 plot_flag = 'jm05'
 
@@ -73,7 +77,7 @@ f2 = tdc_Data_Sequence_Initializer( tdc_XP_Data,
 # field plotter
 p2 = XPs_Plotter__OF( (f2,), of__filename)
 # MFP instance -------------
-mpp = MPP.tdc_MPP_Timeseries( shape, p2, timeshots,select, **mpp_params)
+mpp = MPP.tdc_MPP_Timeseries( shape, p2, timeshots,select, fig_param=fig_param)
 mpp.set_window_title(ID[0])
 mpp.interactive_off()
 
@@ -90,7 +94,4 @@ mpp.interactive_on()
 plt.interactive(True)
 plt.show()
 
-# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-tdc_set_default_rcparams()
-# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 

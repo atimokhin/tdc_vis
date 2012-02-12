@@ -14,8 +14,11 @@ tdc_set_hardcopy_rcparams()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
-#tdc_set_results_dir('../RESULTS/')
-tdc_set_results_dir('../RESULTS/FreeAgent/')
+tdc_set_results_dir('../RESULTS/')
+#tdc_set_results_dir('../RESULTS/FreeAgent/')
+
+fig_param=dict()
+
 
 plot_flag = 'j1_overview'
 ## plot_flag = 'j1_close_view'
@@ -220,7 +223,7 @@ f2 = tdc_Field_Data(ID, 'Rho')
 # field plotter
 p2 = tdc_Fields_Plotter(f2)
 # MFP instance -------------
-mpp = MPP.tdc_MPP_Timeseries( shape, p2, timeshots,select)
+mpp = MPP.tdc_MPP_Timeseries( shape, p2, timeshots, select, fig_param=fig_param)
 mpp.set_window_title(ID)
 mpp.interactive_off()
 

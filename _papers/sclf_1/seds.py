@@ -74,13 +74,13 @@ mpp.set_yticks( (0,1), np.logspace(-3,2,6) )
 mpp.set_yticklabels( (0,1),['$10^{%g}$' % np.log10(x) for x in np.logspace(-3,2,6)])
 """
     
-fig_style = dict( dx_pad_abs         = 0.07,
+fig_param = dict( dx_pad_abs         = 0.07,
                   dy_pad_abs         = 0.07,
                   left_margin_abs    = 0.65,
                   bottom_margin_abs  = 0.37,
                   f_ylabel_left      = 0.0175)
     
-mpp = tdc_mpp__sed(ID, timeshots, xxs, **fig_style)
+mpp = tdc_mpp__sed(ID, timeshots, xxs, fig_param=fig_param)
 mpp.set_window_title(ID)
 mpp.interactive_off()
 

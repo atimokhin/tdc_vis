@@ -9,7 +9,7 @@ from MPP       import *
 
 def tdc_mpp_v__e_rho_n(ID,timeshots,
                        moving_grid_dict=None,
-                       **kwarg):
+                       fig_param=None):
     """
     for *timeshots* plots:
     [1] e/p number density
@@ -36,5 +36,5 @@ def tdc_mpp_v__e_rho_n(ID,timeshots,
         fp2 = tdc_Moving_Grid_Plotter(fp2,moving_grid_dict)
         fp3 = tdc_Moving_Grid_Plotter(fp3,moving_grid_dict)
     # MFP instance
-    mpp = tdc_MPP_Comparative_Timeseries_V( (fp1,fp2,fp3), timeshots, **kwarg)
+    mpp = tdc_MPP_Comparative_Timeseries_V( (fp1,fp2,fp3), timeshots, fig_param=fig_param)
     return mpp

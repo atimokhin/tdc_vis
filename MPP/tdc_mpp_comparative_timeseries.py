@@ -13,7 +13,7 @@ class tdc_MPP_Comparative_Timeseries_H ( tdc_MPP_H ):
     top_xlabels
     """
 
-    def __init__(self, plotters, timeshots, **kwargs):
+    def __init__(self, plotters, timeshots, fig_param=None):
         """
         gets list of plotters and timeshots, plots
         len(plotters)*len(timeshots) grid marks time of each
@@ -23,7 +23,7 @@ class tdc_MPP_Comparative_Timeseries_H ( tdc_MPP_H ):
         nx = len(timeshots)
         ny = len(plotters)
         # make figure and grid
-        tdc_MPP_H.__init__(self,nx,ny, **kwargs)
+        tdc_MPP_H.__init__(self,nx,ny, fig_param)
         # do actual plotting
         self.top_xlabels=[]
         for i in range(ny):
@@ -34,13 +34,8 @@ class tdc_MPP_Comparative_Timeseries_H ( tdc_MPP_H ):
                 plotters[i].plot( self.grid[i][j] )
                 # top x labels <-- times
                 if ( i==0 ):
-                    t_str = self._timelabel_format % plotters[i].get_time()
+                    t_str = self.fg.timelabel_format % plotters[i].get_time()
                     self.top_xlabels.append( self.set_top_xlabel(j, '$t='+t_str+'$') )
-        # change fontsize fot timelabel
-        for tl in self.top_xlabels:
-            tl.set_size(self._timelabel_fontsize)
-        # bottom x labels
-        #for j in range(nx): set_bottom_xlabel(j,'$x$')
         # show plots
         self.fig.canvas.draw()
 
@@ -55,7 +50,7 @@ class tdc_MPP_Comparative_Timeseries_V ( tdc_MPP_V ):
     top_xlabels
     """
 
-    def __init__(self, plotters, timeshots, **kwargs):
+    def __init__(self, plotters, timeshots, fig_param=None):
         """
         gets list of plotters and timeshots, plots
         len(timeshots)*len(plotters) grid marks time of each
@@ -65,7 +60,7 @@ class tdc_MPP_Comparative_Timeseries_V ( tdc_MPP_V ):
         nx = len(plotters)
         ny = len(timeshots)
         # make figure and grid
-        tdc_MPP_V.__init__(self,nx,ny, **kwargs)
+        tdc_MPP_V.__init__(self,nx,ny, fig_param)
         # do actual plotting
         self.top_xlabels=[]
         for i in range(ny):
@@ -77,7 +72,7 @@ class tdc_MPP_Comparative_Timeseries_V ( tdc_MPP_V ):
                 if ( i==0 ):
                     self.top_xlabels.append( self.set_top_xlabel(j, plotters[j].plot_ylabel) )
             # plot ylabels <--- time
-            t_str = self._timelabel_format % plotters[0].get_time()
+            t_str = self.fg.timelabel_format % plotters[0].get_time()
             timelabel=self.set_ylabel(i,'$t='+t_str+'$')
             timelabel.set_size(self._timelabel_size)
         # bottom x labels

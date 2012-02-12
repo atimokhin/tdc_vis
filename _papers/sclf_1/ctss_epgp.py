@@ -31,7 +31,7 @@ tdc_set_hardcopy_rcparams()
 tdc_set_results_dir('../RESULTS/WD/')
 
 
-fig_style=dict()
+fig_param=dict()
 
 #------------------------------------
 # PLot Flags
@@ -54,7 +54,7 @@ if ( plot_flag == 'jp1.5__1' ):
     ID='SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj7_sU'
     timeshots1 = [632, 636, 640, 644]
     sample_dict=dict(name='regular',n_reduce=1,n_min=400)
-    fig_style=dict(aspect_ratio = 1.618*1.355)
+    fig_param=dict(aspect_ratio = 1.618*1.355)
     tick_and_labels_commands="""
 mpp.set_xlim([-0.02,1.02])
 mpp.set_xticks(np.arange(0,1.2,.2))
@@ -94,7 +94,7 @@ elif ( plot_flag == 'jp1.5__2' ):
     ID='SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj7_sU'
     timeshots1 = [645, 651, 657, 663]
     sample_dict=dict(name='regular',n_reduce=1,n_min=400)
-    fig_style=dict(aspect_ratio = 1.618*1.355)
+    fig_param=dict(aspect_ratio = 1.618*1.355)
     tick_and_labels_commands="""
 mpp.set_xlim([-0.02,1.02])
 mpp.set_xticks(np.arange(0,1.2,.2))
@@ -134,7 +134,7 @@ elif ( plot_flag == 'jp1.5__3' ):
     ID='SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj7_sU'
     timeshots1 = [664, 674, 684, 694]
     sample_dict=dict(name='regular',n_reduce=1,n_min=400)
-    fig_style=dict(aspect_ratio = 1.618*1.355)
+    fig_param=dict(aspect_ratio = 1.618*1.355)
     tick_and_labels_commands="""
 mpp.set_xlim([-0.02,1.02])
 mpp.set_xticks(np.arange(0,1.2,.2))
@@ -176,7 +176,10 @@ mpp._delete_ylabels_for_middle_plots()
 # Actual Plotting Commands
 # ============================================================
     
-mpp = tdc_mpp__n_rho_j_e_xp_epgp(ID,timeshots1,sample_dict=sample_dict,**fig_style)
+mpp = tdc_mpp__n_rho_j_e_xp_epgp(ID,
+                                 timeshots1,
+                                 sample_dict=sample_dict,
+                                 fig_param=fig_param)
 mpp.set_window_title(ID)
 mpp.interactive_off()
 

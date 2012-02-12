@@ -58,28 +58,28 @@ mpp.grid[0][2].set_ylim([-4.6,4.6])
 mpp.grid[0][2].set_yticks([-4,-2,0,2,4])
 mpp.grid[0][2].set_yticklabels(['-4','-2','0','2','4'])
 
-mpp.grid[1][0].set_ylim([-13,13])
+mpp.grid[1][0].set_ylim([-14,14])
 mpp.grid[1][0].set_yticks([-10,0,10])
 mpp.grid[1][0].set_yticklabels(['-10','0','10'])
 mpp.grid[1][0].set_yticks([-5,5],minor=True)
 
-mpp.grid[1][1].set_ylim([-26,26])
+mpp.grid[1][1].set_ylim([-28,28])
 mpp.grid[1][1].set_yticks([-20,-10,0,10,20])
 mpp.grid[1][1].set_yticklabels(['-20','-10','0','10','20'])
 
-mpp.grid[1][2].set_ylim([-52,52])
+mpp.grid[1][2].set_ylim([-56,56])
 mpp.grid[1][2].set_yticks([-40,-20,0,20, 40])
 mpp.grid[1][2].set_yticklabels(['-40','-20','0','20','40'])
 """
 
-j_label_coord={'x' : 0.038, 'y' : .75}
-j_label_fontsize = 8
-    
-mpp_params['dx_pad_abs']      = 0.30
-mpp_params['dy_pad_abs']      = 0.25
-mpp_params['left_margin_abs'] = 0.40
-mpp_params['top_margin_abs']  = 0.1
-mpp_params['ticklabel_fontsize'] =9
+j_label_coord={'x' : 0.038, 'y' : .69}
+j_label_fontsize = 9
+
+fig_param = dict( dx_pad_abs          = 0.30,
+                  dy_pad_abs          = 0.25,
+                  left_margin_abs     = 0.40,
+                  top_margin_abs      = 0.1,
+                  yticklabel_fontsize = 9 )
 # ---------------------------------
 
 sed_list=[['0.1' , 'sed_jm0.1_2' ],
@@ -90,7 +90,7 @@ sed_list=[['0.1' , 'sed_jm0.1_2' ],
           ['0.95', 'sed_jm0.95_2']]
 
 # create MPP
-mpp=tdc_MPP(3,2, **mpp_params)
+mpp=tdc_MPP(3,2, fig_param=fig_param)
 
 # plotters and labels
 plotters=[]
