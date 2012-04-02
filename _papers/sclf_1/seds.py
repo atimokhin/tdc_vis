@@ -18,9 +18,9 @@ tdc_set_results_dir('../RESULTS/WD/')
 # ---------------------------------
 
 
-plot_flag = 'jm1.5'
-plot_flag = 'jp0.5'
-## plot_flag = 'jp1.5'
+## plot_flag = 'jm1.5'
+## plot_flag = 'jp0.5'
+plot_flag = 'jp1.5'
 
 
 # ------------------------------------------------------------
