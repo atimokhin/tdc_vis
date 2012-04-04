@@ -14,7 +14,7 @@ def plot_movie( movie_frames, movie_id, fps, keep_frame_files, **kwargs):
     # movie frames
     MF = movie_frames
     # movie file maker
-    MFM = Movie_File_Maker__CMD(movie_id, fps, keep_frame_files)
+    MFM = Movie_File_Maker__CMD(movie_id, fps, keep_frame_files, dpi=MF.MFS.dpi)
     # write frames ----------------------------
     MFM.open_index_file()
     for i in range(MF.i_frame_min, MF.i_frame_max):

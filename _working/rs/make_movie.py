@@ -55,6 +55,7 @@ symlog=True
 linthreshy=5
 
 tt = None
+tt = [0,0.2]
 
 fps = 9
 keep_frame_files=False
@@ -74,12 +75,12 @@ moving_grid_dict = None
 # ============================================================
 
 Plots = {'XP'           : True,
-         'Rho'          : False,
+         'Rho'          : True,
          'J'            : False,
          'E_acc'        : False,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
-         'Phi'          : False,
+         'Phi'          : True,
          'EP'           : False,
          'EPG'          : False,
          'EPGP'         : False,
@@ -147,7 +148,6 @@ def do_movie(IDs):
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
                                  ghost_points=True,
-                                 xlabel = xlabel_Debye,
                                  fig_param = fig_param)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
        

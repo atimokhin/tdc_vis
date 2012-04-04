@@ -3,10 +3,10 @@ from Movie import Movie_File_Maker
 class Movie_File_Maker__CMD(Movie_File_Maker):
     """
     Make movie file
-    - store_snapshot()  takes snapshot of the widget (figure canvas)
+    - store_snapshot()  store each figure as a separate png file
     - open_index_file()
     - close_index_file()
-    
+    --------
     Members:
     --------
     movie_filename
@@ -14,29 +14,45 @@ class Movie_File_Maker__CMD(Movie_File_Maker):
     fps
        fps of created movie file
     keep_frame_files_flag
-       whether to keep png frame files after creating movie
-       default - False
+       [True/False] whether to keep png frame files after creating movie
+    dpi
+       dpi for figure.savefig()
+       resolution of png files saved for each frame
+       NB: this member is absent in __GUI version! 
     """
 
-    def __init__(self, movie_id, fps, keep_frame_files):
+    def __init__(self, movie_id, fps, keep_frame_files, dpi):
         """
-        movie_id  -- subdirectorty where movie files will be stored
-        """
+        movie_id
+           subdirectorty where movie files will be stored
+        fps
+           fps of created movie file
+        keep_frame_files_flag
+           [True/False] whether to keep png frame files after creating movie
+        dpi
+           dpi for figure.savefig()
+         """
         # setup base class
         Movie_File_Maker.__init__(self,movie_id,fps,keep_frame_files)
         self.index_file = None
         # frame counter
         self.i_frame = 0
+        # dpi - use the same dpi as figure plot
+        self.dpi = dpi
 
     def get_number_of_saved_snapshots(self):
         return self.i_frame
 
     def store_snapshot(self, figure):
+        """
+        each snapshot is a figure saved as separate png file
+        """
         # name of the file where current frame will be saved
         filename = self.movie_dir_name + \
                    self._frame_filename + '_' + str(self.i_frame) + '.png'
-        # create frame file, save frame there, then close the file 
-        figure.savefig(filename)
+        # create frame file, save frame there, then close the file
+        # use dpi saved at class initialization
+        figure.savefig(filename,dpi=self.dpi)
         # append name of the frame file to the list
         self.index_file.write(filename+'\n')
         # increment frame counter

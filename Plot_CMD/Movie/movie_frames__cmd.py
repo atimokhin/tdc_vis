@@ -67,7 +67,7 @@ class MovieFrames__CMD(MovieFrames):
             self.p_time_label.append( A.text(0.02, 0.925,
                                              't=%.3f' % P.get_time(),
                                              transform = A.transAxes,
-                                             fontsize=self._ticklabel_fontsize) )
+                                             fontsize=self.MFS.ticklabel_fontsize) )
 
     def animation_update(self,i_frame,**kwargs):
         """

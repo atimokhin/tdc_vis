@@ -58,10 +58,14 @@ class tdc_Single_FigureGeometry:
                                              paramSingleFig_Work['ylabel_left_x'])
         # -------------------------------------
         # figure size in inches
-        self.dpi = matplotlib.rcParams['figure.dpi']                
+        self.dpi = matplotlib.rcParams['figure.dpi']
+        print 'dpi=',self.dpi
+
         self.figsize_inch = fig_param.get('figsize_inch',
                                           [self.figsize_points[0]/self.dpi,
                                            self.figsize_points[1]/self.dpi])
+        print 'figsize_inch=',self.figsize_inch
+        
         # axes related parameters
         self.dx_ax = self.axes_boxes[0][2]
         self.dy_ax = self.axes_boxes[0][3]

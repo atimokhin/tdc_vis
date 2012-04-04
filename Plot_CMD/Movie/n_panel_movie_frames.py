@@ -9,12 +9,12 @@ class Single_Panel_Movie_Frames(MovieFrames__CMD):
     in other opartions relies on MovieFrames__GUI
     """
 
-    def __init__(self, seq_plotter, ylim, xlim=None, axes_commands=None):
+    def __init__(self, seq_plotter, ylim, xlim=None, axes_commands=None, fig_param=None):
         # initialize base class ======
         # seq_plotter must be a sequence
         MovieFrames__CMD.__init__(self, (seq_plotter,) )
         # setup graphic elements =====
-        mfs = tdc_Single_FigureGeometry()
+        mfs = tdc_Single_FigureGeometry(fig_param)
         # xlim, ylim must be sequences
         self.setup_figure_and_axes(mfs, [xlim],[ylim], [axes_commands])
 
@@ -26,7 +26,7 @@ class Double_Panel_Movie_Frames(MovieFrames__CMD):
     in other opartions relies on MovieFrames__GUI
     """
 
-    def __init__(self, seq_plotter, ylim, xlim=None, axes_commands=None, **kwargs):
+    def __init__(self, seq_plotter, ylim, xlim=None, axes_commands=None, fig_param=None, **kwargs):
         """
         All arguments must be sequences of the same length!
         -----------
@@ -37,7 +37,7 @@ class Double_Panel_Movie_Frames(MovieFrames__CMD):
         # initialize base class ======
         MovieFrames__CMD.__init__(self, seq_plotter )
         # setup graphic elements =====
-        mfs = tdc_Double_FigureGeometry()
+        mfs = tdc_Double_FigureGeometry(fig_param)
         # xlim, ylim must be sequences
         if not xlim:
             xlim = [None,None]
