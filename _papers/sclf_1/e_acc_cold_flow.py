@@ -1,27 +1,31 @@
 import matplotlib.pyplot as plt
 from   matplotlib.cbook  import flatten
 import numpy             as np
-import pickle
 
 from Auxiliary        import *
 from Common_Data_Plot import *
 
-from Particles import *
+from Fields import *
 
-from MPP import tdc_MPP
+from MPP import tdc_MPP_H
+
+import pickle
 
 from plot_params import mpp_params
+# -------------------------
 
-
-# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 tdc_set_hardcopy_rcparams()
-# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+
+#tdc_set_results_dir('../RESULTS/FreeAgent/')
 
 # ------------------------------
 # SubDirectory with dumped files
 # ------------------------------
-dump_id='__TDC_2/SEDs'
+dump_id='__TDC_2/FFTs'
+
 
 tick_and_labels_commands="""
 for i in range(3):
@@ -45,37 +49,28 @@ mpp.grid[1][2].set_xticks(np.arange(0,801,200))
 mpp.grid[1][2].set_xticklabels(['0','200','400','600', '800'])
 mpp.grid[1][2].set_xticks(np.arange(100,800,200),minor=True)
 
-
 mpp.grid[0][0].set_ylim([-1.15,1.15])
 mpp.grid[0][0].set_yticks([-1,0,1])
 mpp.grid[0][0].set_yticklabels(['-1','0','1'])
 mpp.grid[0][0].set_yticks([-0.5,0.5],minor=True)
 
-mpp.grid[0][1].set_ylim([-2.3,2.3])
-mpp.grid[0][1].set_yticks([-2,-1,0,1,2])
-mpp.grid[0][1].set_yticklabels(['-2','-1','0','1','2'])
+for i in [1,2]:
+    mpp.grid[0][i].set_ylim([-2.6,2.6])
+    mpp.grid[0][i].set_yticks([-2,0,2])
+    mpp.grid[0][i].set_yticklabels(['-2','0','2'])
+    mpp.grid[0][i].set_yticks([-1,1],minor=True)
 
-mpp.grid[0][2].set_ylim([-4.6,4.6])
-mpp.grid[0][2].set_yticks([-4,-2,0,2,4])
-mpp.grid[0][2].set_yticklabels(['-4','-2','0','2','4'])
+for i in range(3):
+    mpp.grid[1][i].set_ylim([-5.5,5.5])
+    mpp.grid[1][i].set_yticks([-5,0,5])
+    mpp.grid[1][i].set_yticklabels(['-5','0','5'])
+    mpp.grid[1][i].set_yticks([-2.5,2.5],minor=True)
 
-mpp.grid[1][0].set_ylim([-14,14])
-mpp.grid[1][0].set_yticks([-10,0,10])
-mpp.grid[1][0].set_yticklabels(['-10','0','10'])
-mpp.grid[1][0].set_yticks([-5,5],minor=True)
-
-mpp.grid[1][1].set_ylim([-28,28])
-mpp.grid[1][1].set_yticks([-20,-10,0,10,20])
-mpp.grid[1][1].set_yticklabels(['-20','-10','0','10','20'])
-
-mpp.grid[1][2].set_ylim([-56,56])
-mpp.grid[1][2].set_yticks([-40,-20,0,20, 40])
-mpp.grid[1][2].set_yticklabels(['-40','-20','0','20','40'])
 """
 
 j_label_coord={'x' : 0.038, 'y' : .69}
 j_label_fontsize = 9
-
+    
 fig_param = dict( dx_pad_abs          = 0.30,
                   dy_pad_abs          = 0.25,
                   left_margin_abs     = 0.40,
@@ -83,25 +78,26 @@ fig_param = dict( dx_pad_abs          = 0.30,
                   yticklabel_fontsize = 9 )
 # ---------------------------------
 
-sed_list=[['0.1' , 'sed_jm0.1_2' ],
-          ['0.25', 'sed_jm0.25_1__a'],
-          ['0.5' , 'sed_jm0.5_1__a' ],
-          ['0.75', 'sed_jm0.75_2__a'],
-          ['0.9' , 'sed_jm0.9_1__a' ],
-          ['0.95', 'sed_jm0.95_2']]
 
+fft_list=[['0.1' , 'fft_jm0.1_2' ],
+          ['0.25', 'fft_jm0.25_1__a'],
+          ['0.5' , 'fft_jm0.5_1__a' ],
+          ['0.75', 'fft_jm0.75_2__a'],
+          ['0.9' , 'fft_jm0.9_1__a' ],
+          ['0.95', 'fft_jm0.95_2']]
+
+    
 # create MPP
-mpp=tdc_MPP(3,2, fig_param=fig_param)
-
+mpp=tdc_MPP_H(3,2, fig_param=fig_param)
 # plotters and labels
 plotters=[]
 j_labels=[]
-for jl,filename in sed_list:
+for jl,filename in fft_list:
     j_labels.append( r'$j_0 = %s\,j_{\rm GJ}$' % jl )
     # full file name of the file with manipulator dump
     filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
     dump_dict = pickle.load( open(filename,'r') )
-    plotters.append( tdc_XPs_Plotter( (dump_dict['seds'][0].xp,)) )
+    plotters.append( tdc_Fields_Plotter(dump_dict['fft_data'][0].field) )
 # do plotting 
 mpp.interactive_off()
 ip=0
@@ -114,8 +110,11 @@ for i in range(0,mpp.ny):
 for j in range(mpp.nx):
     mpp.set_bottom_xlabel(j, r'$x\,[\lambda_{\rm D}]$')
 # ylabels
-mpp.set_ylabel(0,plotters[0].plot_ylabel)
-mpp.set_ylabel(1,plotters[0].plot_ylabel)
+ylabel=plotters[0].plot_ylabel
+mpp.set_ylabel(0,ylabel)
+mpp.set_ylabel(1,ylabel)
+# draw figure
+mpp.fig.canvas.draw()
 # ticks and tick labels
 exec tick_and_labels_commands
 mpp._change_fonsize([ g for g in flatten(mpp.grid)])
@@ -132,8 +131,6 @@ for i in range(0,mpp.ny):
 #------------------
 mpp.interactive_on()
 
-# draw figure
-mpp.fig.canvas.draw()
-plt.interactive(True)
 plt.show()
 
+plt.interactive(True)

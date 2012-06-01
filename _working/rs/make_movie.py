@@ -19,19 +19,21 @@ fig_param = paramSingleFig_Presentation
 # Directory
 # ============================================================
 ## tdc_set_results_dir('../RESULTS/')
-tdc_set_results_dir('../RESULTS/WD/RS')
+tdc_set_results_dir('../RESULTS/WD/RS_2')
 
 
 # ============================================================
 # IDs 
 # ============================================================
-IDs=['RS_1_R6_jp1.0_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU']
-
+## IDs=['RS_1_R6_jp1.0_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU']
+IDs=['RS__RD_jp0.95_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU']
+## IDs=['RS__RD_jp0.5_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU']
 
 # ============================================================
 # plot limits:
 # ============================================================
-xlim = [-0.005,0.305]
+## xlim = [-0.005,0.305]
+xlim = [-0.005,0.605]
 
 ylim_xp  = [-1.7e5,1.7e5]
 ylim_rho = [-100,100]
@@ -55,7 +57,7 @@ symlog=True
 linthreshy=5
 
 tt = None
-tt = [0,0.2]
+## tt = [0,0.2]
 
 fps = 9
 keep_frame_files=False
@@ -74,10 +76,10 @@ moving_grid_dict = None
 # Plots 
 # ============================================================
 
-Plots = {'XP'           : True,
+Plots = {'XP'           : False,
          'Rho'          : True,
          'J'            : False,
-         'E_acc'        : False,
+         'E_acc'        : True,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
          'Phi'          : True,
