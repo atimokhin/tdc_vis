@@ -97,7 +97,7 @@ mpp=tdc_MPP(3,2, fig_param=fig_param)
 plotters=[]
 j_labels=[]
 for jl,filename in sed_list:
-    j_labels.append( r'$j_0 = %s\,j_{\rm GJ}$' % jl )
+    j_labels.append( r'$j_{\rm m} = %s\,j_{\rm GJ}$' % jl )
     # full file name of the file with manipulator dump
     filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
     dump_dict = pickle.load( open(filename,'r') )

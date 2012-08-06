@@ -32,6 +32,7 @@ IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_i
 ## IDs=['SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj7_sU']
 
 IDs=['Arons__j2.000_Pcf9e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU']
+## IDs=['Arons__j2.000_Pcf9e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU__wave']
 
 ## IDs=[['Arons__j1.102_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj10_sU',
 ##       'Arons__j1.102_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj10_sU__1']]

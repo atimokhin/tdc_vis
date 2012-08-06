@@ -141,7 +141,7 @@ class tdc_MPP_H(tdc_MPP):
     x_labelled_axes
     y_labelled_axes
     """
-
+    
     def __init__(self,nx,ny, fig_param=None):
         """
         Call tdc_MPP.__init__
@@ -198,7 +198,34 @@ class tdc_MPP_H(tdc_MPP):
             self.grid[i][0].yaxis.set_ticklabels(labels,*args, **kwargs)
         if self.interactive: self.fig.canvas.draw()
 
+    def set_xlim_rows(self, rows, *args, **kwargs):
+        "call set_xlim command for each axes in the i'th row"
+        for i in flatten([rows]):
+            for ax in self.grid[i]:
+                ax.set_xlim(*args, **kwargs)
+        if self.interactive: self.fig.canvas.draw()
 
+    def set_xticks_rows(self, rows, *args, **kwargs):
+        "call set_ticks for each xaxis in rows"
+        for i in flatten([rows]):
+            for ax in self.grid[i]:
+                ax.xaxis.set_ticks(*args, **kwargs)
+        if self.interactive: self.fig.canvas.draw()
+
+    def set_xticklabels_rows(self, rows, labels,tex=False, *args, **kwargs):
+        """
+        call set_ticklabels for labelled xaxis in the i'th row,
+        if tex is True, format each label L as "$L$"
+        """
+        # format in TeX mathmode if necessary
+        if tex: labels = ['$'+l+'$' if len(l)!=0 else l  for l in labels]
+        # set labels for y labelled axes
+        for i in flatten([rows]):
+            self.grid[i][0].xaxis.set_ticklabels(labels,*args, **kwargs)
+        if self.interactive: self.fig.canvas.draw()
+            
+
+            
 class tdc_MPP_V(tdc_MPP):
     """
     Multiple Panel Plot
@@ -208,7 +235,7 @@ class tdc_MPP_V(tdc_MPP):
     x_labelled_axes
     y_labelled_axes
     """
-
+    
     def __init__(self,nx,ny, fig_param=None):
         """
         Call tdc_MPP.__init__
@@ -256,6 +283,33 @@ class tdc_MPP_V(tdc_MPP):
         for j in flatten([columns]):
             for ax in [ axs[j] for axs in self.grid ]:
                 ax.yaxis.set_ticklabels(labels,*args, **kwargs)
+        if self.interactive: self.fig.canvas.draw()
+
+    def set_xlim_columns(self, columns, *args, **kwargs):
+        "call set_xlim command for each axes in the j'th column"
+        for j in flatten([columns]):
+            for ax in [ axs[j] for axs in self.grid ]:
+                ax.set_xlim(*args, **kwargs)
+        if self.interactive: self.fig.canvas.draw()
+
+    def set_xticks_columns(self, columns, *args, **kwargs):
+        "call set_ticks for each xaxis in columns"
+        for j in flatten([columns]):
+            for ax in [ axs[j] for axs in self.grid ]:
+                ax.xaxis.set_ticks(*args, **kwargs)
+        if self.interactive: self.fig.canvas.draw()
+
+    def set_xticklabels_columns(self, columns, labels,tex=False, *args, **kwargs):
+        """
+        call set_ticklabels for labelled xaxis in the i'th column,
+        if tex is True, format each label L as "$L$"
+        """
+        # format in TeX mathmode if necessary
+        if tex: labels = ['$'+l+'$' if len(l)!=0 else l  for l in labels]
+        # set labels for y labelled axes
+        for j in flatten([columns]):
+            for ax in [ axs[j] for axs in self.grid ]:
+                ax.xaxis.set_ticklabels(labels,*args, **kwargs)
         if self.interactive: self.fig.canvas.draw()
 
 

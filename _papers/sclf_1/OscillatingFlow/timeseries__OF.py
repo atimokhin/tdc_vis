@@ -83,7 +83,7 @@ mpp.interactive_off()
 
 # xlabels
 for j in range(shape[0]):
-    mpp.set_bottom_xlabel(j, r'$x$')
+    mpp.set_bottom_xlabel(j, r'$x\,[\lambda_{\rm D}]$')
 
 # adjust tick and labels
 exec tick_and_labels_commands

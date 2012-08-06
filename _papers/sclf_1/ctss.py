@@ -45,9 +45,9 @@ fig_param=dict()
 ## plot_flag = 'jp0.5__3'
 
 ## plot_flag = 'RhoGJ_lin2__jm2.0__1'
-## plot_flag = 'RhoGJ_lin2__jm2.0__2'
+plot_flag = 'RhoGJ_lin2__jm2.0__2'
 
-plot_flag = 'RhoGJ_lin2__jm1.059'
+## plot_flag = 'RhoGJ_lin2__jm1.059'
 #------------------------------------
 
 

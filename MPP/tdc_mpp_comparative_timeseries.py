@@ -74,7 +74,7 @@ class tdc_MPP_Comparative_Timeseries_V ( tdc_MPP_V ):
             # plot ylabels <--- time
             t_str = self.fg.timelabel_format % plotters[0].get_time()
             timelabel=self.set_ylabel(i,'$t='+t_str+'$')
-            timelabel.set_size(self._timelabel_size)
+            timelabel.set_size(self.fg.timelabel_fontsize)
         # bottom x labels
         #for j in range(nx): set_bottom_xlabel(j,'$x$')
         # show plots

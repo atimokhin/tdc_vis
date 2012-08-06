@@ -25,8 +25,8 @@ tdc_set_results_dir('../RESULTS/__TDC_2/')
 # ============================================================
 IDs=['SCLF__jm0.95_L800_X0.5_nGJ8e5_nx4e4_dt4e-3__RhoGJConst__noMC__dP5e-2_inj10']
 
-## IDs=[['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1',
-##       'SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__1']]
+IDs=[['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1',
+      'SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__1']]
 
 #-----------------
 # xlabel
@@ -77,10 +77,10 @@ moving_grid_dict = None
 # ============================================================
 # Plots 
 # ============================================================
-Plots = {'XP'           : False,
+Plots = {'XP'           : True,
          'Rho'          : False,
          'J'            : False,
-         'E_acc'        : True,
+         'E_acc'        : False,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
          'Phi'          : False,
