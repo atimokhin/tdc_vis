@@ -18,22 +18,27 @@ fig_param = paramSingleFig_Presentation
 # ============================================================
 # Directory
 # ============================================================
-## tdc_set_results_dir('../RESULTS/')
-tdc_set_results_dir('../RESULTS/WD/RS_2')
+tdc_set_results_dir('../RESULTS/WD')
+## tdc_set_results_dir('../RESULTS/WD/RS')
+## tdc_set_results_dir('../RESULTS/WD/RS_2')
 
 
 # ============================================================
 # IDs 
 # ============================================================
 ## IDs=['RS_1_R6_jp1.0_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU']
-IDs=['RS__RD_jp0.95_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU']
+## IDs=['RS__RD_jp0.95_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU']
 ## IDs=['RS__RD_jp0.5_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU']
+IDs=[['RS_1_R6_jp1.0_P0.2_L0.3_nGJ2.5e4_nx2.5e3_dt4e-5_s1',
+     'RS_1_R6_jp1.0_P0.2_L0.3_nGJ2.5e4_nx2.5e3_dt4e-5_s1__1']]
+
+IDs=['RS_prsnt_R6_jp1.0_P0.2_L0.3_nGJ2.5e4_nx2.5e3_dt4e-5_s1']
 
 # ============================================================
 # plot limits:
 # ============================================================
-## xlim = [-0.005,0.305]
-xlim = [-0.005,0.605]
+xlim = [-0.005,0.305]
+## xlim = [-0.005,0.605]
 
 ylim_xp  = [-1.7e5,1.7e5]
 ylim_rho = [-100,100]
@@ -48,7 +53,7 @@ axes_commands_xp = ['set_yticks([-1e8,-1e4,0,1e4,1e8])']
 
 
 
-sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
+sample_dict    = dict(name='regular',n_reduce=10,n_min=1000)
 ## sample_dict    = dict(name='regular',n_reduce=20,n_min=3000)
 
 particle_names = ['Positrons','Electrons','Pairs']
@@ -76,13 +81,13 @@ moving_grid_dict = None
 # Plots 
 # ============================================================
 
-Plots = {'XP'           : False,
-         'Rho'          : True,
+Plots = {'XP'           : True,
+         'Rho'          : False,
          'J'            : False,
-         'E_acc'        : True,
+         'E_acc'        : False,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
-         'Phi'          : True,
+         'Phi'          : False,
          'EP'           : False,
          'EPG'          : False,
          'EPGP'         : False,

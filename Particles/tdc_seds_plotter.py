@@ -16,7 +16,7 @@ class tdc_SEDs_Plotter(tdc_Data_Plotter):
                                'Positrons' : ['r:'] ,
                                'Pairs'     : ['k:']   }
 
-
+    
     def __init__(self, seds, xlabel=None,ylabel=None,idlabel=None):
         """
         sets internal variables 
@@ -63,7 +63,7 @@ class tdc_SEDs_Plotter(tdc_Data_Plotter):
         **kwargs goes to ax.plot(..)
         """
         # prefix and plotstyles
-        if not prefix or prefix=='total':
+        if prefix is None or prefix=='total':
             plotstyle_u = self.__plotstyle_u_combined
             plotstyle_d = self.__plotstyle_d_combined
         else:
@@ -72,14 +72,14 @@ class tdc_SEDs_Plotter(tdc_Data_Plotter):
         
         for i,sed in enumerate(self.data):
             # SED for UPWARD moving particles
-            if not prefix or prefix == 'lc':
+            if prefix is None or prefix == 'lc':
                 self.lines[i],   = ax.loglog(sed.P_bins, sed.dN_dlogPdX_u,
                                              *plotstyle_u[sed.name],
                                              drawstyle='steps-pre',
                                              nonposx='clip',nonposy='clip',
                                              **kwargs)
             # SED for DOWNWARD moving particles 
-            if not prefix or prefix == 'ns':
+            if prefix is None or prefix == 'ns':
                 self.lines_d[i], = ax.loglog(sed.P_bins, sed.dN_dlogPdX_d,
                                              *plotstyle_d[sed.name],
                                              drawstyle='steps-pre',

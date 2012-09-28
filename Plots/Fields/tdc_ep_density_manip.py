@@ -1,251 +1,62 @@
 from Common_Data_Plot  import tdc_Manip_Plot_vs_X
-from Fields   import tdc_Field_Data, tdc_EP_Density_Plotter, tdc_EPG_Density_Plotter, tdc_EPGP_Density_Plotter
-
-
-def tdc_plot_ep_density(calc_id,
-                        i_ts,
-                        e_density_negative=True,
-                        ylim=None,
-                        xlim=None,
-                        print_id=False,
-                        no_plot=False,
-                        fig_param=None):
-    """
-    calc_id
-       calculation id name
-    field_name
-       name of the field to be plotted
-    i_ts
-       timeshot#
-    Options:
-    --------
-    xlim 
-    ylim
-       <None>  axis limits
-    e_density_negative
-       <True> if True plots n_e and n_p
-       as having different signs
-    print_id
-       <False> whether to put id label on the figure
-    no_plot
-       <False> if True do not call plot in Manipulator
-       useful if additional plot modifications are required
-    Returns:
-    --------
-    ()=> tdc_EP_Density_Manip
-    """
-    manip = tdc_EP_Density_Manip(fig_param)
-    manip.setup_from_data(calc_id, e_density_negative)
-    manip.read(i_ts)
-    if not no_plot:
-        manip.plot(ylim, xlim, print_id)
-    return manip
-
-
-def tdc_plot_ep_density_restored(filename,
-                                 dump_id,
-                                 e_density_negative=True,
-                                 ylim=None,
-                                 xlim=None,
-                                 print_id=False,
-                                 no_plot=False,
-                                 fig_param=None):
-    """
-    filename
-       pickle file name is 'filename.pickle'
-    Options:
-    --------
-    xlim 
-    ylim
-       <None>  axis limits
-    e_density_negative
-       <True> if True plots n_e and n_p
-       as having different signs
-    print_id
-       <False> whether to put id label on the figure
-    no_plot
-       <False> if True do not call plot in Manipulator
-       useful if additional plot modifications are required
-    Returns:
-    --------
-    ()=> tdc_EP_Density_Manip
-    """
-    # create Manip
-    manip = tdc_EP_Density_Manip(fig_param)
-    manip.restore(filename,dump_id,e_density_negative)
-    if not no_plot:
-        manip.plot(ylim, xlim, print_id)
-    return manip
-
-
-
-def tdc_plot_epg_density(calc_id,
-                         i_ts,
-                         e_density_negative=True,
-                         ylim=None,
-                         xlim=None,
-                         print_id=False,
-                         no_plot=False,
-                         fig_param=None):
-    """
-    calc_id
-       calculation id name
-    field_name
-       name of the field to be plotted
-    i_ts
-       timeshot#
-    Options:
-    --------
-    xlim 
-    ylim
-       <None>  axis limits
-    e_density_negative
-       <True> if True plots n_e and n_p
-       as having different signs
-    print_id
-       <False> whether to put id label on the figure
-    no_plot
-       <False> if True do not call plot in Manipulator
-       useful if additional plot modifications are required
-    Returns:
-    --------
-    ()=> tdc_EPG_Density_Manip
-    """
-    manip = tdc_EPG_Density_Manip(fig_param)
-    manip.setup_from_data(calc_id, e_density_negative)
-    manip.read(i_ts)
-    if not no_plot:
-        manip.plot(ylim, xlim, print_id)
-    return manip
-
-
-def tdc_plot_epg_density_restored(filename,
-                                  dump_id,
-                                  e_density_negative=True,
-                                  ylim=None,
-                                  xlim=None,
-                                  print_id=False,
-                                  no_plot=False,
-                                  fig_param=None):
-    """
-    filename
-       pickle file name is 'filename.pickle'
-    Options:
-    --------
-    xlim 
-    ylim
-       <None>  axis limits
-    e_density_negative
-       <True> if True plots n_e and n_p
-       as having different signs
-    print_id
-       <False> whether to put id label on the figure
-    no_plot
-       <False> if True do not call plot in Manipulator
-       useful if additional plot modifications are required
-    Returns:
-    --------
-    ()=> tdc_EPG_Density_Manip
-    """
-    # create Manip
-    manip = tdc_EPG_Density_Manip(fig_param)
-    manip.restore(filename,dump_id,e_density_negative)
-    if not no_plot:
-        manip.plot(ylim, xlim, print_id)
-    return manip
-
-
-
-def tdc_plot_epgp_density(calc_id,
-                          i_ts,
-                          e_density_negative=True,
-                          ylim=None,
-                          xlim=None,
-                          print_id=False,
-                          no_plot=False,
-                          fig_param=None):
-    """
-    calc_id
-       calculation id name
-    field_name
-       name of the field to be plotted
-    i_ts
-       timeshot#
-    Options:
-    --------
-    xlim 
-    ylim
-       <None>  axis limits
-    e_density_negative
-       <True> if True plots n_e and n_p
-       as having different signs
-    print_id
-       <False> whether to put id label on the figure
-    no_plot
-       <False> if True do not call plot in Manipulator
-       useful if additional plot modifications are required
-    Returns:
-    --------
-    ()=> tdc_EPGP_Density_Manip
-    """
-    manip = tdc_EPGP_Density_Manip(fig_param)
-    manip.setup_from_data(calc_id, e_density_negative)
-    manip.read(i_ts)
-    if not no_plot:
-        manip.plot(ylim, xlim, print_id)
-    return manip
-
-
-def tdc_plot_epgp_density_restored(filename,
-                                   dump_id,
-                                   e_density_negative=True,
-                                   ylim=None,
-                                   xlim=None,
-                                   print_id=False,
-                                   no_plot=False,
-                                   fig_param=None):
-    """
-    filename
-       pickle file name is 'filename.pickle'
-    Options:
-    --------
-    xlim 
-    ylim
-       <None>  axis limits
-    e_density_negative
-       <True> if True plots n_e and n_p
-       as having different signs
-    print_id
-       <False> whether to put id label on the figure
-    no_plot
-       <False> if True do not call plot in Manipulator
-       useful if additional plot modifications are required
-    Returns:
-    --------
-    ()=> tdc_EPGP_Density_Manip
-    """
-    # create Manip
-    manip = tdc_EPGP_Density_Manip(fig_param)
-    manip.restore(filename,dump_id,e_density_negative)
-    if not no_plot:
-        manip.plot(ylim, xlim, print_id)
-    return manip
-
+from Fields            import tdc_Field_Data, tdc_EP_Density_Plotter, tdc_EPG_Density_Plotter, tdc_EPGP_Density_Plotter
 
 
 class tdc_EP_Density_Manip(tdc_Manip_Plot_vs_X):
     """
-    Manipulator class for Field
+    Manipulator class for Density plots of E[lectrons] P[ositrons]
     """
+    
     def __init__(self,fig_param=None):
         tdc_Manip_Plot_vs_X.__init__(self,fig_param)
         # Field DATA <<<<<<<
         self.fe=None
         self.fp=None
 
-    def setup_from_data(self,
-                        calc_id,
-                        e_density_negative=True):
+        
+    @staticmethod
+    def setup_from_data(calc_id,
+                        i_ts,
+                        e_density_negative=True,
+                        fig_param=None):
+        """
+        Setup Manip by reading original data
+
+        calc_id
+           calculation id name
+        i_ts
+           timeshot#
+        --------
+        Options:
+        --------
+        e_density_negative
+        fig_param
+        --------
+        """
+        manip=tdc_EP_Density_Manip(fig_param)
+        manip.read_from_data(calc_id, i_ts, e_density_negative=e_density_negative)
+        return manip
+
+    
+    @staticmethod
+    def setup_from_dump(filename,
+                        dump_id,
+                        e_density_negative=True,
+                        fig_param=None):
+        """
+        Setup Manip from dumped data
+        filename
+           pickle file name is 'filename.pickle'
+        """
+        manip=tdc_EP_Density_Manip(fig_param)
+        manip.read_from_dump(filename, dump_id, e_density_negative=e_density_negative)
+        return manip
+
+    
+    def read_from_data(self,
+                       calc_id,
+                       i_ts,
+                       e_density_negative=True):
         # fields 
         self.fe = tdc_Field_Data(calc_id,
                                  field_name='N',
@@ -258,11 +69,14 @@ class tdc_EP_Density_Manip(tdc_Manip_Plot_vs_X):
                                                  self.fp,
                                                  e_density_negative)
                           )
+        #read data
+        self.read(i_ts)
 
-    def restore(self,
-                filename,
-                dump_id,
-                e_density_negative=True):
+        
+    def read_from_dump(self,
+                       filename,
+                       dump_id,
+                       e_density_negative=True):
         """
         setup Manip by reading the pickle'd data dumped
         by Manip called before
@@ -309,7 +123,7 @@ class tdc_EP_Density_Manip(tdc_Manip_Plot_vs_X):
 
 class tdc_EPG_Density_Manip(tdc_Manip_Plot_vs_X):
     """
-    Manipulator class for Field
+    Manipulator class for Density plots of E[lectrons] P[ositrons] G[amma rays]
     """
 
     def __init__(self,fig_param=None):
@@ -318,10 +132,51 @@ class tdc_EPG_Density_Manip(tdc_Manip_Plot_vs_X):
         self.fe=None
         self.fp=None
         self.fg=None
+
         
-    def setup_from_data(self,
-                        calc_id,
-                        e_density_negative=True):
+    @staticmethod
+    def setup_from_data(calc_id,
+                        i_ts,
+                        e_density_negative=True,
+                        fig_param=None):
+        """
+        Setup Manip by reading original data
+
+        calc_id
+           calculation id name
+        i_ts
+           timeshot#
+        --------
+        Options:
+        --------
+        e_density_negative
+        fig_param
+        --------
+        """
+        manip=tdc_EPG_Density_Manip(fig_param)
+        manip.read_from_data(calc_id, i_ts, e_density_negative=e_density_negative)
+        return manip
+
+    
+    @staticmethod
+    def setup_from_dump(filename,
+                        dump_id,
+                        e_density_negative=True,
+                        fig_param=None):
+        """
+        Setup Manip from dumped data
+        filename
+           pickle file name is 'filename.pickle'
+        """
+        manip=tdc_EPG_Density_Manip(fig_param)
+        manip.read_from_dump(filename, dump_id, e_density_negative=e_density_negative)
+        return manip
+
+    
+    def read_from_data(self,
+                       calc_id,
+                       i_ts,
+                       e_density_negative=True):
         # fields 
         self.fe = tdc_Field_Data(calc_id,
                                  field_name='N',
@@ -338,11 +193,14 @@ class tdc_EPG_Density_Manip(tdc_Manip_Plot_vs_X):
                                                   self.fg,
                                                   e_density_negative)
                           )
+        #read data
+        self.read(i_ts)
 
-    def restore(self,
-                filename,
-                dump_id,
-                e_density_negative=True):
+        
+    def read_from_dump(self,
+                       filename,
+                       dump_id,
+                       e_density_negative=True):
         """
         setup Manip by reading the pickle'd data dumped
         by Manip called before
@@ -366,6 +224,7 @@ class tdc_EPG_Density_Manip(tdc_Manip_Plot_vs_X):
                                                   self.fg,
                                                   e_density_negative)
                           )
+
         
     def dump_data(self,filename,dump_id):
         """
@@ -392,7 +251,7 @@ class tdc_EPG_Density_Manip(tdc_Manip_Plot_vs_X):
 
 class tdc_EPGP_Density_Manip(tdc_Manip_Plot_vs_X):
     """
-    Manipulator class for Field
+    Manipulator class for Density plots of E[lectrons] P[ositrons] G[amma rays] P[rotons]
     """
 
     def __init__(self,fig_param=None):
@@ -402,10 +261,51 @@ class tdc_EPGP_Density_Manip(tdc_Manip_Plot_vs_X):
         self.fp=None
         self.fg=None
         self.fpr=None
-        
-    def setup_from_data(self,
-                        calc_id,
-                        e_density_negative=True):
+
+
+    @staticmethod
+    def setup_from_data(calc_id,
+                        i_ts,
+                        e_density_negative=True,
+                        fig_param=None):
+        """
+        Setup Manip by reading original data
+
+        calc_id
+           calculation id name
+        i_ts
+           timeshot#
+        --------
+        Options:
+        --------
+        e_density_negative
+        fig_param
+        --------
+        """
+        manip=tdc_EPGP_Density_Manip(fig_param)
+        manip.read_from_data(calc_id, i_ts, e_density_negative=e_density_negative)
+        return manip
+
+    
+    @staticmethod
+    def setup_from_dump(filename,
+                        dump_id,
+                        e_density_negative=True,
+                        fig_param=None):
+        """
+        Setup Manip from dumped data
+        filename
+           pickle file name is 'filename.pickle'
+        """
+        manip=tdc_EPGP_Density_Manip(fig_param)
+        manip.read_from_dump(filename, dump_id, e_density_negative=e_density_negative)
+        return manip
+
+    
+    def read_from_data(self,
+                       calc_id,
+                       i_ts,
+                       e_density_negative=True):
         # fields 
         self.fe = tdc_Field_Data(calc_id,
                                  field_name='N',
@@ -426,11 +326,14 @@ class tdc_EPGP_Density_Manip(tdc_Manip_Plot_vs_X):
                                                    self.fpr,
                                                    e_density_negative)
                           )
+        #read data
+        self.read(i_ts)
 
-    def restore(self,
-                filename,
-                dump_id,
-                e_density_negative=True):
+        
+    def read_from_dump(self,
+                       filename,
+                       dump_id,
+                       e_density_negative=True):
         """
         setup Manip by reading the pickle'd data dumped
         by Manip called before
@@ -478,5 +381,4 @@ class tdc_EPGP_Density_Manip(tdc_Manip_Plot_vs_X):
         s += '   calc_id = \"%s\"\n' % self.fe.calc_id
         s += '      i_ts = %d\n'     % self.i_ts
         return s
-
 

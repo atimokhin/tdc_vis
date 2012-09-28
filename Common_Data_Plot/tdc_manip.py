@@ -249,3 +249,4 @@ class tdc_Manip_Plot_vs_X(tdc_Manip):
         """
         self.plotter.cells_off(self.ax)
         self.fig.canvas.draw()
+

@@ -118,7 +118,6 @@ class tdc_Flux_Data:
         # reset working arrays
         self.reset()
 
-
     def mean(self,tt=None):
         """
         Return mean value of the flux for time interval tt

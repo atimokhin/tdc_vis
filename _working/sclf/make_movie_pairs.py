@@ -26,13 +26,13 @@ tdc_set_results_dir('../RESULTS/WD/')
 # ============================================================
 # IDs 
 # ============================================================
-IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1']
+## IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1']
 
-## IDs=['SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj5_sU_P']
+IDs=['SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj5_sU_P']
 ## IDs=['SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj7_sU']
 
-IDs=['Arons__j2.000_Pcf9e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU']
-## IDs=['Arons__j2.000_Pcf9e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU__wave']
+## IDs=['Arons__j2.000_Pcf9e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU']
+IDs=['Arons__j2.000_Pcf9e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU__wave']
 
 ## IDs=[['Arons__j1.102_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj10_sU',
 ##       'Arons__j1.102_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj10_sU__1']]
@@ -112,7 +112,7 @@ ylim_ep  = [-0.5,100]
 ## # ----------------------------------------
 
 
-sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
+sample_dict    = dict(name='regular',n_reduce=5,n_min=100)
 ## sample_dict    = dict(name='regular',n_reduce=20,n_min=3000)
 
 particle_names = ['Positrons','Electrons','Pairs','Protons']
@@ -123,7 +123,7 @@ linthreshy=5
 
 tt = None
 
-fps = 9
+fps = 24
 keep_frame_files=False
 
 use_cell_coordinates=False
@@ -140,10 +140,10 @@ moving_grid_dict = None
 # Plots 
 # ============================================================
 
-Plots = {'XP'           : True,
+Plots = {'XP'           : False,
          'Rho'          : False,
          'J'            : False,
-         'E_acc'        : False,
+         'E_acc'        : True,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
          'Phi'          : False,

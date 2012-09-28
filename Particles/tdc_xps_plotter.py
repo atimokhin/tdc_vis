@@ -51,7 +51,7 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
 
     def plot(self,
              ax,
-             symlog=False,
+             symlog=True,
              linthreshy=5,
              **kwargs):
         """
@@ -61,9 +61,9 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
         Options:
         ----------
         symlog
-           <False>/True --  whether to plot in semi-logarithmic scale
+           <True>/False --  whether to plot in semi-logarithmic scale
         linthreshy   
-           <1>     The range (-x, x) within which the plot is linear
+           <5>     The range (-x, x) within which the plot is linear
         """
         plot_kwargs={}
         for i,xp in enumerate(self.data):

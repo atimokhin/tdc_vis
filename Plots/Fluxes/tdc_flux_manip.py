@@ -4,69 +4,6 @@ from Fluxes.tdc_flux_data       import tdc_Flux_Data
 from Fluxes.tdc_fluxes_plotter  import tdc_Fluxes_Plotter
 
 
-def tdc_plot_fluxes( calc_ids,
-                     flux_name,
-                     prefix=None,
-                     ylim=None,
-                     xlim=None,
-                     print_id=False,
-                     no_plot=False,
-                     fig_param=None):
-    """
-    calc_ids
-       calculation ids 
-    flux_name
-       name of the flux to be plotted (dataset name in HDF file)
-    prefix
-       ns|lc -- by default both ns and lc fluxes will be plotted
-
-    Options:
-    --------
-    xlim
-       <None> X axis limits
-    ylim
-       <None> Y axis limits
-    print_id
-       <False> whether to put id label on the figure
-    no_plot
-       <False> if True do not call plot in Manipulator
-       useful if additional plot modifications are required
-    """       
-    manip = tdc_Flux_Manip(fig_param)
-    manip.setup_from_data(calc_ids, flux_name, prefix)
-    if not no_plot:
-        manip.plot(ylim, xlim, print_id)
-    return manip
-
-
-def tdc_plot_fluxes_restored(filename,
-                             dump_id,
-                             ylim=None,
-                             xlim=None,
-                             print_id=False,
-                             no_plot=False,
-                             fig_param=None):
-    """
-    filename
-       pickle file name is 'filename.pickle'
-    Options:
-    --------
-    print_id
-       <False> whether to put id label on the figure
-    no_plot
-       <False> if True do not call plot in Manipulator
-       useful if additional plot modifications are required
-    Returns:
-    --------
-    ()=> tdc_Flux_Manip
-    """
-    # create Manip
-    manip = tdc_Flux_Manip(fig_param)
-    manip.restore(filename,dump_id)
-    if not no_plot:
-        manip.plot(ylim, xlim, print_id)
-    return manip
-
 
 class tdc_Flux_Manip(tdc_Manip):
     """
@@ -77,10 +14,50 @@ class tdc_Flux_Manip(tdc_Manip):
     def __init__(self,fig_param=None):
         tdc_Manip.__init__(self, fig_param)
 
-    def setup_from_data(self,
-                        calc_ids,
+
+    @staticmethod
+    def setup_from_data(calc_ids,
                         flux_name,
-                        prefix=None):
+                        prefix=None,
+                        fig_param=None):
+        """
+        Setup Manip by reading original data
+
+        calc_ids
+           calculation ids 
+        flux_name
+           name of the flux to be plotted (dataset name in HDF file)
+        prefix
+           ns|lc -- by default both ns and lc fluxes will be plotted
+        --------
+        Options:
+        --------
+        fig_param
+        --------
+        """
+        manip=tdc_Flux_Manip(fig_param)
+        manip.read_from_data( calc_ids, flux_name, prefix=prefix)
+        return manip
+
+
+    @staticmethod
+    def setup_from_dump(filename,
+                        dump_id,
+                        fig_param=None):
+        """
+        Setup Manip from dumped data
+        filename
+           pickle file name is 'filename.pickle'
+        """
+        manip=tdc_Flux_Manip(fig_param)
+        manip.read_from_dump(filename, dump_id)
+        return manip
+
+
+    def read_from_data(self,
+                       calc_ids,
+                       flux_name,
+                       prefix=None):
         # fluxes
         self.fluxes = dict()
         # prefix
@@ -95,9 +72,10 @@ class tdc_Flux_Manip(tdc_Manip):
         # with tdc_XPs_Plotter instanse
         self.set_plotter( tdc_Fluxes_Plotter( self.fluxes.values() ) )
 
-    def restore(self,
-                filename,
-                dump_id):
+
+    def read_from_dump(self,
+                       filename,
+                       dump_id):
         """
         setup Manip by reading the pickle'd data dumped
         by Manip called before
@@ -135,32 +113,6 @@ class tdc_Flux_Manip(tdc_Manip):
             s += '\n' + str(f)
         return s
 
-    def plot(self,
-             ylim=None,
-             xlim=None,
-             print_id=False,
-             **kwargs):
-        """
-        Do normal linear plot
-        """
-        self.__general_plot(self.plotter.plot,
-                            ylim, xlim,
-                            print_id,
-                            **kwargs)
-
-    def semilogy(self,
-                 ylim=None,
-                 xlim=None,
-                 print_id=False,
-                 **kwargs):
-        """
-        Do semilogy plot
-        """
-        self.__general_plot(self.plotter.semilogy,
-                            ylim, xlim,
-                            print_id,
-                            **kwargs)
-
     def set_time(self,tt):
         "Set working time domain"
         for f in self.fluxes.values():
@@ -185,10 +137,12 @@ class tdc_Flux_Manip(tdc_Manip):
         return mean_flux
 
 
-    def __general_plot(self, plot_function,
-                       ylim=None, xlim=None,
-                       print_id=False,
-                       **kwargs):
+    def plot(self, 
+             semilog=True,
+             ylim=None, 
+             xlim=None,
+             print_id=False,
+             **kwargs):
         """
         Common function teplate for plot operation
         plot_function
@@ -207,7 +161,7 @@ class tdc_Flux_Manip(tdc_Manip):
             id_label += prefix + ' '
         self.fig.canvas.set_window_title(id_label) 
         # plot <----------------
-        plot_function(self.ax)
+        self.plotter.plot(self.ax, semilog=semilog)
         # ----------------------
         # set axes limits:
         if xlim:
@@ -220,3 +174,4 @@ class tdc_Flux_Manip(tdc_Manip):
         self.set_xlabel(self.plotter.plot_xlabel)
         # change ticklabel_fonsize
         self._change_ticklabel_fonsize()
+        

@@ -9,115 +9,6 @@ from Particles.tdc_sed_data      import tdc_SED_Data
 from Particles.tdc_seds_plotter  import tdc_SEDs_Plotter
 
 
-def tdc_plot_sed(calc_id, i_ts,
-                 particle_names=None,
-                 p_bins=None,
-                 xx=None,
-                 prefix=None,
-                 ylim=None,
-                 xlim=None,
-                 print_id=False,
-                 no_plot=False,
-                 fig_param=paramSingleFig_SED_Work):
-    """
-    calc_id
-       calculation id name
-    i_ts
-       timeshot#
-    --------
-    Options:
-    --------
-    particle_names
-       <None> name(s) of particles whose distribution functions will be plotted
-              if None, default value ['Electrons', 'Positrons', 'Pairs'] will be used
-              {default value set in tdc_SED_Manip}
-    p_bins
-       <None> energy bins for distribution function
-              if None, default value (1,1e8,100) will be used
-              {default value set in tdc_SED_Manip}
-    xx    
-       <None> spatial domain fordistribution function
-              if None, the whole domain will be used
-              {default value set in tdc_SED_Data}
-    prefix: < 'ns' | 'lc' | None >
-       depending on prefix plot:
-           - None    : plot SED for both ns and lc moving particles
-                       on  the same plot, use color lines
-           - 'ns'    : plot SED for particles moving to the NS
-                       use solid/dashe/dotted b/w lines
-           - 'lc'    : plot SED for particles moving to the LC
-                       use solid/dashe/dotted b/w lines
-           - 'total' : plot SED for particles all particles as a function
-                       of |p|, summing dN_dlogPdX_u+dN_dlogPdX_u
-    xlim 
-    ylim
-       <None>  axis limits
-    print_id
-       <False> whether to put id label on the figure
-    no_plot
-       <False> if True do not call plot in Manipulator
-       useful if additional plot modifications are required
-    --------
-    Returns:
-    --------
-    ()=> tdc_SED_Manip
-    """
-    manip = tdc_SED_Manip(fig_param)
-    manip.setup_from_data(calc_id,
-                          particle_names,
-                          p_bins,
-                          xx)
-    manip.read(i_ts)
-    if not no_plot:
-        manip.plot(prefix=prefix, ylim=ylim, xlim=xlim, print_id=print_id)
-    return manip
-
-
-def tdc_plot_sed_restored(filename,
-                          dump_id,
-                          prefix=None,
-                          ylim=None,
-                          xlim=None,
-                          print_id=False,
-                          no_plot=False,
-                          fig_param=paramSingleFig_SED_Work):
-    """
-    filename
-       pickle file name is 'filename.pickle'
-    --------
-    Options:
-    --------
-    prefix: < 'ns' | 'lc' | None >
-       depending on prefix plot:
-           - None    : plot SED for both ns and lc moving particles
-                       on  the same plot, use color lines
-           - 'ns'    : plot SED for particles moving to the NS
-                       use solid/dashe/dotted b/w lines
-           - 'lc'    : plot SED for particles moving to the LC
-                       use solid/dashe/dotted b/w lines
-           - 'total' : plot SED for particles all particles as a function
-                       of |p|, summing dN_dlogPdX_u+dN_dlogPdX_u
-    xlim 
-    ylim
-       <None>  axis limits
-    print_id
-       <False> whether to put id label on the figure
-    no_plot
-       <False> if True do not call plot in Manipulator
-       useful if additional plot modifications are required
-    --------
-    Returns:
-    --------
-    ()=> tdc_SED_Manip
-    """
-    # create Manip
-    manip = tdc_SED_Manip(fig_param)
-    manip.restore(filename,dump_id)
-    if not no_plot:
-        manip.plot(prefix=prefix, ylim=ylim, xlim=xlim, print_id=print_id)
-    return manip
-
-
 class tdc_SED_Manip(tdc_Manip):
     """
     Manipulator class for SED
@@ -130,10 +21,69 @@ class tdc_SED_Manip(tdc_Manip):
         # leve more place for y label
         tdc_Manip.__init__(self,fig_param)
 
-    def setup_from_data(self, calc_id,
+        
+    @staticmethod
+    def setup_from_data(calc_id,
+                        i_ts,
                         particle_names=None, 
                         p_bins=None,
-                        xx=None):
+                        xx=None,
+                        fig_param=None):
+        """
+        Setup Manip by reading original data
+     
+        calc_id
+           calculation id name
+        i_ts
+           timeshot#
+        --------
+        Options:
+        --------
+        particle_names
+           <None> name(s) of particles whose distribution functions will be plotted
+                  if None, default value ['Electrons', 'Positrons', 'Pairs'] will be used
+                  {default value set in tdc_SED_Manip}
+        p_bins
+           <None> energy bins for distribution function
+                  if None, default value (1,1e8,100) will be used
+                  {default value set in tdc_SED_Manip}
+        xx    
+           <None> spatial domain fordistribution function
+                  if None, the whole domain will be used
+                  {default value set in tdc_SED_Data}
+
+        --------
+        """
+        manip=tdc_SED_Manip(fig_param)
+        manip.read_from_data(calc_id,
+                             i_ts,
+                             particle_names=particle_names,
+                             p_bins=p_bins,
+                             xx=xx)
+        return manip
+
+    
+    @staticmethod
+    def setup_from_dump(filename,
+                        dump_id,
+                        fig_param=None):
+        """
+        Setup Manip from dumped data
+        filename
+           pickle file name is 'filename.pickle'
+        """
+        manip=tdc_SED_Manip(fig_param)
+        manip.read_from_dump(filename, dump_id)
+        return manip
+        
+
+        
+    def read_from_data(self, 
+                       calc_id,
+                       i_ts,
+                       particle_names=None, 
+                       p_bins=None,
+                       xx=None):
         """
         setup Manip by reading the original data file
         --------
@@ -176,18 +126,18 @@ class tdc_SED_Manip(tdc_Manip):
         self.e_p = {}
         # get Mesh
         self._Mesh = self.seds[0].xp._Mesh
+        # read data
+        self.read(i_ts)
+        
 
-    def restore(self,
-                filename,
-                dump_id,
-                p_bins=None,
-                xx=None):
+    def read_from_dump(self,
+                       filename,
+                       dump_id):
         """
         setup Manip by reading the pickle'd data dumped
         by Manip called before
         """
         import pickle
-        from   Auxiliary import tdc_Filenames
         # set restored_from_dump flag so the data cannot be read again
         self.restored_from_dump=True
         # SED DATA <<<<<<<
@@ -257,7 +207,7 @@ class tdc_SED_Manip(tdc_Manip):
              print_id=False,
              **kwargs):
         """
-        Plots SED for already already set i_ts, p_bins, xx
+        Plots SED for already  set i_ts, p_bins, xx
         accepts only
         prefix: < 'ns' | 'lc' | None >
           depending on prefix plot:
@@ -441,3 +391,5 @@ class tdc_SED_Manip(tdc_Manip):
         f.write( self.info_str__number_of_particles() )
         f.write( self.info_str__particle_energy() )
         f.close()
+
+    

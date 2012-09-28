@@ -4,88 +4,9 @@ from Common_Data_Plot  import tdc_Manip
 from Fields            import tdc_FFT_Data, tdc_FFT_Plotter, tdc_FFT_Fit, tdc_FFT_Fit_Plotter
 
 
-def tdc_plot_fft(calc_id,
-                 i_ts,
-                 field_name,
-                 xx=None,
-                 fitting_type='pl',
-                 nk_plot=20,
-                 ylim=None,
-                 xlim=None,
-                 print_id=False,
-                 no_plot=False,
-                 fig_param=None):
-    """
-    calc_id
-       calculation id name
-    field_name
-       name of the field which Fourier transform will be plotted
-    i_ts
-       timeshot#
-    Options:
-    --------
-    nk_plot
-       <20> length of plotting arrays
-    xlim 
-    ylim
-       <None>  axis limits
-    print_id
-       <False> whether to put id label on the figure
-    no_plot
-       <False> if True do not call plot in Manipulator
-       useful if additional plot modifications are required
-    Returns:
-    --------
-    ()=> tdc_Field_Manip
-    """
-    manip = tdc_FFT_Manip(fig_param)
-    manip.setup_from_data(calc_id,
-                          field_name,
-                          xx,
-                          fitting_type=fitting_type,
-                          nk_plot=nk_plot)
-    manip.read(i_ts)
-    if not no_plot:
-        manip.plot(ylim, xlim, print_id)
-    return manip
-
-
-def tdc_plot_fft_restored(filename,
-                          dump_id,
-                          ylim=None,
-                          xlim=None,
-                          print_id=False,
-                          no_plot=False,
-                          fig_param=None):
-    """
-    filename
-       pickle file name is 'filename.pickle'
-    Options:
-    --------
-    xlim 
-    ylim
-       <None>  axis limits
-    print_id
-       <False> whether to put id label on the figure
-    no_plot
-       <False> if True do not call plot in Manipulator
-       useful if additional plot modifications are required
-    Returns:
-    --------
-    ()=> tdc_Field_Manip
-    """
-    # create Manip
-    manip = tdc_FFT_Manip(fig_param)
-    manip.restore(filename,dump_id)
-    if not no_plot:
-        manip.plot(ylim, xlim, print_id)
-    return manip
-
-
-
 class tdc_FFT_Manip(tdc_Manip):
     """
-    Manipulator class for Field
+    Manipulator class for Furier transform plot of a field
     """
 
     def __init__(self,fig_param=None):
@@ -95,12 +16,65 @@ class tdc_FFT_Manip(tdc_Manip):
         self.fft_fit=None
         self.fft_fit_plotter=None
 
-    def setup_from_data(self,
-                        calc_id,
+        
+    @staticmethod
+    def setup_from_data(calc_id,
+                        i_ts,
                         field_name,
-                        xx,
-                        fitting_type,
-                        nk_plot):
+                        xx=None,
+                        fitting_type='pl',
+                        nk_plot=20,
+                        fig_param=None):
+        """
+        Setup Manip by reading original data
+
+        calc_id
+           calculation id name
+        field_name
+           name of the field which Fourier transform will be plotted
+        i_ts
+           timeshot#
+        -------
+        Options:
+        --------
+        nk_plot
+           <20> length of plotting arrays
+        fitting_type
+           <'pl'>
+        fig_param
+        --------
+        """
+        manip=tdc_FFT_Manip(fig_param)
+        manip.read_from_data(calc_id,
+                             i_ts,
+                             field_name,
+                             xx=xx,
+                             fitting_type=fitting_type,
+                             nk_plot=nk_plot)
+        return manip
+
+    
+    @staticmethod
+    def setup_from_dump(filename,
+                        dump_id,
+                        fig_param=None):
+        """
+        Setup Manip from dumped data
+        filename
+           pickle file name is 'filename.pickle'
+        """
+        manip=tdc_FFT_Manip(fig_param)
+        manip.read_from_dump(filename, dump_id)
+        return manip
+
+    
+    def read_from_data(self,
+                       calc_id,
+                       i_ts,
+                       field_name,
+                       xx,
+                       fitting_type,
+                       nk_plot):
         """
         setup Manip by reading the original data file
         """
@@ -112,8 +86,11 @@ class tdc_FFT_Manip(tdc_Manip):
         self.set_plotter( tdc_FFT_Plotter(self.fft) )
         # FFT Fit <<<<<<<
         self.set_fft_fit(fitting_type=fitting_type, nk_plot=nk_plot)
+        # read data
+        self.read(i_ts)
 
-    def restore(self,filename,dump_id):
+        
+    def read_from_dump(self,filename,dump_id):
         """
         setup Manip by reading the pickle'd data dumped
         by Manip called before

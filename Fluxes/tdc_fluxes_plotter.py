@@ -31,16 +31,18 @@ class tdc_Fluxes_Plotter(tdc_Data_Plotter):
         # initialize lines
         self.lines = len(self.data)*[None]
 
-    def plot(self,ax,**kwargs):
-        for i,flux in enumerate(self.data):
-            self.lines[i], = ax.plot( flux.t, flux.f,
-                                      self.__plotstyle[flux.prefix],
-                                      **kwargs)
-
-    def semilogy(self,ax,**kwargs):
+    def plot(self,
+             ax,
+             semilog=True,
+             **kwargs):
+        """
+        semilog
+           <True> if True make semilog plot: t-linear, f-log scale,
+                  if False  make linear plot: t,f-linear
+        """
         for i,flux in enumerate(self.data):
             self.lines[i], = ax.semilogy( flux.t, flux.f,
                                           self.__plotstyle[flux.prefix],
-                                          nonposy='clip',
                                           **kwargs)
-
+        if semilog is True:
+            ax.set_yscale('log')
