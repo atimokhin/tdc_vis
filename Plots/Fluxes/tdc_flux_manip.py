@@ -16,10 +16,10 @@ class tdc_Flux_Manip(tdc_Manip):
 
 
     @staticmethod
-    def setup_from_data(calc_ids,
-                        flux_name,
-                        prefix=None,
-                        fig_param=None):
+    def init_from_data(calc_ids,
+                       flux_name,
+                       prefix=None,
+                       fig_param=None):
         """
         Setup Manip by reading original data
 
@@ -41,9 +41,9 @@ class tdc_Flux_Manip(tdc_Manip):
 
 
     @staticmethod
-    def setup_from_dump(filename,
-                        dump_id,
-                        fig_param=None):
+    def init_from_dump(filename,
+                       dump_id,
+                       fig_param=None):
         """
         Setup Manip from dumped data
         filename

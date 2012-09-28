@@ -22,13 +22,13 @@ class tdc_XP_Manip(tdc_Manip_Plot_vs_X):
 
 
     @staticmethod
-    def setup_from_data(calc_id,
-                        i_ts,
-                        particle_names=None,
-                        sample_dict=None,
-                        tp=None,
-                        trail_dict=None,
-                        fig_param=None):
+    def init_from_data(calc_id,
+                       i_ts,
+                       particle_names=None,
+                       sample_dict=None,
+                       tp=None,
+                       trail_dict=None,
+                       fig_param=None):
         """
         Setup Manip by reading original data
 
@@ -57,13 +57,13 @@ class tdc_XP_Manip(tdc_Manip_Plot_vs_X):
                              trail_dict=trail_dict)
         return manip
 
-    
+
     @staticmethod
-    def setup_from_dump(filename,
-                        dump_id,
-                        tp=None,
-                        trail_dict=None,
-                        fig_param=None):
+    def init_from_dump(filename,
+                       dump_id,
+                       tp=None,
+                       trail_dict=None,
+                       fig_param=None):
         """
         Setup Manip from dumped data
         filename

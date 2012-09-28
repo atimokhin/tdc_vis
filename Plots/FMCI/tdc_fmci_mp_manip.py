@@ -26,13 +26,13 @@ class tdc_FMCI_MP_Manip(tdc_Manip):
 
         
     @staticmethod
-    def setup_from_data(calc_id,
-                        i_ts,
-                        particle_name, 
-                        xp_partition=None,
-                        m_max=None,
-                        w_max=None,
-                        fig_param=None):
+    def init_from_data(calc_id,
+                       i_ts,
+                       particle_name, 
+                       xp_partition=None,
+                       m_max=None,
+                       w_max=None,
+                       fig_param=None):
         """
         Setup Manip by reading original data
 
@@ -66,11 +66,11 @@ class tdc_FMCI_MP_Manip(tdc_Manip):
 
 
     @staticmethod
-    def setup_from_ascii(filename,
-                         dump_id,
-                         m_max=None,
-                         w_max=None,
-                         fig_param=None):
+    def init_from_ascii(filename,
+                        dump_id,
+                        m_max=None,
+                        w_max=None,
+                        fig_param=None):
         """
         Setup Manip from ascii data file
         filename
@@ -85,9 +85,9 @@ class tdc_FMCI_MP_Manip(tdc_Manip):
 
     
     @staticmethod
-    def setup_from_dump(filename,
-                        dump_id,
-                        fig_param=None):
+    def init_from_dump(filename,
+                       dump_id,
+                       fig_param=None):
         """
         Setup Manip from dumped data
         filename
@@ -96,7 +96,6 @@ class tdc_FMCI_MP_Manip(tdc_Manip):
         manip=tdc_FMCI_MP_Manip(fig_param)
         manip.read_from_dump(filename, dump_id)
         return manip
-
 
     
     def read_from_data(self, 
@@ -182,7 +181,7 @@ class tdc_FMCI_MP_Manip(tdc_Manip):
         self.restored_from_dump=True
         # full file name of the file with tdc_FMCI_XP_Data_Base info
         filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.dat')
-        fmci_xp = tdc_FMCI_XP_Data_Base().setup_from_ascii(filename)
+        fmci_xp = tdc_FMCI_XP_Data_Base().init_from_ascii(filename)
         # setup metaparticles
         self.fmci_mp = tdc_FMCI_MP_Data(fmci_xp, m_max=m_max, w_max=w_max)
         self.fmci_mp.setup_metaparticles()

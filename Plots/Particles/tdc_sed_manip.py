@@ -21,14 +21,14 @@ class tdc_SED_Manip(tdc_Manip):
         # leve more place for y label
         tdc_Manip.__init__(self,fig_param)
 
-        
+
     @staticmethod
-    def setup_from_data(calc_id,
-                        i_ts,
-                        particle_names=None, 
-                        p_bins=None,
-                        xx=None,
-                        fig_param=None):
+    def init_from_data(calc_id,
+                       i_ts,
+                       particle_names=None, 
+                       p_bins=None,
+                       xx=None,
+                       fig_param=None):
         """
         Setup Manip by reading original data
      
@@ -64,9 +64,9 @@ class tdc_SED_Manip(tdc_Manip):
 
     
     @staticmethod
-    def setup_from_dump(filename,
-                        dump_id,
-                        fig_param=None):
+    def init_from_dump(filename,
+                       dump_id,
+                       fig_param=None):
         """
         Setup Manip from dumped data
         filename

@@ -15,7 +15,7 @@ class tdc_EP_Density_Manip(tdc_Manip_Plot_vs_X):
 
         
     @staticmethod
-    def setup_from_data(calc_id,
+    def init_from_data(calc_id,
                         i_ts,
                         e_density_negative=True,
                         fig_param=None):
@@ -39,7 +39,7 @@ class tdc_EP_Density_Manip(tdc_Manip_Plot_vs_X):
 
     
     @staticmethod
-    def setup_from_dump(filename,
+    def init_from_dump(filename,
                         dump_id,
                         e_density_negative=True,
                         fig_param=None):
@@ -98,7 +98,8 @@ class tdc_EP_Density_Manip(tdc_Manip_Plot_vs_X):
                                                  self.fp,
                                                  e_density_negative)
                           )
-        
+
+
     def dump_data(self,filename,dump_id):
         """
         get pure data from plotter and dump it into the pickle file filename.pickle 
@@ -135,7 +136,7 @@ class tdc_EPG_Density_Manip(tdc_Manip_Plot_vs_X):
 
         
     @staticmethod
-    def setup_from_data(calc_id,
+    def init_from_data(calc_id,
                         i_ts,
                         e_density_negative=True,
                         fig_param=None):
@@ -159,7 +160,7 @@ class tdc_EPG_Density_Manip(tdc_Manip_Plot_vs_X):
 
     
     @staticmethod
-    def setup_from_dump(filename,
+    def init_from_dump(filename,
                         dump_id,
                         e_density_negative=True,
                         fig_param=None):
@@ -225,7 +226,7 @@ class tdc_EPG_Density_Manip(tdc_Manip_Plot_vs_X):
                                                   e_density_negative)
                           )
 
-        
+
     def dump_data(self,filename,dump_id):
         """
         get pure data from plotter and dump it into the pickle file filename.pickle 
@@ -264,10 +265,10 @@ class tdc_EPGP_Density_Manip(tdc_Manip_Plot_vs_X):
 
 
     @staticmethod
-    def setup_from_data(calc_id,
-                        i_ts,
-                        e_density_negative=True,
-                        fig_param=None):
+    def init_from_data(calc_id,
+                       i_ts,
+                       e_density_negative=True,
+                       fig_param=None):
         """
         Setup Manip by reading original data
 
@@ -288,10 +289,10 @@ class tdc_EPGP_Density_Manip(tdc_Manip_Plot_vs_X):
 
     
     @staticmethod
-    def setup_from_dump(filename,
-                        dump_id,
-                        e_density_negative=True,
-                        fig_param=None):
+    def init_from_dump(filename,
+                       dump_id,
+                       e_density_negative=True,
+                       fig_param=None):
         """
         Setup Manip from dumped data
         filename
@@ -301,7 +302,7 @@ class tdc_EPGP_Density_Manip(tdc_Manip_Plot_vs_X):
         manip.read_from_dump(filename, dump_id, e_density_negative=e_density_negative)
         return manip
 
-    
+
     def read_from_data(self,
                        calc_id,
                        i_ts,

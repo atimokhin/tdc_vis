@@ -18,13 +18,13 @@ class tdc_FFT_Manip(tdc_Manip):
 
         
     @staticmethod
-    def setup_from_data(calc_id,
-                        i_ts,
-                        field_name,
-                        xx=None,
-                        fitting_type='pl',
-                        nk_plot=20,
-                        fig_param=None):
+    def init_from_data(calc_id,
+                       i_ts,
+                       field_name,
+                       xx=None,
+                       fitting_type='pl',
+                       nk_plot=20,
+                       fig_param=None):
         """
         Setup Manip by reading original data
 
@@ -55,9 +55,9 @@ class tdc_FFT_Manip(tdc_Manip):
 
     
     @staticmethod
-    def setup_from_dump(filename,
-                        dump_id,
-                        fig_param=None):
+    def init_from_dump(filename,
+                       dump_id,
+                       fig_param=None):
         """
         Setup Manip from dumped data
         filename
@@ -67,7 +67,7 @@ class tdc_FFT_Manip(tdc_Manip):
         manip.read_from_dump(filename, dump_id)
         return manip
 
-    
+  
     def read_from_data(self,
                        calc_id,
                        i_ts,
