@@ -13,7 +13,7 @@ def pairs_from_single_particle( calc_id,
                                 ylim2=None ):
     
     # read photons --------------------------
-    filename = tdc_Filenames().get_full_filename(calc_id, 'cache_photons.h5')
+    filename = tdc_Filenames.get_full_filename(calc_id, 'cache_photons.h5')
     f2 = h5py.File(filename,'r')
     # number of emitted photons
     n_ph = f2['N'].value
@@ -36,7 +36,7 @@ def pairs_from_single_particle( calc_id,
     ax1.set_xlabel(r'$E_{\gamma}$')  
     ax1.set_ylabel(r'$E\;dN_\gamma/dE$')  
     # read pairs ---------------------------
-    filename = tdc_Filenames().get_full_filename(calc_id, 'cache_pairs.h5')
+    filename = tdc_Filenames.get_full_filename(calc_id, 'cache_pairs.h5')
     f0 = h5py.File(filename,'r')
     # number of pairs
     n_pairs = f0['N'].value

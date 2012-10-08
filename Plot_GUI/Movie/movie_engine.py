@@ -79,8 +79,8 @@ class MovieEngine:
         # ----------------------------
         # update diplay_panel
         # ----------------------------
-        DP.update_panel( F.get__i_id(),
-                         F.get__i_timeshot(),
+        DP.update_panel( F.get__id(),
+                         F.get__i_ts(),
                          self.i_frame )
         CP.set_frame_number(self.i_frame)
         CP.set_iframe_flag = False

@@ -4,6 +4,7 @@ import numpy             as np
 from Auxiliary        import *
 from Common_Data_Plot import *
 from Common_Data_Plot import tdc_Manip, tdc_Data_Plotter
+# --------------------------------------
 
 
 # --------------------------------------
@@ -38,7 +39,7 @@ def do_plot():
     global manip_w
 
     # <<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    tdc_set_hardcopy_rcparams()
+    tdc_rcParams.set_hardcopy()
     # <<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     manip_w = tdc_plot_w_cold_flow(100, ksi_max=ksi_max, fig_param=paramSingleFig_SED_MNRAS)

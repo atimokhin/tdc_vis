@@ -4,17 +4,16 @@ import numpy             as np
 from Auxiliary        import *
 from Common_Data_Plot import *
 
-from Particles  import *
-from Plots_MPP  import tdc_mpp__sed
+from x_Plots.MPP      import tdc_mpp__sed
+# ---------------------------------
 
-import MPP
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-tdc_set_hardcopy_rcparams()
+tdc_rcParams.set_hardcopy()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 # ---------------------------------
-tdc_set_results_dir('../RESULTS/WD/')
+tdc_Filenames.set_results_dir('../RESULTS/WD/')
 # ---------------------------------
 
 

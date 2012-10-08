@@ -3,7 +3,7 @@ import os
 
 from Auxiliary        import *
 from Common_Data_Plot import *
-from Plots  import *
+from x_Plots          import *
 
 from x_Tests.plot_test_e_e_gauss_movie import *
 
@@ -16,8 +16,8 @@ fig_param = paramSingleFig_Presentation
 # ============================================================
 # Directory
 # ============================================================
-tdc_set_results_dir('../RESULTS/__TDC_2/')
-## tdc_set_results_dir('../RESULTS/FreeAgent/')
+tdc_Filenames.set_results_dir('../RESULTS/__TDC_2/')
+## tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
 
 
 # ============================================================
@@ -62,6 +62,7 @@ ylim_e  = [-3,3]
 ## ylim_e  = [-10,1]
 
 tt=None
+tt=[0,1]
 fps = 14
 
 use_cell_coordinates=False

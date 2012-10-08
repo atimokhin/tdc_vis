@@ -2,7 +2,7 @@ import h5py
 import numpy as np
 
 from Particles        import tdc_XP_Data, tdc_XPs_Plotter
-from Common_Data_Plot import tdc_Data_Sequence, tdc_Data_Sequence_Initializer, tdc_Filenames
+from Common_Data_Plot import tdc_Data_Sequence, tdc_Filenames
 
 
 def plot_test_sclf_xp_movie(plot_module,
@@ -32,13 +32,13 @@ def plot_test_sclf_xp_movie(plot_module,
     # particles sequence
     xps=[]
     for pname in particle_names:
-        xps.append(  tdc_Data_Sequence_Initializer( tdc_XP_Data,
-                                                    calc_ids=calc_ids,
-                                                    particle_name=pname,
-                                                    sample_dict=sample_dict,
-                                                    tt=tt,
-                                                    time_normalization=time_normalization,
-                                                    **kwargs) )
+        xps.append(  tdc_Data_Sequence.init_from_data( tdc_XP_Data,
+                                                       calc_ids=calc_ids,
+                                                       particle_name=pname,
+                                                       sample_dict=sample_dict,
+                                                       tt=tt,
+                                                       time_normalization=time_normalization,
+                                                       **kwargs) )
     # plotter
     pp  = test_sclf_XPs_Plotter(calc_ids[0],xps=xps)
     if use_cell_coordinates:
@@ -82,7 +82,7 @@ class test_sclf_XPs_Plotter:
         # initialize XP plotter
         self.XP_Plotter=tdc_XPs_Plotter(xps)
         # get parameters for theoretical curves
-        h5_filename  = tdc_Filenames().get_full_filename(calc_id, 'setup_properties.h5')
+        h5_filename  = tdc_Filenames.get_full_filename(calc_id, 'setup_properties.h5')
         f0 = h5py.File(h5_filename,'r')
         lambda_D = f0['/PlasmaProps/LambdaDebye'].value
         L        = f0['/GridProps/L'].value

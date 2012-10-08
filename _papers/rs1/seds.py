@@ -12,9 +12,9 @@ from Plots_MPP  import tdc_mpp__sed
 
 import MPP
 
-tdc_set_hardcopy_rcparams()
+tdc_rcParams.set_hardcopy()
 
-tdc_set_results_dir('../RESULTS/FreeAgent/')
+tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
 
 plot_flag = 'j1'
 
@@ -57,4 +57,4 @@ exec tick_and_labels_commands
 mpp.interactive_on()
 
 plt.show()
-tdc_set_default_rcparams()
+tdc_rcParams.set_default()

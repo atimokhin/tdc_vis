@@ -17,5 +17,5 @@ from tdc_exception       import tdc_Exception
 
 __all__= ['tdc_save_figure',
           'tdc_TimeInfo',
-          'tdc_Exception'   ] + \
-          tdc_filenames.__all__
+          'tdc_Exception',
+          'tdc_Filenames' ]

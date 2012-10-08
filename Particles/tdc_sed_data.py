@@ -2,10 +2,11 @@ import numpy as np
 import h5py
 import math
 
-from Auxiliary             import tdc_Mesh, tdc_Setup_Props
-from Particles.tdc_xp_data import tdc_XP_Data
+from Auxiliary        import tdc_Mesh, tdc_Setup_Props
+from Particles        import tdc_XP_Data
+from Common_Data_Plot import tdc_Data, tdc_Data__with_Timetable
 
-class tdc_SED_Data:
+class tdc_SED_Data(tdc_Data__with_Timetable,tdc_Data):
     """
     This class contains data for single particle specie SED
     It calculated dN/dlogP dX: nomalized to n_GJ

@@ -1,25 +1,24 @@
 import matplotlib.pyplot as plt
 from   matplotlib.cbook  import flatten
 import numpy             as np
+import pickle
 
 from Auxiliary        import *
 from Common_Data_Plot import *
 
-from Fields import *
+from Fields import tdc_Fields_Plotter
+from MPP    import tdc_MPP_H
 
-from MPP import tdc_MPP_H
-
-import pickle
 
 from plot_params import mpp_params
 # -------------------------
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-tdc_set_hardcopy_rcparams()
+tdc_rcParams.set_hardcopy()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
-#tdc_set_results_dir('../RESULTS/FreeAgent/')
+#tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
 
 # ------------------------------
 # SubDirectory with dumped files
@@ -95,7 +94,7 @@ j_labels=[]
 for jl,filename in fft_list:
     j_labels.append( r'$j_{\rm m} = %s\,j_{\rm GJ}$' % jl )
     # full file name of the file with manipulator dump
-    filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+    filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
     dump_dict = pickle.load( open(filename,'r') )
     plotters.append( tdc_Fields_Plotter(dump_dict['fft_data'][0].field) )
 # do plotting 

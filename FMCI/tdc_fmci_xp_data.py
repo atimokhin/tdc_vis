@@ -1,12 +1,15 @@
 import StringIO
 import re
+import os
 
 import numpy as np
     
-from Auxiliary             import tdc_Mesh, tdc_Setup_Props
-from Particles.tdc_xp_data import tdc_XP_Data
+from Auxiliary        import tdc_Mesh, tdc_Setup_Props
+from Particles        import tdc_XP_Data
+from Common_Data_Plot import tdc_Data, tdc_Data__with_Timetable
 
-class tdc_FMCI_XP_Data_Base:
+
+class tdc_FMCI_XP_Data_Base(tdc_Data):
     """
     Basic class for use for input in Full Monte Carlo Simulations
     Contains all fucntionality to save and restore data from ascii file
@@ -21,29 +24,31 @@ class tdc_FMCI_XP_Data_Base:
     p        
     fmci_XP      
     """
-
     __particle_short_names = { 'Electrons' : 'E',
                                'Positrons' : 'P',
                                'Protons'   : 'I',
                                'Pairs'     : 'G' }
-    
+
+    default_ascii_filename_format = 'xp_%04d.dat'
+
     def __init__(self):
         """
         Contains class members in one place
         """
-        # name and calc_id
-        self.name      = None
-        self.calc_id   = None
-        self.i_ts      = None
-        self.time      = None
-        # data members
-        self.x         = None
-        self.p         = None
-        self.fmci_XP   = None
+        self.ascii_filename = None
 
-        
+        # name and calc_id
+        self.name    = None
+        self.calc_id = None
+        self.i_ts    = None
+        self.time    = None
+        # data members
+        self.x       = None
+        self.p       = None
+        self.fmci_XP = None
+
     @staticmethod
-    def setup_from_ascii(filename):
+    def init_from_ascii(filename, **kwargs):
         """
         return tdc_FMCI_XP_Data_Base instance initialized from ascii
         data file 'filename'
@@ -52,8 +57,7 @@ class tdc_FMCI_XP_Data_Base:
         fmci_xp_data.read_from_ascii(filename)
         return fmci_xp_data
 
-    
-    def save_to_ascii(self, filename):
+    def save_to_ascii(self, filename, print_progress=True):
         """
         Save class data to ascii file 'filename''
         ---------------
@@ -103,7 +107,7 @@ class tdc_FMCI_XP_Data_Base:
         # params_physics:
         out.write('\n#>>params_physics:\n')
         out.write('particle=%s\n' % self.__particle_short_names[self.name])        
-        out.write('time=%1.E8\n'  % self.time)
+        out.write('time=%1.8E\n'  % self.time)
         # params_TDC:
         out.write('\n#>>params_TDC:\n')
         out.write('calc_id=%s\n' % self.calc_id)        
@@ -115,13 +119,14 @@ class tdc_FMCI_XP_Data_Base:
         f.write(out.getvalue())
         f.close()
         out.close()
-        print '\nContent saved in "%s" \n' % filename
+        if print_progress:
+            print '\nContent saved in "%s" \n' % filename
 
-        
     def read_from_ascii(self, filename):
         """
-        read class data from ascii file 'filename''
+        read class data from ascii file 'filename'
         """
+        self.ascii_filename = filename
         # read file content into a string
         f=open(filename,'r')
         file_str=f.read()
@@ -144,12 +149,11 @@ class tdc_FMCI_XP_Data_Base:
         self.calc_id=params_TDC_dict['calc_id']
         self.i_ts=int(params_TDC_dict['i_ts'])
 
-        
     def make_data_dict_from_str(self,reg_exp,data_str):
         """
         - split string using reg_exp
         - delete first entry (before reg_exp, usually empty if no header)
-        - make dictionary out of teh splitted list
+        - make dictionary out of the splitted list
         - delete trailing \n in values
         """
         data_list=reg_exp.split(data_str)
@@ -171,6 +175,23 @@ class tdc_FMCI_XP_Data_Base:
         s += ' np: %4d;  p: [%1.2e, %1.2e]\n' % (len(self.p),self.p[0],self.p[-1])
         return s
 
+    def read(self, 
+             i_ts, 
+             print_progress=True, 
+             filename_format=None):
+        """
+        read *ascii file* from the same directory as the current file
+        """
+        if self.ascii_filename is None:
+            raise Exception("tdc_FMCI_XP_Data_Base: this class was not set up from an ascii file!")
+        if filename_format is None:
+            filename_format = self.default_ascii_filename_format 
+        dirname = os.path.dirname(self.ascii_filename)
+        filename = os.path.join(dirname, filename_format % i_ts)
+        self.read_from_ascii(filename)
+            
+    def get_time(self):
+        return self.time
 
     def __get_particle_name(self,short_name):
         """
@@ -183,15 +204,16 @@ class tdc_FMCI_XP_Data_Base:
     def set_xp_partition(self,xp_partition):
         print 'Can not change xp_partition for tdc_FMCI_XP_Data_Base!\n'
         
-    def fill_fmci_XP_array(self):
+    def fill_fmci_XP_array(self,**kwargs):
         print 'Can not re-calculate fmci_XP array in tdc_FMCI_XP_Data_Base!\n'
- 
-    
         
-class tdc_FMCI_XP_Data(tdc_FMCI_XP_Data_Base):
-    """
-    """
 
+
+class tdc_FMCI_XP_Data(tdc_Data__with_Timetable,tdc_FMCI_XP_Data_Base):
+    """
+    Class
+    """
+        
     def __init__(self, calc_id, particle_name, xp_partition):
         """
         - opens particle HDF5 file, 
@@ -224,7 +246,6 @@ class tdc_FMCI_XP_Data(tdc_FMCI_XP_Data_Base):
         # set xp_partition =================
         self.set_xp_partition(xp_partition)
 
-        
     def get_pure_data_copy(self):
         """
         Returns copy containing only data necessary for producing a sinle plot,
@@ -237,7 +258,7 @@ class tdc_FMCI_XP_Data(tdc_FMCI_XP_Data_Base):
         data.xp = data.xp.get_pure_data_copy()
         data.timetable = data.timetable.get_pure_data_copy() 
         return data
-    
+
     def __repr__(self):
         s  = 'tdc_FMCI_XP_Data:\n'
         s += ' particle name : %s\n' % self.name
@@ -260,20 +281,19 @@ class tdc_FMCI_XP_Data(tdc_FMCI_XP_Data_Base):
         # allocate fmci_XP array
         self.fmci_XP=np.zeros((self.xp_partition.nx,self.xp_partition.np))
         
-    def read(self, i_ts):
+    def read(self, i_ts, print_progress=True):
         """
         Read particle data for timeshot i_ts and fill fmci_XP array for
         current partition
         """
-        print 'Reading data   "%s" ... ' % self.xp.name
+        if print_progress:
+            print 'Reading data "%s" i_ts=%d ... ' % (self.xp.name,i_ts)
         self.xp.read(i_ts)
-        print 'Filling fmci_XP array ... '
-        self.fill_fmci_XP_array()
+        self.fill_fmci_XP_array(print_progress)
         self.i_ts = i_ts
         self.time = self.xp.timetable.get_time()
 
-        
-    def fill_fmci_XP_array(self):
+    def fill_fmci_XP_array(self, print_progress=True):
         """
         Fill fmci_XP array for current timeshot and current partition:
         - iterates over all particles in self.xp and adds their statistical weights
@@ -283,7 +303,8 @@ class tdc_FMCI_XP_Data(tdc_FMCI_XP_Data_Base):
         # iterate over particles ----------------------
         x_idx=self.xp_partition.x_idx
         p_idx=self.xp_partition.p_idx
-        print 'Iterating over "%s" ... ' % self.xp.name
+        if print_progress:
+            print 'Filling fmci_XP array for "%s" ... ' % self.xp.name
         for  x,p,w  in zip(self.xp.x,self.xp.p,self.xp.w):
             ix=x_idx(x)
             ip=p_idx(p)
@@ -295,5 +316,3 @@ class tdc_FMCI_XP_Data(tdc_FMCI_XP_Data_Base):
         # works for non-uniform x partition as well
         dx = self.xp_partition.x_cell[1:]-self.xp_partition.x_cell[0:-1]
         self.fmci_XP = self.W0*self.fmci_XP/dx.reshape((dx.size,1))
-
-        

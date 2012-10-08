@@ -10,9 +10,9 @@ from Plot_CMD      import *
 from single_figure_style import fig_style
 
 
-tdc_set_hardcopy_rcparams()
+tdc_rcParams.set_hardcopy()
 
-tdc_set_results_dir('../RESULTS/FreeAgent/')
+tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
 
 plot_flag = 'j1'
 
@@ -63,4 +63,4 @@ exec tick_and_labels_commands
 
 manip_tp.interactive_on()
 plt.show()
-tdc_set_default_rcparams()
+tdc_rcParams.set_default()

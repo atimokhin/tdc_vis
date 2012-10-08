@@ -76,7 +76,7 @@ class tdc_FMCI_XP_Manip(tdc_Manip):
                               wlims=wlims)
         return manip
 
-    
+
     @staticmethod
     def init_from_dump(filename,
                        dump_id,
@@ -129,7 +129,7 @@ class tdc_FMCI_XP_Manip(tdc_Manip):
         # read data
         self.read(i_ts)
 
-        
+
     def read_from_dump(self,
                        filename,
                        dump_id,
@@ -147,7 +147,7 @@ class tdc_FMCI_XP_Manip(tdc_Manip):
         self.restored_from_dump=True
         # fmci_XP DATA <<<<<<<
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         self.fmci_xp = pickle.load( open(filename,'r') )[0]
         # i_ts
         self.i_ts = self.fmci_xp.i_ts
@@ -157,7 +157,6 @@ class tdc_FMCI_XP_Manip(tdc_Manip):
         # set PLOTTER by calling base class method
         self.set_plotter( tdc_FMCI_XP_Plotter(self.fmci_xp, wlims) )
 
-        
 
     def read_from_ascii(self, 
                         filename,
@@ -168,9 +167,9 @@ class tdc_FMCI_XP_Manip(tdc_Manip):
         into data file dump_id/filename.dat
         """
         # set restored_from_dump flag so the data cannot be read again
-        self.restored_from_dump=True
+        ## self.restored_from_dump=True
         # full file name of the file with tdc_FMCI_XP_Data_Base info
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.dat')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.dat')
         self.fmci_xp = tdc_FMCI_XP_Data_Base.init_from_ascii(filename)
         # i_ts
         self.i_ts = self.fmci_xp.i_ts
@@ -180,22 +179,22 @@ class tdc_FMCI_XP_Manip(tdc_Manip):
         # set PLOTTER by calling base class method
         self.set_plotter( tdc_FMCI_XP_Plotter(self.fmci_xp, wlims) )
 
-        
+
     def save_to_ascii(self, 
                       filename,
                       dump_id):
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.dat')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.dat')
         self.fmci_xp.save_to_ascii(filename)
 
-        
+
     def __repr__(self):
         s = self._manip_name('tdc_FMCI_XP_Manip')
         s += ' default wlims : [%g, %g]\n\n' % tuple(self.__default_wlims)
         s += 'FMCI_XP => %s\n' % str(self.fmci_xp)
         return s
 
-    
+
     def plot(self,
              wlims=None,
              ylim=None,
@@ -244,6 +243,6 @@ class tdc_FMCI_XP_Manip(tdc_Manip):
 
     def set_xp_partition(self,xp_partition):
         self.fmci_xp.set_xp_partition(xp_partition)
-        
+
     def fill_fmci_XP_array(self):
         self.fmci_xp.fill_fmci_XP_array()

@@ -3,7 +3,7 @@ import os
 
 from Auxiliary        import *
 from Common_Data_Plot import *
-from Plots            import *
+from x_Plots          import *
 
 from x_Tests.plot_test_e_e_gauss_movie import *
 
@@ -18,9 +18,9 @@ fig_param = paramSingleFig_Presentation
 # ============================================================
 # Directory
 # ============================================================
-## tdc_set_results_dir('../RESULTS/')
-## tdc_set_results_dir('../RESULTS/FreeAgent/')
-tdc_set_results_dir('../RESULTS/WD/')
+## tdc_Filenames.set_results_dir('../RESULTS/')
+## tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
+tdc_Filenames.set_results_dir('../RESULTS/WD/')
 
 
 # ============================================================

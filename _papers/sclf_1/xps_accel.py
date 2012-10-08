@@ -5,16 +5,24 @@ from Auxiliary        import *
 from Common_Data_Plot import *
 from Common_Data_Plot import tdc_Manip_Plot_vs_X
 
-from Particles.tdc_xp_data          import tdc_XP_Data
-from Particles.tdc_xps_tp_plotter   import tdc_XPs_TP_Plotter
+from Particles        import tdc_XP_Data, tdc_XPs_TP_Plotter
+
+## from Particles.tdc_xp_data          import tdc_XP_Data
+## from Particles.tdc_xps_tp_plotter   import tdc_XPs_TP_Plotter
 
 from plot_params import single_plot_params
+# -----------------------------------
+
+#
+# Does not work!
+#
 
 
 tick_and_labels_commands="""
 manip_xps_accel.set_ylim([-130,2800])
 manip_xps_accel.set_xlim([-4,102])
 """
+
 filename='xps_accel'
 
 
@@ -34,11 +42,11 @@ def do_dump(filename):
 def do_plot(filename):
     global manip_xps_accel
 
-    tdc_set_hardcopy_rcparams()
-    tdc_set_results_dir('../RESULTS/__TDC_2')
+    tdc_rcParams.set_hardcopy()
+    tdc_Filenames.set_results_dir('../RESULTS/__TDC_2')
 
     manip_xps_accel = tdc_plot_xp_accel_restored(filename, **single_plot_params)
-    tdc_set_default_rcparams()
+    tdc_rcParams.set_default()
     manip_xps_accel.interactive_off()
 
     exec tick_and_labels_commands
@@ -192,7 +200,7 @@ class XP_Manip_Accel(tdc_Manip_Plot_vs_X):
         self.restored_from_dump=True
         # XP DATA <<<<<<<
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         self.xps = pickle.load( open(filename,'r') )
         # i_ts
         self.i_ts = self.xps[0].i_ts

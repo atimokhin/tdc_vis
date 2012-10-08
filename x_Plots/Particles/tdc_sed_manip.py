@@ -142,7 +142,7 @@ class tdc_SED_Manip(tdc_Manip):
         self.restored_from_dump=True
         # SED DATA <<<<<<<
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         dump_dict = pickle.load( open(filename,'r') )
         self.seds = dump_dict['seds']
         self.set_plotter( tdc_SEDs_Plotter(self.seds) )
@@ -172,7 +172,7 @@ class tdc_SED_Manip(tdc_Manip):
         dump_dict['n_p']   = self.n_p 
         dump_dict['e_p']   = self.e_p 
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         pickle.dump( dump_dict, open(filename,'w') )
         print '\nContent dumped in "%s" \n' % filename
 

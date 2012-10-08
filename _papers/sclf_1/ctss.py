@@ -2,32 +2,25 @@
 # => use png device
 # => use dpi=600 --> tdc_set_hires_dpi()
 #
-#commands for raster graphics format 
-import matplotlib as mpl
-## mpl.use('Agg')
 
-from Auxiliary        import *
-from Common_Data_Plot import *
-
-#------------------------------------
-
-#------------------------------------
+import numpy             as np
 import matplotlib.pyplot as plt
 from   matplotlib.cbook  import flatten
 
-import numpy             as np
+from Auxiliary        import *
+from Common_Data_Plot import *
+from x_Plots.MPP      import tdc_mpp__n_rho_j_e_xp
 
-from Particles  import *
-from Plots_MPP  import tdc_mpp__n_rho_j_e_xp
-
-import MPP
+## from Particles    import *
+## import MPP
 #------------------------------------
 
+
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-tdc_set_hardcopy_rcparams()
+tdc_rcParams.set_hardcopy()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     
-tdc_set_results_dir('../RESULTS/WD/')
+tdc_Filenames.set_results_dir('../RESULTS/WD/')
 
 
 fig_param=dict()

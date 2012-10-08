@@ -37,7 +37,7 @@ class tdc_EP_Density_Manip(tdc_Manip_Plot_vs_X):
         manip.read_from_data(calc_id, i_ts, e_density_negative=e_density_negative)
         return manip
 
-    
+
     @staticmethod
     def init_from_dump(filename,
                         dump_id,
@@ -87,7 +87,7 @@ class tdc_EP_Density_Manip(tdc_Manip_Plot_vs_X):
         self.restored_from_dump=True
         # Fields <<<<<<<
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         fields = pickle.load( open(filename,'r') )
         self.fe = fields['fe']
         self.fp = fields['fp']
@@ -110,7 +110,7 @@ class tdc_EP_Density_Manip(tdc_Manip_Plot_vs_X):
         dump_dict['fe'] = self.fe.get_pure_data_copy()
         dump_dict['fp'] = self.fp.get_pure_data_copy()
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         pickle.dump( dump_dict, open(filename,'w') )
         print '\nContent dumped in "%s" \n' % filename
 
@@ -212,7 +212,7 @@ class tdc_EPG_Density_Manip(tdc_Manip_Plot_vs_X):
         self.restored_from_dump=True
         # Fields <<<<<<<
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         fields = pickle.load( open(filename,'r') )
         self.fe = fields['fe']
         self.fp = fields['fp']
@@ -238,7 +238,7 @@ class tdc_EPG_Density_Manip(tdc_Manip_Plot_vs_X):
         dump_dict['fp'] = self.fp.get_pure_data_copy()
         dump_dict['fg'] = self.fg.get_pure_data_copy()
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         pickle.dump( dump_dict, open(filename,'w') )
         print '\nContent dumped in "%s" \n' % filename
 
@@ -330,7 +330,7 @@ class tdc_EPGP_Density_Manip(tdc_Manip_Plot_vs_X):
         #read data
         self.read(i_ts)
 
-        
+
     def read_from_dump(self,
                        filename,
                        dump_id,
@@ -345,7 +345,7 @@ class tdc_EPGP_Density_Manip(tdc_Manip_Plot_vs_X):
         self.restored_from_dump=True
         # Fields <<<<<<<
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         fields = pickle.load( open(filename,'r') )
         self.fe = fields['fe']
         self.fp = fields['fp']
@@ -373,7 +373,7 @@ class tdc_EPGP_Density_Manip(tdc_Manip_Plot_vs_X):
         dump_dict['fg'] = self.fg.get_pure_data_copy()
         dump_dict['fpr'] = self.fpr.get_pure_data_copy()
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         pickle.dump( dump_dict, open(filename,'w') )
         print '\nContent dumped in "%s" \n' % filename
 

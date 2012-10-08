@@ -1,9 +1,11 @@
 import numpy as np
 import h5py
 
-from Auxiliary  import tdc_Filenames, tdc_Timetable, tdc_Setup_Props, tdc_Mesh
+from Auxiliary        import tdc_Filenames, tdc_Timetable, tdc_Setup_Props, tdc_Mesh
+from Common_Data_Plot import tdc_Data, tdc_Data__with_Timetable
 
-class tdc_Field_Data:
+
+class tdc_Field_Data(tdc_Data__with_Timetable,tdc_Data):
     """
     This class contains field and positions
     Members:
@@ -48,8 +50,12 @@ class tdc_Field_Data:
         # read ghost points?
         self.ghost_points=ghost_points
         # open HDF file ------------------
-        h5_filename=tdc_Filenames().get_full_filename(calc_id, filename)
-        self.file_id=h5py.h5f.open(h5_filename,flags=h5py.h5f.ACC_RDONLY)
+        h5_filename=tdc_Filenames.get_full_filename(calc_id, filename)
+        try:
+            self.file_id = h5py.h5f.open(h5_filename,flags=h5py.h5f.ACC_RDONLY)
+        except IOError as exception:
+            print "Error opening \"%s\"\n" % h5_filename
+            raise exception
         # Initialize Timetable -----------
         self.timetable = tdc_Timetable(self.file_id)
         # set time normalization <<<<<<<<<

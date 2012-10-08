@@ -18,19 +18,19 @@ def test_single_particle_acceleration(calc_id='test_single_particle_acceleration
     """
     # setup parameters =======================
     infile=AT.FileInput()
-    infile.ReadFile(tdc_Filenames().get_full_filename(calc_id, 'cascade.input'))
+    infile.ReadFile(tdc_Filenames.get_full_filename(calc_id, 'cascade.input'))
     infile.ChangeGroup('ELECTRODYNAMICS::Electrostatic_1D::BoundaryConditions_Phi')
     dV = infile.get_param('dV')
     infile.ChangeGroup()
     # parameters of computation region -------
-    filename = tdc_Filenames().get_full_filename(calc_id, 'setup_properties.h5')
+    filename = tdc_Filenames.get_full_filename(calc_id, 'setup_properties.h5')
     f1 = h5py.File(filename,'r')
     xmax = f1['GridProps/L'].value
     dT   = f1['GridProps/dT'].value
     p_cf = f1['PulsarGapProps/Pcf'].value
     f1.close()
     # particles parameters
-    filename = tdc_Filenames().get_full_filename(calc_id, particle_name + '.h5')
+    filename = tdc_Filenames.get_full_filename(calc_id, particle_name + '.h5')
     f2 = h5py.File(filename,'r')
     Q = f2['/PROPERTIES/Charge'].value
     M = f2['/PROPERTIES/Mass'].value

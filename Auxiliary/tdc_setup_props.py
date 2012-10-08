@@ -2,7 +2,7 @@ import h5py
 
 from tdc_filenames  import tdc_Filenames
 
-class tdc_Setup_Props:
+class tdc_Setup_Props(object):
     """
     This class contains information from setup_properties.h5 file
     NB: redirects all non-defined requests to self.file_id
@@ -15,7 +15,7 @@ class tdc_Setup_Props:
     __default_Filename = 'setup_properties.h5'
     
     def __init__(self, calc_id):
-        h5_filename=tdc_Filenames().get_full_filename(calc_id, self.__default_Filename)
+        h5_filename=tdc_Filenames.get_full_filename(calc_id, self.__default_Filename)
         self.file_id = h5py.File(h5_filename)
 
     def __getattr__(self,attrname):

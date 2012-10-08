@@ -6,7 +6,7 @@ from tdc_filenames import tdc_Filenames
 from tdc_functions import tdc_get_bound_index
 from tdc_exception import tdc_Exception
 
-class tdc_TimeInfo:
+class tdc_TimeInfo(object):
     """
     Provides intormation about timetable.
     (by default uses timetable from 'fields.h5')
@@ -26,9 +26,9 @@ class tdc_TimeInfo:
         timetable and reads timearray
         """
         # if no fielname defined use default one
-        if not filename: filename=tdc_TimeInfo.__default_filename
+        if filename is None: filename=tdc_TimeInfo.__default_filename
         # HDF5 file
-        h5_filename = tdc_Filenames().get_full_filename(calc_id, filename)
+        h5_filename = tdc_Filenames.get_full_filename(calc_id, filename)
         file_id  = h5py.h5f.open(h5_filename,flags=h5py.h5f.ACC_RDONLY)
         # setup timetable
         self.timetable=tdc_Timetable(file_id)
@@ -77,7 +77,7 @@ class tdc_Time_Normalizer:
 
     def __init__(self, calc_id):
         # setup time normalization constants
-        filename=tdc_Filenames().get_full_filename(calc_id, '/setup_properties.h5')
+        filename=tdc_Filenames.get_full_filename(calc_id, 'setup_properties.h5')
         # ...............................................
         # try to setup constants for other normalizations
         try:

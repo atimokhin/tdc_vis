@@ -21,7 +21,13 @@ class Movie_File_Maker__CMD(Movie_File_Maker):
        NB: this member is absent in __GUI version! 
     """
 
-    def __init__(self, movie_id, fps, keep_frame_files, dpi):
+    def __init__(self, 
+                 movie_id, 
+                 fps, 
+                 keep_frame_files, 
+                 dpi,
+                 movie_file_basename=None,
+                 frame_filename_format=None):
         """
         movie_id
            subdirectorty where movie files will be stored
@@ -33,42 +39,28 @@ class Movie_File_Maker__CMD(Movie_File_Maker):
            dpi for figure.savefig()
          """
         # setup base class
-        Movie_File_Maker.__init__(self,movie_id,fps,keep_frame_files)
-        self.index_file = None
-        # frame counter
-        self.i_frame = 0
+        Movie_File_Maker.__init__(self,
+                                  movie_id,
+                                  fps,
+                                  keep_frame_files, 
+                                  movie_file_basename=movie_file_basename,
+                                  frame_filename_format=frame_filename_format)
         # dpi - use the same dpi as figure plot
         self.dpi = dpi
 
-    def get_number_of_saved_snapshots(self):
-        return self.i_frame
 
     def store_snapshot(self, figure):
         """
         each snapshot is a figure saved as separate png file
         """
         # name of the file where current frame will be saved
-        filename = self.movie_dir_name + \
-                   self._frame_filename + '_' + str(self.i_frame) + '.png'
+        filename = self.get_frame_filename(self.i_saved_frame)
         # create frame file, save frame there, then close the file
         # use dpi saved at class initialization
-        figure.savefig(filename,dpi=self.dpi)
+        figure.savefig( filename, dpi=self.dpi )
         # append name of the frame file to the list
-        self.index_file.write(filename+'\n')
-        # increment frame counter
-        self.i_frame += 1
+        self.add_filename_to_index_file(filename)
         
-    def open_index_file(self):
-        # setup output directory
-        self.setup_directory()
-        # open index file
-        self.index_file = open(self.index_filename, 'w')
-        # clear number of snapshots
-        self.i_frame = 0
-
-    def close_index_file(self):
-        # open index file
-        self.index_file.close()
         
 
 

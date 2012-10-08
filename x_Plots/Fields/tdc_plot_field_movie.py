@@ -1,6 +1,6 @@
 from Auxiliary import tdc_Filenames
 
-from Common_Data_Plot   import tdc_Data_Sequence, tdc_Data_Sequence_Initializer
+from Common_Data_Plot   import tdc_Data_Sequence
 from Auxiliary_Plotters import tdc_Moving_Grid_Plotter
 from Fields   import tdc_Field_Data, tdc_Fields_Plotter
 
@@ -44,18 +44,18 @@ def tdc_plot_field_movie(plot_module,
     time_normalization
        <None>
     **kwargs
-       go to tdc_*_Data via tdc_Data_Sequence_Initializer
+       go to tdc_*_Data via tdc_Data_Sequence.init_from_data
     """
     # make sure calc_id is a sequence ----------------
     if not isinstance( calc_ids, (list,tuple) ):
         calc_ids = (calc_ids,)        
     # field sequence ---------------------------------
-    fs  = tdc_Data_Sequence_Initializer( tdc_Field_Data,
-                                         calc_ids=calc_ids,
-                                         field_name=field_name,
-                                         tt=tt,
-                                         time_normalization=time_normalization,
-                                         **kwargs)
+    fs  = tdc_Data_Sequence.init_from_data( tdc_Field_Data,
+                                            calc_ids=calc_ids,
+                                            field_name=field_name,
+                                            tt=tt,
+                                            time_normalization=time_normalization,
+                                            **kwargs)
     # field plotter
     fp  = tdc_Fields_Plotter(fs,
                              xlabel=xlabel, ylabel=ylabel, idlabel=idlabel)

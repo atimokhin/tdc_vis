@@ -1,8 +1,7 @@
-from Common_Data_Plot   import tdc_Data_Sequence, tdc_Data_Sequence_Initializer
+from Common_Data_Plot   import tdc_Data_Sequence
 from Auxiliary_Plotters import tdc_Moving_Grid_Plotter
 
-from Particles.tdc_xp_data           import tdc_XP_Data
-from Particles.tdc_xps_tp_plotter    import tdc_XPs_Plotter, tdc_XPs_TP_Plotter
+from Particles import tdc_XP_Data, tdc_XPs_Plotter, tdc_XPs_TP_Plotter
 
 def tdc_plot_xp_movie(plot_module,
                       calc_ids,
@@ -53,7 +52,7 @@ def tdc_plot_xp_movie(plot_module,
     axes_commands
        <None>
     **kwargs
-       go to tdc_*_Data via tdc_Data_Sequence_Initializer
+       go to tdc_*_Data via tdc_Data_Sequence.init_from_data
     """
     # make sure calc_id is a sequence
     if not isinstance( calc_ids, (list,tuple) ):
@@ -64,15 +63,13 @@ def tdc_plot_xp_movie(plot_module,
         particle_names = (particle_names,)
         
     # particles sequence
-    xps=[]
-    for pname in particle_names:
-        xps.append(  tdc_Data_Sequence_Initializer( tdc_XP_Data,
-                                                    calc_ids=calc_ids,
-                                                    particle_name=pname,
-                                                    sample_dict=sample_dict,
-                                                    tt=tt,
-                                                    time_normalization=time_normalization,
-                                                    **kwargs) )
+    xps=[ tdc_Data_Sequence.init_from_data( tdc_XP_Data,
+                                            calc_ids=calc_ids,
+                                            particle_name=pname,
+                                            sample_dict=sample_dict,
+                                            tt=tt,
+                                            time_normalization=time_normalization,
+                                            **kwargs) for pname in particle_names ]
     # tracked particles sequence
     tps = tdc_Data_Sequence(tp, tt=tt) if tp else None
     # plotter

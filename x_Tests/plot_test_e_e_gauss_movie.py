@@ -1,4 +1,4 @@
-from Common_Data_Plot import tdc_Data_Sequence_Initializer
+from Common_Data_Plot import tdc_Data_Sequence
 from Fields           import tdc_Field_Data, tdc_Fields_Diff_Data, tdc_Fields_Plotter
 
 
@@ -42,26 +42,26 @@ def plot_test_e_e_gauss_movie(plot_module,
     time_normalization
        <None>
     **kwargs
-       go to tdc_*_Data via tdc_Data_Sequence_Initializer
+       go to tdc_*_Data via tdc_Data_Sequence.init_from_data
     """
     # make sure calc_id is a sequence ----------------
     if not isinstance( calc_ids, (list,tuple) ):
         calc_ids = (calc_ids,)        
     # field sequences ---------------------------------
-    fs1  = tdc_Data_Sequence_Initializer( tdc_Field_Data,
-                                          calc_ids=calc_ids,
-                                          field_name='E_acc',
-                                          tt=tt,
-                                          time_normalization=time_normalization,
-                                          **kwargs)
+    fs1  = tdc_Data_Sequence.init_from_data( tdc_Field_Data,
+                                             calc_ids=calc_ids,
+                                             field_name='E_acc',
+                                             tt=tt,
+                                             time_normalization=time_normalization,
+                                             **kwargs)
     # field sequences ---------------------------------
-    fs2  = tdc_Data_Sequence_Initializer( tdc_Fields_Diff_Data,
-                                          calc_ids=calc_ids,
-                                          field1_name='E_acc',
-                                          field2_name='E_Gauss',
-                                          tt=tt,
-                                          time_normalization=time_normalization,
-                                          **kwargs)
+    fs2  = tdc_Data_Sequence.init_from_data( tdc_Fields_Diff_Data,
+                                             calc_ids=calc_ids,
+                                             field1_name='E_acc',
+                                             field2_name='E_Gauss',
+                                             tt=tt,
+                                             time_normalization=time_normalization,
+                                             **kwargs)
     # field plotter
     fp1 = tdc_Fields_Plotter(fs1)
     fp2 = tdc_Fields_Plotter(fs2)

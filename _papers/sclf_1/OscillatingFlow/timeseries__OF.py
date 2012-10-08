@@ -3,23 +3,23 @@ import numpy             as np
 
 from Auxiliary        import *
 from Common_Data_Plot import *
+from Common_Data_Plot import tdc_Data_Sequence
 
-from Particles        import tdc_XP_Data
-from Common_Data_Plot import tdc_Data_Sequence_Initializer
+from Particles import tdc_XP_Data
+from MPP       import tdc_MPP_Timeseries
 
-import MPP
-
-from  xps_plotter__OF           import XPs_Plotter__OF
+from xps_plotter__OF import XPs_Plotter__OF
+# -----------------------------------
 
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-tdc_set_hardcopy_rcparams()
+tdc_rcParams.set_hardcopy()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
-## tdc_set_results_dir('../RESULTS/')
-## tdc_set_results_dir('../RESULTS/FreeAgent/')
-tdc_set_results_dir('../RESULTS/__TDC_2/')
+## tdc_Filenames.set_results_dir('../RESULTS/')
+## tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
+tdc_Filenames.set_results_dir('../RESULTS/__TDC_2/')
 
 
 fig_param = dict( yticklabel_fontsize = 9 )
@@ -68,16 +68,16 @@ mpp.set_yticks((3,),np.arange(-3.5,4,1), minor=True)
 
 # DATA ---------------------
 # XP data
-f2 = tdc_Data_Sequence_Initializer( tdc_XP_Data,
-                                    calc_ids=ID,
-                                    particle_name='Electrons' )
+f2 = tdc_Data_Sequence.init_from_data( tdc_XP_Data,
+                                       calc_ids=ID,
+                                       particle_name='Electrons' )
 
 #f2 = tdc_XP_Data(calc_id=ID, particle_name='Electrons')
 # PLOTTER -----------------
 # field plotter
 p2 = XPs_Plotter__OF( (f2,), of__filename)
 # MFP instance -------------
-mpp = MPP.tdc_MPP_Timeseries( shape, p2, timeshots,select, fig_param=fig_param)
+mpp = tdc_MPP_Timeseries( shape, p2, timeshots,select, fig_param=fig_param)
 mpp.set_window_title(ID[0])
 mpp.interactive_off()
 

@@ -97,12 +97,6 @@ class tdc_Data_Plotter(tdc_Plotter):
         """
         tdc_Plotter.__init__(self,data, xlabel,ylabel,idlabel)
 
-    def __getattr__(self,attrname):
-        """
-        Redirects all non-implemented methods to data[0] instance
-        """
-        return getattr(self.data[0], attrname)
-
     def read(self,i_ts,**kwargs):
         "Read data at i_ts timeshot"
         for d in self.data:
@@ -116,14 +110,7 @@ class tdc_Data_Plotter(tdc_Plotter):
         """
         self.read(i_ts)
         self.update_plot(ax)
-
-    def get_time(self):
-        """
-        Get time of the current timeshot
-        """
-        return self.data[0].timetable.get_time()
-
-
+    
 
 class tdc_Data_vs_X_Plotter(tdc_Data_Plotter):
     """

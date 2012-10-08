@@ -15,8 +15,8 @@ import Plot_GUI as plot_module
 # ============================================================
 # Directory
 # ============================================================
-tdc_set_results_dir('../RESULTS/')
-## tdc_set_results_dir('../RESULTS/FreeAgent/')
+tdc_Filenames.set_results_dir('../RESULTS/')
+## tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
 
 
 # ============================================================

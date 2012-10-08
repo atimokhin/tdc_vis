@@ -86,7 +86,7 @@ class MovieFrames__GUI(MovieFrames):
         MovieFrames.plot(self,**kwargs)
         # time label
         for P,T in zip(self.seq_plotter,self.p_time_label):
-            T.set_text( 't=%.3f' % P.get_time() )
+            T.set_text( 't=%.3f' % self.get_time() )
 
     def replot(self,**kwargs):
         """
@@ -119,7 +119,7 @@ class MovieFrames__GUI(MovieFrames):
         """
         for P,A,T in zip(self.seq_plotter,self.ax,self.p_time_label):
             P.animation_update( A, i_frame )
-            T.set_text( 't=%.3f' % P.get_time() )
+            T.set_text( 't=%.3f' % self.get_time() )
             A.draw_artist(T)
 
     def set_animated(self,val):

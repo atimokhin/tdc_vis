@@ -27,7 +27,7 @@ class tdc_Mesh:
         Opens mesh.h5 file, reads positions
         """
         # open HDF file
-        h5_filename=tdc_Filenames().get_full_filename(calc_id, self.__default_Filename)
+        h5_filename=tdc_Filenames.get_full_filename(calc_id, self.__default_Filename)
         ## self.file_id=h5py.h5f.open(h5_filename,flags=h5py.h5f.ACC_RDONLY)
         file_id=h5py.h5f.open(h5_filename,flags=h5py.h5f.ACC_RDONLY)
         # read positions parameters from HDF file

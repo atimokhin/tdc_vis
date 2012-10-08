@@ -12,7 +12,7 @@ from Plots_MPP  import tdc_mpp__n_rho_e_xp
 
 import MPP
 
-tdc_set_results_dir('../RESULTS/FreeAgent/')
+tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
 
 
 

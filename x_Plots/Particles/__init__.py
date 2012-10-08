@@ -1,9 +1,9 @@
-from tdc_xp_manip  import *
-from tdc_sed_manip import *
+from tdc_xp_manip  import tdc_XP_Manip
+from tdc_sed_manip import tdc_SED_Manip
 
 from tdc_plot_xp_movie  import tdc_plot_xp_movie
 
-from TrackParticles     import *
+## from TrackParticles     import *
 
 ## __all__= ['tdc_plot_xp',
 ##           'tdc_plot_xp_restored',

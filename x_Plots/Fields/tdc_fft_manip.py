@@ -101,7 +101,7 @@ class tdc_FFT_Manip(tdc_Manip):
         self.restored_from_dump=True
         # Field <<<<<<<
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         dump_dict = pickle.load( open(filename,'r') )
         self.fft = dump_dict['fft_data'][0]
         # i_ts
@@ -124,7 +124,7 @@ class tdc_FFT_Manip(tdc_Manip):
         dump_dict['fitting_type'] = self.fft_fit.type 
         dump_dict['nk_plot']   = self.fft_fit.nk_plot
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         pickle.dump( dump_dict, open(filename,'w') )
         print '\nContent dumped in "%s" \n' % filename
 

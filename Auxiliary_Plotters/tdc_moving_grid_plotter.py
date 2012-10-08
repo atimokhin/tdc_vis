@@ -50,7 +50,7 @@ class tdc_Moving_Grid_Plotter:
         self.xmax = self.plotter.xmax
         self.grid_xx0 = np.linspace(0,self.plotter.xmax,self.n_lines)
         # update positions for the current time
-        t  = self.plotter.timetable.get_absolute_time()
+        t  = self.plotter.data[0].timetable.get_absolute_time()
         xx,yy = self._grid_lines_points(t,ylims)
         for i,x  in enumerate(xx):
             self.grid_lines[i], = ax.plot((x,x),yy,'r',

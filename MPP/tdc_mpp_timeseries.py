@@ -39,7 +39,7 @@ class tdc_MPP_Timeseries ( tdc_MPP_H ):
         for i in range(0,n_plots):
             plotter.read( timeshots[i] )
             plotter.plot( axs[i] )
-            t_str= self.fg.timelabel_format % plotter.get_time()
+            t_str= self.fg.timelabel_format % plotter.data[0].get_time()
             # mark selected timeshots with bold line timebox
             if  ( selected.count(i) > 0 ):
                 box_linewidth = 1.5*mpl.rcParams['axes.linewidth']

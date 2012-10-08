@@ -86,7 +86,7 @@ class tdc_Flux_Manip(tdc_Manip):
         self.restored_from_dump=True
         # Flux DATA <<<<<<<
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         self.fluxes = pickle.load( open(filename,'r') )
         # set PLOTTER by calling base class method
         self.set_plotter( tdc_Fluxes_Plotter( self.fluxes.values() ) )
@@ -101,7 +101,7 @@ class tdc_Flux_Manip(tdc_Manip):
         for pref in fluxes.keys():
             fluxes[pref] = fluxes[pref].get_pure_data_copy()
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         pickle.dump( fluxes, open(filename,'w') )
         print '\nContent dumped in "%s" \n' % filename
 

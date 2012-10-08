@@ -1,5 +1,8 @@
+from Common_Data_Plot import tdc_Data
+from tdc_fmci_xp_data import tdc_FMCI_XP_Data_Base
 
-class tdc_FMCI_MP_Data:
+
+class tdc_FMCI_MP_Data(tdc_Data):
     """
     Represent FMCI_XP as a set of metaparticles:
     markersize contains the size of the metaparticle calculated 
@@ -13,6 +16,10 @@ class tdc_FMCI_MP_Data:
         Creates array represented particles to be plotted
         but do not adjust theit markersizes,
         after initialization all marker sizes are set to 1
+
+        m_max -- maximum marker size
+        w_max -- maximum distinguishable statistical weight
+                 (particles with larger weighs will have their markersize set to m_max)
         """
         # copy plot information from fmci_xp_data
         self.name    = fmci_xp_data.name   
@@ -20,6 +27,20 @@ class tdc_FMCI_MP_Data:
         self.fmci_xp = fmci_xp_data 
         self.m_max   = m_max
         self.w_max   = w_max
+        # setup metaparticles
+        self.setup_metaparticles()
+        self.setup_markersize()
+
+    @staticmethod
+    def init_from_ascii(filename, m_max, w_max, **kwargs):
+        """
+        return tdc_FMCI_MP_Data instance initialized from ascii data file 'filename'
+
+        m_max -- maximum marker size
+        w_max -- maximum distinguishable statistical weight
+                 (particles with larger weighs will have their markersize set to m_max)
+        """
+        return tdc_FMCI_MP_Data( tdc_FMCI_XP_Data_Base.init_from_ascii(filename), m_max, w_max) 
 
     def get_pure_data_copy(self):
         """
@@ -33,6 +54,16 @@ class tdc_FMCI_MP_Data:
         data.fmci_xp = data.fmci_xp.get_pure_data_copy()
         return data
 
+    def __repr__(self):
+        s  = 'tdc_FMCI_MP_Data:\n'
+        s += ' particle name : %s\n' % self.name
+        s += '       calc_id : %s\n' % self.calc_id
+        s += '         m_max : %g\n' % self.m_max
+        s += '         w_max : %g\n' % self.w_max
+        # partition 
+        s += ' Contains => %s\n' % str(self.fmci_xp)
+        return s
+
     def read(self, i_ts):
         """
         reads particles, fills fmci_XP array,
@@ -42,6 +73,9 @@ class tdc_FMCI_MP_Data:
         self.fmci_xp.read(i_ts)
         self.setup_metaparticles()
         self.setup_markersize()
+
+    def get_time(self):
+        return self.fmci_xp.get_time()
         
     def setup_metaparticles(self):
         """

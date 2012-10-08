@@ -195,7 +195,7 @@ class tdc_Manip:
         # get pure data copy
         data = [ d.get_pure_data_copy() for d in self.plotter.data ]
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         pickle.dump( data, open(filename,'w') )
         print '\nContent dumped in "%s" \n' % filename
 

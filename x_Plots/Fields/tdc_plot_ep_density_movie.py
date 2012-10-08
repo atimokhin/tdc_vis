@@ -1,6 +1,6 @@
 from Auxiliary import tdc_Filenames
 
-from Common_Data_Plot   import tdc_Data_Sequence_Initializer
+from Common_Data_Plot   import tdc_Data_Sequence
 from Auxiliary_Plotters import tdc_Moving_Grid_Plotter
 from Fields import tdc_Field_Data, tdc_EP_Density_Plotter, tdc_EPG_Density_Plotter, tdc_EPGP_Density_Plotter
 
@@ -42,7 +42,7 @@ def tdc_plot_ep_density_movie(plot_module,
     time_normalization
         <None>
     **kwargs
-        go to tdc_*_Data via tdc_Data_Sequence_Initializer
+        go to tdc_*_Data via tdc_Data_Sequence.init_from_data
     """
 
     # make sure calc_id is a sequence
@@ -50,14 +50,14 @@ def tdc_plot_ep_density_movie(plot_module,
         calc_ids = (calc_ids,)
 
     # field sequence
-    fe  = tdc_Data_Sequence_Initializer( tdc_Field_Data,
+    fe  = tdc_Data_Sequence.init_from_data( tdc_Field_Data,
                                          calc_ids=calc_ids,
                                          field_name='N',
                                          filename='prop_Electrons.h5',
                                          tt=tt,
                                          time_normalization=time_normalization,
                                          **kwargs)
-    fp  = tdc_Data_Sequence_Initializer( tdc_Field_Data,
+    fp  = tdc_Data_Sequence.init_from_data( tdc_Field_Data,
                                          calc_ids=calc_ids,
                                          field_name='N',
                                          filename='prop_Positrons.h5',
@@ -119,7 +119,7 @@ def tdc_plot_epg_density_movie(plot_module,
     time_normalization
         <None>
     **kwargs
-        go to tdc_*_Data via tdc_Data_Sequence_Initializer
+        go to tdc_*_Data via tdc_Data_Sequence.init_from_data
     """
 
     # make sure calc_id is a sequence
@@ -127,21 +127,21 @@ def tdc_plot_epg_density_movie(plot_module,
         calc_ids = (calc_ids,)
 
     # field sequence
-    fe  = tdc_Data_Sequence_Initializer( tdc_Field_Data,
+    fe  = tdc_Data_Sequence.init_from_data( tdc_Field_Data,
                                          calc_ids=calc_ids,
                                          field_name='N',
                                          filename='prop_Electrons.h5',
                                          tt=tt,
                                          time_normalization=time_normalization,
                                          **kwargs)
-    fp  = tdc_Data_Sequence_Initializer( tdc_Field_Data,
+    fp  = tdc_Data_Sequence.init_from_data( tdc_Field_Data,
                                          calc_ids=calc_ids,
                                          field_name='N',
                                          filename='prop_Positrons.h5',
                                          tt=tt,
                                          time_normalization=time_normalization,
                                          **kwargs)
-    fg  = tdc_Data_Sequence_Initializer( tdc_Field_Data,
+    fg  = tdc_Data_Sequence.init_from_data( tdc_Field_Data,
                                          calc_ids=calc_ids,
                                          field_name='N',
                                          filename='prop_Pairs.h5',
@@ -202,7 +202,7 @@ def tdc_plot_epgp_density_movie(plot_module,
     time_normalization
         <None>
     **kwargs
-        go to tdc_*_Data via tdc_Data_Sequence_Initializer
+        go to tdc_*_Data via tdc_Data_Sequence.init_from_data
     """
 
     # make sure calc_id is a sequence
@@ -210,34 +210,34 @@ def tdc_plot_epgp_density_movie(plot_module,
         calc_ids = (calc_ids,)
 
     # field sequence
-    fe  = tdc_Data_Sequence_Initializer( tdc_Field_Data,
-                                         calc_ids=calc_ids,
-                                         field_name='N',
-                                         filename='prop_Electrons.h5',
-                                         tt=tt,
-                                         time_normalization=time_normalization,
-                                         **kwargs)
-    fp  = tdc_Data_Sequence_Initializer( tdc_Field_Data,
-                                         calc_ids=calc_ids,
-                                         field_name='N',
-                                         filename='prop_Positrons.h5',
-                                         tt=tt,
-                                         time_normalization=time_normalization,
-                                         **kwargs)
-    fg  = tdc_Data_Sequence_Initializer( tdc_Field_Data,
-                                         calc_ids=calc_ids,
-                                         field_name='N',
-                                         filename='prop_Pairs.h5',
-                                         tt=tt,
-                                         time_normalization=time_normalization,
-                                         **kwargs)
-    fpr = tdc_Data_Sequence_Initializer( tdc_Field_Data,
-                                         calc_ids=calc_ids,
-                                         field_name='N',
-                                         filename='prop_Protons.h5',
-                                         tt=tt,
-                                         time_normalization=time_normalization,
-                                         **kwargs)
+    fe  = tdc_Data_Sequence.init_from_data( tdc_Field_Data,
+                                            calc_ids=calc_ids,
+                                            field_name='N',
+                                            filename='prop_Electrons.h5',
+                                            tt=tt,
+                                            time_normalization=time_normalization,
+                                            **kwargs)
+    fp  = tdc_Data_Sequence.init_from_data( tdc_Field_Data,
+                                            calc_ids=calc_ids,
+                                            field_name='N',
+                                            filename='prop_Positrons.h5',
+                                            tt=tt,
+                                            time_normalization=time_normalization,
+                                            **kwargs)
+    fg  = tdc_Data_Sequence.init_from_data( tdc_Field_Data,
+                                            calc_ids=calc_ids,
+                                            field_name='N',
+                                            filename='prop_Pairs.h5',
+                                            tt=tt,
+                                            time_normalization=time_normalization,
+                                            **kwargs)
+    fpr = tdc_Data_Sequence.init_from_data( tdc_Field_Data,
+                                            calc_ids=calc_ids,
+                                            field_name='N',
+                                            filename='prop_Protons.h5',
+                                            tt=tt,
+                                            time_normalization=time_normalization,
+                                            **kwargs)
     plotter  = tdc_EPGP_Density_Plotter(fe,fp,fg,fpr,e_density_negative)
     # plot moving grid if asked
     if moving_grid_dict:

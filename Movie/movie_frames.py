@@ -1,10 +1,5 @@
 import matplotlib
 
-# LaTeX rendering will be very slow - disable
-# sets this for all movie plots
-# matplotlib.rcParams['text.usetex'] = False
-
-
 class MovieFrames:
     """
     Base class for movie frames
@@ -28,7 +23,6 @@ class MovieFrames:
     self.p_time_label
     self.formatter
     """
-
     
     def __init__(self, seq_plotter):
         # sequence plotter
@@ -40,7 +34,7 @@ class MovieFrames:
             P.read(1)
         # frame number limits
         self.i_frame_min = 1
-        self.i_frame_max = seq_plotter[0].get_sequence_length()
+        self.i_frame_max = seq_plotter[0].data[0].get_sequence_length()
         # label of the frame
         self.plot_idlabel = None
         # initialize base class variables
@@ -62,14 +56,10 @@ class MovieFrames:
     def set_movie_frames_sizes(self, mfs):
         """
         sets self.MFS
-        -------
-        Params:
-        -------
         mfs
           MovieFrames_Sizes class instance, contains figure sizes and axes boxes
         """
         self.MFS = mfs
-
 
     def setup_axes(self,xlim,ylim,axes_commands):
         """
@@ -97,7 +87,7 @@ class MovieFrames:
             A.tick_params(labelsize=self.MFS.ticklabel_fontsize)
             # axes limits ------------------------
             # xlim -- if not set, use the whole x range 
-            if xlim[i]==None:
+            if xlim[i] is None:
                 xlim[i]=[ self.seq_plotter[i].xmin, self.seq_plotter[i].xmax ]
             self.xlim.append(xlim[i])
             self.ylim.append(ylim[i])
@@ -136,12 +126,14 @@ class MovieFrames:
             # set flag
             self.set_axes_commands_executed_flag(True)
         
-    def get__i_timeshot(self):
-        return self.seq_plotter[0].get__i_timeshot()
-
-    def get__i_id(self):
-        return self.seq_plotter[0].get__i_id()
-
     def set_main_window(self,window):
         self.main_Window=window
 
+    def get__i_ts(self):
+        return self.seq_plotter[0].data[0].get__i_ts()
+
+    def get__id(self):
+        return self.seq_plotter[0].data[0].get__id()
+
+    def get_time(self):
+        return self.seq_plotter[0].data[0].get_time()

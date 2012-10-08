@@ -24,24 +24,31 @@ class Movie_File_Maker__GUI(Movie_File_Maker):
        function which updated # of recorded frames shown in GUI
     """
 
-    def __init__(self, movie_id, fps, keep_frame_files):
+    def __init__(self, 
+                 movie_id, 
+                 fps, 
+                 keep_frame_files, 
+                 movie_file_basename=None,
+                 frame_filename_format=None):
         """
         movie_id  -- subdirectorty whewre movie files will be stored
         """
         # setup base class
-        Movie_File_Maker.__init__(self,movie_id,fps,keep_frame_files)
+        Movie_File_Maker.__init__(self,
+                                  movie_id,
+                                  fps,
+                                  keep_frame_files, 
+                                  movie_file_basename=movie_file_basename,
+                                  frame_filename_format=frame_filename_format)
         # initialize internal list with frames in png format
         self.frames_png = []
         # main window - needed for Movie_File_Maker parameter window
         self.main_Window=None
 
-    def get_number_of_saved_snapshots(self):
-        return len(self.frames_png)
-
     def store_snapshot(self, widget):
         """
         takes snapshot of the widget, transforms it into png format
-        and stores in it in the internal list 
+        and stores it in the internal list
         """
         # get pixmap from figure's canvas [it's a widget too] (server buffer)
         x,y,w,h = widget.allocation
@@ -66,32 +73,38 @@ class Movie_File_Maker__GUI(Movie_File_Maker):
             # setup output directory
             self.setup_directory()
             # open index file
-            index_file = open(self.index_filename, 'w')
+            self.open_index_file()
             print 'total # of stored frames', len(self.frames_png)
             # save individual frames
             for idx,frame in enumerate(self.frames_png):
                 # name of the file where current frame will be saved
-                filename = self.movie_dir_name + \
-                           self._frame_filename + '_' + str(idx) + '.png'
+                filename = self.get_frame_filename(idx)
                 # create frame file, save frame there, then close the file 
-                frame_file = open(filename,"w")
+                frame_file = open( filename, "w" )
                 frame_file.write(frame)
                 frame_file.close
                 # append name of the frame file to the list
-                index_file.write(filename+'\n')
+                self.add_filename_to_index_file(filename)
             # close index file
-            index_file.close()
+            self.close_index_file()
             # clear frame buffer
             self.clear_frame_buffer()
             return True
         else:
             return False
 
+    def delete_frame_files(self):
+        """
+        Redefine this function to set # of saved frames in GUI to 0
+        """
+        # update #of recorded frames in GUI
+        self.update_number_of_recorded_frames_function(0)
+        # delete frame files
+        return Movie_File_Maker.delete_frame_files(self)
+
     def clear_frame_buffer(self):
         "clear self.frames_png list"
         self.frames_png = []
-        # update #of recorded frames in GUI
-        self.update_number_of_recorded_frames_function(len(self.frames_png))
 
     def set_main_window(self,window):
         self.main_Window=window
@@ -134,7 +147,7 @@ class Movie_File_Maker_Params_Window:
         filename_label.show()
         # entry
         self.filename_entry = gtk.Entry()
-        self.filename_entry.set_text(self.MFM._default_movie_filename)
+        self.filename_entry.set_text(self.MFM._default_movie_file_basename)
         self.filename_entry.select_region(0, len(self.filename_entry.get_text()))
         filename_box.pack_start(self.filename_entry,  False, False, 10)
         self.filename_entry.connect("changed", self.filename_callback, self.filename_entry)
@@ -263,7 +276,7 @@ class Movie_File_Maker_Params_Window:
             # delete frame files -------------
             status=self.MFM.delete_frame_files()
             if not status:
-                self.error_window('Have not deleted frame files!')
+                self.error_window('Could not delete frame files!')
             # --------------------------------
             notification.destroy()
 
@@ -280,7 +293,7 @@ class Movie_File_Maker_Params_Window:
 
 
     def set_default_callback(self,widget):
-        self.filename_entry.set_text(self.MFM._default_movie_filename)
+        self.filename_entry.set_text(self.MFM._default_movie_file_basename)
         self.keep_files_button_N.set_active(True)
         self.fps_spinner_adj.set_value(self.MFM._default_fps)
 

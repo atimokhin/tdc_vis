@@ -49,10 +49,10 @@ class tdc_FMCI_MP_Manip(tdc_Manip):
         Options:
         --------
         xp_partition
-        wlims
-          <None> -- interval for particle weights [wmin,wmax] to be plotted 
-                    as distinct colors according the current color map
-                    if None, use the default value stored at class initialization
+        m_max
+           <None>
+        w_max
+           <None>
         --------
         """
         manip=tdc_FMCI_MP_Manip(fig_param)
@@ -117,8 +117,10 @@ class tdc_FMCI_MP_Manip(tdc_Manip):
         --------
         xp_partition
            <None> -- XP domain partiction to use for fmci_XP
-        wlims
-           <None> -- interval for particle weights [wmin,wmax] to be plotted 
+        m_max
+           <None>
+        w_max
+           <None>
         """        
         # default xp_partition <<<<<<<<<<<<<<<<<<<<<<
         if not xp_partition:
@@ -144,17 +146,12 @@ class tdc_FMCI_MP_Manip(tdc_Manip):
         """
         setup Manip by reading the pickle'd data dumped
         into data file dump_id/filename.pickle
-        --------
-        Options:
-        --------
-        wlims
-           <None> -- interval for particle weights [wmin,wmax] to be plotted 
         """
         # set restored_from_dump flag so the data cannot be read again
         self.restored_from_dump=True
         # fmci_XP DATA <<<<<<<
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         self.fmci_mp = pickle.load( open(filename,'r') )[0]
         # i_ts
         self.i_ts = self.fmci_mp.fmci_xp.i_ts
@@ -180,7 +177,7 @@ class tdc_FMCI_MP_Manip(tdc_Manip):
         # set restored_from_dump flag so the data cannot be read again
         self.restored_from_dump=True
         # full file name of the file with tdc_FMCI_XP_Data_Base info
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.dat')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.dat')
         fmci_xp = tdc_FMCI_XP_Data_Base().init_from_ascii(filename)
         # setup metaparticles
         self.fmci_mp = tdc_FMCI_MP_Data(fmci_xp, m_max=m_max, w_max=w_max)
@@ -196,14 +193,14 @@ class tdc_FMCI_MP_Manip(tdc_Manip):
                       filename,
                       dump_id):
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.dat')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.dat')
         self.fmci_mp.fmci_xp.save_to_ascii(filename)
 
         
     def __repr__(self):
         s = self._manip_name('tdc_FMCI_MP_Manip')
         ## s += '        w_max : %g\n' % 
-        ## s += 'FMCI_XP => %s\n' % str(self.fmci_xp)
+        s += 'FMCI_MP => %s\n' % str(self.fmci_mp)
         return s
 
     def plot(self,

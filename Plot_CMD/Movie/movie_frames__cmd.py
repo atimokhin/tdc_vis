@@ -13,7 +13,7 @@ class MovieFrames__CMD(MovieFrames):
     plot()
     animation_update()
     """
-
+    
     def __init__(self, seq_plotter):
         # initialize base class ======
         MovieFrames.__init__(self, seq_plotter)
@@ -65,7 +65,7 @@ class MovieFrames__CMD(MovieFrames):
         self.p_time_label=[]
         for P,A in zip(self.seq_plotter,self.ax):
             self.p_time_label.append( A.text(0.02, 0.925,
-                                             't=%.3f' % P.get_time(),
+                                             't=%.3f' % self.get_time(),
                                              transform = A.transAxes,
                                              fontsize=self.MFS.ticklabel_fontsize) )
 

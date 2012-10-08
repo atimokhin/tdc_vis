@@ -1,7 +1,7 @@
 from Particles import tdc_XP_Data
 
 from Auxiliary_Plotters import tdc_Moving_Grid_Plotter
-from Common_Data_Plot   import tdc_Data_Sequence_Initializer
+from Common_Data_Plot   import tdc_Data_Sequence
 
 
 from xps_plotter__OF import XPs_Plotter__OF
@@ -37,15 +37,14 @@ def plot_xp__OF_movie(plot_module,
     if not isinstance( particle_names, (list,tuple) ):
         particle_names = (particle_names,)
     # particles sequence
-    xps=[]
-    for pname in particle_names:
-        xps.append(  tdc_Data_Sequence_Initializer( tdc_XP_Data,
-                                                    calc_ids=calc_ids,
-                                                    particle_name=pname,
-                                                    sample_dict=sample_dict,
-                                                    tt=tt,
-                                                    time_normalization=time_normalization,
-                                                    **kwargs) )
+    xps = [ tdc_Data_Sequence.init_from_data( tdc_XP_Data,
+                                              calc_ids=calc_ids,
+                                              particle_name=pname,
+                                              sample_dict=sample_dict,
+                                              tt=tt,
+                                              time_normalization=time_normalization,
+                                              **kwargs 
+                                              ) for pname in particle_names ]
     # plotter
     pp  = XPs_Plotter__OF(xps=xps, of__filename=of__filename)
     if use_cell_coordinates:

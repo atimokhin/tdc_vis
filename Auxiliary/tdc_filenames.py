@@ -1,4 +1,9 @@
-class tdc_Filenames:
+import os
+
+from tdc_exception import tdc_Exception
+
+
+class tdc_Filenames(object):
     """
     class with methods for retriving full filename and setting results directory
     There are twom types of results directories:
@@ -12,58 +17,39 @@ class tdc_Filenames:
     __ResultsDir    = __default_ResultsDir
     __VisResultsDir = __default_VisResultsDir
 
-    def set_results_dir(self, name=__default_ResultsDir):
-        tdc_Filenames.__ResultsDir=name
+    @staticmethod
+    def set_results_dir(name=None):
+        tdc_Filenames.__ResultsDir = \
+          name if name is not None else tdc_Filenames.__default_ResultsDir
+        # check whether the directory name is valid
+        if not os.path.isdir(tdc_Filenames.__ResultsDir):
+            print "Results Directory \"%s\" does not exist!\n" % tdc_Filenames.__ResultsDir
+            raise tdc_Exception()
+            
 
-    def get_results_dir(self):
+    @staticmethod
+    def get_results_dir():
         return tdc_Filenames.__ResultsDir
 
-    def get_full_filename(self,calc_id,fielname):
-        return tdc_Filenames.__ResultsDir + '/' + calc_id + '/' + fielname
+    @staticmethod
+    def get_full_filename(calc_id,filename):
+        return os.path.join(tdc_Filenames.__ResultsDir, calc_id, filename)
 
+    @staticmethod
+    def set_vis_results_dir(name=None):
+        tdc_Filenames.__VisResultsDir = \
+          name if name is not None else tdc_Filenames.__default_VisResultsDir
+        # check whether the directory name is valid
+        if not os.path.isdir(tdc_Filenames.__VisResultsDir):
+            print "VisResults Directory \"%s\" does not exist!\n" % tdc_Filenames.__VisResultsDir
+            raise tdc_Exception()
 
-    def set_vis_results_dir(self, name=__default_VisResultsDir):
-        tdc_Filenames.__VisResultsDir=name
-
-    def get_vis_results_dir(self):
+    @staticmethod
+    def get_vis_results_dir():
         return tdc_Filenames.__VisResultsDir
 
-    def get_full_vis_filename(self,vis_id,fielname):
-        return tdc_Filenames.__VisResultsDir + '/' + vis_id + '/' + fielname
+    @staticmethod
+    def get_full_vis_filename(vis_id,filename):
+        return os.path.join(tdc_Filenames.__VisResultsDir, vis_id, filename)
  
 
-
-# ------------------------------
-# functions for interactive work
-# ------------------------------
-
-__all__ = [ 'tdc_set_results_dir',
-            'tdc_get_results_dir',
-            'tdc_get_fielname',            
-            'tdc_set_vis_results_dir',
-            'tdc_get_vis_results_dir',
-            'tdc_get_vis_fielname' ]
-
-
-def tdc_set_results_dir(name):
-    "global function for setteng RESULTS directory"
-    tdc_Filenames().set_results_dir(name)
-
-def tdc_get_results_dir():
-    "global function for getting RESULTS directory"
-    return tdc_Filenames().get_results_dir()
-
-def tdc_get_fielname(calc_id,fielname):
-    return tdc_Filenames().get_full_fielname(calc_id,fielname)
-
-
-def tdc_set_vis_results_dir(name):
-    "global function for setteng RESULTS_VIS directory"
-    tdc_Filenames().set_vis_results_dir(name)
-
-def tdc_get_vis_results_dir():
-    "global function for getting RESULTS_VIS directory"
-    return tdc_Filenames().get_vis_results_dir()
-
-def tdc_get_vis_fielname(vis_id,fielname):
-    return tdc_Filenames().get_full_vis_filename(vis_id,fielname)

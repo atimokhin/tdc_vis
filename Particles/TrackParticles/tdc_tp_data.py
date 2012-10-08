@@ -133,7 +133,7 @@ class tdc_TP_Data:
         (uses pickle to do this)
         """
         filename = 'tp_' + tp_id + '.dat'
-        full_filename = tdc_Filenames().get_full_filename(self.calc_id,filename)
+        full_filename = tdc_Filenames.get_full_filename(self.calc_id,filename)
         pickle.dump( self, open(full_filename,'w') )
 
     def setup_from_file(self, calc_id, tp_id):
@@ -143,7 +143,7 @@ class tdc_TP_Data:
         (uses pickle to do this)
         """
         filename = 'tp_' + tp_id + '.dat'
-        full_filename = tdc_Filenames().get_full_filename(calc_id,filename)
+        full_filename = tdc_Filenames.get_full_filename(calc_id,filename)
         tp = pickle.load( open(full_filename,'r') )
         self.Particles         = tp.Particles        
         self.n_tracked_orig    = tp.n_tracked_orig        

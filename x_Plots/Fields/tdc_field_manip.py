@@ -82,7 +82,7 @@ class tdc_Field_Manip(tdc_Manip_Plot_vs_X):
         self.restored_from_dump=True
         # Field <<<<<<<
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         fields = pickle.load( open(filename,'r') )
         self.field = fields[0]
         # i_ts

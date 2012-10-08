@@ -7,14 +7,13 @@ import numpy             as np
 from Auxiliary        import *
 from Common_Data_Plot import *
 
-from Particles  import *
-from Plots_MPP  import tdc_mpp_v__e_rho_n
+from x_Plots.MPP      import tdc_mpp_v__e_rho_n
+# -------------------------------
 
-import MPP
 
-tdc_set_hardcopy_rcparams()
+tdc_rcParams.set_hardcopy()
 
-tdc_set_results_dir('../RESULTS/WD/')
+tdc_Filenames.set_results_dir('../RESULTS/WD/')
 
 
 
@@ -105,4 +104,4 @@ exec tick_and_labels_commands
 mpp.interactive_on()
 
 plt.show()
-tdc_set_default_rcparams()
+tdc_rcParams.set_default()

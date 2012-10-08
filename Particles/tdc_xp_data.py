@@ -3,13 +3,13 @@ import h5py
 import math
 
 ## import Common
-from   Auxiliary import tdc_Filenames, tdc_Timetable, tdc_Setup_Props, tdc_Mesh
-
+from Auxiliary        import tdc_Filenames, tdc_Timetable, tdc_Setup_Props, tdc_Mesh
+from Common_Data_Plot import tdc_Data, tdc_Data__with_Timetable
 
 from tdc_xp_samples import *
 
 
-class tdc_XP_Data:
+class tdc_XP_Data(tdc_Data__with_Timetable,tdc_Data):
     """
     This class contains data for phase portrait of particles
     Members:
@@ -71,8 +71,12 @@ class tdc_XP_Data:
         # set get_weight_flag
         self.get_weight_flag = get_weight
         # open HDF file -----------------
-        h5_filename  = tdc_Filenames().get_full_filename(calc_id, self.name+'.h5')
-        self.file_id = h5py.h5f.open(h5_filename,flags=h5py.h5f.ACC_RDONLY)
+        h5_filename  = tdc_Filenames.get_full_filename(calc_id, self.name+'.h5')
+        try:
+            self.file_id = h5py.h5f.open(h5_filename,flags=h5py.h5f.ACC_RDONLY)
+        except IOError as exception:
+            print "Error opening \"%s\"\n" % h5_filename
+            raise exception
         # Initialize Timetable -----------
         self.timetable = tdc_Timetable(self.file_id)
         # set time normalization <<<<<<<<<

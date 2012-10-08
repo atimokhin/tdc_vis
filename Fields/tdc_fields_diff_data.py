@@ -1,8 +1,9 @@
 import numpy as np
 
 from tdc_field_data import tdc_Field_Data
+from Common_Data_Plot import tdc_Data__with_Timetable
 
-class tdc_Fields_Diff_Data:
+class tdc_Fields_Diff_Data(tdc_Data__with_Timetable):
     
     __default_Filename = 'fields.h5'
 

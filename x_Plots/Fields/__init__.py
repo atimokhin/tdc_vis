@@ -1,10 +1,16 @@
-from tdc_field_manip             import *
-from tdc_ep_density_manip        import *
+from tdc_field_manip             import tdc_Field_Manip
+
+from tdc_ep_density_manip        import tdc_EP_Density_Manip, \
+                                        tdc_EPG_Density_Manip,\
+                                        tdc_EPGP_Density_Manip
 
 from tdc_plot_field_movie        import tdc_plot_field_movie
-from tdc_plot_ep_density_movie   import *
 
-from tdc_fft_manip               import *
+from tdc_plot_ep_density_movie   import tdc_plot_ep_density_movie, \
+                                        tdc_plot_epg_density_movie,\
+                                        tdc_plot_epgp_density_movie
+
+from tdc_fft_manip               import tdc_FFT_Manip
 
 ## __all__= [ 'tdc_plot_field',
 ##            'tdc_plot_field_restored',

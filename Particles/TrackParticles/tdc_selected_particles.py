@@ -43,7 +43,7 @@ class tdc_Selected_Particles:
         """
         import scipy.io
         filename = 'sp_' + sp_id + '.mat'
-        full_filename = tdc_Filenames().get_full_filename(calc_id,filename)
+        full_filename = tdc_Filenames.get_full_filename(calc_id,filename)
         mat_struct   = scipy.io.loadmat(full_filename,struct_as_record=True)
         self.calc_id = str(mat_struct['sp']['calc_id'][0][0][0])
         self.i_ts    = int(mat_struct['sp']['timeshot'][0][0][0])

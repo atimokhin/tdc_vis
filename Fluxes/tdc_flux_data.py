@@ -55,8 +55,12 @@ class tdc_Flux_Data:
             # ************************************
             # Read fluxes from file **************
             # open HDF file ------------------
-            full_filename = tdc_Filenames().get_full_filename(calc_id,filename)
-            self.file_id=h5py.h5f.open(full_filename,flags=h5py.h5f.ACC_RDONLY)
+            full_filename = tdc_Filenames.get_full_filename(calc_id,filename)
+            try:
+                self.file_id = h5py.h5f.open(full_filename,flags=h5py.h5f.ACC_RDONLY)
+            except IOError as exception:
+                print "Error opening \"%s\"\n" % full_filename
+                raise exception
             # --------------------------------
             # read Timearray -----------------
             dset=h5py.h5d.open(self.file_id,'/TimeArray')

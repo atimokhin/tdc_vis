@@ -6,6 +6,11 @@ class tdc_FMCI_MP_Plotter(tdc_Data_Plotter):
     """
     Plots FMCI_XP as particles with sizes proportional to their weights
     """
+    __plotstyle = { 'Electrons' : {'color':'b','marker':'o'},
+                    'Positrons' : {'color':'r','marker':'o'},
+                    'Protons'   : {'color':'m','marker':'o'},  
+                    'Pairs'     : {'color':'k','marker':'o'}  }
+
     __default_plot_ylabel = { 'Electrons' : r'$p_{-}$' ,
                               'Positrons' : r'$p_{+}$' ,
                               'Protons'   : r'$p_{p}$',
@@ -45,15 +50,40 @@ class tdc_FMCI_MP_Plotter(tdc_Data_Plotter):
         """
         Plot particles with sizes representing their statistical weight
         """
+        plot_kwargs={}
         for i,mp in enumerate(self.data):
-            self.lines[i] =  ax.scatter(mp.x,mp.p, 
-                                        s=mp.markersize, 
-                                        c='b', marker='o', cmap=None, norm=None,
-                                        vmin=None, vmax=None, alpha=None, linewidths=None,
-                                        verts=None, edgecolors ='none',
-                                        **kwargs)
+            plot_kwargs.update(self.__plotstyle[mp.name])
+            plot_kwargs.update(kwargs)            
+            self.lines[i] = ax.scatter(mp.x,mp.p, 
+                                       s=mp.markersize, 
+                                       cmap=None, norm=None,
+                                       vmin=None, vmax=None, alpha=None, linewidths=None,
+                                       verts=None, edgecolors ='none',
+                                       **plot_kwargs)
         # make scaling semi-logatithmic if asked
         if symlog:
             ax.set_yscale('symlog',linthreshy=linthreshy,subsy=[1,10])
 
+    def replot(self,ax):
+        """
+        Plot particles for animation at timestep# i_ts
+        """
+        self.plot(ax)
+        for line in self.lines:    
+            ax.draw_artist(line)
+
+    def update_plot(self,ax):
+        """
+        Plot particles for animation at timestep# i_ts
+        """
+        self.replot(ax)
+
+
+    def set_animated(self,val):
+        """
+        Set animated property in all lines
+        """
+        pass
+        ## for line in self.lines:
+        ##     line.set_animated(val)
                 

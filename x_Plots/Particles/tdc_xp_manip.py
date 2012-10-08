@@ -163,7 +163,7 @@ class tdc_XP_Manip(tdc_Manip_Plot_vs_X):
         self.restored_from_dump=True
         # XP DATA <<<<<<<
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
         self.xps = pickle.load( open(filename,'r') )
         # i_ts
         self.i_ts = self.xps[0].i_ts

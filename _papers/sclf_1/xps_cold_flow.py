@@ -6,15 +6,15 @@ import pickle
 from Auxiliary        import *
 from Common_Data_Plot import *
 
-from Particles import *
-
-from MPP import tdc_MPP
+from Particles import tdc_XPs_Plotter
+from MPP       import tdc_MPP
 
 from plot_params import mpp_params
+# ------------------------------
 
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-tdc_set_hardcopy_rcparams()
+tdc_rcParams.set_hardcopy()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
@@ -99,7 +99,7 @@ j_labels=[]
 for jl,filename in sed_list:
     j_labels.append( r'$j_{\rm m} = %s\,j_{\rm GJ}$' % jl )
     # full file name of the file with manipulator dump
-    filename=tdc_Filenames().get_full_vis_filename(dump_id, filename+'.pickle')
+    filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.pickle')
     dump_dict = pickle.load( open(filename,'r') )
     plotters.append( tdc_XPs_Plotter( (dump_dict['seds'][0].xp,)) )
 # do plotting 
@@ -108,7 +108,7 @@ ip=0
 for i in range(0,mpp.ny):
     for j in range(0,mpp.nx):
         ax=mpp.grid[i][j]
-        plotters[ip].plot( ax )
+        plotters[ip].plot( ax, symlog=False )
         ip+=1
 # xlabels
 for j in range(mpp.nx):

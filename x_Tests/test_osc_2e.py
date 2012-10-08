@@ -15,8 +15,8 @@ import Plot_GUI as plot_module
 # ============================================================
 # Directory
 # ============================================================
-tdc_set_results_dir('../RESULTS/')
-## tdc_set_results_dir('../RESULTS/FreeAgent/')
+tdc_Filenames.set_results_dir('../RESULTS/')
+## tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
 
 
 # ============================================================
@@ -154,12 +154,12 @@ def do_movie(ID):
 ##     if not isinstance( calc_ids, (list,tuple) ):
 ##         calc_ids = (calc_ids,)        
 ##     # field sequences ---------------------------------
-##     fs1  = tdc_Data_Sequence_Initializer( tdc_Field_Data,
+##     fs1  = tdc_Data_Sequence.init_from_data( tdc_Field_Data,
 ##                                           calc_ids=calc_ids,
 ##                                           field_name='Rho',
 ##                                           **kwargs)
 ##     # field sequences ---------------------------------
-##     fs2  = tdc_Data_Sequence_Initializer( tdc_Field_Data,
+##     fs2  = tdc_Data_Sequence.init_from_data( tdc_Field_Data,
 ##                                           calc_ids=calc_ids,
 ##                                           field_name='E_acc',
 ##                                           **kwargs)
@@ -211,12 +211,12 @@ def do_movie(ID):
 ##     if not isinstance( calc_ids, (list,tuple) ):
 ##         calc_ids = (calc_ids,)        
 ##     # field sequences ---------------------------------
-##     fs1  = tdc_Data_Sequence_Initializer( tdc_Field_Data,
+##     fs1  = tdc_Data_Sequence.init_from_data( tdc_Field_Data,
 ##                                           calc_ids=calc_ids,
 ##                                           field_name='Rho',
 ##                                           **kwargs)
 ##     # field sequences ---------------------------------
-##     fs2  = tdc_Data_Sequence_Initializer( tdc_Field_Data,
+##     fs2  = tdc_Data_Sequence.init_from_data( tdc_Field_Data,
 ##                                           calc_ids=calc_ids,
 ##                                           field_name='E_acc',
 ##                                           **kwargs)

@@ -6,9 +6,10 @@ import scipy.fftpack
 
 from Auxiliary         import tdc_Mesh
 from tdc_field_data    import tdc_Field_Data
+from Common_Data_Plot  import tdc_Data, tdc_Data__with_Timetable
 
 
-class tdc_FFT_Data:
+class tdc_FFT_Data(tdc_Data__with_Timetable, tdc_Data):
     """
     This class contains data for discrete Fourier 
     transform of for a field

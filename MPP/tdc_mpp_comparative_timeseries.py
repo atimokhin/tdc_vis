@@ -34,7 +34,7 @@ class tdc_MPP_Comparative_Timeseries_H ( tdc_MPP_H ):
                 plotters[i].plot( self.grid[i][j] )
                 # top x labels <-- times
                 if ( i==0 ):
-                    t_str = self.fg.timelabel_format % plotters[i].get_time()
+                    t_str = self.fg.timelabel_format % plotters[i].data[0].get_time()
                     self.top_xlabels.append( self.set_top_xlabel(j, '$t='+t_str+'$') )
         # show plots
         self.fig.canvas.draw()
@@ -72,7 +72,7 @@ class tdc_MPP_Comparative_Timeseries_V ( tdc_MPP_V ):
                 if ( i==0 ):
                     self.top_xlabels.append( self.set_top_xlabel(j, plotters[j].plot_ylabel) )
             # plot ylabels <--- time
-            t_str = self.fg.timelabel_format % plotters[0].get_time()
+            t_str = self.fg.timelabel_format % plotters[0].data[0].get_time()
             timelabel=self.set_ylabel(i,'$t='+t_str+'$')
             timelabel.set_size(self.fg.timelabel_fontsize)
         # bottom x labels

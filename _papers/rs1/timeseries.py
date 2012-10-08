@@ -9,10 +9,10 @@ from  Fields  import tdc_Fields_Plotter
 
 import MPP
 
-tdc_set_hardcopy_rcparams()
+tdc_rcParams.set_hardcopy()
 
-#tdc_set_results_dir('../RESULTS/')
-tdc_set_results_dir('../RESULTS/FreeAgent/')
+#tdc_Filenames.set_results_dir('../RESULTS/')
+tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
 
 plot_flag = 'j1_overview'
 ## plot_flag = 'j1_close_view'
@@ -232,4 +232,4 @@ mpp.interactive_on()
 
 # show figure
 plt.show()
-tdc_set_default_rcparams()
+tdc_rcParams.set_default()

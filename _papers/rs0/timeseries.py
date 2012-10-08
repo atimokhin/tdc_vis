@@ -9,8 +9,8 @@ from  Fields  import tdc_Fields_Plotter
 
 import MPP
 
-#tdc_set_results_dir('../RESULTS/')
-tdc_set_results_dir('../RESULTS/FreeAgent/')
+#tdc_Filenames.set_results_dir('../RESULTS/')
+tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
 
 plot_flag = 'overview_paper_1'
 plot_flag = 'close_view_paper_1'

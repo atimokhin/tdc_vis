@@ -16,6 +16,7 @@ def plot_movie( movie_frames, movie_id, fps, keep_frame_files, **kwargs):
     # movie file maker
     MFM = Movie_File_Maker__CMD(movie_id, fps, keep_frame_files, dpi=MF.MFS.dpi)
     # write frames ----------------------------
+    MFM.setup_directory()
     MFM.open_index_file()
     for i in range(MF.i_frame_min, MF.i_frame_max):
         # ====> here keyword parameters go to the plotter's plot method <=====
@@ -25,5 +26,4 @@ def plot_movie( movie_frames, movie_id, fps, keep_frame_files, **kwargs):
     MFM.close_index_file()
     # create movie file -----------------------
     MFM.combine_frames_into_movie()
-    print 'Movie file created: fps = %d, frames = %d ' % (MFM.fps, MFM.get_number_of_saved_snapshots())
     MFM.delete_frame_files()

@@ -1,4 +1,6 @@
+import os
 import h5py
+
 
 from Particles import tdc_XPs_Plotter
 
@@ -37,7 +39,7 @@ class XPs_Plotter__OF:
         else:
             calc_id = xps[0].calc_id
         # read properties file
-        h5_filename  = tdc_Filenames().get_full_filename(calc_id, 'setup_properties.h5')
+        h5_filename  = tdc_Filenames.get_full_filename(calc_id, 'setup_properties.h5')
         f0 = h5py.File(h5_filename,'r')
         L        = f0['/GridProps/L'].value
         dX       = f0['/GridProps/dX'].value
@@ -45,7 +47,8 @@ class XPs_Plotter__OF:
         # interpolated values for p(x) from numerical solutions
         # of Child's equation
         # read hdf file with interpolation of p(x)
-        f1 = h5py.File('_papers/sclf_1/OscillatingFlow/' + of__filename + '.h5','r')
+        f1_filename = os.path.join('_papers', 'sclf_1', 'OscillatingFlow', of__filename+'.h5')
+        f1 = h5py.File(f1_filename,'r')
         self.pp_itpl = f1['Dataset1'].value[:,1]
         self.xx_itpl = f1['Dataset1'].value[:,0]
         f1.close()
@@ -68,7 +71,7 @@ class XPs_Plotter__OF:
         - plot XP
         - plot theoretical lines
         """
-        self.XP_Plotter.plot(ax,**kwargs)
+        self.XP_Plotter.plot(ax, symlog=False, **kwargs)
         self.lines_theory, = ax.plot(self.xx_itpl, self.pp_itpl,
                                      '--r',
                                      linewidth=1,dashes=(3,2),

@@ -34,7 +34,7 @@ class tdc_MPP_SED_Timeseries_H ( tdc_MPP_H ):
             plotter.plot( self.grid[0][j], prefix = 'lc' )
             plotter.plot( self.grid[1][j], prefix = 'ns' )
             # top x labels <-- times
-            t_str = self.fg.timelabel_format % plotter.get_time()
+            t_str = self.fg.timelabel_format % plotter.data[0].get_time()
             self.top_xlabels.append( self.set_top_xlabel(j, '$t='+t_str+'$') )
         # bottom x labels
         #for j in range(nx): set_bottom_xlabel(j,'$x$')

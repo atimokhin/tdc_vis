@@ -4,18 +4,18 @@ import numpy             as np
 from Auxiliary        import *
 from Common_Data_Plot import *
 
-from  Fields  import tdc_Field_Data
-from  Fields  import tdc_Fields_Plotter
+from Fields  import tdc_Field_Data, tdc_Fields_Plotter
+from MPP     import tdc_MPP_Timeseries
+# -----------------------------------
 
-import MPP
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-tdc_set_hardcopy_rcparams()
+tdc_rcParams.set_hardcopy()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
-tdc_set_results_dir('../RESULTS/')
-#tdc_set_results_dir('../RESULTS/FreeAgent/')
+tdc_Filenames.set_results_dir('../RESULTS/')
+#tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
 
 fig_param=dict()
 
@@ -223,7 +223,7 @@ f2 = tdc_Field_Data(ID, 'Rho')
 # field plotter
 p2 = tdc_Fields_Plotter(f2)
 # MFP instance -------------
-mpp = MPP.tdc_MPP_Timeseries( shape, p2, timeshots, select, fig_param=fig_param)
+mpp = tdc_MPP_Timeseries( shape, p2, timeshots, select, fig_param=fig_param)
 mpp.set_window_title(ID)
 mpp.interactive_off()
 

@@ -44,7 +44,7 @@ def do_plot():
     global manip_pmax
 
     # <<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    tdc_set_hardcopy_rcparams()
+    tdc_rcParams.set_hardcopy()
     # <<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     manip_pmax = tdc_plot_pmax(100, ksi_max=ksi_max, fig_param=paramSingleFig_MNRAS)
