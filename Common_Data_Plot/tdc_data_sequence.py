@@ -108,9 +108,6 @@ class tdc_Data_Sequence(tdc_Sequence):
         "()=>i_timeshot current"
         return self.i_ts
 
-    def get_sequence_length(self):
-        return self.idx_seq__end-self.idx_seq__start+1
-
 
     def _get_data_id_timeshot__for_i_seq(self,i_seq):
         """

@@ -17,9 +17,9 @@ class tdc_Sequence(object):
     def get__i_ts(self):
         "()=>i_ts current"
         pass
-    @abstractmethod    
+
     def get_sequence_length(self):
         "()=>length of the sequence"
-        pass
+        return self.idx_seq__end-self.idx_seq__start+1
         
         

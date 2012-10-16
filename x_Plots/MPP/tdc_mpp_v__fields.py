@@ -73,3 +73,37 @@ def tdc_mpp_v__e_fft_discharge(ID,timeshots,
     # MFP instance
     mpp = tdc_MPP_Comparative_Timeseries_V( (fp1,sp1,sp2), timeshots, fig_param=fig_param)
     return mpp
+
+
+def tdc_mpp_v__e_n_fft(ID,timeshots,
+                       xx_discharge,
+                       moving_grid_dict=None,
+                       fig_param=None):
+    """
+    for *timeshots* plots:
+    [1] e/p number density
+    [2] charge density
+    [3] electric field
+    --------
+    Returns:
+    --------
+    ()=>  tdc_MPP_Comparative_Timeseries_V instance with the plot
+    """
+    # electric field
+    f1 = tdc_Field_Data(calc_id=ID, field_name='E_acc')
+    # electron and positron number densities
+    f2_e = tdc_Field_Data(calc_id=ID, field_name='N', filename='prop_Electrons.h5' )
+    f2_p = tdc_Field_Data(calc_id=ID, field_name='N', filename='prop_Positrons.h5' )
+    # Discharge spectrum
+    s1 = tdc_FFT_Data(calc_id=ID, field_name='E_acc', xx=xx_discharge, power_2_flag=False)
+    # PLOTTERS
+    fp1=tdc_Fields_Plotter(f1)
+    fp2=tdc_EP_Density_Plotter(f2_e,f2_p)
+    sp1=tdc_FFT_Plotter(s1)
+    sp1.plot_ylabel = r'$I_k,\ x\in[%g,%g]$' % tuple(xx_discharge)
+    if moving_grid_dict:
+        fp1 = tdc_Moving_Grid_Plotter(fp1,moving_grid_dict)
+        fp2 = tdc_Moving_Grid_Plotter(fp2,moving_grid_dict)
+    # MFP instance
+    mpp = tdc_MPP_Comparative_Timeseries_V( (fp1,sp1,fp2), timeshots, fig_param=fig_param)
+    return mpp

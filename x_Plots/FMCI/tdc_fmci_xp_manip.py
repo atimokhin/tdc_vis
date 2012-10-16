@@ -3,11 +3,11 @@ import matplotlib
 import pickle
 
 from Auxiliary        import tdc_Setup_Props, tdc_Filenames
-from Common_Data_Plot import tdc_Manip
+from Common_Data_Plot import tdc_Manip, paramSingleFig_FMCI_XP_Work
 
 from FMCI.tdc_fmci_xp_partition  import tdc_FMCI_XP_Partition__LinSemiLogUniform
 from FMCI.tdc_fmci_xp_data       import tdc_FMCI_XP_Data_Base, tdc_FMCI_XP_Data
-from FMCI.tdc_fmci_xp_plotter    import tdc_FMCI_XP_Plotter
+from FMCI import tdc_FMCI_XP_Plotter
 
 
 class tdc_FMCI_XP_Manip(tdc_Manip):
@@ -15,11 +15,16 @@ class tdc_FMCI_XP_Manip(tdc_Manip):
     Manipulator class for FMCI_XP
     """
 
-    __default_XP_partition = None
     __default_wlims = [1e-2,1e2 ]
+    __default_xp_partition = tdc_FMCI_XP_Partition__LinSemiLogUniform( x_dict=dict(n=120,xx=None),
+                                                                       p_dict=dict(n=50,pp=[1,5e8]) )
+    __default_fig_param = paramSingleFig_FMCI_XP_Work
+
     
     def __init__(self,fig_param=None):
         # leve more place for y label
+        if fig_param is None:
+            fig_param = self.__default_fig_param
         tdc_Manip.__init__(self,fig_param)
 
     @staticmethod
@@ -116,11 +121,10 @@ class tdc_FMCI_XP_Manip(tdc_Manip):
            <None> -- interval for particle weights [wmin,wmax] to be plotted 
         """        
         # default xp_partition <<<<<<<<<<<<<<<<<<<<<<
-        if not xp_partition:
-            xp_partition=tdc_FMCI_XP_Partition__LinSemiLogUniform( x_dict=dict(n=120,xx=None),
-                                                                   p_dict=dict(n=50,pp=[1,5e8]) )
+        if xp_partition is None:
+            xp_partition=self.__default_xp_partition
         # default wlims
-        if not wlims:
+        if wlims is None:
             wlims=self.__default_wlims
         # FMCI_XP <<<<<<<
         self.fmci_xp=tdc_FMCI_XP_Data(calc_id, particle_name, xp_partition)

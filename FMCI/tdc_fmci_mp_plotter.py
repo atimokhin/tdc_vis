@@ -78,12 +78,10 @@ class tdc_FMCI_MP_Plotter(tdc_Data_Plotter):
         """
         self.replot(ax)
 
-
     def set_animated(self,val):
         """
         Set animated property in all lines
         """
-        pass
-        ## for line in self.lines:
-        ##     line.set_animated(val)
+        for line in self.lines:
+            line.set_animated(val)
                 

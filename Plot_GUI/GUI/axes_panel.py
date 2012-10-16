@@ -19,7 +19,7 @@ class AxesPanel(gtk.Frame):
         gtk.Frame.__init__(self)
         self.set_label(axes_name)
         # size <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!
-        self.set_size_request(160,220)
+        self.set_size_request(160,290)
         # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!
         # -------------------------------------------
         # Y axis limits 

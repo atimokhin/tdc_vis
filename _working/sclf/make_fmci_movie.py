@@ -9,7 +9,8 @@ from x_Plots          import *
 # ============================================================
 # Figure Style Parameters
 # ============================================================
-fig_param = paramSingleFig_Presentation
+fig_param    = paramSingleFig_Work
+fig_param_xp = paramSingleFig_FMCI_XP_Presentation
 
 # ============================================================
 # Directory
@@ -39,9 +40,9 @@ axes_commands_mp = ['set_yticks([-1e8,-1e4,0,1e4,1e8])']
 # ============================================================
 
 ii=None
-## ii=[400,420]
+## ii=[400,405]
 
-fps = 14
+fps = 5
 
 keep_frame_files=False
 # ==================
@@ -50,22 +51,15 @@ keep_frame_files=False
 # ============================================================
 # Plots 
 # ============================================================
-Plots = {'MP' : False,
-         'XP' : True }
+Plots = {'MP' : True,
+         'XP' : False }
 # ============================================================
 
 
 
 def do_movie():
-    # ==========================================
-    # Interface
-    # ==========================================
-    interface = os.environ.get('MPL_INTERFACE','GUI')
-    if interface=='GUI':
-        import Plot_GUI as plot_module
-    else:
-        import Plot_CMD as plot_module
-    # ==========================================
+    # select interface
+    interface = tdc_Select_Interface()
     
     # ~~~~~~~~~~~~~~~~~~~~~~~~
     # MP Movie
@@ -73,7 +67,7 @@ def do_movie():
     if Plots['MP']:
         particle_names = ['Electrons', 'Positrons', 'Pairs']
 
-        tdc_plot_fmci_mp_movie(plot_module,
+        tdc_plot_fmci_mp_movie(interface.plot_module,
                                FMCI_ID,
                                particle_names,
                                ylim=ylim_mp,
@@ -93,9 +87,9 @@ def do_movie():
     # XP Movie
     # ~~~~~~~~~~~~~~~~~~~~~~~~
     if Plots['XP']:
-        particle_name = 'Electrons'
+        particle_name = 'Positrons'
 
-        tdc_plot_fmci_xp_movie(plot_module,
+        tdc_plot_fmci_xp_movie(interface.plot_module,
                                FMCI_ID,
                                particle_name,
                                ylim=ylim_mp,
@@ -107,7 +101,7 @@ def do_movie():
                                symlog=True,
                                linthreshy=5,
                                axes_commands=axes_commands_mp,
-                               fig_param=fig_param)
+                               fig_param=fig_param_xp)
     # ~~~~~~~~~~~~~~~~~~~~~~~~
 
 

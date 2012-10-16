@@ -4,7 +4,7 @@ import os
 
 import numpy as np
     
-from Auxiliary        import tdc_Mesh, tdc_Setup_Props
+from Auxiliary        import tdc_Setup_Props
 from Particles        import tdc_XP_Data
 from Common_Data_Plot import tdc_Data, tdc_Data__with_Timetable
 
@@ -213,7 +213,7 @@ class tdc_FMCI_XP_Data(tdc_Data__with_Timetable,tdc_FMCI_XP_Data_Base):
     """
     Class
     """
-        
+
     def __init__(self, calc_id, particle_name, xp_partition):
         """
         - opens particle HDF5 file, 
@@ -300,6 +300,8 @@ class tdc_FMCI_XP_Data(tdc_Data__with_Timetable,tdc_FMCI_XP_Data_Base):
           into corresponding cell of fmci_XP array
         - normalizes weights to GJ numger density
         """
+        # set fmci_XP to zero
+        self.fmci_XP *= 0
         # iterate over particles ----------------------
         x_idx=self.xp_partition.x_idx
         p_idx=self.xp_partition.p_idx

@@ -23,8 +23,7 @@ class tdc_Filenames(object):
           name if name is not None else tdc_Filenames.__default_ResultsDir
         # check whether the directory name is valid
         if not os.path.isdir(tdc_Filenames.__ResultsDir):
-            print "Results Directory \"%s\" does not exist!\n" % tdc_Filenames.__ResultsDir
-            raise tdc_Exception()
+            raise tdc_Exception("Results Directory \"%s\" does not exist!\n" % tdc_Filenames.__ResultsDir)
             
 
     @staticmethod
@@ -41,8 +40,7 @@ class tdc_Filenames(object):
           name if name is not None else tdc_Filenames.__default_VisResultsDir
         # check whether the directory name is valid
         if not os.path.isdir(tdc_Filenames.__VisResultsDir):
-            print "VisResults Directory \"%s\" does not exist!\n" % tdc_Filenames.__VisResultsDir
-            raise tdc_Exception()
+            raise tdc_Exception("VisResults Directory \"%s\" does not exist!\n" % tdc_Filenames.__VisResultsDir)
 
     @staticmethod
     def get_vis_results_dir():

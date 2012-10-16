@@ -70,15 +70,8 @@ moving_grid_dict = None
 
 
 def do_movie(ID):
-    # ==========================================
-    # Interface
-    # ==========================================
-    interface = os.environ.get('MPL_INTERFACE','GUI')
-    if interface=='GUI':
-        import Plot_GUI as plot_module
-    else:
-        import Plot_CMD as plot_module
-    # ==========================================
+    # select interface
+    interface = tdc_Select_Interface()
 
     
     # ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -91,7 +84,7 @@ def do_movie(ID):
         sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
         particle_names = ['Electrons']
         
-        plot_xp__OF_movie(plot_module,
+        plot_xp__OF_movie(interface.plot_module,
                           ID,
                           particle_names,
                           ylim=ylim_xp,

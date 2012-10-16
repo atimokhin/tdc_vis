@@ -12,13 +12,12 @@ class MovieFrames__CMD(MovieFrames):
     Defines
     plot()
     animation_update()
-    """
-    
+    """    
     def __init__(self, seq_plotter):
         # initialize base class ======
         MovieFrames.__init__(self, seq_plotter)
 
-    def setup_figure_and_axes(self, mfs, xlim, ylim, axes_commands):
+    def _setup_figure_and_axes(self, mfs, xlim, ylim, axes_commands):
         """
         Creates figure and axes accordinng to sized in class mds
         -------
@@ -31,18 +30,37 @@ class MovieFrames__CMD(MovieFrames):
           axes limits
         """
         # set MFS
-        self.set_movie_frames_sizes(mfs)
+        self.MFS = mfs
         # plot window ----------------------------
         self.figure = matplotlib.pyplot.figure(facecolor='white',
                                                figsize=self.MFS.figsize_inch,
                                                dpi=self.MFS.dpi)
         # axes -----------------------------------
         # add as many axes as there are entries in mfs.axes_boxes
-        for box in self.MFS.axes_boxes:
-            self.ax.append( self.figure.add_axes(box) )        
+        self.ax = [ self.figure.add_axes(box)  for box in self.MFS.axes_boxes ]       
         # setup axes limits
-        self.setup_axes(xlim, ylim, axes_commands) 
+        self._setup_axes(xlim, ylim, axes_commands) 
 
+    def _plot_axes_labels(self):
+        for i,P in enumerate(self.seq_plotter):
+            coord_x = self.MFS.xlabel_pos(i)
+            self.figure.text( *coord_x, 
+                              s=P.plot_xlabel,
+                              va='bottom',ha='center',
+                              size=self.MFS.label_fontsize)
+            coord_y = self.MFS.ylabel_pos(i)
+            self.figure.text( *coord_y, 
+                              s=P.plot_ylabel,
+                              va='center',ha='left',
+                              size=self.MFS.label_fontsize)
+
+    def _plot_time_labels(self):
+        for P,A in zip(self.seq_plotter,self.ax):
+             A.text(0.02, 0.925,
+                    't=%.3f' % self.get_time(),
+                    transform = A.transAxes,
+                    fontsize = self.MFS.ticklabel_fontsize )
+        
 
     def plot(self,**kwargs):
         """
@@ -53,30 +71,28 @@ class MovieFrames__CMD(MovieFrames):
         - sets 
         """
         # set axes limits and formatter (again)
-        for A,F,xl,yl in zip(self.ax,self.formatter,self.xlim,self.ylim):
-            A.yaxis.set_major_formatter(F)
-            A.set_xlim(xl)
-            A.set_ylim(yl)
-        # force to call axes commands
-        self.set_axes_commands_executed_flag(False)
+        self._setup_axes_from_stored_values()
         # main plot
         MovieFrames.plot(self,**kwargs)
+        # plot axes labels and execute axes commands
+        self._plot_axes_labels()
+        self._execute_axes_commands()
         # plot time label on top of the plot
-        self.p_time_label=[]
-        for P,A in zip(self.seq_plotter,self.ax):
-            self.p_time_label.append( A.text(0.02, 0.925,
-                                             't=%.3f' % self.get_time(),
-                                             transform = A.transAxes,
-                                             fontsize=self.MFS.ticklabel_fontsize) )
+        self._plot_time_labels()
 
     def animation_update(self,i_frame,**kwargs):
         """
         - reads data for i_frame's frame
-        - clear axes
+        - clear figure
+        - setup axes anew
         - calls self.plot
         """
         for P,A in zip(self.seq_plotter,self.ax):
             P.read(i_frame)
-            A.cla()
+        # clear figure
+        self.figure.clf()
+        # add as many axes as there are entries in mfs.axes_boxes
+        self.ax = [ self.figure.add_axes(box)  for box in self.MFS.axes_boxes ]       
+        # make plot
         self.plot(**kwargs)
 

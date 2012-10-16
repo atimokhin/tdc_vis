@@ -8,10 +8,10 @@ from x_PhysicalProperties  import *
 
 
 
-## RESULTS_DIR = '../RESULTS/'
+RESULTS_DIR = '../RESULTS/'
 ## RESULTS_DIR = '../RESULTS/FreeAgent/'
 
-RESULTS_DIR = '../RESULTS/WD/'
+## RESULTS_DIR = '../RESULTS/WD/'
 
 ## RESULTS_DIR = '../RESULTS/__TDC_2/'
 

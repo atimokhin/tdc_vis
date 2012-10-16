@@ -32,7 +32,7 @@ IDs=['SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_i
 ## IDs=['SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj7_sU']
 
 ## IDs=['Arons__j2.000_Pcf9e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU']
-IDs=['Arons__j2.000_Pcf9e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU__wave']
+## IDs=['Arons__j2.000_Pcf9e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU__wave']
 
 ## IDs=[['Arons__j1.102_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj10_sU',
 ##       'Arons__j1.102_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJexp2_A1_AAm0.2__R6C__dP5e-2_inj10_sU__1']]
@@ -140,7 +140,7 @@ moving_grid_dict = None
 # Plots 
 # ============================================================
 
-Plots = {'XP'           : False,
+Plots = {'XP'           : True,
          'Rho'          : False,
          'J'            : False,
          'E_acc'        : True,
@@ -156,15 +156,8 @@ Plots = {'XP'           : False,
 
 
 def do_movie(IDs):
-    # ==========================================
-    # Interface
-    # ==========================================
-    interface = os.environ.get('MPL_INTERFACE','GUI')
-    if interface=='GUI':
-        import Plot_GUI as plot_module
-    else:
-        import Plot_CMD as plot_module
-    # ==========================================
+    # select interface
+    interface = tdc_Select_Interface()
     
     # iterate over IDs <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     for ID in IDs:
@@ -178,7 +171,7 @@ def do_movie(IDs):
             ## tp.setup_from_file(ID,'p500_ts525')
             ## tp.delete(range(0,47,2))
             
-            tdc_plot_xp_movie(plot_module,
+            tdc_plot_xp_movie(interface.plot_module,
                               ID,
                               particle_names,
                               ylim=ylim_xp,
@@ -203,7 +196,7 @@ def do_movie(IDs):
         # Rho
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         if Plots['Rho']:
-            tdc_plot_field_movie(plot_module,
+            tdc_plot_field_movie(interface.plot_module,
                                  ID,
                                  'Rho',
                                  ylim=[-3,3],
@@ -222,7 +215,7 @@ def do_movie(IDs):
         # J
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         if Plots['J']:
-            tdc_plot_field_movie(plot_module,
+            tdc_plot_field_movie(interface.plot_module,
                                  ID,
                                  'J',
                                  ylim=ylim_j,
@@ -241,7 +234,7 @@ def do_movie(IDs):
         # E_acc
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         if Plots['E_acc']:
-            tdc_plot_field_movie(plot_module,
+            tdc_plot_field_movie(interface.plot_module,
                                  ID,
                                  'E_acc',
                                  ylim=ylim_e,
@@ -260,7 +253,7 @@ def do_movie(IDs):
         # E_Gauss
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         if Plots['E_Gauss']:
-            tdc_plot_field_movie(plot_module,
+            tdc_plot_field_movie(interface.plot_module,
                                  ID,
                                  'E_Gauss',
                                  ylim=ylim_e,
@@ -281,7 +274,7 @@ def do_movie(IDs):
         #  plot Electric field and difference between Gauss' and Ampere's Electric fields
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         if Plots['E__E_Gauss']:
-            plot_test_e_e_gauss_movie(plot_module,
+            plot_test_e_e_gauss_movie(interface.plot_module,
                                       ID,
                                       ylim=[ylim_e,[-1e-2,1e-2]],
                                       xlim=[xlim,xlim],
@@ -299,7 +292,7 @@ def do_movie(IDs):
         # Phi
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         if Plots['Phi']:
-            tdc_plot_field_movie(plot_module,
+            tdc_plot_field_movie(interface.plot_module,
                                  ID,
                                  'Phi',
                                  ylim=ylim_phi,
@@ -317,7 +310,7 @@ def do_movie(IDs):
         # Particle Number Density
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         if Plots['EP']:
-            tdc_plot_ep_density_movie(plot_module,
+            tdc_plot_ep_density_movie(interface.plot_module,
                                       ID,
                                       ylim=ylim_ep,
                                       xlim=xlim,
@@ -336,7 +329,7 @@ def do_movie(IDs):
         # Particle Number Density
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         if Plots['EPG']:
-            tdc_plot_epg_density_movie(plot_module,
+            tdc_plot_epg_density_movie(interface.plot_module,
                                        ID,
                                        ylim=ylim_ep,
                                        xlim=xlim,
@@ -355,7 +348,7 @@ def do_movie(IDs):
         # Particle Number Density
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         if Plots['EPGP']:
-            tdc_plot_epgp_density_movie(plot_module,
+            tdc_plot_epgp_density_movie(interface.plot_module,
                                         ID,
                                         ylim=ylim_ep,
                                         xlim=xlim,

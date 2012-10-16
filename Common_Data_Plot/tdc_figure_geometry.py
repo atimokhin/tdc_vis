@@ -54,8 +54,12 @@ class tdc_Single_FigureGeometry:
         # label positions
         self.xlabel_bottom_y = fig_param.get('xlabel_bottom_y',
                                              paramSingleFig_Work['xlabel_bottom_y'])
+        self.xlabel_bottom_x = fig_param.get('xlabel_bottom_x',
+                                             paramSingleFig_Work['xlabel_bottom_x'])
         self.ylabel_left_x   = fig_param.get('ylabel_left_x',
                                              paramSingleFig_Work['ylabel_left_x'])
+        self.ylabel_left_y   = fig_param.get('ylabel_left_y',
+                                             paramSingleFig_Work['ylabel_left_y'])
         # -------------------------------------
         # figure size in inches
         self.dpi = matplotlib.rcParams['figure.dpi']
@@ -80,15 +84,21 @@ class tdc_Single_FigureGeometry:
         """
         x label position in figure coordinates
         """
-        return ( self.left_margin+.5*self.dx_ax,
-                 self.xlabel_bottom_y)
+        if self.xlabel_bottom_x is None:
+            xlabel_bottom_x = self.left_margin+.5*self.dx_ax
+        else: 
+            xlabel_bottom_x = self.xlabel_bottom_x
+        return ( xlabel_bottom_x, self.xlabel_bottom_y)
 
     def ylabel_pos(self,i=0):
         """
         y label position in figure coordinates
         """
-        return ( self.ylabel_left_x,
-                 self.bottom_margin+.5*self.dy_ax)
+        if self.ylabel_left_y is None:
+            ylabel_left_y = self.bottom_margin+.5*self.dy_ax
+        else:
+            ylabel_left_y = self.ylabel_left_y
+        return ( self.ylabel_left_x, ylabel_left_y)
 
 
 

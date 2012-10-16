@@ -16,7 +16,7 @@ class Single_Panel_Movie_Frames(MovieFrames__CMD):
         # setup graphic elements =====
         mfs = tdc_Single_FigureGeometry(fig_param)
         # xlim, ylim must be sequences
-        self.setup_figure_and_axes(mfs, [xlim],[ylim], [axes_commands])
+        self._setup_figure_and_axes(mfs, [xlim],[ylim], [axes_commands])
 
 
 
@@ -43,6 +43,6 @@ class Double_Panel_Movie_Frames(MovieFrames__CMD):
             xlim = [None,None]
         if not axes_commands:
             axes_commands = [None,None]
-        self.setup_figure_and_axes(mfs, xlim,ylim, axes_commands)
+        self._setup_figure_and_axes(mfs, xlim,ylim, axes_commands)
         # set plot_idlabel -----------------------
         self.plot_idlabel = seq_plotter[0].plot_idlabel

@@ -3,6 +3,8 @@ import gtk
 from button_label_from_stock import *
 from axes_panel import *
 
+from Common_Data_Plot import tdc_Data_Plotter, tdc_Data_vs_X_Plotter
+
 
 class AxesSetupPanel(gtk.Frame):
 
@@ -92,55 +94,63 @@ class Axes_Setup_Window:
         # for each plotter setup control panels
         # -------------------------------------
         for i,plotter in enumerate(self.Plotters):
-            # -----------------------------
-            # Axes Panel 
-            # -----------------------------
-            self.AP.append(AxesPanel(self.Axes[i],'Panel %i' % i))
-            vbox.pack_start(self.AP[i], False, False, 5)
-            # Table with checkboxes <<<<<<<
-            table = gtk.Table(2, 3, False)
-            table.set_col_spacings(10)
-            vbox.pack_start(table, True, True, 1)
-            # -----------------------------
-            # Use Cell Coordinates Buttons 
-            # -----------------------------
-            # label
-            use_cell_coords_label = gtk.Label("Use Cell Coordinates ? ")
-            use_cell_coords_label.set_alignment(1,.5)
-            table.attach(use_cell_coords_label,  0,1,0,1)
-            use_cell_coords_label.show()
-            # button Yes
-            self.use_cell_coords_button_Y.append( gtk.RadioButton(None, "Yes") )
-            table.attach(self.use_cell_coords_button_Y[i], 1,2,0,1)
-            self.use_cell_coords_button_Y[i].show()
-            # button No
-            self.use_cell_coords_button_N.append( gtk.RadioButton(self.use_cell_coords_button_Y[i], "No") )
-            self.use_cell_coords_button_N[i].set_active(not plotter.use_cell_coordinates_flag)
-            table.attach(self.use_cell_coords_button_N[i], 2,3,0,1)
-            self.use_cell_coords_button_N[i].connect("clicked",
-                                                     self.dont_use_cell_coords_callback,
-                                                     (self.use_cell_coords_button_N[i], i) )
-            self.use_cell_coords_button_N[i].show()
-            # -----------------------------
-            # Show Cells Buttons 
-            # -----------------------------
-            # label
-            show_cells_label = gtk.Label("Show Cells ? ")
-            show_cells_label.set_alignment(1,.5)
-            table.attach(show_cells_label, 0,1,1,2)
-            show_cells_label.show()
-            # button Yes
-            self.show_cells_button_Y.append( gtk.RadioButton(None, "Yes") )
-            table.attach(self.show_cells_button_Y[i], 1,2,1,2)
-            self.show_cells_button_Y[i].show()
-            # button No
-            self.show_cells_button_N.append( gtk.RadioButton(self.show_cells_button_Y[i], "No") )
-            self.show_cells_button_N[i].set_active(not plotter.show_cells_flag)
-            table.attach(self.show_cells_button_N[i], 2,3,1,2)
-            self.show_cells_button_N[i].connect("clicked",
-                                                self.dont_show_cells_callback,
-                                                (self.show_cells_button_N[i], i) )
-            self.show_cells_button_N[i].show()
+            # ===============================================
+            # Axes panel only plotters supporting it
+            # ===============================================
+            if isinstance(plotter, tdc_Data_Plotter):
+                # -----------------------------
+                # Axes Panel 
+                # -----------------------------
+                self.AP.append(AxesPanel(self.Axes[i],'Panel %i' % i))
+                vbox.pack_start(self.AP[i], False, False, 5)
+                # Table with checkboxes <<<<<<<
+                table = gtk.Table(2, 3, False)
+                table.set_col_spacings(10)
+                vbox.pack_start(table, True, True, 1)
+                # ===============================================
+                # Cell coordinates only for plotters supporting it
+                # ===============================================
+                if isinstance(plotter, tdc_Data_vs_X_Plotter):
+                    # -----------------------------
+                    # Use Cell Coordinates Buttons 
+                    # -----------------------------
+                    # label
+                    use_cell_coords_label = gtk.Label("Use Cell Coordinates ? ")
+                    use_cell_coords_label.set_alignment(1,.5)
+                    table.attach(use_cell_coords_label,  0,1,0,1)
+                    use_cell_coords_label.show()
+                    # button Yes
+                    self.use_cell_coords_button_Y.append( gtk.RadioButton(None, "Yes") )
+                    table.attach(self.use_cell_coords_button_Y[i], 1,2,0,1)
+                    self.use_cell_coords_button_Y[i].show()
+                    # button No
+                    self.use_cell_coords_button_N.append( gtk.RadioButton(self.use_cell_coords_button_Y[i], "No") )
+                    self.use_cell_coords_button_N[i].set_active(not plotter.use_cell_coordinates_flag)
+                    table.attach(self.use_cell_coords_button_N[i], 2,3,0,1)
+                    self.use_cell_coords_button_N[i].connect("clicked",
+                                                             self.dont_use_cell_coords_callback,
+                                                             (self.use_cell_coords_button_N[i], i) )
+                    self.use_cell_coords_button_N[i].show()
+                    # -----------------------------
+                    # Show Cells Buttons 
+                    # -----------------------------
+                    # label
+                    show_cells_label = gtk.Label("Show Cells ? ")
+                    show_cells_label.set_alignment(1,.5)
+                    table.attach(show_cells_label, 0,1,1,2)
+                    show_cells_label.show()
+                    # button Yes
+                    self.show_cells_button_Y.append( gtk.RadioButton(None, "Yes") )
+                    table.attach(self.show_cells_button_Y[i], 1,2,1,2)
+                    self.show_cells_button_Y[i].show()
+                    # button No
+                    self.show_cells_button_N.append( gtk.RadioButton(self.show_cells_button_Y[i], "No") )
+                    self.show_cells_button_N[i].set_active(not plotter.show_cells_flag)
+                    table.attach(self.show_cells_button_N[i], 2,3,1,2)
+                    self.show_cells_button_N[i].connect("clicked",
+                                                        self.dont_show_cells_callback,
+                                                        (self.show_cells_button_N[i], i) )
+                    self.show_cells_button_N[i].show()
         # -----------------------------
         # Separator
         separator = gtk.HSeparator()
@@ -150,7 +160,7 @@ class Axes_Setup_Window:
         # ==============================
         control_button_box = gtk.HBox()
         vbox.pack_start(control_button_box, True, True, 5)
-        # Set Default
+        # Set Default - sets Cell Options to default
         set_default_button=gtk.Button('Set Default')
         control_button_box.pack_start(set_default_button,  False, False, 10)
         set_default_button.connect("clicked",self.set_default_callback,len(self.Plotters))
@@ -167,9 +177,10 @@ class Axes_Setup_Window:
         self.window.destroy()
 
     def set_default_callback(self,widget,n):
-        for i in range(n):
-            self.show_cells_button_N[i].set_active(True)
-            self.use_cell_coords_button_N[i].set_active(True)
+        # set cell buttons to default position
+        for b1,b2 in zip(self.show_cells_button_N,self.use_cell_coords_button_N):
+            b1.set_active(True)
+            b2.set_active(True)
 
     def close_callback(self,widget):
         self.close_window()
