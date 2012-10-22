@@ -3,9 +3,10 @@
 
 from Auxiliary        import *
 from Common_Data_Plot import *
-from x_Plots          import *
+from x_PlottingFunctions          import *
+from Movie            import Movie_Interface_Selector
 
-from x_Tests.plot_test_e_e_gauss_movie import *
+from _Tests.plot_test_e_e_gauss_movie import *
 
 # ============================================================
 # Figure Style Parameters
@@ -62,14 +63,14 @@ ylim_e  = [-3,3]
 ## ylim_e  = [-10,1]
 
 tt=None
-tt=[0,1]
+tt=[0,10]
 
-fps = 14
+fps = 7
 
 use_cell_coordinates=False
 show_cells=False
 
-keep_frame_files=False
+keep_frame_files=True
 
 ## moving_grid_dict = dict(n_lines=30, speed=1)
 moving_grid_dict = None
@@ -97,7 +98,7 @@ Plots = {'XP'           : True,
 
 def do_movie(IDs):
     # select interface
-    interface = tdc_Select_Interface()
+    interface = Movie_Interface_Selector()
 
     # iterate over IDs <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     for ID in IDs:
@@ -115,7 +116,7 @@ def do_movie(IDs):
             ## particle_names = ['Electrons','Protons']
             particle_names = ['Electrons']
 
-            tdc_plot_xp_movie(interface.plot_module,
+            tdc_plot_xp_movie(interface.movie_module,
                               ID,
                               particle_names,
                               ylim=ylim_xp,
@@ -139,7 +140,7 @@ def do_movie(IDs):
         # Rho
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         if Plots['Rho']:
-            tdc_plot_field_movie(interface.plot_module,
+            tdc_plot_field_movie(interface.movie_module,
                                  ID,
                                  'Rho',
                                  ylim=[-3,3],
@@ -158,7 +159,7 @@ def do_movie(IDs):
         # J
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         if Plots['J']:
-            tdc_plot_field_movie(interface.plot_module,
+            tdc_plot_field_movie(interface.movie_module,
                                  ID,
                                  'J',
                                  ylim=[-3,3],
@@ -176,7 +177,7 @@ def do_movie(IDs):
         # E_acc
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         if Plots['E_acc']:
-            tdc_plot_field_movie(interface.plot_module,
+            tdc_plot_field_movie(interface.movie_module,
                                  ID,
                                  'E_acc',
                                  ylim=ylim_e,
@@ -194,7 +195,7 @@ def do_movie(IDs):
         # E_Gauss
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         if Plots['E_Gauss']:
-            tdc_plot_field_movie(interface.plot_module,
+            tdc_plot_field_movie(interface.movie_module,
                                  ID,
                                  'E_Gauss',
                                  ylim=ylim_e,
@@ -214,7 +215,7 @@ def do_movie(IDs):
         #  plot Electric field and difference between Gauss' and Ampere's Electric fields
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         if Plots['E__E_Gauss']:
-            plot_test_e_e_gauss_movie(interface.plot_module,
+            plot_test_e_e_gauss_movie(interface.movie_module,
                                       ID,
                                       ylim=[ylim_e,[-1e-2,1e-2]],
                                       xlim=[xlim,xlim],
@@ -233,7 +234,7 @@ def do_movie(IDs):
         # Phi
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         if Plots['Phi']:
-            tdc_plot_field_movie(interface.plot_module,
+            tdc_plot_field_movie(interface.movie_module,
                                  ID,
                                  'Phi',
                                  ylim=[-.5,.1],
@@ -244,7 +245,7 @@ def do_movie(IDs):
         # Particle Number Density
         # ~~~~~~~~~~~~~~~~~~~~~~~~
         if Plots['EP']:
-            tdc_plot_ep_density_movie(interface.plot_module,
+            tdc_plot_ep_density_movie(interface.movie_module,
                                       ID,
                                       ylim=[0,60],
                                       e_density_negative=False,

@@ -7,7 +7,7 @@ import numpy             as np
 from Auxiliary        import *
 from Common_Data_Plot import *
 
-from x_Plots.MPP   import tdc_mpp_v__e_fft_discharge
+from x_PlottingFunctions.MPP   import tdc_mpp_v__e_fft_discharge
 
 import MPP
 

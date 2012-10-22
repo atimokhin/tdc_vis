@@ -9,7 +9,7 @@ from   matplotlib.cbook  import flatten
 
 from Auxiliary        import *
 from Common_Data_Plot import *
-from x_Plots.MPP      import tdc_mpp__n_rho_j_e_xp_epgp
+from x_PlottingFunctions.MPP      import tdc_mpp__n_rho_j_e_xp_epgp
 #------------------------------------
 
 
@@ -18,7 +18,7 @@ from x_Plots.MPP      import tdc_mpp__n_rho_j_e_xp_epgp
 tdc_rcParams.set_hardcopy()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     
-tdc_Filenames.set_results_dir('../RESULTS/WD/')
+tdc_Filenames.set_results_dir('../RESULTS/WD/_paper_TDC2')
 
 
 fig_param=dict()
@@ -28,9 +28,9 @@ fig_param=dict()
 #------------------------------------
 
 
-## plot_flag = 'jp1.5__1'
-## plot_flag = 'jp1.5__2'
-plot_flag = 'jp1.5__3'
+plot_flag = 'jp1.5__1'
+# plot_flag = 'jp1.5__2'
+# plot_flag = 'jp1.5__3'
 
 #------------------------------------
 

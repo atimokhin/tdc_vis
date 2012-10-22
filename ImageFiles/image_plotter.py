@@ -35,10 +35,6 @@ class Image_Plotter(tdc_Data_Plotter):
         **kwargs goes to ax.plot(..)
         """
         self.lines[0] = ax.imshow(self.data[0].image, **kwargs)
-        # make axes invisible
-        ax.set_frame_on(False)
-        ax.xaxis.set_visible(False)
-        ax.yaxis.set_visible(False)
             
             
     def replot(self,ax):

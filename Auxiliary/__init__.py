@@ -14,10 +14,8 @@ from tdc_setup_props     import tdc_Setup_Props
 
 from tdc_exception       import tdc_Exception
 
-from tdc_select_interface import tdc_Select_Interface
 
 __all__= ['tdc_save_figure',
           'tdc_TimeInfo',
           'tdc_Exception',
-          'tdc_Filenames',
-          'tdc_Select_Interface' ]
+          'tdc_Filenames' ]

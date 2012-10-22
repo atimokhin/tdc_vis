@@ -194,8 +194,6 @@ class tdc_FMCI_XP_Data_Base(tdc_Data):
         return self.time
 
     def __get_particle_name(self,short_name):
-        """
-        """
         for (key,val) in self.__particle_short_names.items():
             if val==short_name:
                 return key

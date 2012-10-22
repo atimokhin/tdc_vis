@@ -1,12 +1,12 @@
 
 .PHONY: all clean
 
-all: test_read_fmci_file.exe
+all: test_fmci.exe
 
-read_fmci_file.o: read_fmci_file.c read_fmci_file.h
+fmci.o: fmci.c fmci.h
 	$(CC)  -c -o $@ $< -std=c89
 
-test_read_fmci_file.exe: %.exe : %.exe.c read_fmci_file.o
+test_fmci.exe: %.exe : %.exe.c fmci.o
 	$(CC)  -o $@ $^ -std=c89
 
 clean:

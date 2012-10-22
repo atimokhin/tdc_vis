@@ -1,9 +1,10 @@
 #!/usr/bin/python
 import os
 
-from Auxiliary        import *
-from Common_Data_Plot import *
-from x_Plots          import *
+from Auxiliary           import *
+from Common_Data_Plot    import *
+from x_PlottingFunctions import *
+from Movie               import Movie_Interface_Selector
 
 
 # ============================================================
@@ -51,15 +52,15 @@ keep_frame_files=False
 # ============================================================
 # Plots 
 # ============================================================
-Plots = {'MP' : True,
-         'XP' : False }
+Plots = {'MP' : False,
+         'XP' : True }
 # ============================================================
 
 
 
 def do_movie():
     # select interface
-    interface = tdc_Select_Interface()
+    interface = Movie_Interface_Selector()
     
     # ~~~~~~~~~~~~~~~~~~~~~~~~
     # MP Movie
@@ -67,7 +68,7 @@ def do_movie():
     if Plots['MP']:
         particle_names = ['Electrons', 'Positrons', 'Pairs']
 
-        tdc_plot_fmci_mp_movie(interface.plot_module,
+        tdc_plot_fmci_mp_movie(interface.movie_module,
                                FMCI_ID,
                                particle_names,
                                ylim=ylim_mp,
@@ -89,7 +90,7 @@ def do_movie():
     if Plots['XP']:
         particle_name = 'Positrons'
 
-        tdc_plot_fmci_xp_movie(interface.plot_module,
+        tdc_plot_fmci_xp_movie(interface.movie_module,
                                FMCI_ID,
                                particle_name,
                                ylim=ylim_mp,

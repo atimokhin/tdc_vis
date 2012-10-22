@@ -25,7 +25,7 @@ class Image_Sequence(tdc_Sequence):
         image_data
            instance of tdc_FMCI_*_Data class for data intialization
         image_id
-           image id
+           image id (directory with image files)
         --------
         Options:
         --------

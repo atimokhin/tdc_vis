@@ -9,7 +9,7 @@ from   matplotlib.cbook  import flatten
 
 from Auxiliary        import *
 from Common_Data_Plot import *
-from x_Plots.MPP      import tdc_mpp__n_rho_j_e_xp
+from x_PlottingFunctions.MPP      import tdc_mpp__n_rho_j_e_xp
 
 ## from Particles    import *
 ## import MPP
@@ -20,7 +20,7 @@ from x_Plots.MPP      import tdc_mpp__n_rho_j_e_xp
 tdc_rcParams.set_hardcopy()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     
-tdc_Filenames.set_results_dir('../RESULTS/WD/')
+tdc_Filenames.set_results_dir('../RESULTS/WD/_paper_TDC2')
 
 
 fig_param=dict()
@@ -29,18 +29,18 @@ fig_param=dict()
 # PLot Flags
 #------------------------------------
 
-## plot_flag = 'jm1.5__1'
-## plot_flag = 'jm1.5__2'
-## plot_flag = 'jm1.5__3'
+plot_flag = 'jm1.5__1'
+# plot_flag = 'jm1.5__2'
+# plot_flag = 'jm1.5__3'
 
-## plot_flag = 'jp0.5__1'
-## plot_flag = 'jp0.5__2'
-## plot_flag = 'jp0.5__3'
+# plot_flag = 'jp0.5__1'
+# plot_flag = 'jp0.5__2'
+# plot_flag = 'jp0.5__3'
 
-## plot_flag = 'RhoGJ_lin2__jm2.0__1'
-plot_flag = 'RhoGJ_lin2__jm2.0__2'
+# plot_flag = 'RhoGJ_lin2__jm2.0__1'
+# plot_flag = 'RhoGJ_lin2__jm2.0__2'
 
-## plot_flag = 'RhoGJ_lin2__jm1.059'
+# plot_flag = 'RhoGJ_lin2__jm1.059'
 #------------------------------------
 
 

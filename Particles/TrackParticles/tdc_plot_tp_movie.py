@@ -42,4 +42,4 @@ def tdc_plot_tp_movie(plot_module,
     movie_id = 'TP' + '_' + tp.calc_id
     # -----------------------------------------
     # make movie
-    plot_module.Movie.plot_movie( MF, movie_id, fps)
+    plot_module.MovieMakers.plot_movie( MF, movie_id, fps)

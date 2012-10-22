@@ -4,7 +4,7 @@ import numpy             as np
 from Auxiliary        import *
 from Common_Data_Plot import *
 
-from x_Plots.MPP      import tdc_mpp__sed
+from x_PlottingFunctions.MPP      import tdc_mpp__sed
 # ---------------------------------
 
 
@@ -13,13 +13,13 @@ tdc_rcParams.set_hardcopy()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 # ---------------------------------
-tdc_Filenames.set_results_dir('../RESULTS/WD/')
+tdc_Filenames.set_results_dir('../RESULTS/WD/_paper_TDC2')
 # ---------------------------------
 
 
-## plot_flag = 'jm1.5'
-## plot_flag = 'jp0.5'
-plot_flag = 'jp1.5'
+plot_flag = 'jm1.5'
+# plot_flag = 'jp0.5'
+# plot_flag = 'jp1.5'
 
 
 # ------------------------------------------------------------

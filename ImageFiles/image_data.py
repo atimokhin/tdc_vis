@@ -20,10 +20,11 @@ class Image_Data(object):
         Contains class members in one place
         """
         # data member
-        self.image          = None
-        self.image_filename = None
-        self.image_id       = None
-        self.i_im           = None
+        self.image            = None
+        self.image_filename   = None
+        self.image_id         = None
+        self.i_im             = None
+        self.imagesize_points = []
 
         
     @staticmethod
@@ -64,6 +65,7 @@ class Image_Data(object):
         except IOError:
             print "Image_Data: Can not read file \"%s\"\n" % filename
             return False
+        self.imagesize_points = self.image.shape[1::-1]
         self.image_filename=filename
         self.image_id=os.path.basename(os.path.dirname(filename))
         return True

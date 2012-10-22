@@ -1,10 +1,10 @@
 #!/usr/bin/python
 import os
 
-from Auxiliary        import *
-from Common_Data_Plot import *
-
-from x_Plots   import *
+from Auxiliary         import *
+from Common_Data_Plot  import *
+from x_PlottingFunctions           import *
+from Movie             import Movie_Interface_Selector
 
 from plot_xp__OF_movie import *
 
@@ -71,7 +71,7 @@ moving_grid_dict = None
 
 def do_movie(ID):
     # select interface
-    interface = tdc_Select_Interface()
+    interface = Movie_Interface_Selector()
 
     
     # ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -84,7 +84,7 @@ def do_movie(ID):
         sample_dict    = dict(name='regular',n_reduce=1,n_min=1000)
         particle_names = ['Electrons']
         
-        plot_xp__OF_movie(interface.plot_module,
+        plot_xp__OF_movie(interface.movie_module,
                           ID,
                           particle_names,
                           ylim=ylim_xp,

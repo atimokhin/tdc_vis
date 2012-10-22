@@ -7,18 +7,18 @@ import numpy             as np
 from Auxiliary        import *
 from Common_Data_Plot import *
 
-from x_Plots.MPP      import tdc_mpp_v__e_rho_n
+from x_PlottingFunctions.MPP      import tdc_mpp_v__e_rho_n
 # -------------------------------
 
 
 tdc_rcParams.set_hardcopy()
 
-tdc_Filenames.set_results_dir('../RESULTS/WD/')
+tdc_Filenames.set_results_dir('../RESULTS/WD/_paper_TDC2')
 
 
 
 
-plot_flag = 'wave1'
+plot_flag = 'wave2'
 
 
 # ------------------------------------------------------------
