@@ -126,9 +126,9 @@ class Movie_File_Maker:
         """
         # [shifruemsya na klastere] ---
         import os
-        # my_host = os.environ.get('MY_HOST','nohost')
-        # # mencoder command [shifruemsya na klastere]
-        # encoder_command = 'combine.exe' if my_host=='henyey' else 'mencoder'        
+        my_host = os.environ.get('MY_HOST','nohost')
+        # mencoder command [shifruemsya na klastere]
+        encoder_command = 'ffm' if my_host=='henyey' else 'ffmpeg'        
         # -----------------------------
         # run mencoder which combines frames into a movie
                        # "bitrate=1500:subq=5:frameref=3:bframes=0:threads=auto" 
@@ -145,7 +145,6 @@ class Movie_File_Maker:
         #                "; " +\
         #                "rm -f " + self.h264_filename
 
-        encoder_command = 'ffmpeg'
         command_string = \
             "rm -f %s; " % self.movie_filename +\
             encoder_command + " -r %d " % self.fps +\
