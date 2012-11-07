@@ -1,3 +1,5 @@
+import re
+
 from Common_Data_Plot  import tdc_Single_FigureGeometry, tdc_Double_FigureGeometry
 
 from Movie             import *
@@ -29,7 +31,7 @@ class Double_Panel_Movie_Frames(MovieFrames__GUI):
     in other opertions it relies on MovieFrames__GUI
     """
 
-    def __init__(self, seq_plotter, ylim, xlim=None, axes_commands=None, fig_param=None):
+    def __init__(self, seq_plotters, ylims, xlims=None, axes_commands=None, fig_param=None):
         """
         All arguments must be sequences of the same length!
         -----------
@@ -38,14 +40,14 @@ class Double_Panel_Movie_Frames(MovieFrames__GUI):
         xlim       
         """
         # initialize base class ======
-        MovieFrames__GUI.__init__(self, seq_plotter )
+        MovieFrames__GUI.__init__(self, seq_plotters )
         # setup graphic elements =====
         mfs = tdc_Double_FigureGeometry(fig_param)
         # xlim, ylim must be sequences
-        if not xlim:
-            xlim = [None,None]
+        if not xlims:
+            xlims = [None,None]
         if not axes_commands:
             axes_commands = [None,None]
-        self._setup_figure_and_axes(mfs, xlim,ylim, axes_commands)
+        self._setup_figure_and_axes(mfs, xlims,ylims, axes_commands)
         # set plot_idlabel -----------------------
-        self.plot_idlabel = seq_plotter[0].plot_idlabel
+        self.plot_idlabel = '%s + %s' % (re.split(':',seq_plotters[0].plot_idlabel)[0], seq_plotters[1].plot_idlabel)

@@ -23,8 +23,9 @@ struct FMCI{
   
   double time;                  /* time of the timeshot */
 
-  double B0;                    /* magnetic field [in 10^12 Gauss] */
-  double X0;                    /* distance noramalization   */
+  double B12;                   /* magnetic field [in 10^12 Gauss] */
+  double Lcm;                   /* domain length [cm]  */
+  double P;                     /* pulsar period [sec] */
 
   int __need_memory_allocation; /* internal variable, do not chnage it! */
 };

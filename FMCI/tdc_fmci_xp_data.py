@@ -46,7 +46,11 @@ class tdc_FMCI_XP_Data_Base(tdc_Data):
         self.x       = None
         self.p       = None
         self.fmci_XP = None
-
+        # PSR parameters
+        self.PSR_P   = None
+        self.PSR_B12 = None
+        self.PSR_Lcm = None
+ 
     @staticmethod
     def init_from_ascii(filename, **kwargs):
         """
@@ -80,6 +84,10 @@ class tdc_FMCI_XP_Data_Base(tdc_Data):
         #>>params_physics:
         particle=
         time=
+        P= 
+        B12= 
+        Lcm=
+        Xi=
 
         #>>params_TDC:
         calc_id=
@@ -108,6 +116,9 @@ class tdc_FMCI_XP_Data_Base(tdc_Data):
         out.write('\n#>>params_physics:\n')
         out.write('particle=%s\n' % self.__particle_short_names[self.name])        
         out.write('time=%1.8E\n'  % self.time)
+        out.write('P=%1.8E\n'  % self.PSR_P)
+        out.write('B12=%1.8E\n'  % self.PSR_B12)
+        out.write('Lcm=%1.8E\n'  % self.PSR_Lcm)
         # params_TDC:
         out.write('\n#>>params_TDC:\n')
         out.write('calc_id=%s\n' % self.calc_id)        
@@ -241,6 +252,10 @@ class tdc_FMCI_XP_Data(tdc_Data__with_Timetable,tdc_FMCI_XP_Data_Base):
         # normalization parameters
         self.W0 = setup_props.get_papam('FMPProps/W0')
         self.L  = setup_props.get_papam('/GridProps/L')
+        # physical parameters
+        self.PSR_P   = setup_props.get_papam('/PulsarGapProps/P')
+        self.PSR_B12 = setup_props.get_papam('/PulsarGapProps/B12')
+        self.PSR_Lcm = setup_props.get_papam('/GridProps/L_cm')
         # set xp_partition =================
         self.set_xp_partition(xp_partition)
 

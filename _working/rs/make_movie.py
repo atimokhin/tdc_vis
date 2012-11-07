@@ -22,7 +22,10 @@ fig_param = paramSingleFig_Presentation
 # tdc_Filenames.set_results_dir('../RESULTS/WD')
 tdc_Filenames.set_results_dir('../RESULTS/WD/RS')
 ## tdc_Filenames.set_results_dir('../RESULTS/WD/RS_2')
+tdc_Filenames.set_results_dir('../RESULTS/WD/TDC_Presentation')
 
+
+tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/TDC_Presentation')
 
 # ============================================================
 # IDs 
@@ -35,17 +38,25 @@ IDs=[['RS_1_R6_jp1.0_P0.2_L0.3_nGJ2.5e4_nx2.5e3_dt4e-5_s1',
 
 # IDs=['RS_prsnt_R6_jp1.0_P0.2_L0.3_nGJ2.5e4_nx2.5e3_dt4e-5_s1']
 
+# IDs=['RS__R6_jp0.5_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU']
+IDs=['RS__R6_jp0.5_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU__wave']
+
+
 # ============================================================
 # plot limits:
 # ============================================================
 xlim = [-0.005,0.305]
 ## xlim = [-0.005,0.605]
 
-ylim_xp  = [-1.7e5,1.7e5]
+ylim_xp  = [-5e8,5e8]
+
 ylim_rho = [-100,100]
 ylim_j   = [-100,100]
 ylim_e   = [-2.001,2.001]
 ylim_phi = [-0.5,0.5]
+
+# wave
+ylim_e   = [-0.101,0.21]
 
 
 axes_commands_xp = ['set_yticks([-1e8,-1e4,0,1e4,1e8])']
@@ -54,8 +65,8 @@ axes_commands_xp = ['set_yticks([-1e8,-1e4,0,1e4,1e8])']
 
 
 
-sample_dict    = dict(name='regular',n_reduce=10,n_min=1000)
-## sample_dict    = dict(name='regular',n_reduce=20,n_min=3000)
+sample_dict = dict(name='regular',n_reduce=1,n_min=1000)
+## sample_dict = dict(name='regular',n_reduce=20,n_min=3000)
 
 particle_names = ['Positrons','Electrons','Pairs']
 
@@ -65,15 +76,15 @@ linthreshy=5
 tt = None
 ## tt = [0,0.2]
 
-fps = 9
+fps = 15
 keep_frame_files=False
 
 use_cell_coordinates=False
 show_cells=False
 ghost_points=False
 
-## moving_grid_dict = dict(n_lines=30, speed=1)
 moving_grid_dict = None
+# moving_grid_dict = dict(n_lines=30, speed=1)
 # ==================
 
 
@@ -85,7 +96,7 @@ moving_grid_dict = None
 Plots = {'XP'           : True,
          'Rho'          : False,
          'J'            : False,
-         'E_acc'        : False,
+         'E_acc'        : True,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
          'Phi'          : False,

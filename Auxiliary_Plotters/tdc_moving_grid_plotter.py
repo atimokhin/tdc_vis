@@ -52,10 +52,14 @@ class tdc_Moving_Grid_Plotter:
         # update positions for the current time
         t  = self.plotter.data[0].timetable.get_absolute_time()
         xx,yy = self._grid_lines_points(t,ylims)
+        # filter grid lines  parameters from kwargs
+        grid_lines_keys = ('animated',)
+        grid_lines_kwargs = { k: kwargs[k] for k in grid_lines_keys if kwargs.has_key(k) }
+        # plot grid lines
         for i,x  in enumerate(xx):
-            self.grid_lines[i], = ax.plot((x,x),yy,'r',
-                                          linewidth=0.75*mpl.rcParams['lines.linewidth'],
-                                          **kwargs)
+            self.grid_lines[i], = ax.plot( (x,x), yy, 'r',
+                                           linewidth=0.75*mpl.rcParams['lines.linewidth'],
+                                           **grid_lines_kwargs )
 
     def set_animated(self,val):
         "Set animated property in all lines"
@@ -70,7 +74,7 @@ class tdc_Moving_Grid_Plotter:
         # plot moving gris
         ylims = ax.get_ylim()
         # update grid line positions for the current time
-        t  = self.plotter.timetable.get_absolute_time()
+        t  = self.plotter.data[0].timetable.get_absolute_time()
         xx,yy = self._grid_lines_points(t,ylims)
         # plot grid lines
         for line,x in zip(self.grid_lines, xx):

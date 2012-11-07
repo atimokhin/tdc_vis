@@ -23,6 +23,9 @@ fig_param = paramSingleFig_Presentation
 tdc_Filenames.set_results_dir('../RESULTS/__TDC_2')
 
 
+tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/TDC_Presentation')
+
+
 # ============================================================
 # ID 
 # ============================================================
@@ -56,8 +59,9 @@ ylim_xp=[-3.5,3.5]
 
 
 tt=None
-tt=[0,6]
-fps = 11
+tt=[-1,6]
+
+fps = 15
 
 use_cell_coordinates=False
 show_cells=False

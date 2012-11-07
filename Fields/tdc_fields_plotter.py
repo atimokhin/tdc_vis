@@ -1,3 +1,6 @@
+import inspect
+import matplotlib.lines
+
 from Common_Data_Plot import tdc_Data_vs_X_Plotter
 
 class tdc_Fields_Plotter(tdc_Data_vs_X_Plotter):
@@ -6,6 +9,9 @@ class tdc_Fields_Plotter(tdc_Data_vs_X_Plotter):
 
     plots all fields as black lines
     """
+
+    __line_args = inspect.getargspec(matplotlib.lines.Line2D.__init__).args
+    __line_args.append('animated')
 
     def __init__(self, fields, xlabel=None,ylabel=None,idlabel=None):
         """
@@ -27,9 +33,12 @@ class tdc_Fields_Plotter(tdc_Data_vs_X_Plotter):
         Plot fields into axes ax
         **kwargs goes to ax.plot(..)
         """
+        # filter arguments for field lines
+        field_lines_kwargs = { k: kwargs[k] for k in self.__line_args if kwargs.has_key(k)}        
+        # plot lines
         for i,field in enumerate(self.data):
-            self.lines[i], = ax.plot(field.x, field.f,'k',**kwargs)
-        tdc_Data_vs_X_Plotter.plot(self,ax,**kwargs)
+            self.lines[i], = ax.plot(field.x, field.f,'k',**field_lines_kwargs)
+        tdc_Data_vs_X_Plotter.plot(self,ax)
 
     def replot(self,ax):
         """

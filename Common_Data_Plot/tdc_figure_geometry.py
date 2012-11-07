@@ -102,11 +102,25 @@ class tdc_Single_FigureGeometry:
 
 
 
-class tdc_Double_FigureGeometry:
+class tdc_Double_FigureGeometry(tdc_Single_FigureGeometry):
     """
     Size of figure and axes boxes for single pane movie frame
     """
 
-    def __init__(self):
-        self.figsize_points=[1100,500]
-        self.axes_boxes=[[0.08,.1,.4,.85],[0.58,.1,.4,.85]]
+    def __init__(self,fig_param=None):
+        tdc_Single_FigureGeometry.__init__(self,fig_param)
+        self.figsize_points=[720,600]
+        self.axes_boxes=[[0.12,.55,.86,.43], [0.12,.11,.86,.43]]
+        # axes related parameters
+        self.y_BOT_ax_center = self.bottom_margin    + 0.5*self.axes_boxes[1][3]
+        self.y_TOP_ax_center = self.axes_boxes[0][1] + 0.5*self.axes_boxes[0][3]
+
+    def ylabel_pos(self,i):
+        """
+        y label position in figure coordinates
+        """
+        if self.ylabel_left_y is None:
+            ylabel_left_y = self.y_TOP_ax_center if i==0 else self.y_BOT_ax_center
+        else:
+            ylabel_left_y = self.ylabel_left_y
+        return ( self.ylabel_left_x, ylabel_left_y)

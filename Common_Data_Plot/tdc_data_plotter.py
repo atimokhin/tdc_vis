@@ -38,7 +38,7 @@ class tdc_Plotter:
         self.plot_xlabel  = xlabel
         self.plot_idlabel = idlabel
 
-    def plot(self,ax,**kwargs):
+    def plot(self,ax):
         """
         Do plotting on axes ax - EMPTY
         Must be implemented in a children class
@@ -175,7 +175,7 @@ class tdc_Data_vs_X_Plotter(tdc_Data_Plotter):
         # unset _coordinates_chaged_flag
         self._coordinates_chaged_flag = False 
 
-    def plot(self,ax,**kwargs):
+    def plot(self,ax):
         """
         Plot cell boundaries if requested
         """

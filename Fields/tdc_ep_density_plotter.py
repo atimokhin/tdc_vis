@@ -34,7 +34,7 @@ class tdc_EP_Density_Plotter(tdc_Fields_Plotter):
         "Plot Field into axes ax"
         self.lines[0], = ax.plot(self.data[0].x, self.e_sign*self.data[0].f,'b',**kwargs)
         self.lines[1], = ax.plot(self.data[1].x,             self.data[1].f,'r',**kwargs)
-        tdc_Data_vs_X_Plotter.plot(self,ax,**kwargs)
+        tdc_Data_vs_X_Plotter.plot(self,ax)
 
     def animation_update(self,ax,i_ts):
         "Read and plot field for animation at timestep# i_ts"
@@ -76,7 +76,7 @@ class tdc_EPG_Density_Plotter(tdc_Fields_Plotter):
         self.lines[0], = ax.plot(self.data[0].x, self.e_sign*self.data[0].f,'b',**kwargs)
         self.lines[1], = ax.plot(self.data[1].x,             self.data[1].f,'r',**kwargs)
         self.lines[2], = ax.plot(self.data[2].x,             self.data[2].f,'k',**kwargs)
-        tdc_Data_vs_X_Plotter.plot(self,ax,**kwargs)
+        tdc_Data_vs_X_Plotter.plot(self,ax)
 
     def animation_update(self,ax,i_ts):
         "Read and plot field for animation at timestep# i_ts"
@@ -121,7 +121,7 @@ class tdc_EPGP_Density_Plotter(tdc_Fields_Plotter):
         self.lines[1], = ax.plot(self.data[1].x,             self.data[1].f,'r',**kwargs)
         self.lines[2], = ax.plot(self.data[2].x,             self.data[2].f,'k',**kwargs)
         self.lines[3], = ax.plot(self.data[3].x,             self.data[3].f,'m',**kwargs)
-        tdc_Data_vs_X_Plotter.plot(self,ax,**kwargs)
+        tdc_Data_vs_X_Plotter.plot(self,ax)
 
     def animation_update(self,ax,i_ts):
         "Read and plot field for animation at timestep# i_ts"

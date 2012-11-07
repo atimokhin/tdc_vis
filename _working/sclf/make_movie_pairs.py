@@ -19,14 +19,16 @@ fig_param = paramSingleFig_Presentation
 # ============================================================
 # Directory
 # ============================================================
-tdc_Filenames.set_results_dir('../RESULTS/')
-# tdc_Filenames.set_results_dir('../RESULTS/WD/_paper_TDC2')
+# tdc_Filenames.set_results_dir('../RESULTS/')
+tdc_Filenames.set_results_dir('../RESULTS/WD/_paper_TDC2')
 
+
+tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/TDC_Presentation')
 
 # ============================================================
 # IDs 
 # ============================================================
-# IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1']
+IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1']
 
 # IDs=['SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj5_sU_P']
 # IDs=['SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj7_sU']
@@ -34,10 +36,10 @@ tdc_Filenames.set_results_dir('../RESULTS/')
 # IDs=['Arons__j2.000_Pcf9e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU']
 # IDs=['Arons__j2.000_Pcf9e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU__wave']
 
-IDs=['Arons__j1.059_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU']
+# IDs=['Arons__j1.059_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU']
 
-IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1_noPairs']
-IDs=['SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj5_sU_P_noPairs']
+
+
 
 # ============================================================
 # plot limits:
@@ -57,8 +59,7 @@ xlim = [-0.01,1.01]
 
 #  jm2.0 ---
 ylim_xp  = [-5e8,5e8]
-axes_commands_xp = ['set_yticks([-1e8,-1e4,0,1e4,1e8])']
-## axes_commands_xp = None
+
 
 ylim_rho = [-10,10]
 ylim_j   = [-2,0.5]
@@ -88,11 +89,6 @@ ylim_ep  = [-0.5,100]
 ## # ----------------------------------------
 
 ## # ----------------------------------------
-## # jm0.5 ---
-## ylim_xp = [-50,50]
-## ylim_e  = [-1,1]
-## # ----------------------------------------
-## # ----------------------------------------
 ## # jp0.5 ---
 ## ylim_xp = [-2e7,2e7]
 ## ylim_e  = [-1,1]
@@ -109,18 +105,27 @@ ylim_ep  = [-0.5,100]
 ## # ----------------------------------------
 
 
-sample_dict    = dict(name='regular',n_reduce=5,n_min=100)
-## sample_dict    = dict(name='regular',n_reduce=20,n_min=3000)
+sample_dict = dict(name='regular',n_reduce=1,n_min=3000)
+# sample_dict = dict(name='regular',n_reduce=10,n_min=3000)
+
 
 particle_names = ['Positrons','Electrons','Pairs','Protons']
 ## particle_names = ['Positrons','Electrons','Pairs']
+
+
+# axes_commands_xp = None
+# axes_commands_xp = ['set_yticks([-1e8,-1e4,0,1e4,1e8])']
+axes_commands_xp = ['set_yticks([-1e8,-1e4,0,1e4,1e8])', 
+                    'axvspan(0.7, 1.01, facecolor=\'0.85\', alpha=0.5)'] # for no-pair zone
 
 symlog=True
 linthreshy=5
 
 tt = None
+# tt=[12.10,16.00]
+# tt=[10,12.120]
 
-fps = 24
+fps = 9
 keep_frame_files=False
 
 use_cell_coordinates=False
@@ -140,7 +145,7 @@ moving_grid_dict = None
 Plots = {'XP'           : True,
          'Rho'          : False,
          'J'            : False,
-         'E_acc'        : True,
+         'E_acc'        : False,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
          'Phi'          : False,

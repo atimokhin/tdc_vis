@@ -22,8 +22,8 @@ def plot_movie( movie_frames, movie_id, fps, keep_frame_files, **kwargs):
     MFM.open_index_file()
     for i in range(MF.i_frame_min, MF.i_frame_max):
         # ====> here keyword parameters go to the plotter's plot method <=====
-        MF.animation_update(i+1,**kwargs)
-        print 'Saving frame %4d (out of %d)' % (i+1,MF.i_frame_max)  
+        MF.animation_update(i,**kwargs)
+        print 'Saving frame %4d (out of %d)' % (i,MF.i_frame_max)  
         MFM.store_snapshot(MF.figure)
     MFM.close_index_file()
     # create movie file -----------------------

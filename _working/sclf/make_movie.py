@@ -18,8 +18,9 @@ fig_param = paramSingleFig_Presentation
 # Directory
 # ============================================================
 tdc_Filenames.set_results_dir('../RESULTS/__TDC_2/')
-## tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
 
+
+tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/TDC_Presentation')
 
 # ============================================================
 # IDs 
@@ -28,6 +29,8 @@ tdc_Filenames.set_results_dir('../RESULTS/__TDC_2/')
 
 IDs=[['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1',
       'SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__1']]
+
+IDs=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__slow']
 
 #-----------------
 # xlabel
@@ -63,7 +66,7 @@ ylim_e  = [-3,3]
 ## ylim_e  = [-10,1]
 
 tt=None
-tt=[0,10]
+# tt=[0,10]
 
 fps = 7
 

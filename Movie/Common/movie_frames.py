@@ -47,7 +47,7 @@ class MovieFrames:
         """
         for P,A in zip(self.seq_plotter,self.ax):
             P.plot(A,**kwargs)
-        
+
     def get__i_ts(self):
         return self.seq_plotter[0].data[0].get__i_ts()
 

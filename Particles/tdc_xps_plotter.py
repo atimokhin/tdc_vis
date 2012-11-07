@@ -1,3 +1,6 @@
+import inspect
+import matplotlib.lines
+
 from Common_Data_Plot import tdc_Data_vs_X_Plotter
 
 class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
@@ -8,6 +11,8 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
     plot_label -- TeX string label used for plot annotations
     line       -- Line artists with plotted field
     """
+    __line_args = inspect.getargspec(matplotlib.lines.Line2D.__init__).args
+    __line_args.append('animated')
 
     __plotstyle = { 'Electrons' : {'linestyle':'None','color':'b','markeredgecolor':'b','marker':'o','markersize':0.5},
                     'Positrons' : {'linestyle':'None','color':'r','markeredgecolor':'r','marker':'o','markersize':0.5},
@@ -65,16 +70,16 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
         linthreshy   
            <5>     The range (-x, x) within which the plot is linear
         """
-        plot_kwargs={}
+        # filter arguments for field lines
+        plot_kwargs = { k: kwargs[k] for k in self.__line_args if kwargs.has_key(k)}        
         for i,xp in enumerate(self.data):
             plot_kwargs.update(self.__plotstyle[xp.name])
-            plot_kwargs.update(kwargs)            
             self.lines[i], = ax.plot(xp.x, xp.p,
                                      **plot_kwargs)
             # make scaling semi-logatithmic if asked
             if symlog:
                 ax.set_yscale('symlog',linthreshy=linthreshy,subsy=[1,10])
-        tdc_Data_vs_X_Plotter.plot(self,ax,**kwargs)
+        tdc_Data_vs_X_Plotter.plot(self,ax)
 
 
     def replot(self,ax):

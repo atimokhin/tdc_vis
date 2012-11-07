@@ -48,13 +48,12 @@ class Movie_File_Maker__CMD(Movie_File_Maker):
         # dpi - use the same dpi as figure plot
         self.dpi = dpi
 
-
     def store_snapshot(self, figure):
         """
         each snapshot is a figure saved as separate png file
         """
         # name of the file where current frame will be saved
-        filename = self.get_frame_filename(self.i_saved_frame)
+        filename = self.get_frame_filename(self.i_saved_frame+1)
         # create frame file, save frame there, then close the file
         # use dpi saved at class initialization
         figure.savefig( filename, dpi=self.dpi )
