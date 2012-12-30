@@ -23,6 +23,7 @@ def tdc_plot_xp_movie(plot_module,
                       axes_commands=None,
                       xlabel=None,ylabel=None,idlabel=None,
                       fig_param=None,
+                      plot_style=None,
                       **kwargs):
     """
     calc_ids
@@ -77,6 +78,8 @@ def tdc_plot_xp_movie(plot_module,
                              tp=tps,
                              trail_dict=trail_dict,
                              xlabel=xlabel, ylabel=ylabel, idlabel=idlabel)
+    if plot_style is not None:
+        pp.set_plotstyle(**plot_style)
     if use_cell_coordinates:
         pp.use_cell_coordinates()
     if show_cells:

@@ -18,6 +18,7 @@ def tdc_plot_field_movie(plot_module,
                          time_normalization=None,
                          xlabel=None,ylabel=None,idlabel=None,
                          fig_param=None,
+                         plot_style=None,
                          **kwargs):
     """
     plot_module
@@ -59,6 +60,8 @@ def tdc_plot_field_movie(plot_module,
     # field plotter
     fp  = tdc_Fields_Plotter(fs,
                              xlabel=xlabel, ylabel=ylabel, idlabel=idlabel)
+    if plot_style is not None:
+        fp.set_plotstyle(**plot_style)
     if use_cell_coordinates:
         fp.use_cell_coordinates()
     if show_cells:

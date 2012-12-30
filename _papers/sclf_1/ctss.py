@@ -7,17 +7,17 @@ import numpy             as np
 import matplotlib.pyplot as plt
 from   matplotlib.cbook  import flatten
 
+from ATvis.Common_Data_Plot import *
+
 from Auxiliary        import *
 from Common_Data_Plot import *
 from x_PlottingFunctions.MPP      import tdc_mpp__n_rho_j_e_xp
 
-## from Particles    import *
-## import MPP
 #------------------------------------
 
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-tdc_rcParams.set_hardcopy()
+AT_rcParams.set_hardcopy()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     
 tdc_Filenames.set_results_dir('../RESULTS/WD/_paper_TDC2')

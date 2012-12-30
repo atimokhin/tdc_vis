@@ -18,6 +18,7 @@ def tdc_plot_ep_density_movie(plot_module,
                               time_normalization=None,
                               xlabel=None,ylabel=None,idlabel=None,
                               fig_param=None,
+                              plot_style=None,
                               **kwargs):
     """
     calc_ids
@@ -66,6 +67,8 @@ def tdc_plot_ep_density_movie(plot_module,
                                          **kwargs)
     plotter  = tdc_EP_Density_Plotter(fe,fp,e_density_negative,
                                       xlabel=xlabel, ylabel=ylabel, idlabel=idlabel)
+    if plot_style is not None:
+        plotter.set_plotstyle(**plot_style)
     # plot moving grid if asked
     if moving_grid_dict:
         plotter  = tdc_Moving_Grid_Plotter(plotter,moving_grid_dict)
@@ -91,6 +94,7 @@ def tdc_plot_epg_density_movie(plot_module,
                                show_cells=False,
                                time_normalization=None,
                                fig_param=None,
+                               plot_style=None,
                                **kwargs):
     """
     Plots movie for number density of (e)lectrons, (p)positrons, (g)amma-rays
@@ -149,6 +153,8 @@ def tdc_plot_epg_density_movie(plot_module,
                                          time_normalization=time_normalization,
                                          **kwargs)
     plotter  = tdc_EPG_Density_Plotter(fe,fp,fg,e_density_negative)
+    if plot_style is not None:
+        plotter.set_plotstyle(**plot_style)
     # plot moving grid if asked
     if moving_grid_dict:
         plotter  = tdc_Moving_Grid_Plotter(plotter,moving_grid_dict)
@@ -174,6 +180,7 @@ def tdc_plot_epgp_density_movie(plot_module,
                                 show_cells=False,
                                 time_normalization=None,
                                 fig_param=None,
+                                plot_style=None,
                                 **kwargs):
     """
     Plots movie for number density of (e)lectrons, (p)positrons, (g)amma-rays, (p)rotons
@@ -239,6 +246,8 @@ def tdc_plot_epgp_density_movie(plot_module,
                                             time_normalization=time_normalization,
                                             **kwargs)
     plotter  = tdc_EPGP_Density_Plotter(fe,fp,fg,fpr,e_density_negative)
+    if plot_style is not None:
+        plotter.set_plotstyle(**plot_style)
     # plot moving grid if asked
     if moving_grid_dict:
         plotter  = tdc_Moving_Grid_Plotter(plotter,moving_grid_dict)

@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy             as np
 
+from ATvis.Common_Data_Plot import *
+
 from Auxiliary        import *
 from Common_Data_Plot import *
 
@@ -10,7 +12,7 @@ from Plot_CMD      import *
 from single_figure_style import fig_style
 
 
-tdc_rcParams.set_hardcopy()
+AT_rcParams.set_hardcopy()
 
 tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
 
@@ -63,4 +65,4 @@ exec tick_and_labels_commands
 
 manip_tp.interactive_on()
 plt.show()
-tdc_rcParams.set_default()
+AT_rcParams.set_default()

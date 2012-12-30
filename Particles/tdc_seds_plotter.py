@@ -1,6 +1,6 @@
-from Common_Data_Plot import tdc_Data_Plotter
+from ATvis.Common_Data_Plot import AT_Data_Plotter
 
-class tdc_SEDs_Plotter(tdc_Data_Plotter):
+class tdc_SEDs_Plotter(AT_Data_Plotter):
     """
     This class is SED plotter
     """
@@ -23,7 +23,7 @@ class tdc_SEDs_Plotter(tdc_Data_Plotter):
         seds -- xp data to be plotted
         """
         # base class initialization is enough
-        tdc_Data_Plotter.__init__(self,seds, xlabel,ylabel,idlabel)
+        AT_Data_Plotter.__init__(self,seds, xlabel,ylabel,idlabel)
         # plot labels ---------------------
         if not ylabel:
             self.plot_ylabel = r'$p\frac{\partial{}n}{\partial{}p}$'

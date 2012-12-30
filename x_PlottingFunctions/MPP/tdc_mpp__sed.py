@@ -2,7 +2,7 @@ import Particles
 from Particles  import tdc_SED_Data
 from Particles  import tdc_SEDs_Plotter
 
-from MPP    import tdc_MPP_SED_Timeseries_H
+from ATvis.MPP import AT_MPP_SED_Timeseries_H
 
 
 def tdc_mpp__sed(ID, timeshots, xxs, p_bins=None, fig_param=None):
@@ -24,5 +24,5 @@ def tdc_mpp__sed(ID, timeshots, xxs, p_bins=None, fig_param=None):
     # plotters
     sp = tdc_SEDs_Plotter( [s_p,s_e,s_g] )
         
-    mpp = tdc_MPP_SED_Timeseries_H( sp, timeshots, xxs, fig_param=fig_param)
+    mpp = AT_MPP_SED_Timeseries_H( sp, timeshots, xxs, fig_param=fig_param)
     return mpp

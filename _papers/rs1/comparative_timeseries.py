@@ -6,6 +6,8 @@
 import matplotlib as mpl
 mpl.use('Agg')
 
+from ATvis.Common_Data_Plot import *
+
 from Auxiliary        import *
 from Common_Data_Plot import *
 
@@ -18,10 +20,10 @@ import numpy             as np
 from Particles  import *
 from Plots_MPP  import tdc_mpp__n_rho_e_xp
 
-import MPP
+import ATvis.MPP
 
 
-tdc_rcParams.set_hardcopy()
+AT_rcParams.set_hardcopy()
     
 tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
 
@@ -225,4 +227,4 @@ exec tick_and_labels_commands
 mpp.interactive_on()
 
 plt.show()
-tdc_rcParams.set_default()
+AT_rcParams.set_default()

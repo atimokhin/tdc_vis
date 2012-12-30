@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy             as np
 
+from ATvis.Common_Data_Plot import *
+
 from Auxiliary        import *
 from Common_Data_Plot import *
 
@@ -9,7 +11,7 @@ from x_PlottingFunctions.MPP      import tdc_mpp__sed
 
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-tdc_rcParams.set_hardcopy()
+AT_rcParams.set_hardcopy()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 # ---------------------------------

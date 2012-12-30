@@ -1,6 +1,8 @@
 #!/usr/bin/python
 import os
 
+from ATvis.Common_Data_Plot import *
+
 from Auxiliary        import *
 from Common_Data_Plot import *
 from x_PlottingFunctions          import *
@@ -29,11 +31,8 @@ tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/TDC_Presentation')
 # ============================================================
 # IDs 
 # ============================================================
-## ID=['RS_1_R6_jp1.0_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU']
-## ID=['RS__RD_jp0.95_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU']
-## ID=['RS__RD_jp0.5_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU']
-
 # ID=['RS__R6_jp0.5_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU']
+
 ID=['RS__R6_jp0.5_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU__wave']
 
 
@@ -42,17 +41,17 @@ ID=['RS__R6_jp0.5_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU__wave']
 # ============================================================
 xlims = [[-0.005,0.305],[-0.005,0.305]]
 
-ylims_xp_e  = [[-5e8,5e8],[-.15,0.45]]
+ylims_xp_e  = [[-5e8,5e8],[-.15,0.32]]
 
 
 axes_commands_xp = [['set_yticks([-1e8,-1e4,0,1e4,1e8])',
                      'set_xticks([0,0.1,0.2, 0.3])',
                      'xaxis.set_ticklabels([])'],
-                    ['set_yticks([0,0.2,0.4])',
+                    ['set_yticks([0,0.2])',
                      'set_yticks([-0.1,0.1,0.3],minor=True)',
                      'set_xticks([0,0.1,0.2, 0.3])']]
 ## axes_commands_xp = None
-## # ----------------------------------------
+# ----------------------------------------
 
 
 
@@ -100,7 +99,8 @@ def do_movie(ID):
                              linthreshy=linthreshy,
                              axes_commands = axes_commands_xp,
                              xlabel=None,ylabel=None,idlabel=None,
-                             fig_param = fig_param)
+                             fig_param = fig_param,
+                             plot_style={'linewidth':2})
 
  
 if __name__ == "__main__":

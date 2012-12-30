@@ -7,7 +7,7 @@ from Common_Data_Plot import *
 from  Fields  import tdc_Field_Data
 from  Fields  import tdc_Fields_Plotter
 
-import MPP
+import ATvis.MPP
 
 #tdc_Filenames.set_results_dir('../RESULTS/')
 tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
@@ -164,7 +164,7 @@ f2 = tdc_Field_Data(ID, 'Rho')
 # field plotter
 p2 = tdc_Fields_Plotter(f2)
 # MFP instance -------------
-mpp = MPP.tdc_MPP_Timeseries( shape, p2, timeshots,select)
+mpp = MPP.AT_MPP_Timeseries( shape, p2, timeshots,select)
 mpp.interactive_off()
 
 # adjust tick and labels

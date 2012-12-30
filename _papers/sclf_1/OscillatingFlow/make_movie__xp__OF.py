@@ -1,12 +1,14 @@
 #!/usr/bin/python
 import os
 
-from Auxiliary         import *
-from Common_Data_Plot  import *
-from x_PlottingFunctions           import *
-from Movie             import Movie_Interface_Selector
+from ATvis.Common_Data_Plot  import *
 
-from plot_xp__OF_movie import *
+from Auxiliary           import *
+from Common_Data_Plot    import *
+from x_PlottingFunctions import *
+from Movie               import Movie_Interface_Selector
+
+from plot_xp__OF_movie   import *
 
 
 # ============================================================

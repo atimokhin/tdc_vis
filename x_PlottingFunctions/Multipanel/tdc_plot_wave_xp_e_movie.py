@@ -22,6 +22,7 @@ def tdc_plot_wave_xp_e_movie(plot_module,
                              axes_commands=None,
                              xlabel=None,ylabel=None,idlabel=None,
                              fig_param=None,
+                             plot_style=None,
                              **kwargs):
     """
     calc_ids
@@ -71,7 +72,7 @@ def tdc_plot_wave_xp_e_movie(plot_module,
                                               **kwargs) for pname in particle_names ]
     # plotter
     xps_pp = tdc_XPs_Plotter(xps=xps,
-                              xlabel=xlabel, ylabel=ylabel, idlabel=idlabel)
+                             xlabel=xlabel, ylabel=ylabel, idlabel=idlabel)
 
     # field sequence ---------------------------------
     fs  = tdc_Data_Sequence.init_from_data( tdc_Field_Data,
@@ -83,7 +84,9 @@ def tdc_plot_wave_xp_e_movie(plot_module,
     # field plotter
     e_pp  = tdc_Fields_Plotter(fs,
                                xlabel=xlabel, ylabel=ylabel, idlabel=idlabel)
-
+    if plot_style is not None:
+        xps_pp.set_plotstyle(**plot_style)
+        e_pp.set_plotstyle(**plot_style)
     if use_cell_coordinates:
         xps_pp.use_cell_coordinates()
         e_pp.use_cell_coordinates()

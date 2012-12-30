@@ -1,8 +1,8 @@
 ## import Common
-from Common_Data_Plot import tdc_Data_Plotter
+from ATvis.Common_Data_Plot import AT_Data_Plotter
 
 
-class tdc_Fluxes_Plotter(tdc_Data_Plotter):
+class tdc_Fluxes_Plotter(AT_Data_Plotter):
     """
     Flux plotter
     """
@@ -19,7 +19,7 @@ class tdc_Fluxes_Plotter(tdc_Data_Plotter):
         fluxes -- list with fluxes to be plotted
         """
         # base class initialization is enough
-        tdc_Data_Plotter.__init__(self,fluxes, xlabel,ylabel,idlabel)
+        AT_Data_Plotter.__init__(self,fluxes, xlabel,ylabel,idlabel)
         # labels -----------------------------
         if not xlabel:
             self.plot_xlabel  = r'$t$'

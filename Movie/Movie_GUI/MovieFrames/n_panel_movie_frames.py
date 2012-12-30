@@ -1,6 +1,6 @@
 import re
 
-from Common_Data_Plot  import tdc_Single_FigureGeometry, tdc_Double_FigureGeometry
+from ATvis.Common_Data_Plot import AT_Single_FigureGeometry, AT_Double_FigureGeometry
 
 from Movie             import *
 from movie_frames__gui import *
@@ -17,7 +17,7 @@ class Single_Panel_Movie_Frames(MovieFrames__GUI):
         # seq_plotter must be a sequence
         MovieFrames__GUI.__init__(self, (seq_plotter,) )
         # setup graphic elements =====
-        mfs = tdc_Single_FigureGeometry(fig_param)
+        mfs = AT_Single_FigureGeometry(fig_param)
         # xlim, ylim must be sequences
         self._setup_figure_and_axes(mfs, [xlim],[ylim], [axes_commands])
         # set plot_idlabel -----------------------
@@ -42,7 +42,7 @@ class Double_Panel_Movie_Frames(MovieFrames__GUI):
         # initialize base class ======
         MovieFrames__GUI.__init__(self, seq_plotters )
         # setup graphic elements =====
-        mfs = tdc_Double_FigureGeometry(fig_param)
+        mfs = AT_Double_FigureGeometry(fig_param)
         # xlim, ylim must be sequences
         if not xlims:
             xlims = [None,None]

@@ -1,118 +1,14 @@
 import numpy  as  np
 
+from ATvis.Common_Data_Plot import AT_Data_Plotter
+
 from Auxiliary import tdc_Mesh
 
 from tdc_data_sequence import tdc_Data_Sequence
 
 
-class tdc_Plotter:
-    """
-    Base class for Plotting on both single frame and in animation
-    it contains required methods
-    which must be implemented in children classes
-    -------
-    Members:
-    --------
-    data
-       data to be plotted
-    plot_label
-       TeX string label used for plot annotations
-    line
-       Line artists with plotted field
-    """
 
-    def __init__(self, data, xlabel,ylabel,idlabel ):
-        """
-        Sets internal variables 
-        data
-           data to be plotted
-        """
-        # be sure data is a sequnce
-        if not isinstance( data, (list,tuple) ):
-            data = (data,)
-        self.data=data
-        # plot labels
-        self.plot_ylabel  = ylabel
-        # this label can be more complex, it will be rendered by LaTeX
-        self.plot_ylabel_latex  = self.plot_ylabel
-        self.plot_xlabel  = xlabel
-        self.plot_idlabel = idlabel
-
-    def plot(self,ax):
-        """
-        Do plotting on axes ax - EMPTY
-        Must be implemented in a children class
-        """
-        pass
-
-    def replot(self,ax,**kwargs):
-        """
-        Do replotting on axes ax - EMPTY
-        Must be implemented in a children class
-        """
-        pass
-
-    def update_plot(self,ax,**kwargs):
-        """
-        Update plot for animation - EMPTY
-        Must be implemented in a children class
-        """
-        pass
-
-    def set_animated(self,val):
-        """
-        Set animated property in all lines
-        Must be implemented in a children class
-        """
-        pass
-    
-    def animation_update(self,ax,i_ts):
-        """
-        Update animation frame - EMPTY
-        Must be implemented in a children class
-        """
-        pass
-    
-
-class tdc_Data_Plotter(tdc_Plotter):
-    """
-    Base class for *Data* plotting on both single frame and in animation
-    it contains all required methods
-
-    plot()
-    animation_update()
-       must be implemented in children classes
-    Adds: ---
-    read()
-    get_time()
-
-    Redirects all non-implemented methods to data[0] instance
-    """
-
-    def __init__(self, data, xlabel,ylabel,idlabel):
-        """
-        Sets internal variables 
-        data
-           data to be plotted
-        """
-        tdc_Plotter.__init__(self,data, xlabel,ylabel,idlabel)
-
-    def read(self,i_ts,**kwargs):
-        "Read data at i_ts timeshot"
-        for d in self.data:
-            d.read(i_ts,**kwargs)
-    
-    def animation_update(self,ax,i_ts):
-        """
-        Update animation frame:
-        - read data for timestep i_ts
-        - replot existing lines for the new data
-        """
-        self.read(i_ts)
-        self.update_plot(ax)
-    
-
-class tdc_Data_vs_X_Plotter(tdc_Data_Plotter):
+class tdc_Data_vs_X_Plotter(AT_Data_Plotter):
     """
     Base class for plotters of physical quantities
     being functions of space positions
@@ -138,7 +34,7 @@ class tdc_Data_vs_X_Plotter(tdc_Data_Plotter):
     
     def __init__(self, data, xlabel,ylabel,idlabel):
         # setup base class
-        tdc_Data_Plotter.__init__(self,data, xlabel,ylabel,idlabel)
+        AT_Data_Plotter.__init__(self,data, xlabel,ylabel,idlabel)
         # set alias for mesh
         self._Mesh = self.data[0]._Mesh
         # default xlabel

@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # import os
 
+from ATvis.Common_Data_Plot import *
+
 from Auxiliary        import *
 from Common_Data_Plot import *
 from x_PlottingFunctions          import *
@@ -30,7 +32,7 @@ tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/TDC_Presentation')
 IDs=[['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1',
       'SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__1']]
 
-IDs=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__slow']
+# IDs=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__slow']
 
 #-----------------
 # xlabel
@@ -84,7 +86,7 @@ moving_grid_dict = None
 # Plots 
 # ============================================================
 Plots = {'XP'           : True,
-         'Rho'          : False,
+         'Rho'          : True,
          'J'            : False,
          'E_acc'        : False,
          'E_Gauss'      : False,
@@ -155,7 +157,8 @@ def do_movie(IDs):
                                  show_cells=show_cells,
                                  ghost_points=True,
                                  xlabel = xlabel_Debye,
-                                 fig_param = fig_param)
+                                 fig_param = fig_param,
+                                 plot_style={'linewidth':2})
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,11 +1,13 @@
 import numpy as np
 import h5py
 
+from ATvis.Common_Data_Plot import AT_Data
+
 from Auxiliary        import tdc_Filenames, tdc_Timetable, tdc_Setup_Props, tdc_Mesh
-from Common_Data_Plot import tdc_Data, tdc_Data__with_Timetable
+from Common_Data_Plot import tdc_Data__with_Timetable
 
 
-class tdc_Field_Data(tdc_Data__with_Timetable,tdc_Data):
+class tdc_Field_Data(tdc_Data__with_Timetable,AT_Data):
     """
     This class contains field and positions
     Members:

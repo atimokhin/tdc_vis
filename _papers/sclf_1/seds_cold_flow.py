@@ -2,17 +2,19 @@ import matplotlib.pyplot as plt
 import numpy             as np
 import pickle
 
+from ATvis.Common_Data_Plot import *
+from ATvis.MPP              import AT_MPP_H
+
 from Auxiliary        import *
 from Common_Data_Plot import *
 
-from MPP       import tdc_MPP_H
 from Particles import tdc_SEDs_Plotter
 
 from plot_params import mpp_params
 # -------------------------
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-tdc_rcParams.set_hardcopy()
+AT_rcParams.set_hardcopy()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
@@ -54,7 +56,7 @@ sed_list=[['0.1' , 'sed_jm0.1_2' ],
           ['0.95', 'sed_jm0.95_2']]
 
 # create MPP
-mpp=tdc_MPP_H(3,2, fig_param=fig_param)
+mpp=AT_MPP_H(3,2, fig_param=fig_param)
 # plotters and labels
 plotters=[]
 j_labels=[]

@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy             as np
 
+from ATvis.Common_Data_Plot import *
+
 from Auxiliary        import *
 from Common_Data_Plot import *
 from Common_Data_Plot import tdc_Manip_Plot_vs_X
@@ -42,11 +44,11 @@ def do_dump(filename):
 def do_plot(filename):
     global manip_xps_accel
 
-    tdc_rcParams.set_hardcopy()
+    AT_rcParams.set_hardcopy()
     tdc_Filenames.set_results_dir('../RESULTS/__TDC_2')
 
     manip_xps_accel = tdc_plot_xp_accel_restored(filename, **single_plot_params)
-    tdc_rcParams.set_default()
+    AT_rcParams.set_default()
     manip_xps_accel.interactive_off()
 
     exec tick_and_labels_commands

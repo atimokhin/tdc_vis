@@ -3,18 +3,21 @@ from   matplotlib.cbook  import flatten
 import numpy             as np
 import pickle
 
+from ATvis.Common_Data_Plot import *
+
 from Auxiliary        import *
 from Common_Data_Plot import *
 
 from Particles import tdc_XPs_Plotter
-from MPP       import tdc_MPP
+
+from ATvis.MPP import AT_MPP
 
 from plot_params import mpp_params
 # ------------------------------
 
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-tdc_rcParams.set_hardcopy()
+AT_rcParams.set_hardcopy()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
@@ -91,7 +94,7 @@ sed_list=[['0.1' , 'sed_jm0.1_2' ],
           ['0.95', 'sed_jm0.95_2']]
 
 # create MPP
-mpp=tdc_MPP(3,2, fig_param=fig_param)
+mpp=AT_MPP(3,2, fig_param=fig_param)
 
 # plotters and labels
 plotters=[]

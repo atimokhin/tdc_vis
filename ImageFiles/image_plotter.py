@@ -1,8 +1,8 @@
 from numpy import *
 
-from Common_Data_Plot import tdc_Data_Plotter
+from ATvis.Common_Data_Plot import AT_Data_Plotter
 
-class Image_Plotter(tdc_Data_Plotter):
+class Image_Plotter(AT_Data_Plotter):
     """
     Display image read from file
     """
@@ -14,7 +14,7 @@ class Image_Plotter(tdc_Data_Plotter):
         limits variables
         """
         # base class initialization is enough
-        tdc_Data_Plotter.__init__(self,image_data,None,None,None)
+        AT_Data_Plotter.__init__(self,image_data,None,None,None)
         # labels -----------------------
         # idlabel
         if not idlabel:

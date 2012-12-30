@@ -1,8 +1,9 @@
-from Common_Data_Plot import tdc_Data
+from ATvis.Common_Data_Plot import AT_Data
+
 from tdc_fmci_xp_data import tdc_FMCI_XP_Data_Base
 
 
-class tdc_FMCI_MP_Data(tdc_Data):
+class tdc_FMCI_MP_Data(AT_Data):
     """
     Represent FMCI_XP as a set of metaparticles:
     markersize contains the size of the metaparticle calculated 

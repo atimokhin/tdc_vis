@@ -1,19 +1,21 @@
 import matplotlib.pyplot as plt
 import numpy             as np
 
+from ATvis.Common_Data_Plot import *
+
 from Auxiliary        import *
 from Common_Data_Plot import *
 from Common_Data_Plot import tdc_Data_Sequence
 
 from Particles import tdc_XP_Data
-from MPP       import tdc_MPP_Timeseries
+from ATvis.MPP import AT_MPP_Timeseries
 
 from xps_plotter__OF import XPs_Plotter__OF
 # -----------------------------------
 
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-tdc_rcParams.set_hardcopy()
+AT_rcParams.set_hardcopy()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
@@ -77,7 +79,7 @@ f2 = tdc_Data_Sequence.init_from_data( tdc_XP_Data,
 # field plotter
 p2 = XPs_Plotter__OF( (f2,), of__filename)
 # MFP instance -------------
-mpp = tdc_MPP_Timeseries( shape, p2, timeshots,select, fig_param=fig_param)
+mpp = AT_MPP_Timeseries( shape, p2, timeshots,select, fig_param=fig_param)
 mpp.set_window_title(ID[0])
 mpp.interactive_off()
 

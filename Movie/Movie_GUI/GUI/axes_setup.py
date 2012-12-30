@@ -3,7 +3,9 @@ import gtk
 from button_label_from_stock import *
 from axes_panel              import *
 
-from Common_Data_Plot import tdc_Data_Plotter, tdc_Data_vs_X_Plotter
+from ATvis.Common_Data_Plot import AT_Data_Plotter
+
+from Common_Data_Plot import tdc_Data_vs_X_Plotter
 from Movie            import MovieFrames__Axes
 
 
@@ -101,7 +103,7 @@ class Axes_Setup_Window:
             # ===============================================
             # Axes panel only plotters supporting it
             # ===============================================
-            if isinstance(plotter, tdc_Data_Plotter):
+            if isinstance(plotter, AT_Data_Plotter):
                 # -----------------------------
                 # Axes Panel 
                 # -----------------------------

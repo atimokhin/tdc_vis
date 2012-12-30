@@ -4,6 +4,8 @@
 import matplotlib.pyplot as plt
 import numpy             as np
 
+from ATvis.Common_Data_Plot import *
+
 from Auxiliary        import *
 from Common_Data_Plot import *
 
@@ -11,9 +13,9 @@ from x_PlottingFunctions.MPP      import tdc_mpp_v__e_n_fft
 # -------------------------------
 
 
-tdc_rcParams.set_hardcopy()
+AT_rcParams.set_hardcopy()
 
-tdc_Filenames.set_results_dir('../RESULTS/WD/')
+tdc_Filenames.set_results_dir('../RESULTS/WD/_paper_TDC2')
 
 
 
@@ -111,4 +113,4 @@ exec tick_and_labels_commands
 mpp.interactive_on()
 
 plt.show()
-tdc_rcParams.set_default()
+AT_rcParams.set_default()

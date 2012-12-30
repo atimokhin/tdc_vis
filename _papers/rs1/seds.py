@@ -4,15 +4,17 @@
 import matplotlib.pyplot as plt
 import numpy             as np
 
+from ATvis.Common_Data_Plot import *
+
 from Auxiliary        import *
 from Common_Data_Plot import *
 
 from Particles  import *
 from Plots_MPP  import tdc_mpp__sed
 
-import MPP
+import ATvis.MPP
 
-tdc_rcParams.set_hardcopy()
+AT_rcParams.set_hardcopy()
 
 tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
 
@@ -57,4 +59,4 @@ exec tick_and_labels_commands
 mpp.interactive_on()
 
 plt.show()
-tdc_rcParams.set_default()
+AT_rcParams.set_default()

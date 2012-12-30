@@ -1,6 +1,8 @@
 #!/usr/bin/python
 import os
 
+from ATvis.Common_Data_Plot import *
+
 from Auxiliary        import *
 from Common_Data_Plot import *
 from x_PlottingFunctions          import *
@@ -20,12 +22,15 @@ fig_param = paramSingleFig_Presentation
 # Directory
 # ============================================================
 # tdc_Filenames.set_results_dir('../RESULTS/WD')
-tdc_Filenames.set_results_dir('../RESULTS/WD/RS')
-## tdc_Filenames.set_results_dir('../RESULTS/WD/RS_2')
-tdc_Filenames.set_results_dir('../RESULTS/WD/TDC_Presentation')
+# tdc_Filenames.set_results_dir('../RESULTS/WD/RS')
+tdc_Filenames.set_results_dir('../RESULTS/WD/RS_2')
+# tdc_Filenames.set_results_dir('../RESULTS/WD/TDC_Presentation')
 
 
-tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/TDC_Presentation')
+# tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/')
+# tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/TDC_Presentation')
+tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/__RS_2/')
+
 
 # ============================================================
 # IDs 
@@ -33,25 +38,29 @@ tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/TDC_Presentation')
 ## IDs=['RS_1_R6_jp1.0_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU']
 ## IDs=['RS__RD_jp0.95_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU']
 ## IDs=['RS__RD_jp0.5_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU']
-IDs=[['RS_1_R6_jp1.0_P0.2_L0.3_nGJ2.5e4_nx2.5e3_dt4e-5_s1',
-     'RS_1_R6_jp1.0_P0.2_L0.3_nGJ2.5e4_nx2.5e3_dt4e-5_s1__1']]
+# IDs=[['RS_1_R6_jp1.0_P0.2_L0.3_nGJ2.5e4_nx2.5e3_dt4e-5_s1',
+#      'RS_1_R6_jp1.0_P0.2_L0.3_nGJ2.5e4_nx2.5e3_dt4e-5_s1__1']]
 
 # IDs=['RS_prsnt_R6_jp1.0_P0.2_L0.3_nGJ2.5e4_nx2.5e3_dt4e-5_s1']
 
 # IDs=['RS__R6_jp0.5_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU']
-IDs=['RS__R6_jp0.5_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU__wave']
+# IDs=['RS__R6_jp0.5_P0.2_L0.3_nGJ5e4_nx5e3_dt2e-5_sU__wave']
 
+# IDs=['RS__RD_jp0.25_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU',
+#      'RS__RD_jp0.5_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU' ]
+
+IDs=['RS__RD_jp0.95_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU']
 
 # ============================================================
 # plot limits:
 # ============================================================
-xlim = [-0.005,0.305]
+xlim = [-0.005,0.605]
 ## xlim = [-0.005,0.605]
 
 ylim_xp  = [-5e8,5e8]
 
-ylim_rho = [-100,100]
-ylim_j   = [-100,100]
+ylim_rho = [-10,10]
+ylim_j   = [-10,10]
 ylim_e   = [-2.001,2.001]
 ylim_phi = [-0.5,0.5]
 
@@ -94,7 +103,7 @@ moving_grid_dict = None
 # ============================================================
 
 Plots = {'XP'           : True,
-         'Rho'          : False,
+         'Rho'          : True,
          'J'            : False,
          'E_acc'        : True,
          'E_Gauss'      : False,
@@ -152,7 +161,7 @@ def do_movie(IDs):
             tdc_plot_field_movie(interface.movie_module,
                                  ID,
                                  'Rho',
-                                 ylim=[-3,3],
+                                 ylim=ylim_rho,
                                  xlim=xlim,
                                  moving_grid_dict=moving_grid_dict,
                                  tt=tt,

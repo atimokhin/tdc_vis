@@ -17,8 +17,8 @@ class tdc_FMCI_DataFiles_Maker(object):
     """
 
     __default_particles = ['Electrons', 'Positrons', 'Pairs']
-    __default_partition = tdc_FMCI_XP_Partition__LinSemiLogUniform( x_dict=dict(n=90,xx=None),
-                                                                    p_dict=dict(n=30,pp=[1,1e8]) )
+    __default_partition = tdc_FMCI_XP_Partition__LinSemiLogUniform( x_dict=dict(n=100,xx=None),
+                                                                    p_dict=dict(n=50,pp=[5,5e8]) )
     _index_filename = 'index.txt'
     
     def __init__(self, 

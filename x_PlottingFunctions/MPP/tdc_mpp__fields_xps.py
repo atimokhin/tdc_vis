@@ -7,7 +7,7 @@ import Particles
 from Particles  import tdc_XP_Data
 from Particles  import tdc_XPs_Plotter
 
-from MPP        import *
+from ATvis.MPP import AT_MPP_Comparative_Timeseries_H
 
 
 def tdc_mpp__n_rho_e_xp(ID,timeshots,sample_dict=None,fig_param=None):
@@ -23,7 +23,7 @@ def tdc_mpp__n_rho_e_xp(ID,timeshots,sample_dict=None,fig_param=None):
     --------
     Returns:
     --------
-    ()=>  tdc_MPP_Comparative_Timeseries_H instance with the plot
+    ()=>  AT_MPP_Comparative_Timeseries_H instance with the plot
     """
     # DATA ---------------------
     # electron and positron number densities
@@ -49,7 +49,7 @@ def tdc_mpp__n_rho_e_xp(ID,timeshots,sample_dict=None,fig_param=None):
     p5 = tdc_XPs_Plotter( (xp_e,) )
     p6 = tdc_XPs_Plotter( (xp_g,) )
     # MFP instance -------------
-    mpp = tdc_MPP_Comparative_Timeseries_H( (p1,p2,p3,p4,p5,p6), timeshots, fig_param=fig_param)
+    mpp = AT_MPP_Comparative_Timeseries_H( (p1,p2,p3,p4,p5,p6), timeshots, fig_param=fig_param)
     return mpp
 
 
@@ -68,7 +68,7 @@ def tdc_mpp__n_rho_j_e_xp(ID,timeshots,sample_dict=None,fig_param=None):
     --------
     Returns:
     --------
-    ()=>  tdc_MPP_Comparative_Timeseries_H instance with the plot
+    ()=>  AT_MPP_Comparative_Timeseries_H instance with the plot
     """
     # DATA ---------------------
     # electron and positron number densities
@@ -97,7 +97,7 @@ def tdc_mpp__n_rho_j_e_xp(ID,timeshots,sample_dict=None,fig_param=None):
     p6 = tdc_XPs_Plotter( (xp_e,) )
     p7 = tdc_XPs_Plotter( (xp_g,) )
     # MFP instance -------------
-    mpp = tdc_MPP_Comparative_Timeseries_H( (p1,p2,p3,p4,p5,p6,p7), timeshots, fig_param=fig_param)
+    mpp = AT_MPP_Comparative_Timeseries_H( (p1,p2,p3,p4,p5,p6,p7), timeshots, fig_param=fig_param)
     return mpp
 
 
@@ -116,7 +116,7 @@ def tdc_mpp__n_rho_j_e_xp_epgp(ID,timeshots,sample_dict=None,fig_param=None):
     --------
     Returns:
     --------
-    ()=>  tdc_MPP_Comparative_Timeseries_H instance with the plot
+    ()=>  AT_MPP_Comparative_Timeseries_H instance with the plot
     """
     # DATA ---------------------
     # electron and positron number densities
@@ -149,5 +149,5 @@ def tdc_mpp__n_rho_j_e_xp_epgp(ID,timeshots,sample_dict=None,fig_param=None):
     # make Protons markersize equal to those of the other particles
     p8.change_default_plotstyle('Protons',markersize=1)
     # MFP instance -------------
-    mpp = tdc_MPP_Comparative_Timeseries_H( (p1,p2,p3,p4,p5,p6,p7,p8), timeshots, fig_param=fig_param)
+    mpp = AT_MPP_Comparative_Timeseries_H( (p1,p2,p3,p4,p5,p6,p7,p8), timeshots, fig_param=fig_param)
     return mpp

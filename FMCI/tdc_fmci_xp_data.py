@@ -3,13 +3,17 @@ import re
 import os
 
 import numpy as np
+
+import ATbase as AT
     
-from Auxiliary        import tdc_Setup_Props
+from ATvis.Common_Data_Plot import AT_Data
+
+from Auxiliary        import tdc_Setup_Props, tdc_Filenames
 from Particles        import tdc_XP_Data
-from Common_Data_Plot import tdc_Data, tdc_Data__with_Timetable
+from Common_Data_Plot import tdc_Data__with_Timetable
 
 
-class tdc_FMCI_XP_Data_Base(tdc_Data):
+class tdc_FMCI_XP_Data_Base(AT_Data):
     """
     Basic class for use for input in Full Monte Carlo Simulations
     Contains all fucntionality to save and restore data from ascii file
@@ -24,6 +28,7 @@ class tdc_FMCI_XP_Data_Base(tdc_Data):
     p        
     fmci_XP      
     """
+
     __particle_short_names = { 'Electrons' : 'E',
                                'Positrons' : 'P',
                                'Protons'   : 'I',
@@ -50,6 +55,8 @@ class tdc_FMCI_XP_Data_Base(tdc_Data):
         self.PSR_P   = None
         self.PSR_B12 = None
         self.PSR_Lcm = None
+        self.PSR_Theta  = None
+        self.PSR_Chi = None
  
     @staticmethod
     def init_from_ascii(filename, **kwargs):
@@ -87,7 +94,8 @@ class tdc_FMCI_XP_Data_Base(tdc_Data):
         P= 
         B12= 
         Lcm=
-        Xi=
+        Theta=
+        Chi=
 
         #>>params_TDC:
         calc_id=
@@ -116,13 +124,17 @@ class tdc_FMCI_XP_Data_Base(tdc_Data):
         out.write('\n#>>params_physics:\n')
         out.write('particle=%s\n' % self.__particle_short_names[self.name])        
         out.write('time=%1.8E\n'  % self.time)
-        out.write('P=%1.8E\n'  % self.PSR_P)
-        out.write('B12=%1.8E\n'  % self.PSR_B12)
-        out.write('Lcm=%1.8E\n'  % self.PSR_Lcm)
+        #
+        out.write('P=%1.8E\n'   % self.PSR_P)
+        out.write('B12=%1.8E\n' % self.PSR_B12)
+        out.write('Lcm=%1.8E\n' % self.PSR_Lcm)
+        #
+        out.write('Theta=%1.8E\n' % self.PSR_Theta)
+        out.write('Chi=%1.8E\n'   % self.PSR_Chi)
         # params_TDC:
         out.write('\n#>>params_TDC:\n')
         out.write('calc_id=%s\n' % self.calc_id)        
-        out.write('i_ts=%d\n' % self.i_ts)
+        out.write('i_ts=%d\n'    % self.i_ts)
         # --------------------------------
         # save to file 
         # --------------------------------
@@ -228,7 +240,7 @@ class tdc_FMCI_XP_Data(tdc_Data__with_Timetable,tdc_FMCI_XP_Data_Base):
         - opens particle HDF5 file, 
         - setups partition (x)
         - creates array for holding data and sets it to zeros
-        NB: Reads setup_properties.h5
+        NB: Reads setup_properties.h5 AND cascade.input
         ---------
         Parameters:
         ---------
@@ -252,10 +264,19 @@ class tdc_FMCI_XP_Data(tdc_Data__with_Timetable,tdc_FMCI_XP_Data_Base):
         # normalization parameters
         self.W0 = setup_props.get_papam('FMPProps/W0')
         self.L  = setup_props.get_papam('/GridProps/L')
-        # physical parameters
+        # physical parameters from "setup_properties.h5"
         self.PSR_P   = setup_props.get_papam('/PulsarGapProps/P')
-        self.PSR_B12 = setup_props.get_papam('/PulsarGapProps/B12')
+        self.PSR_B12 = setup_props.get_papam('/PulsarGapProps/B_12')
         self.PSR_Lcm = setup_props.get_papam('/GridProps/L_cm')
+        # physical parameters from "cascade.input": THETA and CHI
+        infile=AT.FileInput()
+        infile.ReadFile(tdc_Filenames.get_full_filename(calc_id, 'cascade.input'))
+        infile.ChangeGroup('GEOMETRY')
+        self.PSR_Theta = infile.get_param('THETA')
+        infile.ChangeGroup()        
+        infile.ChangeGroup('DIMENSIONAL_CONSTANTS::PSR_ConstsInitializer')
+        self.PSR_Chi = infile.get_param('CHI')
+        infile.ChangeGroup()        
         # set xp_partition =================
         self.set_xp_partition(xp_partition)
 
@@ -331,3 +352,4 @@ class tdc_FMCI_XP_Data(tdc_Data__with_Timetable,tdc_FMCI_XP_Data_Base):
         # works for non-uniform x partition as well
         dx = self.xp_partition.x_cell[1:]-self.xp_partition.x_cell[0:-1]
         self.fmci_XP = self.W0*self.fmci_XP/dx.reshape((dx.size,1))
+

@@ -13,6 +13,7 @@ class tdc_Fields_Plotter(tdc_Data_vs_X_Plotter):
     __line_args = inspect.getargspec(matplotlib.lines.Line2D.__init__).args
     __line_args.append('animated')
 
+
     def __init__(self, fields, xlabel=None,ylabel=None,idlabel=None):
         """
         fields -- list with fields to be plotted
@@ -34,10 +35,12 @@ class tdc_Fields_Plotter(tdc_Data_vs_X_Plotter):
         **kwargs goes to ax.plot(..)
         """
         # filter arguments for field lines
-        field_lines_kwargs = { k: kwargs[k] for k in self.__line_args if kwargs.has_key(k)}        
+        plot_kwargs = { k: kwargs[k] for k in self.__line_args if kwargs.has_key(k)}        
+        # apply custom plot style set manually with set_plotstyle()
+        plot_kwargs.update(self._plot_style)
         # plot lines
         for i,field in enumerate(self.data):
-            self.lines[i], = ax.plot(field.x, field.f,'k',**field_lines_kwargs)
+            self.lines[i], = ax.plot(field.x, field.f,'k',**plot_kwargs)
         tdc_Data_vs_X_Plotter.plot(self,ax)
 
     def replot(self,ax):

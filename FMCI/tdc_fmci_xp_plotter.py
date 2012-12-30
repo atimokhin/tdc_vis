@@ -1,9 +1,9 @@
 from numpy import *
 from matplotlib.colors import LogNorm
 
-from Common_Data_Plot import tdc_Data_Plotter
+from ATvis.Common_Data_Plot import AT_Data_Plotter
 
-class tdc_FMCI_XP_Plotter(tdc_Data_Plotter):
+class tdc_FMCI_XP_Plotter(AT_Data_Plotter):
     """
     Plot Color map of array fmci_XP
     """
@@ -20,7 +20,7 @@ class tdc_FMCI_XP_Plotter(tdc_Data_Plotter):
         wlims   -- limits on colormap showing particle weights
         """
         # base class initialization is enough
-        tdc_Data_Plotter.__init__(self,fmci_XPs, xlabel,ylabel,idlabel)
+        AT_Data_Plotter.__init__(self,fmci_XPs, xlabel,ylabel,idlabel)
         # limits on particle weights
         self.wlims=wlims
         # labels -----------------------

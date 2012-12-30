@@ -1,12 +1,14 @@
 import matplotlib.pyplot as plt
 import numpy             as np
 
+from ATvis.Common_Data_Plot import *
+
 from Auxiliary        import *
 from Common_Data_Plot import *
 
 from Fields import *
 
-from MPP import tdc_MPP_H
+from ATvis.MPP import AT_MPP_H
 
 import pickle
 
@@ -14,7 +16,7 @@ from plot_params import mpp_params
 # -------------------------
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-tdc_rcParams.set_hardcopy()
+AT_rcParams.set_hardcopy()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
@@ -60,7 +62,7 @@ fft_list=[['0.1' , 'fft_jm0.1_2' ],
           ['0.95', 'fft_jm0.95_2']]
 
 # create MPP
-mpp=tdc_MPP_H(3,2, fig_param=fig_param)
+mpp=AT_MPP_H(3,2, fig_param=fig_param)
 # plotters and labels
 plotters=[]
 j_labels=[]

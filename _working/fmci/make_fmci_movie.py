@@ -18,26 +18,26 @@ fig_param_xp = paramSingleFig_FMCI_XP_Presentation
 # ============================================================
 # Directory
 # ============================================================
-## tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
+tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/__RS_2/')
 
 
 # ============================================================
 # FMCI_IDs 
 # ============================================================
-FMCI_ID='FMCI__SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj7_sU'
-
-
+# FMCI_ID='FMCI__RS__RD_jp0.5_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU'
+# FMCI_ID='FMCI__RS__RD_jp0.25_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU'
+FMCI_ID='FMCI__RS__RD_jp0.95_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU'
 
 # ============================================================
 # plot limits:
 # ============================================================
-xlim     = [-0.01,1.01]
+xlim     = [-0.01,.61]
 ylim_mp  = [-5e8,5e8]
 
-m_max=80
-w_max=100
+m_max=200
+w_max=10
 
-wlims=[1e-2,1e2]
+wlims=[5e-2,5e1]
 
 axes_commands_mp = ['set_yticks([-1e8,-1e4,0,1e4,1e8])']
 # ============================================================
@@ -54,7 +54,7 @@ keep_frame_files=False
 # ============================================================
 # Plots 
 # ============================================================
-Plots = {'MP' : False,
+Plots = {'MP' : True,
          'XP' : True }
 # ============================================================
 

@@ -3,7 +3,7 @@ from Fields import tdc_Field_Data
 from Fields import tdc_Fields_Plotter
 from Fields import tdc_EP_Density_Plotter
 
-from MPP       import *
+from ATvis.MPP import AT_MPP_Comparative_Timeseries_H
 
 def tdc_mpp__n_rho_e(ID,timeshots,fig_param=None):
     """
@@ -14,7 +14,7 @@ def tdc_mpp__n_rho_e(ID,timeshots,fig_param=None):
     --------
     Returns:
     --------
-    ()=>  tdc_MPP_Comparative_Timeseries_H instance with the plot
+    ()=>  AT_MPP_Comparative_Timeseries_H instance with the plot
     """
     # electron and positron number densities
     f1_e = tdc_Field_Data(calc_id=ID, field_name='N', filename='prop_Electrons.h5' )
@@ -28,5 +28,5 @@ def tdc_mpp__n_rho_e(ID,timeshots,fig_param=None):
     fp2=tdc_Fields_Plotter(f2)
     fp3=tdc_Fields_Plotter(f3)
     # MFP instance
-    mpp = tdc_MPP_Comparative_Timeseries_H( (fp1,fp2,fp3), timeshots, fig_param=fig_param)
+    mpp = AT_MPP_Comparative_Timeseries_H( (fp1,fp2,fp3), timeshots, fig_param=fig_param)
     return mpp

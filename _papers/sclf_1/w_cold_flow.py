@@ -1,9 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy             as np
 
+from ATvis.Common_Data_Plot import *
+
 from Auxiliary        import *
 from Common_Data_Plot import *
-from Common_Data_Plot import tdc_Manip, tdc_Data_Plotter
+from Common_Data_Plot import tdc_Manip
 # --------------------------------------
 
 
@@ -39,7 +41,7 @@ def do_plot():
     global manip_w
 
     # <<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    tdc_rcParams.set_hardcopy()
+    AT_rcParams.set_hardcopy()
     # <<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     manip_w = tdc_plot_w_cold_flow(100, ksi_max=ksi_max, fig_param=paramSingleFig_SED_MNRAS)
@@ -99,11 +101,11 @@ class W_Manip(tdc_Manip):
         return s
 
 
-class W_Plotter(tdc_Data_Plotter):
+class W_Plotter(AT_Data_Plotter):
     
     def __init__(self,nn,ksi_max, xlabel=None,ylabel=None,idlabel=None):
         # base class initialization is enough
-        tdc_Data_Plotter.__init__(self,
+        AT_Data_Plotter.__init__(self,
                                   None,
                                   xlabel=r'$\xi$',
                                   ylabel=r'$\tilde{W}$',

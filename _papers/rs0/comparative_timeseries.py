@@ -10,7 +10,7 @@ from Common_Data_Plot import *
 from Particles  import *
 from Plots_MPP  import tdc_mpp__n_rho_e_xp
 
-import MPP
+import ATvis.MPP
 
 tdc_Filenames.set_results_dir('../RESULTS/FreeAgent/')
 

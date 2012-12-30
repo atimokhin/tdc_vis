@@ -121,8 +121,16 @@ void fmci__read_data_file(int i_ts, char particle_name, const char* dir_name, st
 
   /* read physical parameters ------------------------- */
   _fmci__read_group_start(pFile,"params_physics:");
-  fscanf(pFile,"particle=%c\n",  &p_fmci->particle_name);
+  fscanf(pFile,"particle=%c\n", &p_fmci->particle_name);
+
   fscanf(pFile,"time=%lG\n", &p_fmci->time);
+
+  fscanf(pFile,"P=%lG\n",   &p_fmci->P);
+  fscanf(pFile,"B12=%lG\n", &p_fmci->B12);
+  fscanf(pFile,"Lcm=%lG\n", &p_fmci->Lcm);
+
+  fscanf(pFile,"Theta=%lG\n", &p_fmci->Theta);
+  fscanf(pFile,"Chi=%lG\n",   &p_fmci->Chi);
   /* -------------------------------------------------- */
 
   fclose (pFile);
@@ -190,4 +198,11 @@ void fmci__print(struct FMCI* p_fmci)
   printf("\n#>>params_physics:\n");
   printf("particle=%c\n", p_fmci->particle_name);
   printf("time=%.8E\n",   p_fmci->time);
+
+  printf("P=%.8lE\n",   p_fmci->P);
+  printf("B12=%.8lE\n", p_fmci->B12);
+  printf("Lcm=%.8lE\n", p_fmci->Lcm);
+
+  printf("Theta=%.8lE\n", p_fmci->Theta);
+  printf("Chi=%.8lE\n",   p_fmci->Chi);
 }

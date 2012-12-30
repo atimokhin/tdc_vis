@@ -1,6 +1,6 @@
-from Common_Data_Plot import tdc_Data_Plotter
+from ATvis.Common_Data_Plot import AT_Data_Plotter
 
-class tdc_FFT_Plotter(tdc_Data_Plotter):
+class tdc_FFT_Plotter(AT_Data_Plotter):
     """
     This class is a base class for Furier spectrum plotters
 
@@ -12,7 +12,7 @@ class tdc_FFT_Plotter(tdc_Data_Plotter):
         spectrum -- field spectrum to be plotted
         """
         # initialize base class
-        tdc_Data_Plotter.__init__(self,spectrum, xlabel,ylabel,idlabel)
+        AT_Data_Plotter.__init__(self,spectrum, xlabel,ylabel,idlabel)
         # plot labels -------------------
         if not ylabel:
             self.plot_ylabel = r'$I_k$'
@@ -34,7 +34,7 @@ class tdc_FFT_Plotter(tdc_Data_Plotter):
         update default plot limits [xmin,xmax],
         because spectral range can change if we change sampling range
         """
-        tdc_Data_Plotter.read(self,i_ts,**kwargs)
+        AT_Data_Plotter.read(self,i_ts,**kwargs)
         # update xmin/xmax
         self.xmin = 0
         self.xmax = self.data[0].kk[self.data[0].imax__kk]

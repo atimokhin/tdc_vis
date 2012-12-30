@@ -4,12 +4,14 @@ import math
 import scipy
 import scipy.fftpack
 
+from ATvis.Common_Data_Plot  import AT_Data
+
+from Common_Data_Plot  import tdc_Data__with_Timetable
 from Auxiliary         import tdc_Mesh
 from tdc_field_data    import tdc_Field_Data
-from Common_Data_Plot  import tdc_Data, tdc_Data__with_Timetable
 
 
-class tdc_FFT_Data(tdc_Data__with_Timetable, tdc_Data):
+class tdc_FFT_Data(tdc_Data__with_Timetable, AT_Data):
     """
     This class contains data for discrete Fourier 
     transform of for a field

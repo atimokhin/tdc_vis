@@ -1,8 +1,8 @@
 from numpy import *
 
-from Common_Data_Plot import tdc_Data_Plotter
+from ATvis.Common_Data_Plot import AT_Data_Plotter
 
-class tdc_FMCI_MP_Plotter(tdc_Data_Plotter):
+class tdc_FMCI_MP_Plotter(AT_Data_Plotter):
     """
     Plots FMCI_XP as particles with sizes proportional to their weights
     """
@@ -20,7 +20,7 @@ class tdc_FMCI_MP_Plotter(tdc_Data_Plotter):
         """
         """
         # base class initialization is enough
-        tdc_Data_Plotter.__init__(self,fmci_MPs, xlabel,ylabel,idlabel)
+        AT_Data_Plotter.__init__(self,fmci_MPs, xlabel,ylabel,idlabel)
         # labels -----------------------
         # xlabel
         if not xlabel:

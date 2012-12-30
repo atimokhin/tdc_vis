@@ -23,9 +23,12 @@ struct FMCI{
   
   double time;                  /* time of the timeshot */
 
+  double P;                     /* pulsar period [sec] */
   double B12;                   /* magnetic field [in 10^12 Gauss] */
   double Lcm;                   /* domain length [cm]  */
-  double P;                     /* pulsar period [sec] */
+
+  double Theta;                 /* Colatitude of the field line \theta/\theta_{pc} */
+  double Chi;                   /* Pulsar inclination angle */
 
   int __need_memory_allocation; /* internal variable, do not chnage it! */
 };

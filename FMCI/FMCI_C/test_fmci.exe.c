@@ -6,11 +6,11 @@
 int main(int argc, char *argv[])
 {
   const char dirname[] = 
-    "../../../RESULTS_VIS/FMCI__SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj7_sU/";
+    "../../../RESULTS_VIS/__RS_2/FMCI__RS__RD_jp0.5_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU/";
 
   /*
   const char dirname[] = 
-    "..\\RESULTS_VIS\\FMCI__SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj7_sU\\";
+    "..\\RESULTS_VIS\\__RS_2\\FMCI__RS__RD_jp0.5_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU\\";
   */
 
 

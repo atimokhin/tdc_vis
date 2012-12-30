@@ -73,7 +73,11 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
         # filter arguments for field lines
         plot_kwargs = { k: kwargs[k] for k in self.__line_args if kwargs.has_key(k)}        
         for i,xp in enumerate(self.data):
+            # apply individual plot styles
             plot_kwargs.update(self.__plotstyle[xp.name])
+            # apply custom plot style set manually with set_plotstyle()
+            plot_kwargs.update(self._plot_style)
+            # actual plotting
             self.lines[i], = ax.plot(xp.x, xp.p,
                                      **plot_kwargs)
             # make scaling semi-logatithmic if asked

@@ -1,9 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy             as np
 
+from ATvis.Common_Data_Plot import *
+
 from Auxiliary        import *
 from Common_Data_Plot import *
-from Common_Data_Plot import tdc_Manip, tdc_Data_Plotter
+from Common_Data_Plot import tdc_Manip
 
 
 # --------------------------------------
@@ -44,7 +46,7 @@ def do_plot():
     global manip_pmax
 
     # <<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    tdc_rcParams.set_hardcopy()
+    AT_rcParams.set_hardcopy()
     # <<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     manip_pmax = tdc_plot_pmax(100, ksi_max=ksi_max, fig_param=paramSingleFig_MNRAS)
@@ -104,11 +106,11 @@ class Pmax_Manip(tdc_Manip):
         return s
 
 
-class Pmax_Plotter(tdc_Data_Plotter):
+class Pmax_Plotter(AT_Data_Plotter):
     
     def __init__(self,nn,ksi_max, xlabel=None,ylabel=None,idlabel=None):
         # base class initialization is enough
-        tdc_Data_Plotter.__init__(self,
+        AT_Data_Plotter.__init__(self,
                                   None,
                                   xlabel=r'$\xi$',
                                   ylabel=r'$p_{\mathrm{beam}}$',
