@@ -1,5 +1,8 @@
 #!/usr/bin/python
 # import os
+if __name__ == '__main__':
+    import tdc_vis
+
 
 from ATvis.Common_Data_Plot import *
 

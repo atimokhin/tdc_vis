@@ -1,5 +1,8 @@
 # for printing use dpi=600
 #
+if __name__ == '__main__':
+    import tdc_vis
+
 
 import matplotlib.pyplot as plt
 import numpy             as np

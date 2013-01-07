@@ -2,6 +2,8 @@
 # => use png device
 # => use dpi=600 --> tdc_set_hires_dpi()
 #
+if __name__ == '__main__':
+    import tdc_vis
 
 import numpy             as np
 import matplotlib.pyplot as plt

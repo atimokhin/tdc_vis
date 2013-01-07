@@ -1,3 +1,6 @@
+if __name__ == '__main__':
+    import tdc_vis
+
 import matplotlib.pyplot as plt
 from   matplotlib.cbook  import flatten
 import numpy             as np
