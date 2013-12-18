@@ -32,7 +32,7 @@ class tdc_FMCI_Sequence(tdc_Sequence):
         ii
            i_ts index interval <[i1,<i2>]>           
         """
-        self.dirname = os.path.join(tdc_Filenames.get_vis_results_dir(),fmci_id, data_dir)
+        self.dirname = os.path.join(tdc_Filenames.get_results_dir(),fmci_id, data_dir)
         # read data from index file
         filename = os.path.join(self.dirname,self._default_index_filename)
         try:

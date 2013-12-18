@@ -58,7 +58,7 @@ def tdc_plot_fmci_xp_movie(plot_module,
                                                             axes_commands=axes_commands,
                                                             fig_param=fig_param)
     # movie_id - directory with the movie file
-    movie_id = 'FMCI_XP__' + fmci_id
+    movie_id = 'FMCI_XP_%s__%s' % (particle_name, fmci_id)
     # -----------------------------------------
     # make movie
     plot_module.MovieMakers.plot_movie( MF, movie_id, fps, keep_frame_files,

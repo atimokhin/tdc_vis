@@ -2,6 +2,7 @@ from __future__ import print_function
 
 import numpy as np
 import os
+import sys
 import glob
 
 from Auxiliary import tdc_Filenames, tdc_TimeInfo
@@ -13,7 +14,7 @@ from FMCI import tdc_FMCI_XP_Data
 class tdc_FMCI_DataFiles_Maker(object):
     """
     Class for reading particle data from TDC simulations and
-    creating of FMCI files
+    creating FMCI files
     """
 
     __default_particles = ['Electrons', 'Positrons', 'Pairs']
@@ -26,6 +27,8 @@ class tdc_FMCI_DataFiles_Maker(object):
                  particles=None,
                  partition=None):
         """
+        Initializes output directory name, particles, i_ts range, partition
+        Actual calculations will be performed by make_files(..) method
         """
         self.calc_id = calc_id
         self.data_top_dir = tdc_Filenames.get_vis_results_dir() + 'FMCI__%s' % calc_id
@@ -38,9 +41,11 @@ class tdc_FMCI_DataFiles_Maker(object):
         # set partition -----------------------
         self.partition = self.__default_partition if partition is None else partition
 
+        
     def make_files(self, i_ts__range=None):
         """
         Reads data and creates FMCI files and directories
+        for i_ts in the range i_ts__range
         """
         if i_ts__range is not None:
             i_ts__range[0] = max(1, i_ts__range[0])
@@ -59,14 +64,19 @@ class tdc_FMCI_DataFiles_Maker(object):
                 os.makedirs(data_dir)
             # initialise data class
             fmci_xp=tdc_FMCI_XP_Data(self.calc_id, p, self.partition)
+            print("particles:%s" % p)
             print("i_ts=", end="")
             # open index file
             index_file = open( os.path.join(data_dir,self._index_filename), "w")
             for i_ts in i_ts_array:
+                # print progress
                 print(" %d," % i_ts, end="")
+                sys.stdout.flush()
+                # preform read/calculation/write
                 fmci_xp.read(i_ts,print_progress=False)
                 filename = os.path.join( data_dir, fmci_xp.default_ascii_filename_format % i_ts )
                 fmci_xp.save_to_ascii(filename,print_progress=False)
                 # write i_ts to index file
                 index_file.write("%d\n" % i_ts)
             index_file.close()
+            print("\n")

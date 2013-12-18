@@ -57,7 +57,7 @@ class tdc_FMCI_XP_Data_Base(AT_Data):
         self.PSR_Lcm = None
         self.PSR_Theta  = None
         self.PSR_Chi = None
- 
+
     @staticmethod
     def init_from_ascii(filename, **kwargs):
         """

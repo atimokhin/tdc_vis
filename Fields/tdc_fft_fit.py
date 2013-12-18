@@ -2,7 +2,7 @@ import scipy
 import scipy.optimize
 import math
 
-from ATvis.Common_Data_Plot import AT_Plotter
+from ATvis.Common_Data_Plot import AT_Data_Plotter
 
 from Auxiliary        import tdc_Exception
 
@@ -132,7 +132,11 @@ class tdc_FFT_Fit:
         return self.__func(k,*self.__popt)
     
 
-class tdc_FFT_Fit_Plotter(AT_Plotter):
+#
+# This has been changed to AT_Data_Plotter -- untested
+#
+
+class tdc_FFT_Fit_Plotter(AT_Data_Plotter):
     """
     Plotter for plotting FFT_Fit
     """
@@ -142,7 +146,7 @@ class tdc_FFT_Fit_Plotter(AT_Plotter):
         fft_data_fit
            tdc_FFT_Data_Fit objects
         """
-        AT_Plotter.__init__(self,fft_data_fit, xlabel,ylabel,idlabel)
+        AT_Data_Plotter.__init__(self,fft_data_fit, xlabel,ylabel,idlabel)
         
     def plot(self,ax,**kwargs):
         """

@@ -24,15 +24,16 @@ fig_param = paramSingleFig_Presentation
 # ============================================================
 # Directory
 # ============================================================
-# tdc_Filenames.set_results_dir('../RESULTS/WD')
-# tdc_Filenames.set_results_dir('../RESULTS/WD/RS')
-tdc_Filenames.set_results_dir('../RESULTS/WD/RS_2')
-# tdc_Filenames.set_results_dir('../RESULTS/WD/TDC_Presentation')
+# tdc_Filenames.set_results_dir('../RESULTS/')
+# tdc_Filenames.set_results_dir('../RESULTS/WD1TB')
+# tdc_Filenames.set_results_dir('../RESULTS/WD1TB/TDC_Presentation')
+tdc_Filenames.set_results_dir('../RESULTS/WD2TB/Crab')
+# tdc_Filenames.set_results_dir('../RESULTS/WD2TB/Test')
 
 
 # tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/')
 # tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/TDC_Presentation')
-tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/__RS_2/')
+tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/Crab/')
 
 
 # ============================================================
@@ -52,15 +53,23 @@ tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/__RS_2/')
 # IDs=['RS__RD_jp0.25_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU',
 #      'RS__RD_jp0.5_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU' ]
 
-IDs=['RS__RD_jp0.95_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU']
+# IDs=['RS__RD_jp0.95_P0.09_L0.6_nGJ5e4_nx5e3_dt4e-5_sU']
+
+# IDs=['RS__Crab_B3_Dipole_jp1_P0.033_L0.2_nGJ5e4_nx5e3_dt1.5e-5_sU']
+# IDs=['RS__Crab_B3_Dipole_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU']
+# IDs=['RS__Crab_B1_Dipole_jp1_P0.033_L0.2_nGJ5e4_nx5e3_dt1.5e-5_sU__test_debug_3_MC']
+
+# IDs=['RS__Crab_B3_Rc2e6_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU']
+IDs=['RS__Crab_B3_Dipole_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a']
+# IDs=['RS__Crab_B3_Dipole_theta0.5_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a']
 
 # ============================================================
 # plot limits:
 # ============================================================
-xlim = [-0.005,0.605]
+xlim = [-0.005,0.205]
 ## xlim = [-0.005,0.605]
 
-ylim_xp  = [-5e8,5e8]
+ylim_xp  = [-1.5e8,1.5e8]
 
 ylim_rho = [-10,10]
 ylim_j   = [-10,10]
@@ -77,7 +86,7 @@ axes_commands_xp = ['set_yticks([-1e8,-1e4,0,1e4,1e8])']
 
 
 
-sample_dict = dict(name='regular',n_reduce=1,n_min=1000)
+sample_dict = dict(name='regular',n_reduce=5,n_min=1000)
 ## sample_dict = dict(name='regular',n_reduce=20,n_min=3000)
 
 particle_names = ['Positrons','Electrons','Pairs']
@@ -88,7 +97,7 @@ linthreshy=5
 tt = None
 ## tt = [0,0.2]
 
-fps = 15
+fps = 10
 keep_frame_files=False
 
 use_cell_coordinates=False

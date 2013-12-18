@@ -1,4 +1,7 @@
 #!/usr/bin/python
+if __name__ == '__main__':
+    import tdc_vis
+
 import os
 
 from ATvis.Common_Data_Plot  import *
@@ -21,11 +24,11 @@ fig_param = paramSingleFig_Presentation
 # ============================================================
 # Directory
 # ============================================================
-## tdc_Filenames.set_results_dir('../RESULTS/')
-tdc_Filenames.set_results_dir('../RESULTS/__TDC_2')
+tdc_Filenames.set_results_dir('../RESULTS/')
+# tdc_Filenames.set_results_dir('../RESULTS/__TDC_2')
 
 
-tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/TDC_Presentation')
+# tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/TDC_Presentation')
 
 
 # ============================================================
@@ -33,7 +36,8 @@ tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/TDC_Presentation')
 # ============================================================
 ID=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1',
     'SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__1']
-## ID=['sclf_test_L50_nx2e3_jm1.0_injP_inj8_xinjII']
+
+ID=['SCLF__jm0.5_L50_X0.5_nGJ2e5_nx5e3_dt2e-3__RhoGJConst__noMC__dP5e-2_inj15_s1__test_new_gcc']
 # ============================================================
 # OF solution file 
 # ============================================================
