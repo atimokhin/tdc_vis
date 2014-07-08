@@ -22,7 +22,7 @@ class AxesSetupPanel(gtk.Frame):
         main_box.set_border_width(5)
         self.add(main_box)
         # ------------------------------------------
-        # Axes setup Button: add only of Movie Frames 
+        # Axes setup Button: add only if Movie Frames 
         #                    have adjustable axes
         # ------------------------------------------
         if isinstance(self.F, MovieFrames__Axes):

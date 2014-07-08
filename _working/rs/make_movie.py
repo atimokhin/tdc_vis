@@ -60,8 +60,14 @@ tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/Crab/')
 # IDs=['RS__Crab_B1_Dipole_jp1_P0.033_L0.2_nGJ5e4_nx5e3_dt1.5e-5_sU__test_debug_3_MC']
 
 # IDs=['RS__Crab_B3_Rc2e6_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU']
-IDs=['RS__Crab_B3_Dipole_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a']
+# IDs=['RS__Crab_B3_Dipole_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a']
 # IDs=['RS__Crab_B3_Dipole_theta0.5_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a']
+
+# IDs=['RS__Crab_B1_Dipole_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a']
+
+# IDs=['RS__Crab_B1_Dipole_theta0.5_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a']
+IDs=['RS__Crab_B1_R8.6e6_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a']
+
 
 # ============================================================
 # plot limits:

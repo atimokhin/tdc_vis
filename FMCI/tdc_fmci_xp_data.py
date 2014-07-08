@@ -50,6 +50,7 @@ class tdc_FMCI_XP_Data_Base(AT_Data):
         # data members
         self.x       = None
         self.p       = None
+        # particle number density normalized to nGJ: n/n_{GJ} 
         self.fmci_XP = None
         # PSR parameters
         self.PSR_P   = None
@@ -332,7 +333,7 @@ class tdc_FMCI_XP_Data(tdc_Data__with_Timetable,tdc_FMCI_XP_Data_Base):
         Fill fmci_XP array for current timeshot and current partition:
         - iterates over all particles in self.xp and adds their statistical weights
           into corresponding cell of fmci_XP array
-        - normalizes weights to GJ numger density
+        - normalizes weights to GJ number density
         """
         # set fmci_XP to zero
         self.fmci_XP *= 0

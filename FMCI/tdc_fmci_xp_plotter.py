@@ -3,6 +3,7 @@ from matplotlib.colors import LogNorm
 
 from ATvis.Common_Data_Plot import AT_Data_Plotter
 
+
 class tdc_FMCI_XP_Plotter(AT_Data_Plotter):
     """
     Plot Color map of array fmci_XP
@@ -30,19 +31,21 @@ class tdc_FMCI_XP_Plotter(AT_Data_Plotter):
         # ylabel
         if not ylabel:
             self.plot_ylabel = self.__default_plot_ylabel[self.data[0].name]
+            self.plot_ylabel_latex=self.plot_ylabel
         # idlabel
         if not idlabel:
             self.plot_idlabel='FMCI_XP:' + self.data[0].name + ':' + self.data[0].calc_id
         # ---------------------------------
         # initialize lines
         self.lines = [ None ]
-        self.cbar  = None
+        self.colorbar  = None
         self.pcolor_args = {}
         
     def plot(self,
              ax,            
              wlims=None,
              symlog=True,
+             colorbar=True,
              linthreshy=5,
              **kwargs):
         """
@@ -65,7 +68,8 @@ class tdc_FMCI_XP_Plotter(AT_Data_Plotter):
            <5>     The range (-x, x) within which the plot is linear
         """
         self.__plot_colormap(ax, wlims, symlog=symlog, linthreshy=linthreshy, **kwargs)
-        self.__plot_colorbar()
+        if colorbar:
+            self.__plot_colorbar()
         
     def __plot_colormap(self, 
                         ax,
@@ -77,22 +81,37 @@ class tdc_FMCI_XP_Plotter(AT_Data_Plotter):
         if wlims is None:
             wlims = self.wlims
         xp = self.data[0]
-        self.lines[0] = ax.pcolor(xp.x, xp.p, 
-                                  transpose(xp.fmci_XP),
-                                  norm=LogNorm(vmin=0.95*wlims[0], vmax=1.05*wlims[1]),
-                                  **kwargs)
+        self.lines[0] = ax.pcolormesh( xp.x, xp.p,
+                                       transpose(xp.fmci_XP),
+                                       norm=LogNorm(vmin=0.95*wlims[0],
+                                                    vmax=1.05*wlims[1]),
+                                       **kwargs)
         # make scaling semi-logatithmic if asked
         if symlog:
             ax.set_yscale('symlog',linthreshy=linthreshy,subsy=[1,10])
 
+    def data_point(self, x, y):
+        """
+        Returns (z, xx, yy) for the data point x,y
+        Used for data inspection
+        """
+        xp = self.data[0]
+        i=xp.x.searchsorted(x)-1
+        j=xp.p.searchsorted(y)-1
+        # are we within data range?
+        if i is None or j is None:
+            return None
+        xx = [ xp.x[i],  xp.x[i+1] ]
+        yy = [ xp.p[j],  xp.p[j+1] ]
+        z = xp.fmci_XP[i][j]
+        return (z, xx, yy)
+    
     def __plot_colorbar(self):
         "Plot colorbar for already plotted color map"
         fig = self.lines[0].get_figure()
         ax  = self.lines[0].get_axes()
-        self.cbar = fig.colorbar(self.lines[0],ax=ax)
+        self.colorbar = fig.colorbar(self.lines[0],ax=ax,fraction=0.12,pad=0.03)
         
-            
-            
     def replot(self,ax):
         """
         Plot new colormap, *does not change colorbar* 
@@ -112,6 +131,4 @@ class tdc_FMCI_XP_Plotter(AT_Data_Plotter):
         """
         for line in self.lines:
             line.set_animated(val)
-
-            
 

@@ -31,7 +31,7 @@ class tdc_FMCI_DataFiles_Maker(object):
         Actual calculations will be performed by make_files(..) method
         """
         self.calc_id = calc_id
-        self.data_top_dir = tdc_Filenames.get_vis_results_dir() + 'FMCI__%s' % calc_id
+        self.data_top_dir = os.path.join(tdc_Filenames.get_vis_results_dir(), 'FMCI__%s' % calc_id)
         # set particles -----------------------
         self.particles = self.__default_particles if particles is None else particles 
         # default__i_ts__range to all i_ts ----

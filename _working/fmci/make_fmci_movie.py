@@ -41,8 +41,11 @@ tdc_Filenames.set_vis_results_dir('../RESULTS_FMCI_VIS/Crab/')
 # FMCI_ID='FMCI__RS__Crab_B1_Dipole_jp1_P0.033_L0.2_nGJ5e4_nx5e3_dt1.5e-5_sU__test_debug_3_MC'
 
 # FMCI_ID='FMCI__RS__Crab_B3_Dipole_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a'
-FMCI_ID='FMCI__RS__Crab_B3_Dipole_theta0.5_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a'
+# FMCI_ID='HiResFMCI__RS__Crab_B3_Dipole_theta0.5_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a'
 
+# FMCI_ID='FMCI__RS__Crab_B1_Dipole_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a'
+# FMCI_ID='FMCI__RS__Crab_B1_Dipole_theta0.5_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a'
+FMCI_ID='FMCI__SCLF__Crab_B1_Dipole_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU'
 
 # ============================================================
 # plot limits:

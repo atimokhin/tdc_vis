@@ -25,32 +25,48 @@ fig_param = paramSingleFig_Presentation
 # Directory
 # ============================================================
 # tdc_Filenames.set_results_dir('../RESULTS/')
-tdc_Filenames.set_results_dir('../RESULTS/WD/_paper_TDC2')
+# tdc_Filenames.set_results_dir('../RESULTS/WD/_paper_TDC2')
 # tdc_Filenames.set_results_dir('../RESULTS/WD/_test_new_pooma')
+tdc_Filenames.set_results_dir('../RESULTS/WD2TB/Crab')
 
 
-## tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/TDC_Presentation')
-tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/')
+# tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/TDC_Presentation')
+# tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/')
+tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/Crab/')
 
 # ============================================================
 # IDs 
 # ============================================================
-IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1']
+# IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1']
 # IDs=['SCLF__jm1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj8_s1__test']
 
 # IDs=['SCLF__jp0.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj5_sU_P']
 # IDs=['SCLF__jp1.5_Pcf1e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJConst__R6C_Xb0.7__dP5e-2_inj7_sU']
 
-## IDs=['Arons__j2.000_Pcf9e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU']
+# IDs=['Arons__j2.000_Pcf9e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU']
 # IDs=['Arons__j2.000_Pcf9e8_L1_nGJ5e4_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU__wave']
 
-## IDs=['Arons__j1.059_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU']
+# IDs=['Arons__j1.059_Pcf9e8_L1_nGJ1e5_nx5e3_dt4e-5__RhoGJlin2_A1_AAm0.7_X1__R6C__dP5e-2_inj12_sU']
+
+# IDs=['SCLF__Crab_B1_Dipole_jp1.5_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a']
+# IDs=['SCLF__Crab_B1_Dipole_jm1.5_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a']
+
+# IDs=['SCLF__Crab_B1_Dipole_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU']
+# IDs=['SCLF__Crab_B3_Dipole_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU']
+
+
+IDs=['SCLF__Crab_B1_R6.8e6_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU']
+#IDs=['SCLF__Crab_B1_R8.8e6_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU']
+
+#IDs=['SCLF__Crab_B3_R6.8e6_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU']
+#IDs=['SCLF__Crab_B3_R8.8e6_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU']
+
 
 
 # ============================================================
 # plot limits:
 # ============================================================
-xlim = [-0.01,1.01]
+xlim = [-0.01,0.31]
 
 ## #----------------------------------------
 ## #  Arons ---
@@ -68,7 +84,7 @@ ylim_xp  = [-5e8,5e8]
 
 
 ylim_rho = [-10,10]
-ylim_j   = [-2,0.5]
+ylim_j   = [-3,0.5]
 ylim_e   = [-0.15,0.05]
 ylim_phi = [-2.5e-3,2.5e-3]
 ylim_ep  = [-0.5,100]
@@ -111,7 +127,7 @@ ylim_ep  = [-0.5,100]
 ## # ----------------------------------------
 
 
-sample_dict = dict(name='regular',n_reduce=1,n_min=3000)
+sample_dict = dict(name='regular',n_reduce=20,n_min=3000)
 # sample_dict = dict(name='regular',n_reduce=10,n_min=3000)
 
 
@@ -149,9 +165,9 @@ moving_grid_dict = None
 # ============================================================
 
 Plots = {'XP'           : True,
-         'Rho'          : False,
-         'J'            : False,
-         'E_acc'        : False,
+         'Rho'          : True,
+         'J'            : True,
+         'E_acc'        : True,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
          'Phi'          : False,
@@ -207,7 +223,7 @@ def do_movie(IDs):
             tdc_plot_field_movie(interface.movie_module,
                                  ID,
                                  'Rho',
-                                 ylim=[-3,3],
+                                 ylim=ylim_rho,
                                  xlim=xlim,
                                  moving_grid_dict=moving_grid_dict,
                                  tt=tt,
@@ -215,7 +231,6 @@ def do_movie(IDs):
                                  use_cell_coordinates=use_cell_coordinates,
                                  show_cells=show_cells,
                                  ghost_points=True,
-                                 xlabel = xlabel_Debye,
                                  fig_param = fig_param)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
        

@@ -19,7 +19,7 @@ class MovieGUI(gtk.Window):
     cp      -- Control panel
     toolbar -- Toolbar
     """
-    
+
     def make_control_box(self):
         "make VBox with various control panels"
         # define various control panels

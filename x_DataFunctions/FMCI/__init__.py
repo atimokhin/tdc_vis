@@ -1,1 +1,2 @@
 from tdc_fmci_datafiles_maker import tdc_FMCI_DataFiles_Maker
+from FMCI.tdc_fmci_xp_partition import tdc_FMCI_XP_Partition__LinSemiLogUniform

@@ -75,7 +75,6 @@ class tdc_SED_Manip(tdc_Manip):
         manip=tdc_SED_Manip(fig_param)
         manip.read_from_dump(filename, dump_id)
         return manip
-        
 
         
     def read_from_data(self, 

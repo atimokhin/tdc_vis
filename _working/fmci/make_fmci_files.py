@@ -27,7 +27,8 @@ tdc_Filenames.set_results_dir('../RESULTS/WD2TB/Crab')
 # FMCI files will be writtent in this directory:
 # ------------------------------------------------------------
 # tdc_Filenames.set_vis_results_dir('../RESULTS_FMCI/')
-tdc_Filenames.set_vis_results_dir('../RESULTS_FMCI/Crab/')
+# tdc_Filenames.set_vis_results_dir('../RESULTS_FMCI/Crab/')
+tdc_Filenames.set_vis_results_dir('../RESULTS_FMCI/Crab/HiRes')
 
 
 # ============================================================
@@ -38,13 +39,25 @@ tdc_Filenames.set_vis_results_dir('../RESULTS_FMCI/Crab/')
 # ID='RS__Crab_B1_Dipole_jp1_P0.033_L0.2_nGJ5e4_nx5e3_dt1.5e-5_sU__test_debug_3_MC'
 
 # ID='RS__Crab_B3_Rc2e6_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU'
-ID='RS__Crab_B3_Dipole_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a'
+# ID='RS__Crab_B3_Dipole_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a'
 # ID='RS__Crab_B3_Dipole_theta0.5_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a'
+# ID='RS__Crab_B1_Dipole_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a'
+# ID='RS__Crab_B1_Dipole_theta0.5_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a'
+# ID='RS__Crab_B3_R8.6e6_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a'
+# ID='RS__Crab_B1_R8.6e6_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a'
+
+# ID='SCLF__Crab_B1_Dipole_jp1.5_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a'
+# ID='SCLF__Crab_B1_Dipole_jm1.5_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a'
+
+ID='SCLF__Crab_B1_Dipole_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU'
+
 
 # ============================================================
 # parameters:
 # ============================================================
 particles = ['Electrons', 'Positrons', 'Pairs']
+# partition = tdc_FMCI_XP_Partition__LinSemiLogUniform( x_dict=dict(n=200,xx=None),
+#                                                       p_dict=dict(n=100,pp=[5,5e8]) )
 partition = tdc_FMCI_XP_Partition__LinSemiLogUniform( x_dict=dict(n=100,xx=None),
                                                       p_dict=dict(n=50,pp=[5,5e8]) )
 # i_ts__range=[295,315]

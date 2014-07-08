@@ -41,6 +41,7 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
                 self.plot_ylabel=r'$p$'
             else:
                 self.plot_ylabel=self.__default_plot_ylabel[xps[0].name]
+            self.plot_ylabel_latex=self.plot_ylabel
         # idlabel
         if not idlabel:
             self.plot_idlabel='XP:' + self.data[0].calc_id

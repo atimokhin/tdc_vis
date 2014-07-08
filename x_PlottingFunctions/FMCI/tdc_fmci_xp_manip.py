@@ -67,7 +67,7 @@ class tdc_FMCI_XP_Manip(tdc_Manip):
 
     @staticmethod
     def init_from_ascii(filename,
-                        dump_id,
+                        fmci_dir,
                         wlims=None,
                         fig_param=None):
         """
@@ -77,14 +77,14 @@ class tdc_FMCI_XP_Manip(tdc_Manip):
         """
         manip=tdc_FMCI_XP_Manip(fig_param)
         manip.read_from_ascii(filename,
-                              dump_id,
+                              fmci_dir,
                               wlims=wlims)
         return manip
 
 
     @staticmethod
     def init_from_dump(filename,
-                       dump_id,
+                       fmci_dir,
                        wlims=None,
                        fig_param=None):
         """
@@ -94,7 +94,7 @@ class tdc_FMCI_XP_Manip(tdc_Manip):
         """
         manip=tdc_FMCI_XP_Manip(fig_param)
         manip.read_from_dump(filename,
-                             dump_id,
+                             fmci_dir,
                              wlims=wlims)
         return manip
 
@@ -140,7 +140,7 @@ class tdc_FMCI_XP_Manip(tdc_Manip):
                        wlims=None):
         """
         setup Manip by reading the pickle'd data dumped
-        into data file dump_id/filename.pickle
+        into data file fmci_dir/filename.pickle
         --------
         Options:
         --------
@@ -164,16 +164,16 @@ class tdc_FMCI_XP_Manip(tdc_Manip):
 
     def read_from_ascii(self, 
                         filename,
-                        dump_id,
+                        fmci_dir,
                         wlims=None):
         """
         setup Manip by reading the data saved as ascii
-        into data file dump_id/filename.dat
+        into data file RESULTS_DIR/fmci_dir/filename.dat
         """
         # set restored_from_dump flag so the data cannot be read again
         ## self.restored_from_dump=True
         # full file name of the file with tdc_FMCI_XP_Data_Base info
-        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.dat')
+        filename=tdc_Filenames.get_full_filename(fmci_dir, filename+'.dat')
         self.fmci_xp = tdc_FMCI_XP_Data_Base.init_from_ascii(filename)
         # i_ts
         self.i_ts = self.fmci_xp.i_ts
@@ -186,9 +186,9 @@ class tdc_FMCI_XP_Manip(tdc_Manip):
 
     def save_to_ascii(self, 
                       filename,
-                      dump_id):
+                      fmci_dir):
         # full file name of the file with manipulator dump
-        filename=tdc_Filenames.get_full_vis_filename(dump_id, filename+'.dat')
+        filename=tdc_Filenames.get_full_vis_filename(fmci_dir, filename+'.dat')
         self.fmci_xp.save_to_ascii(filename)
 
 
@@ -245,6 +245,15 @@ class tdc_FMCI_XP_Manip(tdc_Manip):
         # change ticklabel_fonsize
         self._change_ticklabel_fonsize()
 
+    def _change_ticklabel_fonsize(self):
+        "function for changing fontsize for axes"
+        self.ax.tick_params(labelsize=self.fg.ticklabel_fontsize)
+        if self.plotter.colorbar:
+            self.plotter.colorbar.ax.tick_params(labelsize=self.fg.colorbar_ticklabel_fontsize)
+        
+    def data_point(self, x, y):
+        return self.plotter.data_point(x, y)
+        
     def set_xp_partition(self,xp_partition):
         self.fmci_xp.set_xp_partition(xp_partition)
 
