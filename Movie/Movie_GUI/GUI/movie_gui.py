@@ -4,6 +4,7 @@ from axes_setup         import AxesSetupPanel
 from display_panel      import DisplayPanel
 from control_panel      import ControlPanel
 from navigation_toolbar import NavigationToolbar
+from select_panel       import SelectPanel
 
 from button_label_from_stock import *
 
@@ -17,6 +18,7 @@ class MovieGUI(gtk.Window):
     ap      -- Axis panel
     dp      -- Display panel
     cp      -- Control panel
+    sp      -- Select panel
     toolbar -- Toolbar
     """
 
@@ -26,11 +28,13 @@ class MovieGUI(gtk.Window):
         self.ap = AxesSetupPanel(self.MovieFrames)
         self.dp = DisplayPanel()
         self.cp = ControlPanel()
+        self.sp = SelectPanel(self.MovieFrames)
         # put all panel into a *VBox
         ctrl_box=gtk.VBox()
         ctrl_box.set_border_width(3)
         ctrl_box.pack_start(self.dp,False,False,5)
         ctrl_box.pack_start(self.ap,False,False,5)
+        ctrl_box.pack_start(self.sp, False, False,5)
         ctrl_box.pack_end(self.cp,False,False,5)
         # return resulting VBox
         return ctrl_box        
