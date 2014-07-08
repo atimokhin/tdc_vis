@@ -2,6 +2,7 @@ from Common_Data_Plot   import tdc_Data_Sequence
 from Auxiliary_Plotters import tdc_Moving_Grid_Plotter
 
 from Particles import tdc_XP_Data, tdc_XPs_Plotter, tdc_XPs_TP_Plotter
+from Particles import tdc_XP_Data_with_Selected, tdc_XPs_TP_Plotter_with_Selected
 
 def tdc_plot_xp_movie(plot_module,
                       calc_ids,
@@ -64,7 +65,7 @@ def tdc_plot_xp_movie(plot_module,
         particle_names = (particle_names,)
         
     # particles sequence
-    xps=[ tdc_Data_Sequence.init_from_data( tdc_XP_Data,
+    xps=[ tdc_Data_Sequence.init_from_data( tdc_XP_Data_with_Selected,
                                             calc_ids=calc_ids,
                                             particle_name=pname,
                                             sample_dict=sample_dict,
@@ -74,10 +75,10 @@ def tdc_plot_xp_movie(plot_module,
     # tracked particles sequence
     tps = tdc_Data_Sequence(tp, tt=tt) if tp else None
     # plotter
-    pp  = tdc_XPs_TP_Plotter(xps=xps,
-                             tp=tps,
-                             trail_dict=trail_dict,
-                             xlabel=xlabel, ylabel=ylabel, idlabel=idlabel)
+    pp  = tdc_XPs_TP_Plotter_with_Selected(xps=xps,
+                                           tp=tps,
+                                           trail_dict=trail_dict,
+                                           xlabel=xlabel, ylabel=ylabel, idlabel=idlabel)
     if plot_style is not None:
         pp.set_plotstyle(**plot_style)
     if use_cell_coordinates:

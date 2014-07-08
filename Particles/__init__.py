@@ -6,3 +6,4 @@ from tdc_xps_tp_plotter import *
 from tdc_seds_plotter   import *
 
 from TrackParticles     import *
+from SelectParticles    import *
