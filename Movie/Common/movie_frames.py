@@ -56,7 +56,7 @@ class MovieFrames:
 
     def get_time(self):
         return self.seq_plotter[0].data[0].get_time()
-
+    
 
 
 class MovieFrames__Axes(MovieFrames):
@@ -67,7 +67,7 @@ class MovieFrames__Axes(MovieFrames):
     self.ylim 
     self.formatter
     """
-    
+ 
     def __init__(self, seq_plotter):
         """
         """
