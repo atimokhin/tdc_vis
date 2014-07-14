@@ -11,6 +11,7 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
                  particle_name,
                  sample_dict=None,
                  get_weight=False,
+                 get_id=False,
                  time_normalization=None): 
         """
         """
@@ -19,6 +20,7 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
                              particle_name=particle_name,
                              sample_dict=sample_dict,
                              get_weight=get_weight,
+                             get_id=get_id,
                              time_normalization=time_normalization)
 
         self.select_x=[]

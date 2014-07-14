@@ -42,6 +42,7 @@ class tdc_XP_Data(tdc_Data__with_Timetable,AT_Data):
                  particle_name,
                  sample_dict=None,
                  get_weight=False,
+                 get_id=False,
                  time_normalization=None):
         """
         Opens HDF5 file, setup time class
@@ -72,6 +73,8 @@ class tdc_XP_Data(tdc_Data__with_Timetable,AT_Data):
         self.sample = tdc_get_XP_Sample(sample_dict)
         # set get_weight_flag
         self.get_weight_flag = get_weight
+        # set id_flag
+        self.get_id_flag = get_id
         # open HDF file -----------------
         h5_filename  = tdc_Filenames.get_full_filename(calc_id, self.name+'.h5')
         try:
@@ -92,6 +95,7 @@ class tdc_XP_Data(tdc_Data__with_Timetable,AT_Data):
         self.x=np.empty(0)
         self.p=np.empty(0)
         self.w=np.empty(0)
+        self.id=np.empty(0)
         if self.name == 'Pairs':
             self.x_em=np.empty(0)
             self.x_cr=np.empty(0)
@@ -171,10 +175,15 @@ class tdc_XP_Data(tdc_Data__with_Timetable,AT_Data):
             if self.get_weight_flag:
                 w_dset_name='/Weight/'+ str(self.i_ts)
                 self.w = self.read_dataset(w_dset_name)
+            # get particle ids if requested
+            if self.get_id_flag:
+                id_dset_name='/ID/'+ str(self.i_ts)
+                self.id = self.read_dataset(id_dset_name)
         else:
             self.x=np.empty(0)
             self.p=np.empty(0)
             self.w=np.empty(0)
+            self.id=np.empty(0)
             if self.name == 'Pairs':
                 self.x_em=np.empty(0)
                 self.x_cr=np.empty(0)

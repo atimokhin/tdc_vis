@@ -135,10 +135,10 @@ particle_names = ['Positrons','Electrons','Pairs','Protons']
 ## particle_names = ['Positrons','Electrons','Pairs']
 
 
-# axes_commands_xp = None
+axes_commands_xp = None
 # axes_commands_xp = ['set_yticks([-1e8,-1e4,0,1e4,1e8])']
-axes_commands_xp = ['set_yticks([-1e8,-1e4,0,1e4,1e8])', 
-                    'axvspan(0.7, 1.01, facecolor=\'0.85\', alpha=0.5)'] # for no-pair zone
+# axes_commands_xp = ['set_yticks([-1e8,-1e4,0,1e4,1e8])', 
+#                     'axvspan(0.7, 1.01, facecolor=\'0.85\', alpha=0.5)'] # for no-pair zone
 
 symlog=True
 linthreshy=5
@@ -165,7 +165,7 @@ moving_grid_dict = None
 # ============================================================
 
 Plots = {'XP'           : True,
-         'Rho'          : False,
+         'Rho'          : True,
          'J'            : False,
          'E_acc'        : False,
          'E_Gauss'      : False,
@@ -212,7 +212,8 @@ def do_movie(IDs):
                               symlog=symlog,
                               linthreshy=linthreshy,
                               axes_commands = axes_commands_xp,
-                              fig_param = fig_param)
+                              fig_param = fig_param,
+                              get_id=True)
         # ~~~~~~~~~~~~~~~~~~~~~~~~
 
 

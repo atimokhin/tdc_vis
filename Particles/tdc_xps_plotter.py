@@ -81,9 +81,9 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
             # actual plotting
             self.lines[i], = ax.plot(xp.x, xp.p,
                                      **plot_kwargs)
-            # make scaling semi-logatithmic if asked
-            if symlog:
-                ax.set_yscale('symlog',linthreshy=linthreshy,subsy=[1,10])
+        # make scaling semi-logatithmic if asked
+        if symlog:
+            ax.set_yscale('symlog',linthreshy=linthreshy,subsy=[1,10])
         tdc_Data_vs_X_Plotter.plot(self,ax)
 
 
