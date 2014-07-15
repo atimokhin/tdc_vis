@@ -38,24 +38,40 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
                                 symlog=symlog,
                                 linthreshy=linthreshy,
                                 **kwargs)
-    def replot(self,ax):
-        """
-        Plot particles for animation at timestep# i_ts
-        """
-        tdc_XPs_TP_Plotter.replot(self,ax=ax)
-#        for i, line in enumerate(self.line_select):
-#            line.set_xdata(self.data[i].select_x)
-#            line.set_ydata(self.data[i].select_y)
-#            line.set_color('green')
-#            ax.draw_artist(line)
         for i, xp in enumerate(self.data):
             select_x = []
             select_y = []
             for key in xp.select:
                 select_x.append(xp.select[key][1])
                 select_y.append(xp.select[key][2])
-            self.line_select[i], = ax.plot(select_x, select_y, 'o', ms = 20, color = 'yellow', alpha = .7)
+            self.line_select[i], = ax.plot(select_x, select_y, 'o', ms = 20, color = 'green', alpha = .7
+            )
+    def replot(self,ax):
+        """
+        Plot particles for animation at timestep# i_ts
+        """
+        tdc_XPs_TP_Plotter.replot(self,ax=ax)
+        for i, xp in enumerate(self.data):
+            select_x = []
+            select_y = []
+            for key in xp.select:
+                select_x.append(xp.select[key][1])
+                select_y.append(xp.select[key][2])
+            self.line_select[i].set_xdata(select_x)
+            self.line_select[i].set_ydata(select_y)
             ax.draw_artist(self.line_select[i])
+#        for i, line in enumerate(self.line_select):
+#            line.set_xdata(self.data[i].select_x)
+#            line.set_ydata(self.data[i].select_y)
+#            line.set_color('green')
+#            ax.draw_artist(line)
+#        for i, xp in enumerate(self.data):
+#            select_x = []
+#            select_y = []
+#            for key in xp.select:
+#                select_x.append(xp.select[key][1])
+#                select_y.append(xp.select[key][2])
+#            self.line_select[i], = ax.plot(select_x, select_y, 'o', ms = 20, color = 'yellow', alpha = .7)
 
     def set_animated(self,val):
         """
