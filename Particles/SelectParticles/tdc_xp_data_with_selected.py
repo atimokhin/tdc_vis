@@ -48,7 +48,9 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         #checks that particles were stationary in ID list
         for key in update:
             if key == self.id[update[key][0]]:
-                update.pop[key]
+                print update[key]
+                update.pop(key)
+                assert False
                 print "Particle with ID %i stationary" %(key)
         if len(update)==0:
             return
@@ -60,7 +62,7 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
                     if key == self.id[test_index]:
                         print "found ID %i near source"
                         self.select[key]=(self.id[test_index], self.x[test_index], self.p[test_index])
-                        update.pop[key]
+                        update.pop(key)
                 except IndexError:
                     pass
         print update
@@ -78,14 +80,14 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
             for key in update:
                 if key == self.id[i]:
                     update[key]=(self.id[i],self.x[i], self.p[i])
-                    update.pop[key]
+                    update.pop(key)
                     break
         print update
         if len(update)>0:
             for key in update:
                 self.select[key]=(update[key], None, None)
                 print "Particle " + str(update[key]) + " not found."
-                update.pop[key]
+                update.pop(key)
         print "Final update is "
         print update
         if len(update) != 0:
