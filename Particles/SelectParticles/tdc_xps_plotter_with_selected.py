@@ -49,7 +49,12 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
 #            line.set_color('green')
 #            ax.draw_artist(line)
         for i, xp in enumerate(self.data):
-            self.line_select[i], = ax.plot(xp.select_x, xp.select_y, 'o', ms = 20, color = 'yellow', alpha = .7)
+            select_x = []
+            select_y = []
+            for key in xp.select:
+                select_x.append(xp.select[key][1])
+                select_y.append(xp.select[key][2])
+            self.line_select[i], = ax.plot(select_x, select_y, 'o', ms = 20, color = 'yellow', alpha = .7)
             ax.draw_artist(self.line_select[i])
 
     def set_animated(self,val):

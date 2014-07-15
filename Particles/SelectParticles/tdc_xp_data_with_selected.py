@@ -138,7 +138,7 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         """
         Add particle with i=idx to the list of the selected particles
         """
-        self.select[self.id[idx]]=(idx,self.x[idx],self.y[idx])
+        self.select[self.id[idx]]=(idx,self.x[idx],self.p[idx])
         
     def deselect_particle(self, ID):
         """
