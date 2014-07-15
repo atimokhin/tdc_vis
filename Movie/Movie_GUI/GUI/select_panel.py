@@ -112,19 +112,12 @@ class SelectPanel(gtk.Frame):
         print "called point with coordinates \n " + str((x_plot, y_plot))
         bound = len(self.MovieFrame.seq_plotter[0].data)
         possible= []
-        coordinates = []
         particle_type = None
         
         #generates one of each type of particle closest to pick_event
         for i in range(0,bound):
             particle = self.data[i].get_distance_idx_ID(x_plot, y_plot, self.x_scale, self.y_scale, self.selecting)
             possible.append(particle)
-            particle_index = particle[1]
-            coordinates.append((self.data[i].x[particle_index], self.data[i].p[particle_index]))
-#        print "coordinates of particles are"
-#        pprint.pprint(coordinates)
-#        print "possible particles are:"
-#        pprint.pprint(possible)
        
         mindist = 2**31
         particle=None
@@ -136,15 +129,15 @@ class SelectPanel(gtk.Frame):
                 particle= possible[i]
                 particle_type=i
         try:
-            print "picked %s with ID %i" %(self.data[particle_type].name, particle[1])
+            print "picked %s with ID %i" %(self.data[particle_type].name, particle[2])
         except TypeError:
             print "No particles to deselect!"
 #--------------BUTTON-FUNCTIONALITY---------------------------------
         if self.selecting:
             self.data[particle_type].select_particle(particle[1])
-#            self.MovieFrame.ax[0].cla()
+            self.MovieFrame.ax[0].cla()
         else:
-            self.data[particle_type].deselect_particle(particle[1])
+            self.data[particle_type].deselect_particle(particle[2])
 #            self.MovieFrame.ax[0].cla()
         self.MovieFrame.redraw_flag=True
         
