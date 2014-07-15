@@ -1,9 +1,8 @@
 #!/usr/bin/python
 if __name__ == '__main__':
     import tdc_vis
-
+    
 import os
-
 from ATvis.Common_Data_Plot import *
 
 from Auxiliary        import *
@@ -27,12 +26,12 @@ fig_param = paramSingleFig_Presentation
 # tdc_Filenames.set_results_dir('../RESULTS/')
 # tdc_Filenames.set_results_dir('../RESULTS/WD/_paper_TDC2')
 # tdc_Filenames.set_results_dir('../RESULTS/WD/_test_new_pooma')
-tdc_Filenames.set_results_dir('../RESULTS/WD2TB/Crab')
+tdc_Filenames.set_results_dir('C:\\Users\\Alexander\\Documents\\NASA\\Code')
 
 
 # tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/TDC_Presentation')
 # tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/')
-tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/Crab/')
+tdc_Filenames.set_vis_results_dir('C:\\Users\\Alexander\\Documents\\NASA\\Code')
 
 # ============================================================
 # IDs 
@@ -55,10 +54,10 @@ tdc_Filenames.set_vis_results_dir('../RESULTS_VIS/Crab/')
 # IDs=['SCLF__Crab_B3_Dipole_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU']
 
 
-IDs=['SCLF__Crab_B1_R6.8e6_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU']
+#IDs=['SCLF__Crab_B1_R6.8e6_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU']
 #IDs=['SCLF__Crab_B1_R8.8e6_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU']
 
-#IDs=['SCLF__Crab_B3_R6.8e6_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU']
+IDs=['SCLF__Crab_B3_R6.8e6_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU']
 #IDs=['SCLF__Crab_B3_R8.8e6_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU']
 
 
@@ -137,8 +136,8 @@ particle_names = ['Positrons','Electrons','Pairs','Protons']
 
 axes_commands_xp = None
 # axes_commands_xp = ['set_yticks([-1e8,-1e4,0,1e4,1e8])']
-# axes_commands_xp = ['set_yticks([-1e8,-1e4,0,1e4,1e8])', 
-#                     'axvspan(0.7, 1.01, facecolor=\'0.85\', alpha=0.5)'] # for no-pair zone
+#axes_commands_xp = ['set_yticks([-1e8,-1e4,0,1e4,1e8])', 
+#                    'axvspan(0.7, 1.01, facecolor=\'0.85\', alpha=0.5)'] # for no-pair zone
 
 symlog=True
 linthreshy=5
@@ -166,8 +165,8 @@ moving_grid_dict = None
 
 Plots = {'XP'           : True,
          'Rho'          : True,
-         'J'            : False,
-         'E_acc'        : False,
+         'J'            : True,
+         'E_acc'        : True,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
          'Phi'          : False,

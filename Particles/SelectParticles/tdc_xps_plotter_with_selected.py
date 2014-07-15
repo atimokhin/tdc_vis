@@ -1,4 +1,5 @@
 from  Particles.tdc_xps_tp_plotter import tdc_XPs_TP_Plotter
+from pprint import *
 
 class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
     """
@@ -14,6 +15,7 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
                                     xlabel=xlabel,
                                     ylabel=ylabel,
                                     idlabel=idlabel)
+        self.line_select=[None]*len(self.data)
         
     def plot(self,
              ax,
@@ -36,14 +38,19 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
                                 symlog=symlog,
                                 linthreshy=linthreshy,
                                 **kwargs)
-
-
     def replot(self,ax):
         """
         Plot particles for animation at timestep# i_ts
         """
         tdc_XPs_TP_Plotter.replot(self,ax=ax)
-
+#        for i, line in enumerate(self.line_select):
+#            line.set_xdata(self.data[i].select_x)
+#            line.set_ydata(self.data[i].select_y)
+#            line.set_color('green')
+#            ax.draw_artist(line)
+        for i, xp in enumerate(self.data):
+            self.line_select[i], = ax.plot(xp.select_x, xp.select_y, 'o', ms = 20, color = 'yellow', alpha = .7)
+            ax.draw_artist(self.line_select[i])
 
     def set_animated(self,val):
         """

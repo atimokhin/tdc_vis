@@ -78,12 +78,12 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
             plot_kwargs.update(self.__plotstyle[xp.name])
             # apply custom plot style set manually with set_plotstyle()
             plot_kwargs.update(self._plot_style)
-            # actual plotting
-            self.lines[i], = ax.plot(xp.x, xp.p,
+            # actual plotting with pick on
+            self.lines[i], = ax.plot(xp.x, xp.p, picker=5,
                                      **plot_kwargs)
-        # make scaling semi-logatithmic if asked
-        if symlog:
-            ax.set_yscale('symlog',linthreshy=linthreshy,subsy=[1,10])
+            # make scaling semi-logatithmic if asked
+            if symlog:
+                ax.set_yscale('symlog',linthreshy=linthreshy,subsy=[1,10])
         tdc_Data_vs_X_Plotter.plot(self,ax)
 
 
