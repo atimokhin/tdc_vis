@@ -20,6 +20,7 @@ class SelectPanel(gtk.Frame):
         self.MovieFrame = movie_frame
         self.data = self.MovieFrame.seq_plotter[0].data
         self.recent = []
+        #used for conversions
         self.x_scale = self.MovieFrame.ax[0].get_xlim()
         self.x_scale = self.x_scale[1]-self.x_scale[0]
         self.y_scale = self.MovieFrame.ax[0].get_ylim()
@@ -86,6 +87,16 @@ class SelectPanel(gtk.Frame):
         self.cleared_ok.connect('clicked', self.cleared_callback)
         self.cleared_dialog.action_area.pack_start(self.cleared_ok)
         
+#        #Key Press Test
+#        self.MovieFrame.canvas.mpl_connect('figure_enter_event', self.key_press_callback)
+#        
+#    def key_press_callback(self,event):
+#        print "key_press_callback called"
+#        for i in range(0,len(self.MovieFrame.ax)):
+#            self.MovieFrame.ax[i].cla()
+#        print "MovieFrame axes cleared"
+#        self.MovieFrame.redraw_flag = True
+        
     def set_flag(self, widget):
         state = self.track_button.get_active()
         if state:
@@ -135,10 +146,10 @@ class SelectPanel(gtk.Frame):
 #--------------BUTTON-FUNCTIONALITY---------------------------------
         if self.selecting:
             self.data[particle_type].select_particle(particle[1])
-            self.MovieFrame.ax[0].cla()
+            self.fix_axes()
         else:
             self.data[particle_type].deselect_particle(particle[2])
-#            self.MovieFrame.ax[0].cla()
+            self.fix_axes()
         self.MovieFrame.redraw_flag=True
         
     def select_button_callback(self,event):
@@ -165,6 +176,8 @@ class SelectPanel(gtk.Frame):
         self.cleared_ok.hide()
     def fix_axes(self):
         for i in range(0,len(self.MovieFrame.ax)):
-            self.MovieFrame.ax[i].cla()
-            self.MovieFrame.ax[i].set_xlim((0,self.x_scale))
-            self.MovieFrame.ax[i].set_ylim((-self.y_scale,self.y_scale))
+            x_scale = self.MovieFrame.ax[0].get_xlim()
+            y_scale = self.MovieFrame.ax[0].get_ylim()
+            self.MovieFrame.ax[i].cla()            
+            self.MovieFrame.ax[i].set_xlim(x_scale[0], x_scale[1])
+            self.MovieFrame.ax[i].set_ylim(y_scale[0], y_scale[1])
