@@ -12,7 +12,7 @@ class tdc_XPs_TP_Plotter(tdc_XPs_Plotter):
     tdc_XPs_Plotter and tdc_TP_Plotter
     """
 
-    def __init__(self, xps, tp=None, trail_dict=None, xlabel=None,ylabel=None,idlabel=None):
+    def __init__(self, xps, tp=None, trail_dict=None, xlabel=None,ylabel=None,idlabel=None, trace_particles = None):
         """
         xps
            XP data to be plotted

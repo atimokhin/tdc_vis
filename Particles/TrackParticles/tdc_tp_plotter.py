@@ -61,6 +61,7 @@ class tdc_TP_Plotter(tdc_Data_vs_X_Plotter):
               size of the marker in pt.
               for both symbols and numbers
         """
+        print "tdc_tp_plotter called"
         # --------------------------------------------------
         # setup plot properties
         # --------------------------------------------------

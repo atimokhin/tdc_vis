@@ -38,15 +38,20 @@ class tdc_Data_Sequence(tdc_Sequence):
         # ------------------------------------------
         # initialize array__time  and  array__i_calc_id
         for i_calc_id,data_entry in enumerate(self.array__data):
+            #get time array of ith data_entry element of self.array__data
             timearray = data_entry.timetable.get_time_array()
+            #iteratively add i_calc_ids from the timearray 
             self.array__i_calc_id.extend(  [ i_calc_id for i in timearray ] )
+            #add natural numbers
             self.array__i_timeshot.extend( range(1,len(timearray)+1,1)      )
+            #add element of self.array_data
             self.array__time.extend(       timearray                        )
         # --------------------------------------------
         # initialize start and end sequence indexies
         self.idx_seq__start = 0
+        #indicates where last element of sequence is in timeshots
         self.idx_seq__end   = len(self.array__i_timeshot)-1
-        # if time argument is given
+        # if time argument is given, retrieve only data within the window
         if tt is not None:
             # be sure t is tuple or list
             if not isinstance( tt, (list,tuple) ): tt = (tt,)

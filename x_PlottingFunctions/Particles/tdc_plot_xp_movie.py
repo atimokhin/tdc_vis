@@ -1,7 +1,6 @@
 from Common_Data_Plot   import tdc_Data_Sequence
 from Auxiliary_Plotters import tdc_Moving_Grid_Plotter
 
-from Particles import tdc_XP_Data, tdc_XPs_Plotter, tdc_XPs_TP_Plotter
 from Particles import tdc_XP_Data_with_Selected, tdc_XPs_TP_Plotter_with_Selected
 
 def tdc_plot_xp_movie(plot_module,

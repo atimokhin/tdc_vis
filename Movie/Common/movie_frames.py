@@ -36,6 +36,7 @@ class MovieFrames:
         # MovieFrames_Sizes class instance, contains figure sizes and axes boxes
         self.MFS = None
         self.figure = None
+        #list of axes
         self.ax = []
         
     def plot(self,**kwargs):
@@ -46,6 +47,7 @@ class MovieFrames:
         it must be plotted in a child class
         """
         for P,A in zip(self.seq_plotter,self.ax):
+            #calls plot method of plotter
             P.plot(A,**kwargs)
 
     def get__i_ts(self):
@@ -56,7 +58,7 @@ class MovieFrames:
 
     def get_time(self):
         return self.seq_plotter[0].data[0].get_time()
-    
+
 
 
 class MovieFrames__Axes(MovieFrames):
@@ -67,7 +69,7 @@ class MovieFrames__Axes(MovieFrames):
     self.ylim 
     self.formatter
     """
- 
+    
     def __init__(self, seq_plotter):
         """
         """

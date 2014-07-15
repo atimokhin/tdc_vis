@@ -39,7 +39,7 @@ class MovieFrames__CMD(MovieFrames__Axes):
         # add as many axes as there are entries in mfs.axes_boxes
         self.ax = [ self.figure.add_axes(box)  for box in self.MFS.axes_boxes ]       
         # setup axes limits
-        self._setup_axes(xlim, ylim, axes_commands) 
+        self._setup_axes(xlim, ylim, axes_commands)
 
     def _plot_axes_labels(self):
         for i,P in enumerate(self.seq_plotter):

@@ -78,8 +78,7 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         Reads and searches data using linear search
         """
         temp = update.copy()
-        print "Beginning lin_read. Temp is \n", temp
-        #checks if particles have moved indices
+        print "--------------LIN_READ---------------------\n Temp is \n", temp
         for i in range(0,len(self.id)):
             for j,key in enumerate(update):
                 if key == self.id[i]:
@@ -120,13 +119,13 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         x_scaled = self.x_scale(x_plot, x_scale)
         y_scaled = self.y_scale(y_plot, y_scale)
         
-        for i in range(0,len(self.x)):
+        for i in range(0,len(self.id)):
             test_dist = np.hypot(x_scaled- self.x_scale(self.x[i], x_scale),y_scaled - self.y_scale(self.p[i]))
             if test_dist<distance:
                 distance = test_dist
                 idx = i
                 ID = self.id[i]
-        return (distance,idx, ID)
+        return (distance, idx, ID)
         
     def x_scale(self, x_plot, x_scale=.31):
         """
@@ -148,6 +147,7 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
     def select_particle(self, idx):
         """
         Add particle with i=idx to the list of the selected particles
+        Format: key = ID, value = (index, x, p)
         """
         self.select[self.id[idx]]=(idx,self.x[idx],self.p[idx])
         

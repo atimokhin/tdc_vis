@@ -1,0 +1,22 @@
+import os
+import matplotlib.pyplot as plt
+
+# ============================================================
+# execute "setup.py"
+# ============================================================
+with open( os.path.join( os.path.dirname(os.path.relpath(__file__)),
+                         "setup.py" ) ) as f:
+    code = compile(f.read(), "setup.py", 'exec')
+    exec(code)
+
+
+tdc_Filenames.set_results_dir('../RESULTS/WD2TB/Crab/')
+
+partition=tdc_FMCI_XP_Partition__LinSemiLogUniform( x_dict=dict(n=200,xx=None), p_dict=dict(n=100,pp=[1,5e8]) )
+
+ID='RS__Crab_B1_Dipole_jp1_P0.033_L0.2_nGJ5e4_nx1e4_dt8e-6_sU_a'
+
+manip_xp_fmci=tdc_FMCI_XP_Manip.init_from_data(ID,348,'Positrons',xp_partition=partition)
+
+manip_xp_fmci.plot(wlims=[0.5,5])
+plt.show()

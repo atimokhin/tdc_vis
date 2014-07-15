@@ -51,7 +51,7 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
         Plot particles for animation at timestep# i_ts
         """
         tdc_XPs_TP_Plotter.replot(self,ax=ax)
-        for i, xp in enumerate(self.data):
+        for i, xp in enumerate(self.data):            
             select_x = []
             select_y = []
             for key in xp.select:
@@ -60,6 +60,7 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
             self.line_select[i].set_xdata(select_x)
             self.line_select[i].set_ydata(select_y)
             ax.draw_artist(self.line_select[i])
+            
 #        for i, line in enumerate(self.line_select):
 #            line.set_xdata(self.data[i].select_x)
 #            line.set_ydata(self.data[i].select_y)

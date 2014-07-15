@@ -165,8 +165,8 @@ moving_grid_dict = None
 
 Plots = {'XP'           : True,
          'Rho'          : True,
-         'J'            : False,
-         'E_acc'        : False,
+         'J'            : True,
+         'E_acc'        : True,
          'E_Gauss'      : False,
          'E__E_Gauss'   : False,
          'Phi'          : False,

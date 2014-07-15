@@ -91,11 +91,15 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
         """
         Plot particles for animation at timestep# i_ts
         """
-        for i,line in enumerate(self.lines):
-            line.set_xdata(self.data[i].x)
-            line.set_ydata(self.data[i].p)
-        for line in self.lines:    
-            ax.draw_artist(line)
+        for i in range(0,len(self.lines)):
+            self.lines[i].set_xdata(self.data[i].x)
+            self.lines[i].set_ydata(self.data[i].p)
+            ax.draw_artist(self.lines[i])
+#        for i,line in enumerate(self.lines):
+#            line.set_xdata(self.data[i].x)
+#            line.set_ydata(self.data[i].p)
+#        for line in self.lines:    
+#            ax.draw_artist(line)
 
     def update_plot(self,ax):
         """
