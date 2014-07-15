@@ -96,6 +96,7 @@ class tdc_XP_Data(tdc_Data__with_Timetable,AT_Data):
         self.p=np.empty(0)
         self.w=np.empty(0)
         self.id=np.empty(0)
+        self.idts=np.empty(0)
         if self.name == 'Pairs':
             self.x_em=np.empty(0)
             self.x_cr=np.empty(0)
@@ -179,6 +180,8 @@ class tdc_XP_Data(tdc_Data__with_Timetable,AT_Data):
             if self.get_id_flag:
                 id_dset_name='/ID/'+ str(self.i_ts)
                 self.id = self.read_dataset(id_dset_name)
+                idts_dset_name='/IDTS/'+ str(self.i_ts)
+                self.idts = self.read_dataset(idts_dset_name)
         else:
             self.x=np.empty(0)
             self.p=np.empty(0)
