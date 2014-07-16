@@ -9,7 +9,7 @@ from movie_frames__gui import *
 class Single_Panel_Movie_Frames(MovieFrames__GUI):
     """
     Setup figure and axes for SINGLE panel plots
-    in other opertions it relies on MovieFrames__GUI
+    in other operations it relies on MovieFrames__GUI
     """
 
     def __init__(self, seq_plotter, ylim, xlim=None, axes_commands=None, fig_param=None):

@@ -43,12 +43,16 @@ class ControlPanel(gtk.Frame):
         # constructor of the base class
         gtk.Frame.__init__(self,**kwargs)
         # size <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!
-        self.set_size_request(145,200)
+        self.set_size_request(145,245)
         # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!
         main_box=gtk.VBox()
         main_box.set_border_width(5)
         self.add(main_box)
 
+        #test box
+        button_test = gtk.Button('Hello!')
+        button_test.connect('clicked', lambda w: gtk.main_quit())
+        button_test.show()
         # FRAME SpinButton -------------
         adj = gtk.Adjustment(1, 1, 50, 1, 10, 0)
         self.frame_spinner = gtk.SpinButton(adj, 0.0, 0)
@@ -56,7 +60,6 @@ class ControlPanel(gtk.Frame):
         self.frame_spinner_adj.connect("value-changed", self.set_flag, ('set_iframe_flag',  True))
         
         button_box_frame = gtk.HBox(spacing=5)
-        #pack label and spinner
         button_box_frame.pack_start(gtk.Label('frame #'))
         button_box_frame.pack_end(self.frame_spinner)
         # ------------------------------
@@ -112,11 +115,11 @@ class ControlPanel(gtk.Frame):
         main_box.pack_start(self.button_play, expand=False, padding=5)
         main_box.pack_start(self.button_record, expand=False, padding=5)
         main_box.pack_end(self.button_quit, expand=False, padding=5)
+        main_box.pack_start(button_test, expand = True, padding = 5)
 
 
 
     def set_flag(self,widget,data):
-        #modifies object's flags
         self.__dict__[data[0]] = data[1]
         return True
 

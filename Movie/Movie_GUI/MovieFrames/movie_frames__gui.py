@@ -58,8 +58,6 @@ class MovieFrames__GUI(MovieFrames__Axes):
         self.figure = Figure(facecolor='white',dpi=self.MFS.dpi)
         self.canvas = FigureCanvas(self.figure)
         self.canvas.set_size_request( *self.MFS.figsize_points )
-        # axes -----------------------------------
-        # add as many axes as there are entries in mfs.axes_boxes
         for box in self.MFS.axes_boxes:
             self.ax.append( self.figure.add_axes(box) )
         # setup axes limits
@@ -142,6 +140,7 @@ class MovieFrames__GUI(MovieFrames__Axes):
             P.animation_update( A, i_frame )
             T.set_text( 't=%.3f' % self.get_time() )
             A.draw_artist(T)
+#        self.canvas.draw()
 
     def set_animated(self,val):
         """
@@ -164,7 +163,8 @@ class MovieFrames__GUI(MovieFrames__Axes):
         self.axes_setup_window=Axes_Setup_Window(self,
                                                  self.seq_plotter,
                                                  self.ax,
-                                                 parent_widget)
+                                                 parent_widget)                        
+
 
 
 

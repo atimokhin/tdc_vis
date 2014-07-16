@@ -176,8 +176,8 @@ class SelectPanel(gtk.Frame):
         self.cleared_ok.hide()
     def fix_axes(self):
         for i in range(0,len(self.MovieFrame.ax)):
-            x_scale = self.MovieFrame.ax[0].get_xlim()
-            y_scale = self.MovieFrame.ax[0].get_ylim()
+            x_scale = self.MovieFrame.ax[i].get_xlim()
+            y_scale = self.MovieFrame.ax[i].get_ylim()
             self.MovieFrame.ax[i].cla()            
             self.MovieFrame.ax[i].set_xlim(x_scale[0], x_scale[1])
             self.MovieFrame.ax[i].set_ylim(y_scale[0], y_scale[1])
