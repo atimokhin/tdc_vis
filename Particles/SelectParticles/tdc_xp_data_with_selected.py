@@ -87,7 +87,7 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         """
         new_particle = Select_Particle(self.idts[idx], self.id[idx], idx, self.x[idx], self.p[idx])
         print "Adding %s," %(self.name), new_particle
-        self.select[(new_particle.idts, new_particle.ID)]=new_particle
+        self.select[(self.idts[idx], self.id[idx])]=new_particle
         
     def deselect_particle(self, idts, ID):
         """
@@ -110,75 +110,72 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         """
         tdc_XP_Data.read(self,i_ts, sample_dict, **kwargs)
         #running list of selected particles that need to be updated
-        update = self.select.copy()
-#        if len(update)>0:
-#            update = self.quick_read(update)
+        update = self.select.keys()
+        if len(update)>0:
+            update = self.quick_read(update)
         if len(update)>0:
             self.lin_read(update)
-        print "Final update of %s is " %(self.name)
-        pprint(self.select)
+        if len(self.select)>0:
+            print "Final update of %s is " %(self.name)
+            pprint(self.select)
                 
     def quick_read(self, update):
+        print "--------------------------QUICK---READ--------------------------"
         #checks that particles were stationary in ID list
-        temp = update.copy()
-        for j,key in enumerate(update):
+        temp = update[:]
+        print "temp is "
+        pprint(temp)
+        for key in update:
             try:
-                test_index = update[key][0]
-                if key == self.id[test_index]:
-                    self.select[key]= (test_index,self.x[test_index], self.p[test_index])
-                    temp.pop(key)
-                    print "%s with ID %i found with static quick_read" %(self.name, key)
+                test_index = self.select[key].index
+                if self.select[key].ID == self.id[test_index] and self.select[key].idts == self.idts[test_index]:
+                    self.select[key].update(test_index, self.x[test_index], self.p[test_index])
+                    temp.remove(key)
+                    print self.name + " with identifier " + str(key) + " found with static quick_read."
             except IndexError:
                 pass
-        update = temp.copy()
-        if len(update)==0:
-            return update
-        #checks that particles didn't move around much in ID list
-        for j,key in enumerate(update):
-            for k in range(-5,6):
-                try:
-                    test_index = update[key][0]+k
-                    if key == self.id[test_index]:
-                        print "%s with ID %i found with local quick_read" %(self.name,key)
-                        self.select[key]=(test_index, self.x[test_index], self.p[test_index])
-                        temp.pop(key)
-                        break
-                except IndexError:
-                    pass
+        update = temp[:]
+        if len(update)>0:
+            #checks that particles didn't move around much in ID list
+            for key in update:
+                for k in range(-5,6):
+                    try:
+                        test_index = self.select[key].index+k
+                        if self.select[key].ID == self.id[test_index] and self.select[key].idts == self.idts[test_index]:
+                            print self.name +  "with indentifier " + str(key) + "found with local quick_read."
+                            self.select[key]=(test_index, self.x[test_index], self.p[test_index])
+                            temp.pop(key)
+                            break
+                    except IndexError:
+                        pass
         return temp
             
     def lin_read(self,update):
         """
         Reads and searches data using linear search
         """
-        temp = update.copy()
+        temp = update[:]
         print "------------------------------LIN_READ-------------------------------"
         print ("Temp is")
         pprint(temp)
         for i in range(0,len(self.id)):
-            for particle in update.values():
-#                if particle.ID == self.id[i]:
-#                    print "particle found with ID %i at index %i" %(particle.ID, i)
-#                    if particle.idts == self.idts[i]:
-#                        print "particle also matches idts %i" %(particle.idts)
-                key = (particle.idts, particle.ID)
-                if key[1] ==self.id[i] and key[0] == self.idts[i]:
+            for key in update:
+                if key[1] == self.id[i] and key[0] == self.idts[i]:
                     print "match at index %i with idts %i=%i and ID %i = %i" \
-                        %(i, particle.idts, self.idts[i], particle.ID, self.id[i])
+                            %(i, key[0], self.idts[i], key[1], self.id[i])
                     self.select[key].update(i, self.x[i], self.p[i])
                     print "%s with key %s updated to %s " %(self.name, key, self.select[key])
-                    temp.pop(key)
-                    print "temp is now"
-                    print temp
+                    temp.remove(key)
+                    print "temp is now", temp
             if len(temp)==0:
                 break
-        update = temp.copy()
+        update = temp[:]
         #deals with destroyed particles
         if len(update)>0:
             for key in update:
                 print "%s with (idts, ID) %s not found" %(self.name, str(key))
 #                self.select.pop(key)
-                temp.pop(key)
+                temp.remove(key)
         if len(temp) != 0:
             print "failed to sort using lin_read"
         return temp
