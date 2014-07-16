@@ -25,9 +25,64 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
                              get_id=get_id,
                              time_normalization=time_normalization)
 
-        #dict containing selected particles with key = ID, value = (index, x, y)
-        #maybe should be a new class
-        self.select = {}
+        #list of Select_Particles
+        self.select = []
+    def get_distance_idx_ID(self,x_plot,y_plot, x_scale, y_scale, selecting):
+        """
+        Returns the distance for the particle nearest to the selected position
+        idx - index of the closest particle in the data array
+        ID  - ID of the closest particle
+        """
+        distance=2**31
+        idx=None
+        ID=None
+        x_scaled = self.x_scale(x_plot, x_scale)
+        y_scaled = self.y_scale(y_plot, y_scale)
+        
+        for i in range(0,len(self.id)):
+            test_dist = np.hypot(x_scaled- self.x_scale(self.x[i], x_scale),y_scaled - self.y_scale(self.p[i]))
+            if test_dist<distance:
+                distance = test_dist
+                idx = i
+                ID = self.id[i]
+        return (distance, idx, ID)
+        
+    def x_scale(self, x_plot, x_scale=.31):
+        """
+        Returns x-coordinate normalized to (-1,1) coordinates
+        """
+        return 2*float(x_plot)/x_scale-1
+    def y_scale(self, y_plot, y_scale=5e8):
+        """
+        Returns y-coordinate normalized to (-1,1) coordinates
+        for semilog components and (-1,1) range individually
+        """
+        if abs(y_plot)<=1:
+            return y_plot
+        elif y_plot>1:
+            return np.log10(y_plot)/np.log10(y_scale)
+        else:
+            return -np.log10(abs(y_plot))/np.log10(y_scale)        
+    #controls input form of Select_Particles
+    def select_particle(self, idx):
+        """
+        Add particle with i=idx to the list of the selected particles
+        Format: key = ID, value = (index, x, p)
+        """
+        new_particle = Select_Particle(self.idts[idx], self.id[idx], idx, self.x[idx], self.p[idx])
+        self.select.append(new_particle)
+        
+    def deselect_particle(self, ID):
+        """
+        Delete particle with ID from the list of selected particles
+        """
+        try:
+            self.select.pop(ID)
+        except: 
+            print "No particle with ID %i found in selected particles" %(ID) 
+        
+    def clear_particles(self):
+        self.select.clear()
     
     def read(self, i_ts, sample_dict = None, **kwargs):
         """
@@ -106,62 +161,6 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         Reads and searches data using binary search
         """
         #sorts self.id
-
-    def get_distance_idx_ID(self,x_plot,y_plot, x_scale, y_scale, selecting):
-        """
-        Returns the distance for the particle nearest to the selected position
-        idx - index of the closest particle in the data array
-        ID  - ID of the closest particle
-        """
-        distance=2**31
-        idx=None
-        ID=None
-        x_scaled = self.x_scale(x_plot, x_scale)
-        y_scaled = self.y_scale(y_plot, y_scale)
-        
-        for i in range(0,len(self.id)):
-            test_dist = np.hypot(x_scaled- self.x_scale(self.x[i], x_scale),y_scaled - self.y_scale(self.p[i]))
-            if test_dist<distance:
-                distance = test_dist
-                idx = i
-                ID = self.id[i]
-        return (distance, idx, ID)
-        
-    def x_scale(self, x_plot, x_scale=.31):
-        """
-        Returns x-coordinate normalized to (-1,1) coordinates
-        """
-        return 2*float(x_plot)/x_scale-1
-    def y_scale(self, y_plot, y_scale=5e8):
-        """
-        Returns y-coordinate normalized to (-1,1) coordinates
-        for semilog components and (-1,1) range individually
-        """
-        if abs(y_plot)<=1:
-            return y_plot
-        elif y_plot>1:
-            return np.log10(y_plot)/np.log10(y_scale)
-        else:
-            return -np.log10(abs(y_plot))/np.log10(y_scale)        
-        
-    def select_particle(self, idx):
-        """
-        Add particle with i=idx to the list of the selected particles
-        Format: key = ID, value = (index, x, p)
-        """
-        self.select[self.id[idx]]=(idx,self.x[idx],self.p[idx])
-        
-    def deselect_particle(self, ID):
-        """
-        Delete particle with ID from the list of selected particles
-        """
-        try:
-            self.select.pop(ID)
-        except: 
-            print "No particle with ID %i found in selected particles" %(ID) 
-        
-    def clear_particles(self):
-        self.select.clear()
         
 
 
