@@ -25,6 +25,7 @@ class SelectPanel(gtk.Frame):
         self.x_scale = self.x_scale[1]-self.x_scale[0]
         self.y_scale = self.MovieFrame.ax[0].get_ylim()
         self.y_scale = self.y_scale[1]
+        self.names = {'Positrons': 0, 'Electrons': 1, 'Pairs' : 2, 'Protons': 3}
         
         self.MovieFrame = movie_frame
         self.set_flags_to_default_values()
@@ -55,6 +56,10 @@ class SelectPanel(gtk.Frame):
         separator = gtk.HSeparator()
         main_box.pack_start(separator)
         
+#------------------------------------------------------------------------------
+#                               BUTTON FUNCTIONALITY
+#------------------------------------------------------------------------------
+        
         #Select/Deselect
         self.select_button = gtk.RadioButton(None, 'Select')
         self.select_button.connect('toggled', self.select_button_callback)
@@ -64,11 +69,52 @@ class SelectPanel(gtk.Frame):
         main_box.pack_start(self.select_button)
         main_box.pack_start(self.deselect_button)
         
-        #Clear
+        #Button for direct entry
+        self.entry_button = gtk.Button('Direct Entry')
+        self.entry_button.connect('clicked', self.entry_show)
+        main_box.pack_start(self.entry_button)
+        
+        #Second Separator
+        separator = gtk.HSeparator()
+        main_box.pack_start(separator)
+        
+        #Clear Button
         self.clear_button= gtk.Button('Clear All')
         self.clear_button.connect('clicked', self.clear_check)
         main_box.pack_end(self.clear_button)
+#------------------------------------------------------------------------------
+#                           DIRECT ENTRY FUNCTIONALITY
+#------------------------------------------------------------------------------
+        #Entry Dialog
+        self.entry_dialog = gtk.Dialog('Direct Entry')
         
+        #Particle Type Label
+        self.particle_type_label = gtk.Label('Particle Type')
+        self.entry_dialog.vbox.pack_start(self.particle_type_label)
+        
+        #Particle Type Menu
+        self.entry_menu = gtk.Combo()
+        names = ['Positrons', 'Electrons', 'Pairs', 'Protons']
+        self.entry_menu.set_popdown_strings(names)
+        self.entry_dialog.vbox.pack_start(self.entry_menu)
+        
+        #idts box
+        self.idts_box = gtk.VBox()
+        self.idts_entry = gtk.Entry()
+        self.idts_box.pack_end(self.idts_entry)
+        self.idts_label = gtk.Label('idts')
+        self.idts_box.pack_start(self.idts_label)
+        self.entry_dialog.action_area.pack_start(self.idts_box)
+        
+        #id box
+        self.id_box = gtk.VBox()
+        self.id_entry = gtk.Entry()
+        self.id_box.pack_end(self.id_entry)
+        self.id_label = gtk.Label('id')
+        self.id_box.pack_start(self.id_label)
+        self.entry_dialog.action_area.pack_start(self.id_box)
+        self.id_entry.connect('activate', self.entry_callback)
+                
         #Clear Dialog
         self.clear_dialog = gtk.MessageDialog(flags = gtk.DIALOG_MODAL,type = gtk.MESSAGE_WARNING)
         self.clear_dialog.set_markup('Are you sure you want to clear all selected particles?')        
@@ -110,6 +156,17 @@ class SelectPanel(gtk.Frame):
         self.select_button.set_sensitive(state)
         self.deselect_button.set_sensitive(state)
     
+    def entry_show(self, widget):
+        self.entry_dialog.show()
+        self.particle_type_label.show()
+        self.entry_menu.show()
+        self.id_label.show()
+        self.id_entry.show()
+        self.idts_label.show()
+        self.idts_entry.show()
+        self.id_box.show()
+        self.idts_box.show()
+    
     def pick_callback(self, event):
         x_plot = event.mouseevent.xdata
         y_plot = event.mouseevent.ydata
@@ -117,8 +174,7 @@ class SelectPanel(gtk.Frame):
         #deals with duplication problem
         if (x_plot, y_plot) in self.recent:
             return
-        else:
-            self.recent.append((x_plot, y_plot))
+        self.recent.append((x_plot, y_plot))
         print "-------------------PICK---------EVENT------------"
         print "called point with coordinates \n " + str((x_plot, y_plot))
         bound = len(self.MovieFrame.seq_plotter[0].data)
@@ -127,7 +183,7 @@ class SelectPanel(gtk.Frame):
         
         #generates one of each type of particle closest to pick_event
         for i in range(0,bound):
-            particle = self.data[i].get_distance_idx_ID(x_plot, y_plot, self.x_scale, self.y_scale, self.selecting)
+            particle = self.data[i].proximity_search(x_plot, y_plot, self.x_scale, self.y_scale, self.selecting)
             possible.append(particle)
        
         mindist = 2**31
@@ -143,8 +199,7 @@ class SelectPanel(gtk.Frame):
             print "picked %s with idts %i ID %i" %(self.data[particle_type].name, particle[2], particle[3])
         except TypeError:
             print "No particles to deselect!"
-            
-#--------------BUTTON-FUNCTIONALITY---------------------------------
+        #Button Functionality
         if self.selecting:
             self.data[particle_type].select_particle(particle[1])
             self.fix_axes()
@@ -152,6 +207,20 @@ class SelectPanel(gtk.Frame):
             self.data[particle_type].deselect_particle(particle[2])
             self.fix_axes()
         self.MovieFrame.redraw_flag=True
+        
+    def entry_callback(self, event):
+        idts = int(self.idts_entry.get_text())
+        ID = int(self.id_entry.get_text())
+        particle_type = self.names[self.entry_menu.entry.get_text()]
+        particle = self.data[particle_type].index_search(idts, ID)
+        if self.selecting:
+            self.data[particle_type].select_particle(particle[2])
+            self.fix_axes()
+        else:
+            self.data[particle_type].deselect_particle(particle[0], particle[1])
+            self.fix_axes()
+        self.MovieFrame.redraw_flag=True
+        
         
     def select_button_callback(self,event):
         self.selecting = self.select_button.get_active()

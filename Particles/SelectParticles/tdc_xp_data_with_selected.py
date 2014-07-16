@@ -29,7 +29,7 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
 
         #list of Select_Particles. Key: Value :: (idts, ID): Select_Particle
         self.select = {}
-    def get_distance_idx_ID(self,x_plot,y_plot, x_scale, y_scale, selecting):
+    def proximity_search(self,x_plot,y_plot, x_scale, y_scale, selecting):
         """
         Returns the distance for the particle nearest to the selected position
         idx - index of the closest particle in the data array
@@ -50,6 +50,17 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
                 idts = self.idts[i]
                 ID = self.id[i]
         return (distance, idx, idts, ID)
+        
+    def index_search(self, idts, ID):
+        """
+        Returns index of particle with matching idts and ID.
+        Returns None if no matching particle found
+        """
+        for i in range(0,len(self.idts)):
+            if self.id[i] == ID and self.idts[i] == idts:
+                return (idts, ID, i)
+        print "particle with idts %i and ID %i not found" %(idts, ID)
+        return None
         
     def x_scale(self, x_plot, x_scale=.31):
         """
