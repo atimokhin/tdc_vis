@@ -109,7 +109,7 @@ class SelectPanel(gtk.Frame):
             self.MovieFrame.canvas.mpl_disconnect(self.pick_id)
         self.select_button.set_sensitive(state)
         self.deselect_button.set_sensitive(state)
-    #must rewrite possible attributes for ID tags; using index for now
+    
     def pick_callback(self, event):
         x_plot = event.mouseevent.xdata
         y_plot = event.mouseevent.ydata
@@ -137,12 +137,13 @@ class SelectPanel(gtk.Frame):
         for i in range(0,len(possible)):
             if possible[i][0]<mindist:
                 mindist = possible[i][0]
-                particle= possible[i]
+                particle = possible[i]
                 particle_type=i
         try:
-            print "picked %s with ID %i" %(self.data[particle_type].name, particle[2])
+            print "picked %s with idts %i ID %i" %(self.data[particle_type].name, particle[2], particle[3])
         except TypeError:
             print "No particles to deselect!"
+            
 #--------------BUTTON-FUNCTIONALITY---------------------------------
         if self.selecting:
             self.data[particle_type].select_particle(particle[1])

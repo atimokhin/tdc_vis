@@ -42,8 +42,8 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
             select_x = []
             select_y = []
             for key in xp.select:
-                select_x.append(xp.select[key][1])
-                select_y.append(xp.select[key][2])
+                select_x.append(xp.select[key].x)
+                select_y.append(xp.select[key].p)
             self.line_select[i], = ax.plot(select_x, select_y, 'o', ms = 20, color = 'green', alpha = .7
             )
     def replot(self,ax):
@@ -55,8 +55,8 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
             select_x = []
             select_y = []
             for key in xp.select:
-                select_x.append(xp.select[key][1])
-                select_y.append(xp.select[key][2])
+                select_x.append(xp.select[key].x)
+                select_y.append(xp.select[key].p)
             self.line_select[i].set_xdata(select_x)
             self.line_select[i].set_ydata(select_y)
             ax.draw_artist(self.line_select[i])

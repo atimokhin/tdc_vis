@@ -1,6 +1,8 @@
 from Particles.tdc_xp_data import tdc_XP_Data
 import numpy as np
+from select_particle import Select_Particle
 from pprint import *
+from copy import deepcopy
 
 class tdc_XP_Data_with_Selected(tdc_XP_Data):
     """
@@ -25,8 +27,8 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
                              get_id=get_id,
                              time_normalization=time_normalization)
 
-        #list of Select_Particles
-        self.select = []
+        #list of Select_Particles. Key: Value :: (idts, ID): Select_Particle
+        self.select = {}
     def get_distance_idx_ID(self,x_plot,y_plot, x_scale, y_scale, selecting):
         """
         Returns the distance for the particle nearest to the selected position
@@ -35,6 +37,7 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         """
         distance=2**31
         idx=None
+        idts=None        
         ID=None
         x_scaled = self.x_scale(x_plot, x_scale)
         y_scaled = self.y_scale(y_plot, y_scale)
@@ -44,14 +47,16 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
             if test_dist<distance:
                 distance = test_dist
                 idx = i
+                idts = self.idts[i]
                 ID = self.id[i]
-        return (distance, idx, ID)
+        return (distance, idx, idts, ID)
         
     def x_scale(self, x_plot, x_scale=.31):
         """
         Returns x-coordinate normalized to (-1,1) coordinates
         """
         return 2*float(x_plot)/x_scale-1
+        
     def y_scale(self, y_plot, y_scale=5e8):
         """
         Returns y-coordinate normalized to (-1,1) coordinates
@@ -70,16 +75,19 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         Format: key = ID, value = (index, x, p)
         """
         new_particle = Select_Particle(self.idts[idx], self.id[idx], idx, self.x[idx], self.p[idx])
-        self.select.append(new_particle)
+        print "Adding %s," %(self.name), new_particle
+        self.select[(new_particle.idts, new_particle.ID)]=new_particle
         
-    def deselect_particle(self, ID):
+    def deselect_particle(self, idts, ID):
         """
         Delete particle with ID from the list of selected particles
         """
-        try:
-            self.select.pop(ID)
-        except: 
-            print "No particle with ID %i found in selected particles" %(ID) 
+        for particle in self.select:
+            if particle.idts==idts and particle.ID == ID:
+                print "Deselected ", particle
+                self.select.pop(particle)
+                return
+        print "No particle with idts %i and ID %i found in selected particles" %(idts, ID) 
         
     def clear_particles(self):
         self.select.clear()
@@ -133,13 +141,21 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         Reads and searches data using linear search
         """
         temp = update.copy()
-        print "--------------LIN_READ---------------------\n Temp is \n", temp
+        print "------------------------------LIN_READ-------------------------------"
+        print ("Temp is")
+        pprint(temp)
         for i in range(0,len(self.id)):
-            for j,key in enumerate(update):
-                if key == self.id[i]:
-                    print "key = self.id at %i = %i with index %i" %(key, self.id[i], i)
-                    self.select[key]=(i,self.x[i], self.p[i])
-                    print "%s with ID %i updated to %s " %(self.name, key, str(self.select[key]))
+            for particle in update.values():
+#                if particle.ID == self.id[i]:
+#                    print "particle found with ID %i at index %i" %(particle.ID, i)
+#                    if particle.idts == self.idts[i]:
+#                        print "particle also matches idts %i" %(particle.idts)
+                key = (particle.idts, particle.ID)
+                if key[1] ==self.id[i] and key[0] == self.idts[i]:
+                    print "match at index %i with idts %i=%i and ID %i = %i" \
+                        %(i, particle.idts, self.idts[i], particle.ID, self.id[i])
+                    self.select[key].update(i, self.x[i], self.p[i])
+                    print "%s with key %s updated to %s " %(self.name, key, self.select[key])
                     temp.pop(key)
                     print "temp is now"
                     print temp
@@ -148,9 +164,9 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         update = temp.copy()
         #deals with destroyed particles
         if len(update)>0:
-            for j,key in enumerate(update):
-                print "%s %i not found" %(self.name, key)
-                self.select.pop(key)
+            for key in update:
+                print "%s with (idts, ID) %s not found" %(self.name, str(key))
+#                self.select.pop(key)
                 temp.pop(key)
         if len(temp) != 0:
             print "failed to sort using lin_read"
@@ -162,7 +178,9 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         """
         #sorts self.id
         
-
+#if __name__ == "__main__":
+#    sample = Select_Particle(10,240,1024,2491,20414)
+#    print "Hey hey hey %i " %(8), sample
 
 
 
