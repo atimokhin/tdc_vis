@@ -30,7 +30,7 @@ class SelectPanel(gtk.Frame):
         self.MovieFrame = movie_frame
         self.set_flags_to_default_values()
         gtk.Frame.__init__(self, **kwargs)
-        self.set_size_request(25, 120)
+        self.set_size_request(25, 150)
         
         #main box for packing everything        
         main_box = gtk.VBox()
@@ -59,6 +59,17 @@ class SelectPanel(gtk.Frame):
 #------------------------------------------------------------------------------
 #                               BUTTON FUNCTIONALITY
 #------------------------------------------------------------------------------
+        # Marker Spin Button
+        adj = gtk.Adjustment(1, 1, 50, 1, 10, 0)
+        self.marker_spinner = gtk.SpinButton(adj, 0.0, 0)
+        self.marker_spinner_adj=self.marker_spinner.get_adjustment()
+        self.marker_spinner_adj.connect("value-changed", self.marker_callback)
+        
+        marker_box= gtk.HBox(spacing=5)
+        #pack label and spinner
+        marker_box.pack_start(gtk.Label('marker size'))
+        marker_box.pack_end(self.marker_spinner)
+        main_box.pack_start(marker_box)
         
         #Select/Deselect
         self.select_button = gtk.RadioButton(None, 'Select')
@@ -72,6 +83,7 @@ class SelectPanel(gtk.Frame):
         #Button for direct entry
         self.entry_button = gtk.Button('Direct Entry')
         self.entry_button.connect('clicked', self.entry_show)
+        self.entry_button.set_sensitive(False)
         main_box.pack_start(self.entry_button)
         
         #Second Separator
@@ -155,6 +167,7 @@ class SelectPanel(gtk.Frame):
             self.MovieFrame.canvas.mpl_disconnect(self.pick_id)
         self.select_button.set_sensitive(state)
         self.deselect_button.set_sensitive(state)
+        self.entry_button.set_sensitive(state)
     
     def entry_show(self, widget):
         self.entry_dialog.show()
@@ -221,6 +234,11 @@ class SelectPanel(gtk.Frame):
             self.fix_axes()
         self.MovieFrame.redraw_flag=True
         
+    def marker_callback(self,widget):
+        marker_size = self.marker_spinner_adj.get_value()
+        for i in range(0,len(self.MovieFrame.seq_plotter[0].line_select)):
+            self.MovieFrame.seq_plotter[0].line_select[i].set_markersize(marker_size)
+        self.MovieFrame.redraw_flag = True        
         
     def select_button_callback(self,event):
         self.selecting = self.select_button.get_active()

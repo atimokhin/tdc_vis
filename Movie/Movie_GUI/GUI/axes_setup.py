@@ -16,10 +16,10 @@ class AxesSetupPanel(gtk.Frame):
         gtk.Frame.__init__(self)
         self.F = movie_frames
         # size <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!
-        self.set_size_request(145,55)
+        self.set_size_request(145,50)
         # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!
         main_box=gtk.VBox()
-        main_box.set_border_width(5)
+        main_box.set_border_width(3)
         self.add(main_box)
         # ------------------------------------------
         # Axes setup Button: add only if Movie Frames 

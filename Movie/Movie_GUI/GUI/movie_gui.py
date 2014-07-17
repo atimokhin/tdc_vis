@@ -32,10 +32,10 @@ class MovieGUI(gtk.Window):
         # put all panel into a *VBox
         ctrl_box=gtk.VBox()
         ctrl_box.set_border_width(3)
-        ctrl_box.pack_start(self.dp,False,False,5)
-        ctrl_box.pack_start(self.ap,False,False,5)
-        ctrl_box.pack_start(self.sp, False, False,5)
-        ctrl_box.pack_end(self.cp,False,False,5)
+        ctrl_box.pack_start(self.dp,False,False,3)
+        ctrl_box.pack_start(self.ap,False,False,3)
+        ctrl_box.pack_start(self.sp, False, False,3)
+        ctrl_box.pack_end(self.cp,False,False,3)
         # return resulting VBox
         return ctrl_box        
 

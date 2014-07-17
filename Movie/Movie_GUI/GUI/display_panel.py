@@ -17,7 +17,7 @@ class DisplayPanel(gtk.Frame):
         # constructor of the base class
         gtk.Frame.__init__(self,**kwargs)
         # size <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!
-        self.set_size_request(145,70)
+        self.set_size_request(145,60)
         # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!
         # initial panel info
         self.i_id       = i_id
