@@ -184,12 +184,8 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         """
         Reads and searches data using binary search
         """
-        #sorts self.id
+        temp = update[:]
         
-#if __name__ == "__main__":
-#    sample = Select_Particle(10,240,1024,2491,20414)
-#    print "Hey hey hey %i " %(8), sample
-
 
 
 
