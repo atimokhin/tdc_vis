@@ -1,8 +1,8 @@
 from Particles.tdc_xp_data  import      tdc_XP_Data
 from select_particle        import      Select_Particle
+from particle_search        import      *
 import numpy as np
 from pprint import *
-from operator import itemgetter
 
 
 class tdc_XP_Data_with_Selected(tdc_XP_Data):
@@ -114,7 +114,7 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         update = self.select.keys()
         if len(update)>0:
             update = self.quick_read(update)
-        if len(update)<10:
+        if len(update)>0 and len(update)<10:
             self.lin_read(update)
         else:
             self.bin_read(update)
@@ -124,91 +124,36 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
                 
     def quick_read(self, update):
         print "--------------------------QUICK---READ--------------------------"
-        #checks that particles were stationary in ID list
-        temp = update[:]
-        print "temp is "
-        pprint(temp)
-        for key in update:
-            try:
-                test_index = self.select[key].index
-                if self.select[key].ID == self.id[test_index] and self.select[key].idts == self.idts[test_index]:
-                    self.select[key].update(test_index, self.x[test_index], self.p[test_index])
-                    temp.remove(key)
-                    print self.name + " with identifier " + str(key) + " found with static quick_read."
-            except IndexError:
-                pass
-        update = temp[:]
-        if len(update)>0:
-            #checks that particles didn't move around much in ID list
-            for key in update:
-                for k in range(-5,6):
-                    try:
-                        test_index = self.select[key].index+k
-                        if self.select[key].ID == self.id[test_index] and self.select[key].idts == self.idts[test_index]:
-                            print self.name +  "with indentifier " + str(key) + "found with local quick_read."
-                            self.select[key]=(test_index, self.x[test_index], self.p[test_index])
-                            temp.pop(key)
-                            break
-                    except IndexError:
-                        pass
-        return temp
+        index_list = quick_search(self.idts, self.id, update, self.select)
+        for key in index_list:
+            if index_list[key]!=-1:
+                index = index_list[key]
+                self.select[key].update(index, self.x[index], self.p[index])
+                update.remove(key)
+        return update
             
     def lin_read(self,update):
         """
         Reads and searches data using linear search
         """
-        temp = update[:]
         print "------------------------------LIN_READ-------------------------------"
-        print ("Temp is")
-        pprint(temp)
-        for i in range(0,len(self.id)):
-            for key in update:
-                if key[1] == self.id[i] and key[0] == self.idts[i]:
-                    print "match at index %i with idts %i=%i and ID %i = %i" \
-                            %(i, key[0], self.idts[i], key[1], self.id[i])
-                    self.select[key].update(i, self.x[i], self.p[i])
-                    print "%s with key %s updated to %s " %(self.name, key, self.select[key])
-                    temp.remove(key)
-                    print "temp is now", temp
-            if len(temp)==0:
-                break
-        update = temp[:]
-        #deals with destroyed particles
-        if len(update)>0:
-            for key in update:
-                print "%s with (idts, ID) %s not found" %(self.name, str(key))
-#                self.select.pop(key)
-                temp.remove(key)
-        if len(temp) != 0:
-            print "failed to sort using lin_read"
-        return temp
-            
+        index_list = lin_search(self.idts, self.id, update)
+        self.update(index_list)
+        
     def bin_read(self,update):
         """
         Reads and searches data using binary search
         """
-        #sorts self.id first
-        sort_array = zip(self.id, self.idts, range(0,len(self.id)))
-        sorted(sort_array, key = itemgetter(0))
-        for key in update:
-            self.bin_search(sort_array,key)
+        index_list = bin_search(self.idts, self.id, update)
+        self.update(index_list)
         
-    def bin_search(self, sort_array, key):
-        print "length of possibles is now ", len(sort_array)
-        if len(sort_array) == 0:
-            print str(self.name) + "with ID " + str(key[1]) + "not found"
-            return
-        test_index = len(sort_array)/2
-        if key[1]==sort_array[test_index][0] and key[0] == sort_array[test_index][1]:
-            true_index = sort_array[test_index][2]
-            self.select[key].update(true_index, self.x[true_index], self.p[true_index])
-            print str(self.name) + "with ID " + str(key) + "updated using bin_read"
-            return
-        elif key[1]<sort_array[test_index][0]:
-            self.bin_search(sort_array[0:test_index], key)
-        else:
-            self.bin_search(sort_array[test_index+1:], key)
-        return
+    def update(self, index_list):
+        for key in index_list:
+            index = index_list[key]
+            if index ==-1:
+                self.select.pop(key)
+            else:
+                self.select[key].update(index, self.x[index], self.p[index])
             
         
         

@@ -127,7 +127,7 @@ ylim_ep  = [-0.5,100]
 
 
 sample_dict = dict(name='regular',n_reduce=20,n_min=3000)
-# sample_dict = dict(name='regular',n_reduce=10,n_min=3000)
+#sample_dict = dict(name='regular',n_reduce= 1,n_min=3000)
 
 
 particle_names = ['Positrons','Electrons','Pairs','Protons']
