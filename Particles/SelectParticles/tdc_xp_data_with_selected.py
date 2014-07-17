@@ -184,8 +184,7 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         """
         Reads and searches data using binary search
         """
-        temp = update[:]
-        
+        pass
 
 
 
