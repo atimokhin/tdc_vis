@@ -112,12 +112,12 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         tdc_XP_Data.read(self,i_ts, sample_dict, **kwargs)
         #running list of selected particles that need to be updated
         update = self.select.keys()
-#        if len(update)>0:
-#            update = self.quick_read(update)
-#        if len(update)<10:
-#            self.lin_read(update)
-#        else:
-        self.bin_read(update)
+        if len(update)>0:
+            update = self.quick_read(update)
+        if len(update)<10:
+            self.lin_read(update)
+        else:
+            self.bin_read(update)
         if len(self.select)>0:
             print "Final update of %s is " %(self.name)
             pprint(self.select)
