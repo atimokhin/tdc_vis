@@ -36,14 +36,17 @@ class ControlPanel(gtk.Frame):
 
 
 
-    def __init__(self,**kwargs):
+    def __init__(self,track_panel = False,**kwargs):
  
         self.set_flags_to_default_values()
         
         # constructor of the base class
         gtk.Frame.__init__(self,**kwargs)
         # size <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!
-        self.set_size_request(145,200)
+        if track_panel:
+            self.set_size_request(145,200)
+        else:
+            self.set_size_request(145, 260)
         # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<!
         main_box=gtk.VBox()
         main_box.set_border_width(5)

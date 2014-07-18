@@ -27,7 +27,7 @@ class MovieGUI(gtk.Window):
         # define various control panels
         self.ap = AxesSetupPanel(self.MovieFrames)
         self.dp = DisplayPanel()
-        self.cp = ControlPanel()
+        self.cp = ControlPanel(self.track_panel)
         if self.track_panel:
             self.sp = SelectPanel(self.MovieFrames)
         # put all panel into a *VBox

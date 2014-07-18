@@ -14,12 +14,16 @@ class SelectPanel(gtk.Frame):
     
     
     def __init__(self, movie_frame,**kwargs):
-        #controls selecting or deselecting       
-        self.selecting = True        
+        #commonly referenced items
         self.MovieFrame = movie_frame
         self.data = self.MovieFrame.seq_plotter[0].data
-        self.recent = []
-        #used for conversions
+        #controls selecting or deselecting       
+        self.selecting = True
+        #cache to prevent double pick_event error
+        self.recent =[]
+        #default filename for saving particles
+        self.filename = ""
+        #used for scale conversions
         x_scale = self.MovieFrame.ax[0].get_xlim()
         self.x_scale = x_scale[1]-x_scale[0]
         y_scale = self.MovieFrame.ax[0].get_ylim()
@@ -111,49 +115,6 @@ class SelectPanel(gtk.Frame):
         clear_button.connect('clicked', self.clear_check)
         data_box.pack_end(clear_button)
         
-#------------------------------------------------------------------------------
-#                                SAVE INFORMATION DIALOG
-#------------------------------------------------------------------------------
-        #Save Dialog
-        self.save_dialog = gtk.Dialog('Save Particles')
-        self.save_dialog.hide()
-        #Filename label
-        self.filename_label = gtk.Label('Filename')
-        self.save_dialog.vbox.pack_start(self.filename_label)
-        #Filename
-        self.filename_entry = gtk.Entry()
-        self.filename_entry.connect('changed', self.filename_callback)
-        self.save_dialog.vbox.pack_start(self.filename_entry)
-        #Cancel Button
-        self.save_cancel= gtk.Button('Cancel')
-        self.save_cancel.connect('clicked', lambda w: self.save_dialog.destroy)
-        self.save_dialog.action_area.pack_start(self.save_cancel)
-        #Save Button
-        self.save = gtk.Button('Save')
-        self.save.connect('clicked', self.save_callback)
-        self.save_dialog.action_area.pack_start(self.save)
-#------------------------------------------------------------------------------
-#                                CLEAR CONFIRMATION DIALOG
-#------------------------------------------------------------------------------
-                
-        #Clear Dialog
-        self.clear_dialog = gtk.MessageDialog(flags = gtk.DIALOG_MODAL,type = gtk.MESSAGE_WARNING)
-        self.clear_dialog.set_markup('Are you sure you want to clear all selected particles?')        
-        self.clear_yes = gtk.Button('Yes')
-        self.clear_yes.connect('clicked', self.clear_callback)
-        self.clear_yes.connect('clicked', self.clear_hide)
-        self.clear_dialog.action_area.pack_start(self.clear_yes)
-        self.clear_no = gtk.Button('No')
-        self.clear_no.connect('clicked', self.clear_hide)
-        self.clear_dialog.action_area.pack_start(self.clear_no)
-        
-        #Cleared Dialog
-        self.cleared_dialog = gtk.MessageDialog(flags = gtk.DIALOG_MODAL, type = gtk.MESSAGE_INFO)
-        self.cleared_dialog.set_markup('Selected particles cleared')
-        self.cleared_ok = gtk.Button("OK")
-        self.cleared_ok.connect('clicked', self.cleared_callback)
-        self.cleared_dialog.action_area.pack_start(self.cleared_ok)
-        
     #Controls sensitivity when tracking option is on/off
     def track_callback(self, widget):
         state = widget.get_active()
@@ -169,8 +130,75 @@ class SelectPanel(gtk.Frame):
         self.deselect_button.set_sensitive(state)
         self.entry_button.set_sensitive(state)
 #------------------------------------------------------------------------------
+#                           PICK EVENT CALLBACK
+#------------------------------------------------------------------------------
+ #Finds nearest particle for pick event
+    def pick_callback(self, event):
+        x_plot = event.mouseevent.xdata
+        y_plot = event.mouseevent.ydata
+        
+        #deals with duplication problem
+        if (x_plot, y_plot) in self.recent:
+            return
+        self.recent.append((x_plot, y_plot))
+        print "-------------------PICK---------EVENT------------"
+        print "called point with coordinates \n " + str((x_plot, y_plot))
+        bound = len(self.MovieFrame.seq_plotter[0].data)
+        possible= []
+        particle_type = None
+        
+        #generates one of each type of particle closest to pick_event
+        for i in range(0,bound):
+            particle = self.data[i].proximity_search(x_plot, y_plot,\
+                                                    self.x_scale, self.y_scale,\
+                                                    self.selecting)
+            possible.append(particle)
+       
+        mindist = 2**31
+        particle=None
+        
+        #finds closest particle 
+        for i in range(0,len(possible)):
+            if possible[i][0]<mindist:
+                mindist = possible[i][0]
+                particle = possible[i]
+                particle_type=i
+        try:
+            print "picked %s with idts %i ID %i" %(self.data[particle_type].name, particle[2], particle[3])
+        except TypeError:
+            print "No particles to deselect!"
+        #Button Functionality
+        if self.selecting:
+            self.data[particle_type].select_particle(particle[1])
+            self.fix_axes()
+        else:
+            self.data[particle_type].deselect_particle(particle[2], particle[3])
+            self.fix_axes()
+        self.MovieFrame.redraw_flag=True
+        
+    #Adjusts marker size
+    def marker_callback(self,widget):
+        marker_size = widget.get_value()
+        for i in range(0,len(self.MovieFrame.seq_plotter)):
+            self.MovieFrame.seq_plotter[i].resize_marker(self.MovieFrame.ax[0], marker_size)
+    
+    #Clears recent list when switching between select and deselect    
+    def select_button_callback(self,widget):
+        self.selecting = widget.get_active()
+        self.recent = []
+    #Preserves axes scale when clearing
+    def fix_axes(self):
+        for i in range(0,len(self.MovieFrame.ax)):
+            x_scale = self.MovieFrame.ax[i].get_xlim()
+            y_scale = self.MovieFrame.ax[i].get_ylim()
+            self.MovieFrame.ax[i].cla()            
+            self.MovieFrame.ax[i].set_xlim(x_scale[0], x_scale[1])
+            self.MovieFrame.ax[i].set_ylim(y_scale[0], y_scale[1])
+        
+
+#------------------------------------------------------------------------------
 #                           DIRECT ENTRY DIALOG
-#------ ------------------------------------------------------------------------
+#------------------------------------------------------------------------------
     #Shows entry box
     def entry_check(self, widget):
 
@@ -226,81 +254,79 @@ class SelectPanel(gtk.Frame):
             self.fix_axes()
         self.MovieFrame.redraw_flag=True
         
-    #Finds nearest particle for pick event
-    def pick_callback(self, event):
-        x_plot = event.mouseevent.xdata
-        y_plot = event.mouseevent.ydata
-        
-        #deals with duplication problem
-        if (x_plot, y_plot) in self.recent:
-            return
-        self.recent.append((x_plot, y_plot))
-        print "-------------------PICK---------EVENT------------"
-        print "called point with coordinates \n " + str((x_plot, y_plot))
-        bound = len(self.MovieFrame.seq_plotter[0].data)
-        possible= []
-        particle_type = None
-        
-        #generates one of each type of particle closest to pick_event
-        for i in range(0,bound):
-            particle = self.data[i].proximity_search(x_plot, y_plot, self.x_scale, self.y_scale, self.selecting)
-            possible.append(particle)
-       
-        mindist = 2**31
-        particle=None
-        
-        #finds closest particle 
-        for i in range(0,len(possible)):
-            if possible[i][0]<mindist:
-                mindist = possible[i][0]
-                particle = possible[i]
-                particle_type=i
-        try:
-            print "picked %s with idts %i ID %i" %(self.data[particle_type].name, particle[2], particle[3])
-        except TypeError:
-            print "No particles to deselect!"
-        #Button Functionality
-        if self.selecting:
-            self.data[particle_type].select_particle(particle[1])
-            self.fix_axes()
-        else:
-            self.data[particle_type].deselect_particle(particle[2], particle[3])
-            self.fix_axes()
-        self.MovieFrame.redraw_flag=True
-    #Adjusts marker size
-    def marker_callback(self,widget):
-        marker_size = widget.get_value()
-        for i in range(0,len(self.MovieFrame.seq_plotter)):
-            self.MovieFrame.seq_plotter[i].resize_marker(self.MovieFrame.ax[0], marker_size)
-    #Clears recent list when switching between select and deselect    
-    def select_button_callback(self,widget):
-        self.selecting = widget.get_active()
-        self.recent = []
+   
+#------------------------------------------------------------------------------
+#                                SAVE INFORMATION DIALOG
+#------------------------------------------------------------------------------    
     def save_check(self, widget):
-        self.save_dialog.show()
-        self.save_cancel.show()
-        self.filename_entry.show()
-        self.filename_label.show()
-        self.save.show()
+        #reset stored filename
+        self.filename = ""
+        #Save Dialog
+        save_dialog = gtk.Dialog('Save Particles')
+        save_dialog.show()
+        #Filename label
+        filename_label = gtk.Label('Filename')
+        save_dialog.vbox.pack_start(filename_label)
+        filename_label.show()
+        #Filename
+        filename_entry = gtk.Entry()
+        filename_entry.connect('changed', self.filename_callback)
+        save_dialog.vbox.pack_start(filename_entry)
+        filename_entry.show()
+        #Cancel Button
+        save_cancel= gtk.Button('Cancel')
+        save_cancel.connect('clicked', lambda w: save_dialog.destroy())
+        save_dialog.action_area.pack_start(save_cancel)
+        save_cancel.show()
+        #Save Button
+        save_button = gtk.Button('Save')
+        save_button.connect('clicked', self.save_callback, save_dialog)
+        save_dialog.action_area.pack_start(save_button)
+        save_button.show()
     #Save particles
     def filename_callback(self, widget):
         self.filename = widget.get_text()
-    def save_callback(self, widget):
+    #call to tdc_data_with_selected to save particles
+    def save_callback(self, widget, save_dialog):
         if len(self.filename)>0:
             for i in range(0,len(self.data)):
                 self.data[i].save_particles(self.filename)
+                save_dialog.destroy()
         else:
-            print "Invalid filename!"
-    #Shows confirmation
+            save_dialog.destroy()
+            self.invalid_callback()
+    #displays dialog for invalid filename
+    def invalid_callback(self):
+        invalid_dialog = gtk.MessageDialog(flags = gtk.DIALOG_MODAL, type = gtk.MESSAGE_WARNING)
+        invalid_dialog.set_markup('Invalid filename!')
+        invalid_dialog.show()
+        
+        invalid_ok = gtk.Button('OK')
+        invalid_dialog.action_area.pack_start(invalid_ok)
+        invalid_ok.connect('clicked', lambda w: invalid_dialog.destroy())
+        invalid_ok.show()
+        
+#------------------------------------------------------------------------------
+#                                CLEAR CONFIRMATION DIALOG
+#------------------------------------------------------------------------------    
     def clear_check(self, event):
-        self.clear_dialog.show()
-        self.clear_yes.show()
-        self.clear_no.show()  
-    #Hides confirmation
-    def clear_hide(self, event):
-        self.clear_dialog.hide()
-        self.clear_yes.hide()
-        self.clear_no.hide()
+                
+        #Clear Confirmation Dialog
+        clear_dialog = gtk.MessageDialog(flags = gtk.DIALOG_MODAL,type = gtk.MESSAGE_WARNING)
+        clear_dialog.set_markup('Are you sure you want to clear all selected particles?') 
+        clear_dialog.show()
+        
+        clear_yes = gtk.Button('Yes')
+        clear_yes.connect('clicked', self.clear_callback)
+        clear_yes.connect('clicked', lambda w: clear_dialog.destroy())
+        clear_dialog.action_area.pack_start(clear_yes)
+        clear_yes.show()
+        
+        clear_no = gtk.Button('No')
+        clear_no.connect('clicked', lambda w: clear_dialog.destroy())
+        clear_dialog.action_area.pack_start(clear_no)
+        clear_no.show()
+        
     #Clears particles
     def clear_callback(self, event):
         self.recent = []
@@ -308,17 +334,12 @@ class SelectPanel(gtk.Frame):
             self.data[i].clear_particles()
         self.fix_axes()
         self.MovieFrame.redraw_flag=True
-        self.cleared_dialog.show()
-        self.cleared_ok.show()
-    #hides dialog after cleared
-    def cleared_callback(self, widget):
-        self.cleared_dialog.hide()
-        self.cleared_ok.hide()
-    #Preserves axes scale when clearing
-    def fix_axes(self):
-        for i in range(0,len(self.MovieFrame.ax)):
-            x_scale = self.MovieFrame.ax[i].get_xlim()
-            y_scale = self.MovieFrame.ax[i].get_ylim()
-            self.MovieFrame.ax[i].cla()            
-            self.MovieFrame.ax[i].set_xlim(x_scale[0], x_scale[1])
-            self.MovieFrame.ax[i].set_ylim(y_scale[0], y_scale[1])
+        #Data cleared Dialog
+        cleared_dialog = gtk.MessageDialog(flags = gtk.DIALOG_MODAL, type = gtk.MESSAGE_INFO)
+        cleared_dialog.set_markup('Selected particles cleared')
+        cleared_dialog.show()
+        
+        cleared_ok = gtk.Button("OK")
+        cleared_ok.connect('clicked', lambda w: cleared_dialog.destroy())
+        cleared_dialog.action_area.pack_start(cleared_ok)
+        cleared_ok.show()
