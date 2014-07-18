@@ -28,13 +28,15 @@ class MovieGUI(gtk.Window):
         self.ap = AxesSetupPanel(self.MovieFrames)
         self.dp = DisplayPanel()
         self.cp = ControlPanel()
-        self.sp = SelectPanel(self.MovieFrames)
+        if self.track_panel:
+            self.sp = SelectPanel(self.MovieFrames)
         # put all panel into a *VBox
         ctrl_box=gtk.VBox()
         ctrl_box.set_border_width(3)
         ctrl_box.pack_start(self.dp,False,False,3)
         ctrl_box.pack_start(self.ap,False,False,3)
-        ctrl_box.pack_start(self.sp, False, False,3)
+        if self.track_panel:
+            ctrl_box.pack_start(self.sp, False, False,3)
         ctrl_box.pack_end(self.cp,False,False,3)
         # return resulting VBox
         return ctrl_box        
@@ -43,11 +45,13 @@ class MovieGUI(gtk.Window):
     def __init__(self,
                  movie_frames,
                  movie_file_maker,
+                 track_panel = False,
                  *args,**kwargs):
         """
         canvas should set size request before
         """
         self.MovieFrames = movie_frames
+        self.track_panel = track_panel
         # initialize base class Window
         gtk.Window.__init__(self,*args,**kwargs)
         # set main window

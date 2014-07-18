@@ -92,12 +92,13 @@ def tdc_plot_xp_movie(plot_module,
                                                             ylim=ylim,
                                                             xlim=xlim,
                                                             axes_commands=axes_commands,
-                                                            fig_param=fig_param)
+                                                            fig_param=fig_param,
+                                                            )
     # movie_id - directory with the movie file
     movie_id = 'XP' + '_' + calc_ids[0]
     # -----------------------------------------
     # make movie
     plot_module.MovieMakers.plot_movie( MF, movie_id, fps, keep_frame_files,
                                         symlog=symlog,
-                                        linthreshy=linthreshy
+                                        linthreshy=linthreshy, track_panel = True
                                   )

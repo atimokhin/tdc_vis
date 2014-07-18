@@ -47,7 +47,11 @@ def lin_search(idts_array, ID_array, update):
                 print "match at index %i with idts %i=%i and ID %i = %i" \
                             %(i, key[0], idts_array[i], key[1], ID_array[i])
                 index_list[key]=i
-                temp.remove(key)
+                print temp
+                try:                
+                    temp.remove(key)
+                except ValueError:
+                    print "Particle not removed"
             elif key[1]>ID_array[i]:
                 break
         if len(temp)==0:

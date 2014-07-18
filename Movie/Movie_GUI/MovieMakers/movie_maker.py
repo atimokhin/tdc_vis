@@ -6,12 +6,12 @@ import movie_engine
 
 class Movie_Maker:
 
-    def __init__(self, movie_frames, movie_file_maker):
+    def __init__(self, movie_frames, movie_file_maker, track_panel = False):
 
         self.F   = movie_frames
         self.MFM = movie_file_maker
 
-        self.GUI = movie_gui.MovieGUI(self.F,self.MFM)
+        self.GUI = movie_gui.MovieGUI(self.F,self.MFM, track_panel)
         self.ME  = movie_engine.MovieEngine(self.F, self.GUI, self.MFM)
 
         self.GUI.cp.set_frame_number_limits(self.F.i_frame_min, self.F.i_frame_max)
