@@ -159,15 +159,6 @@ class SelectPanel(gtk.Frame):
         self.cleared_ok.connect('clicked', self.cleared_callback)
         self.cleared_dialog.action_area.pack_start(self.cleared_ok)
         
-#        #Key Press Test
-#        self.MovieFrame.canvas.mpl_connect('figure_enter_event', self.key_press_callback)
-#        
-#    def key_press_callback(self,event):
-#        print "key_press_callback called"
-#        for i in range(0,len(self.MovieFrame.ax)):
-#            self.MovieFrame.ax[i].cla()
-#        print "MovieFrame axes cleared"
-#        self.MovieFrame.redraw_flag = True
     #Controls sensitivity when tracking option is on/off
     def set_flag(self, widget):
         state = self.track_button.get_active()
@@ -252,8 +243,7 @@ class SelectPanel(gtk.Frame):
     def marker_callback(self,widget):
         marker_size = self.marker_spinner_adj.get_value()
         for i in range(0,len(self.MovieFrame.seq_plotter)):
-            self.MovieFrame.seq_plotter[i].resize_marker(self.MovieFrame.ax[0], marker_size)
-        self.MovieFrame.redraw_flag = True     
+            self.MovieFrame.seq_plotter[i].resize_marker(self.MovieFrame.ax[0], marker_size) 
     #Clears recent list when switching between select and deselect    
     def select_button_callback(self,event):
         self.selecting = self.select_button.get_active()

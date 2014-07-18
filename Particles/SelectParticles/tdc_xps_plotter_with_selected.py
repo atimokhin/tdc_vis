@@ -68,7 +68,6 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
     def resize_marker(self, ax, marker_size):
         self.marker_size = marker_size
         print "resize marker called"
-#            ax.draw_artist(self.line_select[i])
     def set_animated(self,val):
         """
         Set animated property in all lines
