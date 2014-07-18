@@ -148,12 +148,19 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         self.update(index_list)
         
     def update(self, index_list):
+        """
+        Passes on new information to Select_Particle class for updating
+        """
         for key in index_list:
             index = index_list[key]
             if index ==-1:
                 self.select.pop(key)
             else:
                 self.select[key].update(index, self.x[index], self.p[index])
+    def save_particles(self, filename):
+        print "save_particles called"
+        pass
+    
             
         
         

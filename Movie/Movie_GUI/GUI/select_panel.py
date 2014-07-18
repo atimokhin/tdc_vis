@@ -97,17 +97,24 @@ class SelectPanel(gtk.Frame):
         separator = gtk.HSeparator()
         main_box.pack_start(separator)
 #------------------------------------------------------------------------------
-#                                    CLEAR ALL BUTTON
+#                           SAVE AND CLEAR ALL BUTTONS AND BOX
 #------------------------------------------------------------------------------
+        #box for save and clear buttons
+        self.data_box = gtk.HBox()
+        main_box.pack_start(self.data_box)
         
+        #Save Button
+        self.save_button = gtk.Button('Save')
+        self.save_button.connect('clicked', self.save_check)
+        self.data_box.pack_end(self.save_button)
         #Clear Button
         self.clear_button= gtk.Button('Clear All')
         self.clear_button.connect('clicked', self.clear_check)
-        main_box.pack_end(self.clear_button)
+        self.data_box.pack_end(self.clear_button)
         
 #------------------------------------------------------------------------------
 #                           DIRECT ENTRY DIALOG
-#------------------------------------------------------------------------------
+#------ ------------------------------------------------------------------------
         #Entry Dialog
         self.entry_dialog = gtk.Dialog('Direct Entry')
         
@@ -137,6 +144,24 @@ class SelectPanel(gtk.Frame):
         self.id_box.pack_start(self.id_label)
         self.entry_dialog.action_area.pack_start(self.id_box)
         self.id_entry.connect('activate', self.entry_callback)
+#------------------------------------------------------------------------------
+#                                SAVE INFORMATION DIALOG
+#------------------------------------------------------------------------------
+        #Save Dialog
+        self.save_dialog = gtk.Dialog('Save Selected Particles')
+        self.save_dialog.hide()
+        
+        #Filename
+        self.filename_entry = gtk.Entry()
+        self.save_dialog.vbox.pack_start(self.filename_entry)
+        #Cancel Button
+        self.save_cancel= gtk.Button('Cancel')
+        self.save_cancel.connect('clicked', lambda w: self.save_dialog.destroy)
+        self.save_dialog.action_area.pack_start(self.save_cancel)
+        #Save Button
+        self.save = gtk.Button('Save')
+        self.save.connect('clicked', self.save_callback)
+        self.save_dialog.action_area.pack_start(self.save)
 #------------------------------------------------------------------------------
 #                                CLEAR CONFIRMATION DIALOG
 #------------------------------------------------------------------------------
@@ -245,9 +270,23 @@ class SelectPanel(gtk.Frame):
         for i in range(0,len(self.MovieFrame.seq_plotter)):
             self.MovieFrame.seq_plotter[i].resize_marker(self.MovieFrame.ax[0], marker_size)
     #Clears recent list when switching between select and deselect    
-    def select_button_callback(self,event):
+    def select_button_callback(self,widget):
         self.selecting = self.select_button.get_active()
         self.recent = []
+    def save_check(self, widget):
+        self.save_dialog.show()
+        self.save_cancel.show()
+        self.filename_entry.show()
+        self.save.show()
+    #Save particles
+    def save_callback(self, widget):
+        self.save_dialog.destroy()
+        filename = self.filename_entry.get_text()
+        if len(filename)>0:
+            for i in range(0,len(self.data)):
+                self.data[i].save_particles(filename)
+        else:
+            print "Invalid filename!"
     #Shows confirmation
     def clear_check(self, event):
         self.clear_dialog.show()
