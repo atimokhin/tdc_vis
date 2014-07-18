@@ -4,8 +4,7 @@ Created on Tue Jun 24 15:18:52 2014
 
 @author: Alexander
 """
-import gtk
-import pprint 
+import gtk 
 
 class SelectPanel(gtk.Frame):
     #controls highlighting of select button    
@@ -36,7 +35,9 @@ class SelectPanel(gtk.Frame):
         main_box = gtk.VBox()
         main_box.set_border_width(5)
         self.add(main_box)
-        
+#------------------------------------------------------------------------------
+#                                TRACKING BUTTON
+#------------------------------------------------------------------------------
         #box for tracking toggle
         track_box = gtk.HBox()
         main_box.pack_start(track_box)
@@ -57,10 +58,10 @@ class SelectPanel(gtk.Frame):
         main_box.pack_start(separator)
         
 #------------------------------------------------------------------------------
-#                               BUTTON FUNCTIONALITY
+#                               Marker Size
 #------------------------------------------------------------------------------
         # Marker Spin Button
-        adj = gtk.Adjustment(1, 1, 50, 1, 10, 0)
+        adj = gtk.Adjustment(12, 1, 50, 1, 10, 0)
         self.marker_spinner = gtk.SpinButton(adj, 0.0, 0)
         self.marker_spinner_adj=self.marker_spinner.get_adjustment()
         self.marker_spinner_adj.connect("value-changed", self.marker_callback)
@@ -70,6 +71,9 @@ class SelectPanel(gtk.Frame):
         marker_box.pack_start(gtk.Label('marker size'))
         marker_box.pack_end(self.marker_spinner)
         main_box.pack_start(marker_box)
+#------------------------------------------------------------------------------
+#                                SELECT/DESELECT BUTTONS
+#------------------------------------------------------------------------------
         
         #Select/Deselect
         self.select_button = gtk.RadioButton(None, 'Select')
@@ -79,6 +83,9 @@ class SelectPanel(gtk.Frame):
         self.deselect_button.set_sensitive(False)        
         main_box.pack_start(self.select_button)
         main_box.pack_start(self.deselect_button)
+#------------------------------------------------------------------------------
+#                                DIRECT ENTRY BUTTON
+#------------------------------------------------------------------------------
         
         #Button for direct entry
         self.entry_button = gtk.Button('Direct Entry')
@@ -89,13 +96,17 @@ class SelectPanel(gtk.Frame):
         #Second Separator
         separator = gtk.HSeparator()
         main_box.pack_start(separator)
+#------------------------------------------------------------------------------
+#                                    CLEAR ALL BUTTON
+#------------------------------------------------------------------------------
         
         #Clear Button
         self.clear_button= gtk.Button('Clear All')
         self.clear_button.connect('clicked', self.clear_check)
         main_box.pack_end(self.clear_button)
+        
 #------------------------------------------------------------------------------
-#                           DIRECT ENTRY FUNCTIONALITY
+#                           DIRECT ENTRY DIALOG
 #------------------------------------------------------------------------------
         #Entry Dialog
         self.entry_dialog = gtk.Dialog('Direct Entry')
@@ -126,6 +137,9 @@ class SelectPanel(gtk.Frame):
         self.id_box.pack_start(self.id_label)
         self.entry_dialog.action_area.pack_start(self.id_box)
         self.id_entry.connect('activate', self.entry_callback)
+#------------------------------------------------------------------------------
+#                                CLEAR CONFIRMATION DIALOG
+#------------------------------------------------------------------------------
                 
         #Clear Dialog
         self.clear_dialog = gtk.MessageDialog(flags = gtk.DIALOG_MODAL,type = gtk.MESSAGE_WARNING)
@@ -154,7 +168,7 @@ class SelectPanel(gtk.Frame):
 #            self.MovieFrame.ax[i].cla()
 #        print "MovieFrame axes cleared"
 #        self.MovieFrame.redraw_flag = True
-        
+    #Controls sensitivity when tracking option is on/off
     def set_flag(self, widget):
         state = self.track_button.get_active()
         if state:
@@ -168,7 +182,7 @@ class SelectPanel(gtk.Frame):
         self.select_button.set_sensitive(state)
         self.deselect_button.set_sensitive(state)
         self.entry_button.set_sensitive(state)
-    
+    #Shows entry box
     def entry_show(self, widget):
         self.entry_dialog.show()
         self.particle_type_label.show()
@@ -179,7 +193,8 @@ class SelectPanel(gtk.Frame):
         self.idts_entry.show()
         self.id_box.show()
         self.idts_box.show()
-    
+        
+    #Finds nearest particle for pick event
     def pick_callback(self, event):
         x_plot = event.mouseevent.xdata
         y_plot = event.mouseevent.ydata
@@ -217,10 +232,10 @@ class SelectPanel(gtk.Frame):
             self.data[particle_type].select_particle(particle[1])
             self.fix_axes()
         else:
-            self.data[particle_type].deselect_particle(particle[2])
+            self.data[particle_type].deselect_particle(particle[2], particle[3])
             self.fix_axes()
         self.MovieFrame.redraw_flag=True
-        
+    #Selects particle entered into direct entry
     def entry_callback(self, event):
         idts = int(self.idts_entry.get_text())
         ID = int(self.id_entry.get_text())
@@ -233,24 +248,27 @@ class SelectPanel(gtk.Frame):
             self.data[particle_type].deselect_particle(particle[0], particle[1])
             self.fix_axes()
         self.MovieFrame.redraw_flag=True
-        
+    #Adjusts marker size
     def marker_callback(self,widget):
         marker_size = self.marker_spinner_adj.get_value()
-        for i in range(0,len(self.MovieFrame.seq_plotter[0].line_select)):
-            self.MovieFrame.seq_plotter[0].line_select[i].set_markersize(marker_size)
-        self.MovieFrame.redraw_flag = True        
-        
+        for i in range(0,len(self.MovieFrame.seq_plotter)):
+            self.MovieFrame.seq_plotter[i].resize_marker(self.MovieFrame.ax[0], marker_size)
+        self.MovieFrame.redraw_flag = True     
+    #Clears recent list when switching between select and deselect    
     def select_button_callback(self,event):
         self.selecting = self.select_button.get_active()
         self.recent = []
+    #Shows confirmation
     def clear_check(self, event):
         self.clear_dialog.show()
         self.clear_yes.show()
-        self.clear_no.show()    
+        self.clear_no.show()  
+    #Hides confirmation
     def clear_hide(self, event):
         self.clear_dialog.hide()
         self.clear_yes.hide()
         self.clear_no.hide()
+    #Clears particles
     def clear_callback(self, event):
         self.recent = []
         for i in range(0,len(self.data)):
@@ -259,9 +277,11 @@ class SelectPanel(gtk.Frame):
         self.MovieFrame.redraw_flag=True
         self.cleared_dialog.show()
         self.cleared_ok.show()
+    #hides dialog after cleared
     def cleared_callback(self, widget):
         self.cleared_dialog.hide()
         self.cleared_ok.hide()
+    #Preserves axes scale when clearing
     def fix_axes(self):
         for i in range(0,len(self.MovieFrame.ax)):
             x_scale = self.MovieFrame.ax[i].get_xlim()
