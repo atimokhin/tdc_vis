@@ -88,7 +88,7 @@ class SelectPanel(gtk.Frame):
         
         #Button for direct entry
         self.entry_button = gtk.Button('Direct Entry')
-        self.entry_button.connect('clicked', self.entry_show)
+        self.entry_button.connect('clicked', self.entry_check)
         self.entry_button.set_sensitive(False)
         main_box.pack_start(self.entry_button)
         
@@ -111,38 +111,6 @@ class SelectPanel(gtk.Frame):
         clear_button.connect('clicked', self.clear_check)
         data_box.pack_end(clear_button)
         
-#------------------------------------------------------------------------------
-#                           DIRECT ENTRY DIALOG
-#------ ------------------------------------------------------------------------
-        #Entry Dialog
-        self.entry_dialog = gtk.Dialog('Direct Entry')
-        
-        #Particle Type Label
-        self.particle_type_label = gtk.Label('Particle Type')
-        self.entry_dialog.vbox.pack_start(self.particle_type_label)
-        
-        #Particle Type Menu
-        self.entry_menu = gtk.Combo()
-        names = ['Positrons', 'Electrons', 'Pairs', 'Protons']
-        self.entry_menu.set_popdown_strings(names)
-        self.entry_dialog.vbox.pack_start(self.entry_menu)
-        
-        #idts box
-        self.idts_box = gtk.VBox()
-        self.idts_entry = gtk.Entry()
-        self.idts_box.pack_end(self.idts_entry)
-        self.idts_label = gtk.Label('idts')
-        self.idts_box.pack_start(self.idts_label)
-        self.entry_dialog.action_area.pack_start(self.idts_box)
-        
-        #id box
-        self.id_box = gtk.VBox()
-        self.id_entry = gtk.Entry()
-        self.id_box.pack_end(self.id_entry)
-        self.id_label = gtk.Label('id')
-        self.id_box.pack_start(self.id_label)
-        self.entry_dialog.action_area.pack_start(self.id_box)
-        self.id_entry.connect('activate', self.entry_callback)
 #------------------------------------------------------------------------------
 #                                SAVE INFORMATION DIALOG
 #------------------------------------------------------------------------------
@@ -200,17 +168,63 @@ class SelectPanel(gtk.Frame):
         self.select_button.set_sensitive(state)
         self.deselect_button.set_sensitive(state)
         self.entry_button.set_sensitive(state)
+#------------------------------------------------------------------------------
+#                           DIRECT ENTRY DIALOG
+#------ ------------------------------------------------------------------------
     #Shows entry box
-    def entry_show(self, widget):
-        self.entry_dialog.show()
-        self.particle_type_label.show()
-        self.entry_menu.show()
-        self.id_label.show()
-        self.id_entry.show()
-        self.idts_label.show()
-        self.idts_entry.show()
-        self.id_box.show()
-        self.idts_box.show()
+    def entry_check(self, widget):
+
+        #Entry Dialog
+        entry_dialog = gtk.Dialog('Direct Entry')
+        entry_dialog.show()
+        
+        #Particle Type Label
+        particle_type_label = gtk.Label('Particle Type')
+        entry_dialog.vbox.pack_start(particle_type_label)
+        particle_type_label.show()
+        
+        #Particle Type Menu
+        entry_menu = gtk.Combo()
+        names = ['Positrons', 'Electrons', 'Pairs', 'Protons']
+        entry_menu.set_popdown_strings(names)
+        entry_dialog.vbox.pack_start(entry_menu)
+        entry_menu.show()
+        
+        #idts box
+        idts_box = gtk.VBox()
+        idts_box.show()
+        idts_entry = gtk.Entry()
+        idts_entry.show()
+        idts_box.pack_end(idts_entry)
+        idts_label = gtk.Label('idts')
+        idts_label.show()
+        idts_box.pack_start(idts_label)
+        entry_dialog.action_area.pack_start(idts_box)
+        
+        #id box
+        id_box = gtk.VBox()
+        id_box.show()
+        id_entry = gtk.Entry()
+        id_entry.show()
+        id_box.pack_end(id_entry)
+        id_label = gtk.Label('id')
+        id_label.show()
+        id_box.pack_start(id_label)
+        entry_dialog.action_area.pack_start(id_box)
+        id_entry.connect('activate', self.entry_callback, idts_entry, entry_menu)
+    #Selects particle entered into direct entry
+    def entry_callback(self, widget, idts_entry, entry_menu):
+        idts = int(idts_entry.get_text())
+        ID = int(widget.get_text())
+        particle_type = self.names[entry_menu.entry.get_text()]
+        particle = self.data[particle_type].index_search(idts, ID)
+        if self.selecting:
+            self.data[particle_type].select_particle(particle[2])
+            self.fix_axes()
+        else:
+            self.data[particle_type].deselect_particle(particle[0], particle[1])
+            self.fix_axes()
+        self.MovieFrame.redraw_flag=True
         
     #Finds nearest particle for pick event
     def pick_callback(self, event):
@@ -251,19 +265,6 @@ class SelectPanel(gtk.Frame):
             self.fix_axes()
         else:
             self.data[particle_type].deselect_particle(particle[2], particle[3])
-            self.fix_axes()
-        self.MovieFrame.redraw_flag=True
-    #Selects particle entered into direct entry
-    def entry_callback(self, event):
-        idts = int(self.idts_entry.get_text())
-        ID = int(self.id_entry.get_text())
-        particle_type = self.names[self.entry_menu.entry.get_text()]
-        particle = self.data[particle_type].index_search(idts, ID)
-        if self.selecting:
-            self.data[particle_type].select_particle(particle[2])
-            self.fix_axes()
-        else:
-            self.data[particle_type].deselect_particle(particle[0], particle[1])
             self.fix_axes()
         self.MovieFrame.redraw_flag=True
     #Adjusts marker size

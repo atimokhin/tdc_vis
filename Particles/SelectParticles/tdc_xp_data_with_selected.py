@@ -95,10 +95,10 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         """
         Delete particle with ID from the list of selected particles
         """
-        for particle in self.select:
+        for particle in self.select.values():
             if particle.idts==idts and particle.ID == ID:
                 print "Deselected ", particle
-                self.select.pop(particle)
+                self.select.pop((idts, ID))
                 return
         print "No particle with idts %i and ID %i found in selected particles" %(idts, ID) 
         
