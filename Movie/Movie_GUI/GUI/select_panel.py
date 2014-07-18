@@ -61,7 +61,7 @@ class SelectPanel(gtk.Frame):
 #                               Marker Size
 #------------------------------------------------------------------------------
         # Marker Spin Button
-        adj = gtk.Adjustment(12, 1, 50, 1, 10, 0)
+        adj = gtk.Adjustment(20, 1, 100, 1, 10, 0)
         self.marker_spinner = gtk.SpinButton(adj, 0.0, 0)
         self.marker_spinner_adj=self.marker_spinner.get_adjustment()
         self.marker_spinner_adj.connect("value-changed", self.marker_callback)
@@ -243,7 +243,7 @@ class SelectPanel(gtk.Frame):
     def marker_callback(self,widget):
         marker_size = self.marker_spinner_adj.get_value()
         for i in range(0,len(self.MovieFrame.seq_plotter)):
-            self.MovieFrame.seq_plotter[i].resize_marker(self.MovieFrame.ax[0], marker_size) 
+            self.MovieFrame.seq_plotter[i].resize_marker(self.MovieFrame.ax[0], marker_size)
     #Clears recent list when switching between select and deselect    
     def select_button_callback(self,event):
         self.selecting = self.select_button.get_active()

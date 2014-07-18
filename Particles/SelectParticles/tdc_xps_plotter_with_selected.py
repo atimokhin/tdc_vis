@@ -16,7 +16,7 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
                                     ylabel=ylabel,
                                     idlabel=idlabel)
         self.line_select=[None]*len(self.data)
-        self.marker_size = 12
+        self.marker_size = 20
     def plot(self,
              ax,
              symlog=True,
@@ -33,7 +33,8 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
         linthreshy   
            <5>     The range (-x, x) within which the plot is linear
         """
-        for i, xp in enumerate(self.data):
+        #sets up empty line_select lines
+        for i in range(0,len(self.data)):
             select_x = []
             select_y = []
             self.line_select[i], = ax.plot(select_x, select_y, 'o', ms = self.marker_size, color = 'green', alpha = .7
@@ -52,9 +53,9 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
         for i, xp in enumerate(self.data):            
             select_x = []
             select_y = []
-            self.line_select[i].set_xdata(select_x)
-            self.line_select[i].set_ydata(select_y)
-            ax.draw_artist(self.line_select[i])
+#            self.line_select[i].set_xdata(select_x)
+#            self.line_select[i].set_ydata(select_y)
+#            ax.draw_artist(self.line_select[i])
             for key in xp.select:
                 select_x.append(xp.select[key].x)
                 select_y.append(xp.select[key].p)
@@ -68,6 +69,9 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
     def resize_marker(self, ax, marker_size):
         self.marker_size = marker_size
         print "resize marker called"
+        for i in range(0,len(self.line_select)):
+            self.line_select[i].set_markersize(marker_size)
+            ax.draw_artist(self.line_select[i])
     def set_animated(self,val):
         """
         Set animated property in all lines
