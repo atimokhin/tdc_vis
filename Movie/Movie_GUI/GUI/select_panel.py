@@ -20,13 +20,12 @@ class SelectPanel(gtk.Frame):
         self.data = self.MovieFrame.seq_plotter[0].data
         self.recent = []
         #used for conversions
-        self.x_scale = self.MovieFrame.ax[0].get_xlim()
-        self.x_scale = self.x_scale[1]-self.x_scale[0]
-        self.y_scale = self.MovieFrame.ax[0].get_ylim()
-        self.y_scale = self.y_scale[1]
+        x_scale = self.MovieFrame.ax[0].get_xlim()
+        self.x_scale = x_scale[1]-x_scale[0]
+        y_scale = self.MovieFrame.ax[0].get_ylim()
+        self.y_scale = y_scale[1]
         self.names = {'Positrons': 0, 'Electrons': 1, 'Pairs' : 2, 'Protons': 3}
         
-        self.MovieFrame = movie_frame
         self.set_flags_to_default_values()
         gtk.Frame.__init__(self, **kwargs)
         self.set_size_request(25, 150)
@@ -48,10 +47,10 @@ class SelectPanel(gtk.Frame):
         track_box.pack_end(self.track_image)
         
         #Tracking On/Off
-        self.track_button = gtk.CheckButton('Tracking')
-        self.track_button.set_active(False)
-        self.track_button.connect('clicked', self.set_flag)
-        track_box.pack_start(self.track_button, expand = True, padding = 5)
+        track_button = gtk.CheckButton('Tracking')
+        track_button.set_active(False)
+        track_button.connect('clicked', self.track_callback)
+        track_box.pack_start(track_button, expand = True, padding = 5)
         
         #Separator
         separator = gtk.HSeparator()
@@ -62,14 +61,14 @@ class SelectPanel(gtk.Frame):
 #------------------------------------------------------------------------------
         # Marker Spin Button
         adj = gtk.Adjustment(20, 1, 100, 1, 10, 0)
-        self.marker_spinner = gtk.SpinButton(adj, 0.0, 0)
-        self.marker_spinner_adj=self.marker_spinner.get_adjustment()
-        self.marker_spinner_adj.connect("value-changed", self.marker_callback)
+        marker_spinner = gtk.SpinButton(adj, 0.0, 0)
+        marker_spinner_adj=marker_spinner.get_adjustment()
+        marker_spinner_adj.connect("value-changed", self.marker_callback)
         
         marker_box= gtk.HBox(spacing=5)
         #pack label and spinner
         marker_box.pack_start(gtk.Label('marker size'))
-        marker_box.pack_end(self.marker_spinner)
+        marker_box.pack_end(marker_spinner)
         main_box.pack_start(marker_box)
 #------------------------------------------------------------------------------
 #                                SELECT/DESELECT BUTTONS
@@ -100,17 +99,17 @@ class SelectPanel(gtk.Frame):
 #                           SAVE AND CLEAR ALL BUTTONS AND BOX
 #------------------------------------------------------------------------------
         #box for save and clear buttons
-        self.data_box = gtk.HBox()
-        main_box.pack_start(self.data_box)
+        data_box = gtk.HBox()
+        main_box.pack_start(data_box)
         
         #Save Button
-        self.save_button = gtk.Button('Save')
-        self.save_button.connect('clicked', self.save_check)
-        self.data_box.pack_end(self.save_button)
+        save_button = gtk.Button('Save')
+        save_button.connect('clicked', self.save_check)
+        data_box.pack_end(save_button)
         #Clear Button
-        self.clear_button= gtk.Button('Clear All')
-        self.clear_button.connect('clicked', self.clear_check)
-        self.data_box.pack_end(self.clear_button)
+        clear_button= gtk.Button('Clear All')
+        clear_button.connect('clicked', self.clear_check)
+        data_box.pack_end(clear_button)
         
 #------------------------------------------------------------------------------
 #                           DIRECT ENTRY DIALOG
@@ -148,11 +147,14 @@ class SelectPanel(gtk.Frame):
 #                                SAVE INFORMATION DIALOG
 #------------------------------------------------------------------------------
         #Save Dialog
-        self.save_dialog = gtk.Dialog('Save Selected Particles')
+        self.save_dialog = gtk.Dialog('Save Particles')
         self.save_dialog.hide()
-        
+        #Filename label
+        self.filename_label = gtk.Label('Filename')
+        self.save_dialog.vbox.pack_start(self.filename_label)
         #Filename
         self.filename_entry = gtk.Entry()
+        self.filename_entry.connect('changed', self.filename_callback)
         self.save_dialog.vbox.pack_start(self.filename_entry)
         #Cancel Button
         self.save_cancel= gtk.Button('Cancel')
@@ -185,8 +187,8 @@ class SelectPanel(gtk.Frame):
         self.cleared_dialog.action_area.pack_start(self.cleared_ok)
         
     #Controls sensitivity when tracking option is on/off
-    def set_flag(self, widget):
-        state = self.track_button.get_active()
+    def track_callback(self, widget):
+        state = widget.get_active()
         if state:
             self.tracking_flag = True
             self.pick_id = self.MovieFrame.canvas.mpl_connect('pick_event', self.pick_callback)
@@ -266,25 +268,26 @@ class SelectPanel(gtk.Frame):
         self.MovieFrame.redraw_flag=True
     #Adjusts marker size
     def marker_callback(self,widget):
-        marker_size = self.marker_spinner_adj.get_value()
+        marker_size = widget.get_value()
         for i in range(0,len(self.MovieFrame.seq_plotter)):
             self.MovieFrame.seq_plotter[i].resize_marker(self.MovieFrame.ax[0], marker_size)
     #Clears recent list when switching between select and deselect    
     def select_button_callback(self,widget):
-        self.selecting = self.select_button.get_active()
+        self.selecting = widget.get_active()
         self.recent = []
     def save_check(self, widget):
         self.save_dialog.show()
         self.save_cancel.show()
         self.filename_entry.show()
+        self.filename_label.show()
         self.save.show()
     #Save particles
+    def filename_callback(self, widget):
+        self.filename = widget.get_text()
     def save_callback(self, widget):
-        self.save_dialog.destroy()
-        filename = self.filename_entry.get_text()
-        if len(filename)>0:
+        if len(self.filename)>0:
             for i in range(0,len(self.data)):
-                self.data[i].save_particles(filename)
+                self.data[i].save_particles(self.filename)
         else:
             print "Invalid filename!"
     #Shows confirmation

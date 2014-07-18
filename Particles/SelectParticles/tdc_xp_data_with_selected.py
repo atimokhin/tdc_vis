@@ -1,5 +1,6 @@
 from Particles.tdc_xp_data  import      tdc_XP_Data
 from select_particle        import      Select_Particle
+from tdc_selected_particles import      tdc_Selected_Particles
 from particle_search        import      *
 import numpy as np
 from pprint import *
@@ -159,7 +160,13 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
                 self.select[key].update(index, self.x[index], self.p[index])
     def save_particles(self, filename):
         print "save_particles called"
-        pass
+        print "i_ts passed was ", self.i_ts
+        print "calc_id passed was ", self.calc_id
+        print "particles passed were", self.select.keys()
+#        selected_particles = tdc_Selected_Particles(self.i_ts, self.calc_id, self.select.keys())
+#        selected_particles.dump(filename)
+        
+        
     
             
         
