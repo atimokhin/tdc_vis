@@ -163,8 +163,8 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         print "i_ts passed was ", self.i_ts
         print "calc_id passed was ", self.calc_id
         print "particles passed were", self.select.keys()
-#        selected_particles = tdc_Selected_Particles(self.i_ts, self.calc_id, self.select.keys())
-#        selected_particles.dump(filename)
+        selected_particles = tdc_Selected_Particles(self.i_ts, self.calc_id, self.select.keys())
+        selected_particles.dump(filename)
         
         
     

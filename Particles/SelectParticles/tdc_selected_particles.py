@@ -1,3 +1,5 @@
+import pickle
+
 from Auxiliary import tdc_Filenames
 
 class tdc_Selected_Particles:
@@ -9,7 +11,7 @@ class tdc_Selected_Particles:
     calc_id
        calc_id where particles were selected
     i_ts
-       timeshot# where selection where particles were selected
+       timeshot# where particles were selected
     IDs
        list with IDs of selected particles:
        [[IDTS1 ID1],  -- IDs of individual selected particle
@@ -20,9 +22,14 @@ class tdc_Selected_Particles:
     """
 
     def __init__(self):
-        self.calc_id = None
         self.i_ts    = None
+        self.calc_id = None
         self.IDs     = []
+
+    def __init__(self, i_ts, calc_id, IDs):
+        self.i_ts    = i_ts
+        self.calc_id = calc_id
+        self.IDs     = IDs
 
     def __getattr__(self,attrname):
         return getattr(self.IDs,attrname)
@@ -35,6 +42,28 @@ class tdc_Selected_Particles:
         s += ' IDs = %s\n' % str(self.IDs)
         return s
     
+    def dump(self,filename):
+        """
+        Dump content into the pickle file RESULTS_DIR/filename.pickle
+        """
+        pickle_filename  = tdc_Filenames.get_full_filename(self.calc_id, filename+'.pickle')
+        pickle_file = open(pickle_filename, 'wb')
+        pickle.dump(self.IDs, pickle_file)
+        pickle.dump(self.calc_id, pickle_file)
+        pickle.dump(self.i_ts, pickle_file)
+        pickle_file.close()
+
+    def load(self, filename):
+        """
+        Restore content from the pickle file RESULTS_DIR/filename.pickle
+        """
+        pickle_filename  = tdc_Filenames.get_full_filename(calc_id, filename+'.pickle')
+        pickle_file = open(pickle_filename, 'rb')
+        self.IDs=pickle.load(pickle_file)
+        self.calc_id=pickle.load(pickle_file)
+        self.i_ts=pickle.load(pickle_file)
+        pickle_file.close()
+        
     def setup_from_matlab_file(self,calc_id,sp_id):
         """
         Read .mat file created by MATLAB function save_selected_particle_to_file()
@@ -49,4 +78,4 @@ class tdc_Selected_Particles:
         self.i_ts    = int(mat_struct['sp']['timeshot'][0][0][0])
         self.IDs     = [ list(i) for i in mat_struct['sp']['IDs'][0][0] ]
 
-
+         
