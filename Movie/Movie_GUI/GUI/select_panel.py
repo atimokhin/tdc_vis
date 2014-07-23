@@ -32,7 +32,7 @@ class SelectPanel(gtk.Frame):
         
         self.set_flags_to_default_values()
         gtk.Frame.__init__(self, **kwargs)
-        self.set_size_request(25, 150)
+        self.set_size_request(25, 160)
         
         #main box for packing everything        
         main_box = gtk.VBox()
@@ -262,12 +262,16 @@ class SelectPanel(gtk.Frame):
         
     #Error message for choosing a non-existent particle
     def non_exist(self, idts, ID):
-        non_exist_dialog = gtk.MessageDialog(flags = gtk.DIALOG_MODAL, type = gtk.MESSAGE_ERROR)
-        non_exist_dialog.set_markup('Particle does not exist in this frame!')
+        non_exist_dialog = gtk.MessageDialog(flags = gtk.DIALOG_MODAL, 
+                                             type = gtk.MESSAGE_ERROR, 
+                                             message_format = "Particle does not exist in this frame!")
         non_exist_dialog.show()
+        non_exist_dialog.label.hide()
+        non_exist_dialog.label.show()
         
         non_exist_ok= gtk.Button('OK')
         non_exist_ok.connect('clicked', lambda w: non_exist_dialog.destroy())
+        non_exist_dialog.action_area.pack_start(non_exist_ok)
         non_exist_ok.show()
         
    
@@ -313,9 +317,12 @@ class SelectPanel(gtk.Frame):
             self.invalid_callback()
     #displays dialog for invalid filename
     def invalid_callback(self):
-        invalid_dialog = gtk.MessageDialog(flags = gtk.DIALOG_MODAL, type = gtk.MESSAGE_WARNING)
-        invalid_dialog.set_markup('Invalid filename!')
+        invalid_dialog = gtk.MessageDialog(flags = gtk.DIALOG_MODAL, 
+                                           type = gtk.MESSAGE_WARNING, 
+                                           message_format = 'Invalid filename!')
         invalid_dialog.show()
+        invalid_dialog.label.hide()
+        invalid_dialog.label.show()
         
         invalid_ok = gtk.Button('OK')
         invalid_dialog.action_area.pack_start(invalid_ok)
@@ -328,9 +335,13 @@ class SelectPanel(gtk.Frame):
     def clear_check(self, event):
                 
         #Clear Confirmation Dialog
-        clear_dialog = gtk.MessageDialog(flags = gtk.DIALOG_MODAL,type = gtk.MESSAGE_WARNING)
-        clear_dialog.set_markup('Are you sure you want to clear all selected particles?') 
+        clear_dialog = gtk.MessageDialog(flags = gtk.DIALOG_MODAL,
+                                         type = gtk.MESSAGE_WARNING, 
+                                         message_format = 'Are you sure you want to clear all selected particles?')
         clear_dialog.show()
+        clear_dialog.label.hide()
+        clear_dialog.label.show()
+        
         
         clear_yes = gtk.Button('Yes')
         clear_yes.connect('clicked', self.clear_callback)
@@ -351,9 +362,12 @@ class SelectPanel(gtk.Frame):
         self.fix_axes()
         self.MovieFrame.redraw_flag=True
         #Data cleared Dialog
-        cleared_dialog = gtk.MessageDialog(flags = gtk.DIALOG_MODAL, type = gtk.MESSAGE_INFO)
-        cleared_dialog.set_markup('Selected particles cleared')
+        cleared_dialog = gtk.MessageDialog(flags = gtk.DIALOG_MODAL, 
+                                           type = gtk.MESSAGE_INFO, 
+                                           message_format = "Selected particles cleared.")
         cleared_dialog.show()
+        cleared_dialog.label.hide()
+        cleared_dialog.label.show()
         
         cleared_ok = gtk.Button("OK")
         cleared_ok.connect('clicked', lambda w: cleared_dialog.destroy())
