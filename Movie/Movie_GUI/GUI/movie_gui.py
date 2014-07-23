@@ -37,7 +37,7 @@ class MovieGUI(gtk.Window):
         ctrl_box.pack_start(self.ap,False,False,3)
         if self.track_panel:
             ctrl_box.pack_start(self.sp, False, False,3)
-        ctrl_box.pack_start(self.cp,False,False,3)
+        ctrl_box.pack_end(self.cp,False,False,3)
         # return resulting VBox
         return ctrl_box        
 
