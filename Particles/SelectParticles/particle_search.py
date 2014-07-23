@@ -1,6 +1,5 @@
 from select_particle        import      Select_Particle
 from operator               import      itemgetter
-import numpy as np
 
 """
 Module for handling all searching
@@ -35,12 +34,10 @@ def quick_search(idts_array, ID_array, update, select_list):
         
 def lin_search(idts_array, ID_array, update):
     """
-    Linear search of data. Sorts update by ID
+    Linear search of data. Sorts update by idts
     Returns dict with idts/ID keys and index of particle (-1 if not found)
     """
-    print "unsorted update is ", update
     update = sorted(update, key = itemgetter(0))
-    print "sorted update is ", update
     index_list = {}
     temp = update[:]
     for i in range(0,len(idts_array)):
@@ -49,12 +46,11 @@ def lin_search(idts_array, ID_array, update):
                 print "match at index %i with idts %i=%i and ID %i = %i" \
                             %(i, key[0], idts_array[i], key[1], ID_array[i])
                 index_list[key]=i
-#                print temp
                 try:                
                     temp.remove(key)
+                #should not occur
                 except ValueError:
                     print "ValueError, particle " + str(key) + "not removed."
-                    print "temp is ", temp
             elif key[1]>idts_array[i]:
                 break
         if len(temp)==0:
@@ -67,19 +63,19 @@ def lin_search(idts_array, ID_array, update):
             print "(idts, ID) %s not found" %(str(key))
             index_list[key]=-1
             temp.remove(key)
-    #Checks that all particles are dealt with. Message should not ever appear
+    #Checks that all particles are dealt with. Message should never appear
     if len(temp) != 0:
         print "failed to sort using lin_read"
     return index_list
         
 def bin_search(idts_array, ID_array, update):
     """
-    Reads and searches data using recursive binary search. Sorts sort_array by ID
+    Reads and searches data using recursive binary search. Sorts sort_array by idts
     Returns dict with idts/ID keys and index of particle (-1 if not found)
     """
     #sorts by ID
-    sort_array = zip(idts_array, ID_array, range(0,len(ID_array)))
-    sort_array = sorted(sort_array, key = itemgetter(1))
+    sort_array = zip(idts_array, ID_array, range(0,len(idts_array)))
+    sort_array = sorted(sort_array, key = itemgetter(0))
     index_list = {}
     for key in update:
         index_list[key] = bin_recursion(sort_array,key)
@@ -93,18 +89,11 @@ def bin_recursion(sort_array, key):
         print str(key) + " not found."
         return -1
     test_index = len(sort_array)/2
-    if key[1]==sort_array[test_index][1] and key[0] == sort_array[test_index][0]:
+    if key[0] == sort_array[test_index][0] and key[1]==sort_array[test_index][1]:
         print str(key)+ "found using bin_read."
         idx = sort_array[test_index][2]
-    elif key[1]<sort_array[test_index][1]:
+    elif key[0]<sort_array[test_index][0]:
         idx = bin_recursion(sort_array[0:test_index], key)
     else:
         idx = bin_recursion(sort_array[test_index+1:], key)
     return idx
-    
-#if __name__ == "__main__": 
-#    idts_array = np.random.randint(0,100,15)
-#    ID_array = np.random.randint(0,100,15)
-#    sort = zip(idts_array, ID_array)
-#    update = [sort[6]]
-#    quick_search(idts_array, ID_array, update, 6)
