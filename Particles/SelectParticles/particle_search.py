@@ -38,8 +38,9 @@ def lin_search(idts_array, ID_array, update):
     Linear search of data. Sorts update by ID
     Returns dict with idts/ID keys and index of particle (-1 if not found)
     """
-#    sorted(update, key = itemgetter(0))
-    print "update is ", update
+    print "unsorted update is ", update
+    update = sorted(update, key = itemgetter(0))
+    print "sorted update is ", update
     index_list = {}
     temp = update[:]
     for i in range(0,len(idts_array)):
@@ -54,8 +55,8 @@ def lin_search(idts_array, ID_array, update):
                 except ValueError:
                     print "ValueError, particle " + str(key) + "not removed."
                     print "temp is ", temp
-#            elif key[1]>ID_array[i]:
-#                break
+            elif key[1]>idts_array[i]:
+                break
         if len(temp)==0:
             print "terminated search at index ", i
             break
