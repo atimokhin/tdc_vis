@@ -27,9 +27,9 @@ class MovieGUI(gtk.Window):
         # define various control panels
         self.ap = AxesSetupPanel(self.MovieFrames)
         self.dp = DisplayPanel()
-        self.cp = ControlPanel(self.track_panel)
         if self.track_panel:
             self.sp = SelectPanel(self.MovieFrames)
+        self.cp = ControlPanel(self.track_panel)        
         # put all panel into a *VBox
         ctrl_box=gtk.VBox()
         ctrl_box.set_border_width(3)
@@ -37,7 +37,7 @@ class MovieGUI(gtk.Window):
         ctrl_box.pack_start(self.ap,False,False,3)
         if self.track_panel:
             ctrl_box.pack_start(self.sp, False, False,3)
-        ctrl_box.pack_end(self.cp,False,False,3)
+        ctrl_box.pack_start(self.cp,False,False,3)
         # return resulting VBox
         return ctrl_box        
 
