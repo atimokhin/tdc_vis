@@ -19,8 +19,7 @@ class Select_Particle(object):
     def get_coordinates(self):
         return (self.x, self.p)
     def __repr__(self):
-        return "Particle with idts %i and ID %i located at \
-        index %i \n with coordinates (%f, %f)" \
+        return "Particle with idts %i and ID %i located at index %i \n\t with coordinates (%f, %f)" \
         %(self.idts, self.ID, self.index, self.x, self.p)
         
     def update(self, index=None, x = None, p=None):

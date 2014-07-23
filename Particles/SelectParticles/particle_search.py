@@ -84,7 +84,6 @@ def bin_recursion(sort_array, key):
     """
     Actual recursive algorithm used by bin_search
     """
-    print sort_array
     if len(sort_array) == 0:
         print str(key) + " not found."
         return -1

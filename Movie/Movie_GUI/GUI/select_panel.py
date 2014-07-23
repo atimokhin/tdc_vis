@@ -247,12 +247,28 @@ class SelectPanel(gtk.Frame):
         particle_type = self.names[entry_menu.entry.get_text()]
         particle = self.data[particle_type].index_search(idts, ID)
         if self.selecting:
-            self.data[particle_type].select_particle(particle[2])
-            self.fix_axes()
+            try:
+                self.data[particle_type].select_particle(particle[2])
+                self.fix_axes()
+            except TypeError:
+                self.non_exist(idts, ID)
         else:
-            self.data[particle_type].deselect_particle(particle[0], particle[1])
-            self.fix_axes()
+            try:
+                self.data[particle_type].deselect_particle(particle[0], particle[1])
+                self.fix_axes()
+            except TypeError:
+                self.non_exist(idts, ID)
         self.MovieFrame.redraw_flag=True
+        
+    #Error message for choosing a non-existent particle
+    def non_exist(self, idts, ID):
+        non_exist_dialog = gtk.MessageDialog(flags = gtk.DIALOG_MODAL, type = gtk.MESSAGE_ERROR)
+        non_exist_dialog.set_markup('Particle does not exist in this frame!')
+        non_exist_dialog.show()
+        
+        non_exist_ok= gtk.Button('OK')
+        non_exist_ok.connect('clicked', lambda w: non_exist_dialog.destroy())
+        non_exist_ok.show()
         
    
 #------------------------------------------------------------------------------

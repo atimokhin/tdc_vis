@@ -113,12 +113,13 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         tdc_XP_Data.read(self,i_ts, sample_dict, **kwargs)
         #running list of selected particles that need to be updated
         update = self.select.keys()
-#        if len(update)>0:
-#            update = self.quick_read(update)
-        if len(update)>0 and len(update)<25:
+        if len(update)>0:
+            update = self.quick_read(update)
+        if len(update)>30:
+            update = self.bin_read(update)
+        if len(update)>0:
             self.lin_read(update)
-        else:
-            self.bin_read(update)
+        
         if len(self.select)>0:
             print "Final update of %s is " %(self.name)
             pprint(self.select)
@@ -160,7 +161,7 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
             else:
                 self.select[key].update(index, self.x[index], self.p[index])
     def save_particles(self, filename):
-        print "save_particles called"
+        print "saved", self.name
         print "i_ts passed was ", self.i_ts
         print "calc_id passed was ", self.calc_id
         print "particles passed were", self.select.keys()
