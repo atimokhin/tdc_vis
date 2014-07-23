@@ -155,6 +155,7 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         for key in index_list:
             index = index_list[key]
             if index ==-1:
+                print "Did not find " + self.name + "with identifier " + str(key)
                 self.select.pop(key)
             else:
                 self.select[key].update(index, self.x[index], self.p[index])

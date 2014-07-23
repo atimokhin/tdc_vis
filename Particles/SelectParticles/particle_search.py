@@ -11,7 +11,7 @@ def index_search(idts_array, ID_array, idts, ID):
     Returns None if no matching particle found
     """
     for i in range(0,len(idts_array)):
-        if ID_array[i] == ID and idts[i] == idts:
+        if idts[i] == idts and ID_array[i] == ID:
             return i
     print "particle with idts %i and ID %i not found" %(idts, ID)
     return None            
@@ -24,7 +24,7 @@ def quick_search(idts_array, ID_array, update, select_list):
     for key in update:
         index_guess = select_list[key].index
         try:
-            if key[1]==ID_array[index_guess] and key[0]==idts_array[index_guess]:
+            if key[0] == idts_array[index_guess] and key[1]==ID_array[index_guess]:
                 index_list[key]=index_guess
                 print str(key) + " found with static quick_read."
             else:
@@ -38,23 +38,26 @@ def lin_search(idts_array, ID_array, update):
     Linear search of data. Sorts update by ID
     Returns dict with idts/ID keys and index of particle (-1 if not found)
     """
-    sorted(update, key = itemgetter(1))
+#    sorted(update, key = itemgetter(0))
+    print "update is ", update
     index_list = {}
     temp = update[:]
     for i in range(0,len(idts_array)):
         for key in update:
-            if key[1] == ID_array[i] and key[0] == idts_array[i]:
+            if key[0] == idts_array[i] and key[1] == ID_array[i]:
                 print "match at index %i with idts %i=%i and ID %i = %i" \
                             %(i, key[0], idts_array[i], key[1], ID_array[i])
                 index_list[key]=i
-                print temp
+#                print temp
                 try:                
                     temp.remove(key)
                 except ValueError:
-                    print "Particle not removed"
-            elif key[1]>ID_array[i]:
-                break
+                    print "ValueError, particle " + str(key) + "not removed."
+                    print "temp is ", temp
+#            elif key[1]>ID_array[i]:
+#                break
         if len(temp)==0:
+            print "terminated search at index ", i
             break
     update = temp[:]
     #deals with destroyed particles
