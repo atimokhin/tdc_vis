@@ -17,6 +17,9 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
                                     idlabel=idlabel)
         self.line_select=[None]*len(self.data)
         self.marker_size = 20
+        #keeps track of sensitivity of pick events
+        self.lines_epsilon = 0
+        self.line_select_epsilon = 20
     def plot(self,
              ax,
              symlog=True,
@@ -33,17 +36,17 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
         linthreshy   
            <5>     The range (-x, x) within which the plot is linear
         """
-        #sets up empty line_select lines
-        for i in range(0,len(self.data)):
-            select_x = []
-            select_y = []
-            self.line_select[i], = ax.plot(select_x, select_y, 'o', ms = self.marker_size, color = 'green', alpha = .7
-            )
         tdc_XPs_TP_Plotter.plot(self,
                                 ax=ax,
                                 symlog=symlog,
                                 linthreshy=linthreshy,
                                 **kwargs)
+        #sets up empty line_select lines
+        for i in range(0,len(self.data)):
+            select_x = []
+            select_y = []
+            self.line_select[i], = ax.plot(select_x, select_y, 'o', picker = self.line_select_epsilon, ms = self.marker_size, color = 'green', alpha = .7
+            )
 
     def replot(self, ax):
         """
@@ -66,6 +69,17 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
         for i in range(0,len(self.line_select)):
             self.line_select[i].set_markersize(marker_size)
             ax.draw_artist(self.line_select[i])
+    def change_sensitivity(self,selecting):
+        if selecting:
+            self.lines_epsilon=self.lines[0].get_pickradius()
+            self.line_select_epsilon = 0
+        else:
+            self.lines_epsilon = 0
+            self.line_select_epsilon = self.marker_size
+        for i in range(0,len(self.lines)):
+            self.lines[i].set_picker(self.lines_epsilon)
+        for i in range(0,len(self.line_select)):
+                self.line_select[i].set_picker(self.line_select_epsilon)
     def set_animated(self,val):
         """
         Set animated property in all lines

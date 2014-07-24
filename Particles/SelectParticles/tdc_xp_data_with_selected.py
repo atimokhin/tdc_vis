@@ -43,14 +43,22 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         ID=None
         x_scaled = self.x_scale(x_plot, x_scale)
         y_scaled = self.y_scale(y_plot, y_scale)
-        
-        for i in range(0,len(self.id)):
-            test_dist = np.hypot(x_scaled- self.x_scale(self.x[i], x_scale),y_scaled - self.y_scale(self.p[i]))
-            if test_dist<distance:
-                distance = test_dist
-                idx = i
-                idts = self.idts[i]
-                ID = self.id[i]
+        if selecting:
+            for i in range(0,len(self.id)):
+                test_dist = np.hypot(x_scaled- self.x_scale(self.x[i], x_scale),y_scaled - self.y_scale(self.p[i], y_scale))
+                if test_dist<distance:
+                    distance = test_dist
+                    idx = i
+                    idts = self.idts[i]
+                    ID = self.id[i]
+        else:
+            for i, particle in enumerate(self.select.values()):
+                test_dist = np.hypot(x_scaled - self.x_scale(particle.x, x_scale), y_scaled - self.y_scale(particle.p, y_scale))
+                if test_dist<distance:
+                    distance = test_dist
+                    idx = i
+                    idts = particle.idts
+                    ID = particle.ID
         return (distance, idx, idts, ID)
         
     def index_search(self, idts, ID):

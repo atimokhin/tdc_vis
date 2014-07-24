@@ -19,10 +19,13 @@ class SelectPanel(gtk.Frame):
         self.data = self.MovieFrame.seq_plotter[0].data
         #controls selecting or deselecting       
         self.selecting = True
+        #controls marker size
+        self.marker_size = 20
         #cache to prevent double pick_event error
         self.recent =[]
         #default filename for saving particles
         self.filename = ""
+        
         #used for scale conversions
         x_scale = self.MovieFrame.ax[0].get_xlim()
         self.x_scale = x_scale[1]-x_scale[0]
@@ -64,7 +67,7 @@ class SelectPanel(gtk.Frame):
 #                               Marker Size
 #------------------------------------------------------------------------------
         # Marker Spin Button
-        adj = gtk.Adjustment(20, 1, 100, 1, 10, 0)
+        adj = gtk.Adjustment(self.marker_size, 1, 100, 1, 10, 0)
         marker_spinner = gtk.SpinButton(adj, 0.0, 0)
         marker_spinner_adj=marker_spinner.get_adjustment()
         marker_spinner_adj.connect("value-changed", self.marker_callback)
@@ -178,14 +181,28 @@ class SelectPanel(gtk.Frame):
         
     #Adjusts marker size
     def marker_callback(self,widget):
-        marker_size = widget.get_value()
+        self.marker_size = widget.get_value()
         for i in range(0,len(self.MovieFrame.seq_plotter)):
-            self.MovieFrame.seq_plotter[i].resize_marker(self.MovieFrame.ax[0], marker_size)
+            self.MovieFrame.seq_plotter[i].resize_marker(self.MovieFrame.ax[0], self.marker_size)
     
-    #Clears recent list when switching between select and deselect    
+    #Clears recent list when switching between select and deselect and changes picker sensitivity
     def select_button_callback(self,widget):
         self.selecting = widget.get_active()
         self.recent = []
+        for i in range(0, len(self.MovieFrame.seq_plotter)):
+            self.MovieFrame.seq_plotter[i].change_sensitivity(self.selecting)
+#        if self.selecting:
+#            for i in range(0,len(self.MovieFrame.seq_plotter)):
+#                for j in range(0,len(self.MovieFrame.seq_plotter[i].lines)):
+#                    self.MovieFrame.seq_plotter[i].lines[j].set_picker(5)
+#                for j in range(0,len(self.MovieFrame.seq_plotter[i].line_select)):
+#                    self.MovieFrame.seq_plotter[i].line_select[j].set_picker(0)
+#        else:
+#            for i in range(0,len(self.MovieFrame.seq_plotter)):
+#                for j in range(0,len(self.MovieFrame.seq_plotter[i].lines)):
+#                    self.MovieFrame.seq_plotter[i].lines[j].set_picker(0)
+#                for j in range(0,len(self.MovieFrame.seq_plotter[i].line_select)):
+#                    self.MovieFrame.seq_plotter[i].line_select[j].set_picker(self.marker_size)
     #Preserves axes scale when clearing
     def fix_axes(self):
         for i in range(0,len(self.MovieFrame.ax)):
