@@ -19,8 +19,6 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
                  get_weight=False,
                  get_id=False,
                  time_normalization=None): 
-        """
-        """
         tdc_XP_Data.__init__(self,
                              calc_id=calc_id,
                              particle_name=particle_name,
@@ -131,8 +129,10 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
         if len(self.select)>0:
             print "Final update of %s is " %(self.name)
             pprint(self.select)
-                
     def quick_read(self, update):
+        """
+        Checks if particles are in the same index (usually true)
+        """
         print "--------------------------QUICK---READ--------------------------"
         index_list = quick_search(self.idts, self.id, update, self.select)
         for key in index_list:
@@ -141,7 +141,6 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
                 self.select[key].update(index, self.x[index], self.p[index])
                 update.remove(key)
         return update
-            
     def lin_read(self,update):
         """
         Reads and searches data using linear search
@@ -169,6 +168,9 @@ class tdc_XP_Data_with_Selected(tdc_XP_Data):
             else:
                 self.select[key].update(index, self.x[index], self.p[index])
     def save_particles(self, filename):
+        """
+        Passes particles to tdc_Selected_Particles for dump into pickle file
+        """
         print "saved", self.name
         print "i_ts passed was ", self.i_ts
         print "calc_id passed was ", self.calc_id

@@ -191,18 +191,6 @@ class SelectPanel(gtk.Frame):
         self.recent = []
         for i in range(0, len(self.MovieFrame.seq_plotter)):
             self.MovieFrame.seq_plotter[i].change_sensitivity(self.selecting)
-#        if self.selecting:
-#            for i in range(0,len(self.MovieFrame.seq_plotter)):
-#                for j in range(0,len(self.MovieFrame.seq_plotter[i].lines)):
-#                    self.MovieFrame.seq_plotter[i].lines[j].set_picker(5)
-#                for j in range(0,len(self.MovieFrame.seq_plotter[i].line_select)):
-#                    self.MovieFrame.seq_plotter[i].line_select[j].set_picker(0)
-#        else:
-#            for i in range(0,len(self.MovieFrame.seq_plotter)):
-#                for j in range(0,len(self.MovieFrame.seq_plotter[i].lines)):
-#                    self.MovieFrame.seq_plotter[i].lines[j].set_picker(0)
-#                for j in range(0,len(self.MovieFrame.seq_plotter[i].line_select)):
-#                    self.MovieFrame.seq_plotter[i].line_select[j].set_picker(self.marker_size)
     #Preserves axes scale when clearing
     def fix_axes(self):
         for i in range(0,len(self.MovieFrame.ax)):
