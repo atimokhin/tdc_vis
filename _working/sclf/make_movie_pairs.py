@@ -57,7 +57,7 @@ tdc_Filenames.set_vis_results_dir('C:\\Users\\Alexander\\Documents\\NASA\\Code')
 #IDs=['SCLF__Crab_B1_R6.8e6_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU']
 #IDs=['SCLF__Crab_B1_R8.8e6_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU']
 
-IDs=['SCLF__Crab_B3_R6.8e6_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU']
+IDs=['SCLF__Crab_B3_R6.8e6_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU_partID']
 #IDs=['SCLF__Crab_B3_R8.8e6_jm1.5_P0.033_Chi60_L0.3_nGJ5e4_nx1e4_dt1e-5_sU']
 
 
