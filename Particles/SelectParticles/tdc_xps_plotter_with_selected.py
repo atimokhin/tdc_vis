@@ -36,22 +36,27 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
         linthreshy   
            <5>     The range (-x, x) within which the plot is linear
         """
+        #sets up empty line_select lines
         tdc_XPs_TP_Plotter.plot(self,
                                 ax=ax,
                                 symlog=symlog,
                                 linthreshy=linthreshy,
                                 **kwargs)
-        #sets up empty line_select lines
         for i in range(0,len(self.data)):
             select_x = []
             select_y = []
-            self.line_select[i], = ax.plot(select_x, select_y, 'o', picker = self.line_select_epsilon, ms = self.marker_size, color = 'green', alpha = .7
-            )
+            self.line_select[i], = ax.plot( select_x, select_y,'o',
+                                            picker = self.line_select_epsilon, 
+                                            ms = self.marker_size, 
+                                            color = 'green', 
+                                            alpha = .7)
+        
 
     def replot(self, ax):
         """
         Plot particles for animation at timestep# i_ts
         """
+        tdc_XPs_TP_Plotter.replot(self,ax=ax)
         for i, xp in enumerate(self.data):            
             select_x = []
             select_y = []
@@ -61,7 +66,7 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
             self.line_select[i].set_xdata(select_x)
             self.line_select[i].set_ydata(select_y)
             ax.draw_artist(self.line_select[i])
-        tdc_XPs_TP_Plotter.replot(self,ax=ax)
+        
 
     def resize_marker(self, ax, marker_size):
         self.marker_size = marker_size
