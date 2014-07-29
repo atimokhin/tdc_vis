@@ -51,16 +51,19 @@ class Movie_File_Maker__GUI(Movie_File_Maker):
         and stores it in the internal list
         """
         # get pixmap from figure's canvas [it's a widget too] (server buffer)
-        x,y,w,h = widget.allocation
+        w,h = widget.get_size_request()
         pm=widget.get_snapshot()
         # transform pixmap into a pixbuf (client buffer)
         pb = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False, 8, w, h)
-        pb.get_from_drawable(pm, pm.get_colormap(), 0, 0, 0, 0, -1, -1)
+        snapshot = pb.get_from_drawable(pm, pm.get_colormap(), 0, 0, 0, 0, w,h)
         # transform pixbuf into png format  and store it in RAM
-        io = cStringIO.StringIO()
-        pb.save_to_callback(io.write, 'png')
-        self.frames_png.append( io.getvalue() )
-        io.close()
+#        io = cStringIO.StringIO()
+#        pb.save_to_callback(io.write, 'png')
+#        self.frames_png.append( io.getvalue() )
+#        io.close()
+        #alternate methods of saving on Windows:
+        self.frames_png.append(snapshot)
+        
         # update #of recorded frames in GUI
         self.update_number_of_recorded_frames_function(len(self.frames_png))
 
@@ -82,9 +85,11 @@ class Movie_File_Maker__GUI(Movie_File_Maker):
                 # name of the file where current frame will be saved
                 filename = self.get_frame_filename(idx+1)
                 # create frame file, save frame there, then close the file 
-                frame_file = open( filename, "w" )
-                frame_file.write(frame)
-                frame_file.close
+#                frame_file = open( filename, "w" )
+#                frame_file.write(frame)
+#                frame_file.close
+                frame.save(filename, 'png')
+                
                 # append name of the frame file to the list
                 self.add_filename_to_index_file(filename)
             # close index file
