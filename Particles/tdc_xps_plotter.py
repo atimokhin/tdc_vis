@@ -14,10 +14,10 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
     __line_args = inspect.getargspec(matplotlib.lines.Line2D.__init__).args
     __line_args.append('animated')
 
-    __plotstyle = { 'Electrons' : {'linestyle':'None','color':'b','markeredgecolor':'b','marker':'o','markersize':0.5},
-                    'Positrons' : {'linestyle':'None','color':'r','markeredgecolor':'r','marker':'o','markersize':0.5},
+    __plotstyle = { 'Electrons' : {'linestyle':'None','color':'b','markeredgecolor':'b','marker':'o','markersize':0.5, 'label':'Electrons'},
+                    'Positrons' : {'linestyle':'None','color':'r','markeredgecolor':'r','marker':'o','markersize':0.5, 'label':'Positrons'},
                     'Protons'   : {'linestyle':'None','color':'m','markeredgecolor':'m','marker':'o','markersize':3},  
-                    'Pairs'     : {'linestyle':'None','color':'k','markeredgecolor':'k','marker':'o','markersize':1}  }
+                    'Pairs'     : {'linestyle':'None','color':'k','markeredgecolor':'k','marker':'o','markersize':1, 'label': 'Photons'}  }
 
     __default_plot_ylabel = { 'Electrons' : r'$p_{-}$' ,
                               'Positrons' : r'$p_{+}$' ,
@@ -79,11 +79,13 @@ class tdc_XPs_Plotter(tdc_Data_vs_X_Plotter):
             # apply custom plot style set manually with set_plotstyle()
             plot_kwargs.update(self._plot_style)
             # actual plotting with pick on
-            self.lines[i], = ax.plot(xp.x, xp.p, picker=5, 
+            self.lines[i], = ax.plot(xp.x, xp.p, picker=5,
                                      **plot_kwargs)
             # make scaling semi-logatithmic if asked
             if symlog:
                 ax.set_yscale('symlog',linthreshy=linthreshy,subsy=[1,10])
+        ax.legend(('Electrons', 'Positrons', 'Photons'), numpoints = 1, markerscale=10, loc = 4)
+        ax.set_title('Pair-cascades around rotation-powered pulsar')
         tdc_Data_vs_X_Plotter.plot(self,ax)
 
 

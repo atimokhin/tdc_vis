@@ -15,7 +15,7 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
                                     xlabel=xlabel,
                                     ylabel=ylabel,
                                     idlabel=idlabel)
-        self.line_select=[None]*len(self.data)
+        self.line_select=[None]*2*len(self.data)
         self.marker_size = 20
         #keeps track of sensitivity of pick events
         self.lines_epsilon = 0
@@ -45,11 +45,18 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
         for i in range(0,len(self.data)):
             select_x = []
             select_y = []
-            self.line_select[i], = ax.plot( select_x, select_y,'o',
+            self.line_select[i], = ax.plot( select_x, select_y,'o', 
                                             picker = self.line_select_epsilon, 
                                             ms = self.marker_size, 
-                                            color = 'green', 
-                                            alpha = .7)
+                                            color = 'green',
+                                            alpha = .6)
+#        for i in range(len(self.data),2*len(self.data)):
+#            select_x = []
+#            select_y = []
+#            self.line_select[i], = ax.plot( select_x, select_y,'-',
+#                                            ms = self.marker_size, 
+#                                            color = 'black', linewidth = 5,
+#                                            alpha = .9)
         
 
     def replot(self, ax):
@@ -57,15 +64,23 @@ class tdc_XPs_TP_Plotter_with_Selected(tdc_XPs_TP_Plotter):
         Plot particles for animation at timestep# i_ts
         """
         tdc_XPs_TP_Plotter.replot(self,ax=ax)
+            
         for i, xp in enumerate(self.data):            
             select_x = []
             select_y = []
+#            old_x = self.line_select[i].get_xdata()
+#            old_y = self.line_select[i].get_ydata()
             for key in xp.select:
                 select_x.append(xp.select[key].x)
                 select_y.append(xp.select[key].p)
             self.line_select[i].set_xdata(select_x)
             self.line_select[i].set_ydata(select_y)
             ax.draw_artist(self.line_select[i])
+#            select_x.extend(old_x)
+#            select_y.extend(old_y)
+#            self.line_select[i+4].set_xdata(select_x)
+#            self.line_select[i+4].set_ydata(select_y)
+#            ax.draw_artist(self.line_select[i+4])
         
 
     def resize_marker(self, ax, marker_size):
